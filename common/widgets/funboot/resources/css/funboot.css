@@ -1,0 +1,350 @@
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../icomoon/fonts/icomoon.eot?nt3nft');
+    src:  url('../icomoon/fonts/icomoon.eot?nt3nft#iefix') format('embedded-opentype'),
+    url('../icomoon/fonts/icomoon.ttf?nt3nft') format('truetype'),
+    url('../icomoon/fonts/icomoon.woff?nt3nft') format('woff'),
+    url('../icomoon/fonts/icomoon.svg?nt3nft#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.page-tabs .active:before {
+    font-family: 'icomoon' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    content: "\ea55";
+    padding-right: 3px;
+    color: #2d8cf0;
+    font-size: 9px;
+}
+
+.text-sm .btn,
+.btn-sm,
+.btn-group-sm > .btn {
+    padding: 4px 8px;
+    font-size: 12px!important;
+    line-height: 1.5;
+    border-radius: 3px;
+    margin-bottom: 2px;
+}
+
+.active-inactive .btn {
+    padding: 3px 0;
+}
+
+.fb-row {
+    width: 100%;
+    display: table;
+}
+
+.card-body {
+    overflow-x:scroll;
+}
+
+.card-body::-webkit-scrollbar {
+    display: none;
+}
+
+.modal-body .form-group {
+    display: flex;
+}
+
+.form-control {
+    font-size: 0.9em;
+}
+
+.required label:before {
+    content: '* ';
+    color: red;
+}
+
+.form-control-page-no {
+    width: 50px;
+    display: inline-block;
+}
+
+.main-header .sidebar-toggle-no-icon:before {
+    content: '' !important;
+}
+
+.grid-view table th a {
+    color: #555 !important;
+    font-weight: bold;
+}
+.grid-view table a.asc:after {
+    content: " \2191";
+    font-size: 16px;
+}.grid-view table a.desc:after {
+    content: " \2193";
+    font-size: 16px;
+}
+
+
+.grid-view th {
+    min-width: 60px;
+}
+
+.grid-view th.action-column {
+    min-width: 105px;
+}
+
+.grid-view th.action-column-lg {
+    min-width: 165px;
+}
+
+.grid-view th.action-column-max {
+    min-width: 209px;
+}
+
+.nav-sidebar>.nav-item .nav-icon.fa, .nav-sidebar>.nav-item .nav-icon.fab, .nav-sidebar>.nav-item .nav-icon.far, .nav-sidebar>.nav-item .nav-icon.fas, .nav-sidebar>.nav-item .nav-icon.glyphicon, .nav-sidebar>.nav-item .nav-icon.ion {
+    font-size: 0.875rem;
+}
+
+.btn-group a {
+    color: #555;
+}
+
+table .form-control {
+    padding: 0.125em 0.75em;
+    height: calc(2rem + 2px);
+}
+table .form-sort {
+    max-width: 60px;
+}
+
+.tab-treegrid td {
+    padding: 0.5em;
+}
+
+.wrapper .content{
+    padding: 0 0.5em;
+}
+
+.content-wrapper {
+    overflow: hidden;
+    width: auto;
+    height: 567px;
+}
+
+/* 导航标签 */
+.content-tabs {
+    border-bottom: solid 1px #e4eaec;
+    position: relative;
+    height: 42px;
+    background: #fafafa;
+    line-height: 41px;
+}
+
+.content-tabs .roll-nav,
+.page-tabs-list {
+    position: absolute;
+    width: 43px;
+    height: 41px;
+    text-align: center;
+    color: #777;
+    z-index: 2;
+    top: 0;
+}
+
+.content-tabs .roll-left {
+    left: 0;
+    border-right: solid 1px #e4eaec;
+}
+
+.content-tabs .roll-right {
+    right: 0;
+    border-left: solid 1px #e4eaec;
+}
+
+.content-tabs button {
+    background: #fff;
+    border: 0;
+    height: 41px;
+    width: 40px;
+    outline: none;
+}
+
+.content-tabs button:hover {
+    background: #f4f6f9;
+}
+
+nav.page-tabs {
+    margin-left: 40px;
+    width: 100000px;
+    height: 41px;
+    overflow: hidden;
+    background: #FFFFFF;
+}
+
+nav.page-tabs .page-tabs-content {
+    float: left;
+}
+
+.page-tabs a {
+    display: block;
+    float: left;
+    border-right: solid 1px #e4eaec;
+    padding: 0 15px;
+    color: #777;
+}
+
+.page-tabs a:hover,
+.content-tabs .roll-nav:hover {
+    color: #777;;
+    background: #f4f6f9;
+    cursor: pointer;
+}
+
+.page-tabs a i {
+    color: #777;
+    padding-left: 6px;
+}
+
+.page-tabs a.active,
+.page-tabs a.active:hover,
+.page-tabs a.active i,
+.page-tabs a.active i:hover {
+    background: #f4f6f9;
+    color: #777;
+    border-bottom: none;
+}
+
+.roll-right.J_tabRight {
+    right: 140px;
+}
+
+.roll-right.btn-group {
+    right: 60px;
+    width: 80px;
+    padding: 0;
+}
+
+.roll-right.btn-group button {
+    width: 80px;
+}
+
+.roll-right.J_tabExit {
+    background: #fff;
+    height: 41px;
+    width: 70px;
+    outline: none;
+}
+
+.hr-line-dashed {
+    border-top: 1px dashed #e4eaec;
+    color: #ffffff;
+    background-color: #ffffff;
+    height: 1px;
+    margin: 20px 0;
+}
+
+.roll-nav .dropdown-menu li {
+    text-align: center;
+    line-height: 30px;
+}
+
+.fbRefreshBack {
+    font-size: 1em;
+    color: #777;
+}
+
+.card-header .card-title {
+    font-size: 1.4em;
+    line-height: 1.9;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.tab-nav {
+    display: inline-flex;
+}
+
+/*.card-target {*/
+/*    margin-bottom: 0;*/
+/*    box-shadow: none;*/
+/*}*/
+
+.card-target input {
+    display: inline-block;
+    width: 400px;
+    height: calc(1.9rem + 2px);
+    font-size: 0.875em;
+    padding: 0.125em 0.75em
+}
+
+.card-target .a {
+    margin-left: 8px;
+}
+
+.border-color-gray {
+    border: 1px solid #e9ecef;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    border-top: 1px solid #dee2e6;
+    line-height: 1.42857;
+    padding: 8px;
+    vertical-align: middle;
+}
+
+.table > tbody > tr > td > input {
+    height: 1.8rem;
+}
+
+.nav-tabs-tools {
+    margin-left: auto; padding: 2px 10px 0 0;
+}
+.nav-tabs-tools a, .nav-tabs-tools a:hover, .nav-tabs-tools a:active {
+    border: none !important;
+}
+
+.toast-center-center {
+    top: 33%;
+    left: 45%;
+    margin-top: -30px;
+    margin-left: -150px;
+}
+
+.help-block {
+    color: #f00;
+}
+
+.pull-left {
+    float: left !important;
+}
+.pull-right {
+    float: right !important;
+}
+.echarts-nav {
+
+}
+.echarts-chart {
+    clear: both;
+    padding-top: 15px;
+}
+.echarts-nav span {
+    margin-right: 5px;
+}
+.orange {
+    color: orange;
+}
+
+.active-inactive {
+    min-width: 55px;
+}

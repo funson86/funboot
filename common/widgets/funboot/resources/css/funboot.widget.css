@@ -1,0 +1,129 @@
+/*** upload box ***/
+
+.upload-list {
+    margin: 0;
+    padding: 0;
+}
+
+.upload-list ul {
+    margin-top: -15px;
+    margin-left: -47px;
+}
+
+.upload-list ul li {
+    float: left;
+    margin: 0;
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 108px;
+    height: 108px;
+    border: 1px #efefed solid;
+    text-align: center;
+    display: inline-block;
+    list-style-type: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.upload-list ul li .img-box .bg-cover {
+    background-size: cover;
+    background-position: center center;
+    height: 110px
+}
+
+.upload-list ul li .img-box.selected {
+    border: 3px #f60 solid;
+}
+
+.upload-list ul li .img-box img {
+    width: auto;
+    height: 100%;
+    margin: 0 auto;
+    opacity: 1;
+}
+
+.upload-list ul li .img-box:hover .delete-image-crop,
+.upload-list ul li .img-box:hover .delete-image {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 0;
+    right: 0;
+    background: url(../images/delete.png) no-repeat;
+    background-size: 25px 25px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.upload-list .fa-cloud-upload-alt {
+    font-size: 40px;
+    color: #d6d9e0;
+    margin: 30px 0 16px;
+    line-height: 45px;
+}
+
+.upload-list .fa-file-o {
+    font-size: 40px;
+    color: #d6d9e0;
+    margin: 20px 0 16px;
+    line-height: 45px;
+}
+
+.upload-box {
+    padding: 0;
+    color: #333;
+    text-align: center;
+    border: 1px #d0d2d0 dashed
+}
+
+.upload-box-bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.upload-box-bg a {
+    color: #fff !important;
+    cursor: pointer
+}
+
+.upload-box-bg .first {
+    left: 25%;
+    top: 25%;
+    position: absolute;
+}
+
+.upload-box-bg .first span {
+    width: 55px;
+}
+
+.upload-box-bg .second {
+    right: 25%;
+    top: 55%;
+    position: absolute;
+}
+
+.upload-ext {
+    position: absolute;
+    top: 55%;
+    left: 33%;
+}
+
+.mailbox-attachment-name span{
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+}
+
+#fbAttachmentList .active {
+    border: 1px solid #62a8ea !important;
+    box-sizing: border-box;
+}

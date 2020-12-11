@@ -1,0 +1,11 @@
+.login-page {
+    background: url("../images/login-bg.png") repeat;
+}
+.login-box {
+    width: 400px;
+}
+.card-shadow {
+    box-shadow: 0 9px 30px -6px rgba(0,0,0,.2), 0 18px 20px -10px rgba(0,0,0,.04), 0 18px 20px -10px rgba(0,0,0,.04), 0 10px 20px -10px rgba(0,0,0,.04);
+    border-radius: 12px;
+    padding: 40px;
+}

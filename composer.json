@@ -1,0 +1,78 @@
+{
+    "name": "yiisoft/yii2-app-advanced",
+    "description": "Yii 2 Advanced Project Template",
+    "keywords": ["yii2", "framework", "advanced", "project template"],
+    "homepage": "http://www.yiiframework.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "http://www.yiiframework.com/wiki/",
+        "irc": "irc://irc.freenode.net/yii",
+        "source": "https://github.com/yiisoft/yii2"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.0",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-imagine": "^2.2",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "yiisoft/yii2-queue": "^2.3",
+        "yiisoft/yii2-redis": "^2.0",
+        "hisune/echarts-php": "^1.0",
+        "unclead/yii2-multiple-input": "~2.0",
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "kartik-v/yii2-widget-timepicker": "*",
+        "kartik-v/yii2-widget-colorinput": "*",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-date-range": "*",
+        "kartik-v/yii2-widget-datetimepicker": "dev-master",
+        "phpoffice/phpspreadsheet": "^1.12",
+        "zircote/swagger-php": "^3.0",
+        "jianyan74/yii2-treegrid": "*",
+        "yiisoft/yii2-bootstrap4": "^2.0",
+        "league/flysystem": "^1.0",
+        "consilience/flysystem-azure-file-storage": "^0.1.4",
+        "league/flysystem-azure": "^1.0",
+        "xxtime/flysystem-aliyun-oss": "^1.5",
+        "zhuzhichao/ip-location-zh": "^2.4",
+        "ramsey/uuid": "^3.9",
+        "2amigos/qrcode-library": "^1.1",
+        "godruoyi/php-snowflake": "^1.0",
+        "overtrue/pinyin": "^4.0",
+        "omnilight/yii2-scheduling": "^1.1",
+        "ext-json": "^1.5",
+        "ext-redis": "*",
+        "e282486518/yii2-console-migration": "@dev",
+        "phing/phing": "*",
+        "sebastian/phpcpd": "*",
+        "stripe/stripe-php": "^7.58"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.1.0",
+        "yiisoft/yii2-gii": "~2.1.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "codeception/codeception": "^4.0",
+        "codeception/module-asserts": "^1.0",
+        "codeception/module-yii2": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/verify": "~0.5.0 || ~1.1.0",
+        "squizlabs/php_codesniffer": "3.*",
+        "symfony/browser-kit": ">=2.7 <=4.2.4",
+        "phan/phan": "^3.2"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}

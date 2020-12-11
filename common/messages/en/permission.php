@@ -1,0 +1,37 @@
+<?php
+return [
+    '管理系统' => 'Management',
+    'Funboot系统' => 'Management',
+    '商城管理' => 'Mall',
+    '系统管理' => 'System Setting',
+    '订单管理' => 'Order',
+    '商品管理' => 'Product',
+    '分类管理' => 'Category',
+    '地址管理' => 'Address',
+    '优惠券类型' => 'Coupon Type',
+    '优惠券' => 'Coupon',
+    '优惠券&礼品券' => 'Coupon&Gift',
+    '用户管理' => 'User',
+    '店铺管理' => 'Store',
+    '部门管理' => 'Department',
+    '消息管理' => 'Message',
+    '文件管理' => 'Attachment',
+    '角色权限管理' => 'Role',
+    '菜单权限管理' => 'Menu Permission',
+    '系统配置' => 'Setting',
+    '配置类型管理' => 'Setting Type',
+    '数据字典' => 'Dict Data',
+
+    '系统监控' => 'System Monitor',
+    '定时任务' => 'Schedule',
+    '日志管理' => 'Log',
+
+    '二次开发' => 'Develop',
+    '接口文档' => 'Swagger Api',
+    'Funboot开发指南' => 'Funboot Develop Docs',
+    'QQ开发交流群' => 'Funboot QQ Group',
+
+    '学校管理' => 'School',
+    '学生' => 'Student',
+    '学生管理' => 'Students',
+];
