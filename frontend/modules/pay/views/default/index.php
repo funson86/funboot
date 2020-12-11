@@ -7,7 +7,7 @@ use common\models\pay\Payment as ActiveModel;
 use frontend\assets\PayLandingAsset;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\Address */
+/* @var $model common\models\pay\Payment */
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = 'FunPay';

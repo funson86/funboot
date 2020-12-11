@@ -6,7 +6,7 @@ use common\components\enums\YesNo;
 use common\models\pay\Payment as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\Address */
+/* @var $model common\models\pay\Payment */
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = ($model->id ? Yii::t('app', 'Edit') : Yii::t('app', 'Create')) . Yii::t('app', 'Address');
