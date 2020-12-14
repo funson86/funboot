@@ -14,7 +14,7 @@ $config = yii\helpers\ArrayHelper::merge(
     require __DIR__ . '/../frontend/config/main-local.php'
 );
 
-$host = file_exists(__DIR__ . '/../frontend/config/host.php') ? require __DIR__ . '/../frontend/config/host.php' : [];
+$host = file_exists(__DIR__ . '/../frontend/runtime/host.php') ? require __DIR__ . '/../frontend/runtime/host.php' : [];
 $config['defaultRoute'] = $host[$_SERVER['SERVER_NAME']] ?? 'site';
 
 (new yii\web\Application($config))->run();

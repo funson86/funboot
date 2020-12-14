@@ -196,6 +196,6 @@ class StoreController extends BaseController
         }
         $str .= "];\n";
 
-        file_put_contents(Yii::getAlias('@frontend/config/host.php'), $str);
+        file_put_contents(Yii::getAlias('@frontend/runtime/host.php'), $str);
     }
 }
