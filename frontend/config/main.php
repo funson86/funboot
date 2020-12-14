@@ -57,6 +57,12 @@ return [
                 'getusers' => 'api/getusers',
                 'getorders' => 'api/getorders',
                 'getorderproducts' => 'api/getorderproducts',
+                '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
+                '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
+                '<modules:\w+>/<controller:\w+>/<action:\w+>'=>'<modules>/<controller>/<action>',
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
         'assetManager' => [

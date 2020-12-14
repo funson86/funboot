@@ -118,6 +118,11 @@ class CommonHelper
         return false;
     }
 
+    public static function isWeixin()
+    {
+        return (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) ? true : false;
+    }
+
     /**
      * @param $viewFile
      * @param array $params

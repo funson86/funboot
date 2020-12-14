@@ -108,6 +108,13 @@ $this->title = strlen($store->settings['website_seo_title']) > 5 ? $store->setti
 </div>
 <!-- ./wrapper -->
 
+<script>
+    // 配置
+    let config = {
+        isMobile: <?= \common\helpers\CommonHelper::isMobile() ? 'true' : 'false' ?>
+    };
+</script>
+
 <!-- REQUIRED SCRIPTS -->
 <?php $this->endBody() ?>
 </body>

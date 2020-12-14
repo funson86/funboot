@@ -55,4 +55,9 @@ class Url extends \yii\helpers\Url
             return parent::to($route, $scheme);
         }
     }
+
+    public static function toWithoutCheck($url = '', $scheme = false)
+    {
+        return self::to($url, $scheme, false);
+    }
 }

@@ -25,23 +25,14 @@ backend\assets\AppAsset::register($this);
     <?php $this->beginBody() ?>
     <div class="wrapper">
 
-        <?= $this->render(
-            'header.php'
-        ) ?>
+        <?= $this->render('header') ?>
 
-        <?= $this->render(
-            'left.php'
-        )
-        ?>
+        <?= $this->render('left')?>
 
-        <?= $this->render(
-            'content.php'
-        ) ?>
+        <?= $this->render('content') ?>
 
         <script>
-            // 配置
             let config = {
-                tag: "<?= Yii::$app->params['sys_tags'] ?? false; ?>",
                 isMobile: <?= \common\helpers\CommonHelper::isMobile() ? 'true' : 'false' ?>
             };
         </script>

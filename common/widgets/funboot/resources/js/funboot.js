@@ -1,3 +1,10 @@
+
+if (config == NaN) {
+    let config = {
+        isMobile: false
+    };
+}
+
 function fbSuccess(content, title = '') {
     //Swal.fire(title, content, 'success')
     toastr.options = {
@@ -113,7 +120,7 @@ $(window).resize(function () {
 function autoChangeMenu(leftAuto = false) {
     // 改变框架高度
     var mainContent = window.innerHeight - 143;
-    if (config.tag != true || config.isMobile == true) {
+    if (config.isMobile == true) {
         mainContent = mainContent + 40;
     }
     $(".J_mainContent").height(mainContent);
@@ -156,13 +163,6 @@ function autoChangeMenu(leftAuto = false) {
         // 底部显示
         $(".main-footer").removeClass('hidden');
     }
-
-    /*if (config.tag != true) {
-        // 隐藏tag
-        $(".content-tabs").addClass('hidden');
-        // 显示退出
-        $("#logout").removeClass('hidden');
-    }*/
 
     // 判断顶部菜单显示状态
     if (config.isMobile == false) {

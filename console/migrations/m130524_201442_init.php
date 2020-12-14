@@ -472,6 +472,7 @@ INSERT INTO `fb_store` VALUES ('2', '2', 'Funboot', 'Funpay', 'www.funpay.com', 
 
 INSERT INTO `fb_user` VALUES ('1', '1', '0', 'admin', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
 INSERT INTO `fb_user` VALUES ('2', '2', '0', 'funpay', '', '', '', '$2y$13\$L58QDefrbiUjyxVXy6P/r.Mz9eeTjJpQEnk/hEN3pqZZRDiw4q7LC', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1607395941', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1599808929', '1607395941', '1', '2');
+INSERT INTO `fb_user` VALUES ('3', '1', '0', 'test', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
 
 INSERT INTO `fb_base_message` VALUES ('7', '1', 'feedback', null, '0', '2', null, '7', '50', '1', '1', '1', '1', '1');
 
@@ -486,6 +487,7 @@ INSERT INTO `fb_base_department` VALUES ('3', '1', '1', '前端开发组', 'back
 
 INSERT INTO `fb_base_role` VALUES ('1', '1', 'superadmin', '0', 'Super Admin all permission, controller by programe', '', '60', '55', '1', '1599449404', '1603418473', '1', '1');
 INSERT INTO `fb_base_role` VALUES ('2', '1', 'admin管理员', '1', 'Normal admin', '', '60', '50', '1', '1599461439', '1603418493', '1', '1');
+INSERT INTO `fb_base_role` VALUES ('3', '1', 'admin体验角色', '0', 'for view', '', '60', '50', '1', '1599461439', '1603418493', '1', '1');
 INSERT INTO `fb_base_role` VALUES ('50', '1', 'store商家', '1', 'For Store Admin Login', '', '60', '50', '1', '1599710877', '1603418515', '1', '1');
 INSERT INTO `fb_base_role` VALUES ('100', '1', 'user前端用户', '1', 'Frontend User', '', '60', '50', '1', '1599737332', '1602327113', '1', '1');
 
@@ -595,6 +597,42 @@ INSERT INTO `fb_base_permission` VALUES ('6115', '1', '611', '导出', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('6116', '1', '611', '导入', 'backend', '', '/base/student/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 
 
+INSERT INTO `fb_base_role_permission` VALUES ('1', '1', '', '3', '5601', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('2', '1', '', '3', '560', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('3', '1', '', '3', '56', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('4', '1', '', '3', '5', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('5', '1', '', '3', '5611', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('6', '1', '', '3', '561', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('7', '1', '', '3', '5621', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('8', '1', '', '3', '562', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('9', '1', '', '3', '5631', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('10', '1', '', '3', '563', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('11', '1', '', '3', '5641', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('12', '1', '', '3', '564', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('13', '1', '', '3', '5651', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('14', '1', '', '3', '565', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('15', '1', '', '3', '5661', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('16', '1', '', '3', '566', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('17', '1', '', '3', '5671', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('18', '1', '', '3', '567', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('19', '1', '', '3', '5681', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('20', '1', '', '3', '568', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('21', '1', '', '3', '5691', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('22', '1', '', '3', '569', '1', '50', '1', '1607671710', '1607671710', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('23', '1', '', '3', '5811', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('24', '1', '', '3', '581', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('25', '1', '', '3', '58', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('26', '1', '', '3', '5831', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('27', '1', '', '3', '583', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('28', '1', '', '3', '6111', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('29', '1', '', '3', '611', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('30', '1', '', '3', '61', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('31', '1', '', '3', '6', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+
+INSERT INTO `fb_base_user_role` VALUES ('1', '2', '', '2', '50', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_user_role` VALUES ('2', '1', '', '3', '3', '1', '50', '1', '1', '1', '1', '1');
+
+
 INSERT INTO `fb_base_setting_type` VALUES ('10', '1', '0', 'backend', '网站设置', 'website', '', 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('30', '1', '0', 'backend', '联系方式', 'contact', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('45', '1', '0', 'backend', '邮件设置', 'mail', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
@@ -625,6 +663,7 @@ INSERT INTO `fb_base_setting_type` VALUES ('4509', '1', '45', 'backend', 'Smtp E
 
 INSERT INTO `fb_base_setting_type` VALUES ('9001', '1', '90', 'backend', '开发模式', 'system_develop_mode', '开发模式影响', 'radioList', '0:否,1:是', '0', '50', '1', '1600948511', '1600948511', '1', '1');
 
+INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/backup', '', '数据库备份，每天凌晨执行', '* 3 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
 
         ";
 

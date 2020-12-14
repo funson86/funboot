@@ -5,6 +5,7 @@ namespace frontend\modules\pay\controllers;
 use common\components\mailer\SmtpMailer;
 use common\helpers\CommonHelper;
 use common\helpers\IdHelper;
+use common\helpers\Url;
 use common\helpers\ValidHelper;
 use common\models\ModelSearch;
 use common\models\Store;
@@ -84,13 +85,13 @@ class DefaultController extends BaseController
         Yii::$app->urlManager->setBaseUrl("https://" . $store->host_name . '/backend');
         $urlParam = ['site/mail-audit', 'type' => 'payment', 'id' => $model->id, 'created_at' => $model->created_at, 'sn' => $model->sn];
         $buttons = [
-            'paid' => ['url' => Yii::$app->urlManager->createAbsoluteUrl(array_merge($urlParam, ['status' => Payment::STATUS_PAID])), 'label' => Yii::t('app', 'Paid'), 'color' => '#28a745'],
-            'paid_funpay' => ['url' => Yii::$app->urlManager->createAbsoluteUrl(array_merge($urlParam, ['status' => Payment::STATUS_PAID, 'type' => 'funpay'])), 'label' => Yii::t('app', 'Paid'), 'color' => '#91c444'],
-            'paid_funboot' => ['url' => Yii::$app->urlManager->createAbsoluteUrl(array_merge($urlParam, ['status' => Payment::STATUS_PAID, 'type' => 'funboot'])), 'label' => Yii::t('app', 'Paid'), 'color' => '#28a745'],
-            'paid_without_list' => ['url' => Yii::$app->urlManager->createAbsoluteUrl(array_merge($urlParam, ['status' => Payment::STATUS_PAID_WITHOUT_LIST])), 'label' => Yii::t('app', 'Paid Without List'), 'color' => '#91c444'],
-            'delete' => ['url' => Yii::$app->urlManager->createAbsoluteUrl(array_merge($urlParam, ['status' => Payment::STATUS_DELETED])), 'label' => Yii::t('app', 'Shipping'), 'color' => '#dc3545'],
-            'close' => ['url' => Yii::$app->urlManager->createAbsoluteUrl(array_merge($urlParam, ['store_status' => Store::STATUS_INACTIVE])), 'label' => Yii::t('app', 'Done'), 'color' => '#ffc107'],
-            'open' => ['url' => Yii::$app->urlManager->createAbsoluteUrl(array_merge($urlParam, ['store_status' => Store::STATUS_ACTIVE])), 'label' => Yii::t('app', 'Delivered'), 'color' => '#28a745'],
+            'paid' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID])), 'label' => Yii::t('app', 'Paid'), 'color' => '#28a745'],
+            'paid_funpay' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID, 'type' => 'funpay'])), 'label' => Yii::t('app', 'Paid'), 'color' => '#91c444'],
+            'paid_funboot' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID, 'type' => 'funboot'])), 'label' => Yii::t('app', 'Paid'), 'color' => '#28a745'],
+            'paid_without_list' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID_WITHOUT_LIST])), 'label' => Yii::t('app', 'Paid Without List'), 'color' => '#91c444'],
+            'delete' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_DELETED])), 'label' => Yii::t('app', 'Shipping'), 'color' => '#dc3545'],
+            'close' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['store_status' => Store::STATUS_INACTIVE])), 'label' => Yii::t('app', 'Done'), 'color' => '#ffc107'],
+            'open' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['store_status' => Store::STATUS_ACTIVE])), 'label' => Yii::t('app', 'Delivered'), 'color' => '#28a745'],
         ];
 
         $content = CommonHelper::render(Yii::getAlias('@common/mail/paymentNotification.php'), [
@@ -105,6 +106,8 @@ class DefaultController extends BaseController
         $to = Yii::$app->params['FunPay']['adminEmail'];
         $cc = [];
         ValidHelper::isEmail($model->email_exp) && array_push($cc, $model->email_exp);
+
+        Yii::$app->urlManager->setBaseUrl('');
 
         $mailer = new SmtpMailer();
         return $mailer->send($to, null, $subject, $content, $cc);

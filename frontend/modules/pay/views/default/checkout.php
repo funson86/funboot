@@ -15,18 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <style>
-    .timeout {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        background: rgba(255,255,255,.95);
-        color: #222;
-        line-height: 200px;
-        text-align: center;
-        z-index: 1;
-    }
 </style>
 
 <section class="content-header">
@@ -37,9 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card">
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
-                <div class="col-sm-12 text-center">
-                    <div class="timeout" style="display: block;">二维码已过期</div>
-                    <img src="/resources/pay/bank/<?= $model->bank_code ?>/<?= intval($model->money) ?>.jpg">
+                <div class="col-sm-12 text-center checkout">
+                    <img class="bank-code-img" src="/resources/pay/bank/wechat.png">
+                    <p class="payment-detail">扫一扫付款（元）</p>
+                    <p class="payment-money"><?= number_format($model->money, 2) ?></p>
+                    <div class="qrcode-box">
+                        <div class="timeout">二维码已过期</div>
+                        <img src="/resources/pay/bank/<?= $model->bank_code ?>/<?= intval($model->money) ?>.jpg">
+                    </div>
+
+
                 </div>
             </div>
             <div class="card-footer text-right">

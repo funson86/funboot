@@ -40,17 +40,6 @@ use Yii;
  */
 class StoreBase extends BaseModel
 {
-    const SUPPORT_SHIPMENT_DELIVERY = 1;
-    const SUPPORT_SHIPMENT_COLLECTION = 2;
-    const SUPPORT_SHIPMENT_BOTH = 3;
-
-    const SUPPORT_PAYMENT_CARD = 1;
-    const SUPPORT_PAYMENT_CASH = 2;
-    const SUPPORT_PAYMENT_BOTH = 3;
-
-    const PRINTER_TYPE_JIABO = 'Jiabo58';
-    const PRINTER_TYPE_FEIE = 'Feie58';
-
     const ROUTE_SITE = 'site';
     const ROUTE_MALL = 'mall';
     const ROUTE_CMS = 'cms';

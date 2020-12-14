@@ -14,9 +14,6 @@ $this->title = 'FunPay';
 
 $store = $this->context->store;
 
-$this->registerCssFile('/resources/pay/css/funpay.css', ['depends' => \frontend\assets\PayLandingAsset::className()]);
-$this->registerJsFile('/resources/pay/js/funpay.js', ['depends' => \frontend\assets\PayLandingAsset::className()]);
-
 ?>
 
 <style>

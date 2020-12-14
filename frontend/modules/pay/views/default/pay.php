@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php $form = ActiveForm::begin([
     'fieldConfig' => [
-        'template' => "<div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
+        'template' => "<div class='col-sm-2 pay-label text-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
         'options' => ['class' => 'form-group row'],
     ],
 ]); ?>
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
         &nbsp;&nbsp;
     </section>
     <div class="row">
-        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+        <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
             <div class="card">
                 <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
                 <div class="card-body">
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer text-right">
                     <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary ']) ?>
                 </div>
             </div>
@@ -83,12 +83,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <script>
     function changeType(v) {
         $('#payment-bank_code').val(v)
+        $('.pay-item').removeClass('active')
+        $('#' + v).addClass('active')
     }
 </script>
 <?php ActiveForm::end(); ?>
 
 <?php
 $js = <<<JS
+if (document.body.clientWidth < 992) {
+    $('.pay-label').removeClass('text-right');
+}
+
 $('.field-payment-money').hide();
 $('#payment-money').val(parseFloat($('#payment-kind').val()));
 
