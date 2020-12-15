@@ -26,8 +26,9 @@ class UserController extends BaseController
     public $modelClass = User::class;
 
     /**
-     * @var string[]
-     */
+      * 模糊查询字段
+      * @var string[]
+      */
     public $likeAttributes = ['username', 'email', 'description'];
 
     /**
@@ -38,7 +39,7 @@ class UserController extends BaseController
     protected $editAjaxFields = ['name', 'sort', 'remark'];
 
     /**
-     * 可编辑字段
+     * 导入导出字段
      *
      * @var int
      */
@@ -50,37 +51,6 @@ class UserController extends BaseController
         'consume_amount' => 'text',
         'created_at' => 'date',
     ];
-
-    /**
-    * 列表页
-    *
-    * @return string
-    * @throws \yii\web\NotFoundHttpException
-    */
-    /*public function actionIndex()
-    {
-        $searchModel = new ModelSearch([
-            'model' => $this->modelClass,
-            'scenario' => 'default',
-            'likeAttributes' => $this->likeAttributes,
-            'defaultOrder' => [
-                'id' => SORT_DESC
-            ],
-            'pageSize' => Yii::$app->request->get('page_size', $this->pageSize),
-        ]);
-
-        // 管理员级别才能查看所有权限
-        $params = Yii::$app->request->queryParams;
-        if (!$this->isAdmin()) {
-            $params['ModelSearch']['store_id'] = $this->getStoreId();
-        }
-        $dataProvider = $searchModel->search($params);
-
-        return $this->render($this->action->id, [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-        ]);
-    }*/
 
     /**
      * ajax编辑/创建

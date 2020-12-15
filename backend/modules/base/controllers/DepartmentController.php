@@ -24,6 +24,7 @@ class DepartmentController extends BaseController
     public $modelClass = Department::class;
 
     /**
+      * 模糊查询字段
       * @var string[]
       */
     public $likeAttributes = ['name'];
@@ -36,7 +37,7 @@ class DepartmentController extends BaseController
     protected $editAjaxFields = ['name', 'sort'];
 
     /**
-     * 可编辑字段
+     * 导入导出字段
      *
      * @var int
      */

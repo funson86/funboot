@@ -22,6 +22,7 @@ class MessageController extends BaseController
 {
 
     /**
+      * 模糊查询字段
       * @var string[]
       */
     public $likeAttributes = ['name'];

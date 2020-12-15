@@ -45,7 +45,7 @@ class BaseController extends \common\components\controller\BaseController
     protected $editAjaxFields = ['name', 'sort'];
 
     /**
-     * 可编辑字段
+     * 导入导出字段
      *
      * @var int
      */

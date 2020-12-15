@@ -27,9 +27,3 @@ Funboot开发文档
 ```
 * * * * *  . /etc/profile; /usr/bin/php /www/funboot/yii schedule/run --scheduleFile=/www/funboot/console/runtime/schedule/schedule.php  1>> /dev/null 2>&1
 ```
-
-composer config -g repo.packagist composer https://packagist.phpcomposer.com
-
-useradd funson
-passwd 123456
-su funson

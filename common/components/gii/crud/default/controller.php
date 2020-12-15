@@ -44,6 +44,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     public $modelClass = <?= $modelClass ?>::class;
 
     /**
+      * 模糊查询字段
       * @var string[]
       */
     public $likeAttributes = ['name'];
@@ -56,7 +57,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
    protected $editAjaxFields = ['name', 'sort'];
 
    /**
-    * 可编辑字段
+    * 导入导出字段
     *
     * @var int
     */

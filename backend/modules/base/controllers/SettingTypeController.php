@@ -23,6 +23,7 @@ class SettingTypeController extends BaseController
     public $modelClass = SettingType::class;
 
     /**
+      * 模糊查询字段
       * @var string[]
       */
     public $likeAttributes = ['name'];
@@ -35,7 +36,7 @@ class SettingTypeController extends BaseController
     protected $editAjaxFields = ['name', 'sort'];
 
     /**
-     * 可编辑字段
+     * 导入导出字段
      *
      * @var int
      */

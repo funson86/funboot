@@ -25,6 +25,7 @@ class SettingController extends BaseController
     public $modelClass = Setting::class;
 
     /**
+      * 模糊查询字段
       * @var string[]
       */
     public $likeAttributes = ['name'];
@@ -37,7 +38,7 @@ class SettingController extends BaseController
     protected $editAjaxFields = ['name', 'sort'];
 
     /**
-     * 可编辑字段
+     * 导入导出字段
      *
      * @var int
      */
@@ -46,37 +47,6 @@ class SettingController extends BaseController
         'name' => 'text',
         'type' => 'select',
     ];
-
-    /**
-      * 列表页
-      *
-      * @return string
-      * @throws \yii\web\NotFoundHttpException
-      */
-    /*public function actionIndex()
-    {
-        $searchModel = new ModelSearch([
-            'model' => $this->modelClass,
-            'scenario' => 'default',
-            'likeAttributes' => $this->likeAttributes,
-            'defaultOrder' => [
-                'id' => SORT_DESC
-            ],
-            'pageSize' => Yii::$app->request->get('page_size', $this->pageSize),
-        ]);
-
-        // 管理员级别才能查看所有数据，其他只能查看本store数据
-        $params = Yii::$app->request->queryParams;
-        if (!$this->isAdmin()) {
-            $params['ModelSearch']['store_id'] = $this->getStoreId();
-        }
-        $dataProvider = $searchModel->search($params);
-
-        return $this->render($this->action->id, [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-        ]);
-    }*/
 
     /**
       * ajax编辑/创建
