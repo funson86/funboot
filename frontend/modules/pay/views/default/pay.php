@@ -9,9 +9,7 @@ use common\models\pay\Payment as ActiveModel;
 /* @var $model common\models\pay\Payment */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = ($model->id ? Yii::t('app', 'Edit') : Yii::t('app', 'Create')) . Yii::t('app', 'Address');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Addresses'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', '确认订单');
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -40,6 +38,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
                 <div class="card-body">
                     <div class="col-sm-12">
+                        <div class="order-info text-center">
+                            <h1>订单提交成功，请填写捐赠信息</h1>
+                            <p class="order-detail">为减轻后台压力，忘记支付的小同学将在次日9点统一收到支付结果邮件通知</p>
+                            <p class="order-detail"></p>
+                        </div>
+
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'kind')->dropDownList(ActiveModel::getKindLabels()) ?>
                         <?= $form->field($model, 'money')->textInput(['maxlength' => true]) ?>
@@ -74,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary ']) ?>
+                    <?= Html::submitButton(Yii::t('app', '立即支付'), ['class' => 'btn btn-primary ']) ?>
                 </div>
             </div>
         </div>

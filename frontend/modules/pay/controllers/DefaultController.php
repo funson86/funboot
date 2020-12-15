@@ -83,15 +83,15 @@ class DefaultController extends BaseController
     {
         $store = $this->store;
         Yii::$app->urlManager->setBaseUrl("https://" . $store->host_name . '/backend');
-        $urlParam = ['site/mail-audit', 'type' => 'payment', 'id' => $model->id, 'created_at' => $model->created_at, 'sn' => $model->sn];
+        $urlParam = ['/site/mail-audit', 'type' => 'payment', 'id' => $model->id, 'created_at' => $model->created_at, 'sn' => $model->sn];
         $buttons = [
-            'paid' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID])), 'label' => Yii::t('app', 'Paid'), 'color' => '#28a745'],
-            'paid_funpay' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID, 'type' => 'funpay'])), 'label' => Yii::t('app', 'Paid'), 'color' => '#91c444'],
-            'paid_funboot' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID, 'type' => 'funboot'])), 'label' => Yii::t('app', 'Paid'), 'color' => '#28a745'],
-            'paid_without_list' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID_WITHOUT_LIST])), 'label' => Yii::t('app', 'Paid Without List'), 'color' => '#91c444'],
-            'delete' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_DELETED])), 'label' => Yii::t('app', 'Shipping'), 'color' => '#dc3545'],
-            'close' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['store_status' => Store::STATUS_INACTIVE])), 'label' => Yii::t('app', 'Done'), 'color' => '#ffc107'],
-            'open' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['store_status' => Store::STATUS_ACTIVE])), 'label' => Yii::t('app', 'Delivered'), 'color' => '#28a745'],
+            'paid' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID])), 'label' => Yii::t('app', '支付成功并加入名单'), 'color' => '#28a745'],
+            'paid_funpay' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID, 'type' => 'funpay'])), 'label' => Yii::t('app', '支付成功并发送FunPay'), 'color' => '#91c444'],
+            'paid_funboot' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID, 'type' => 'funboot'])), 'label' => Yii::t('app', '支付成功并发送Funboot'), 'color' => '#17a2b8'],
+            'paid_without_list' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID_WITHOUT_LIST])), 'label' => Yii::t('app', '支付成功不加入名单'), 'color' => '#007bff'],
+            'delete' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_DELETED])), 'label' => Yii::t('app', '删除订单'), 'color' => '#dc3545'],
+            'close' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['store_status' => Store::STATUS_INACTIVE])), 'label' => Yii::t('app', '网站关闭'), 'color' => '#fd7e14'],
+            'open' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['store_status' => Store::STATUS_ACTIVE])), 'label' => Yii::t('app', '网站开启'), 'color' => '#28a745'],
         ];
 
         $content = CommonHelper::render(Yii::getAlias('@common/mail/paymentNotification.php'), [
@@ -131,6 +131,24 @@ class DefaultController extends BaseController
         return $this->render($this->action->id, [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionQuery()
+    {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->error(404);
+        }
+        $model = Payment::findOne($id);
+        if (!$model) {
+            return $this->error(400);
+        }
+
+        return $this->success($model);
     }
 
     /**

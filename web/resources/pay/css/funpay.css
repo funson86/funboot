@@ -625,6 +625,10 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
   border-style: none;  box-shadow: 0 10px 20px rgba(0,0,0,.19),0 6px 6px rgba(0,0,0,.23)!important;
 }
 
+.order-info p {
+  font-size: 0.9em;
+}
+
 .pay-label .control-label{
   font-weight: 300 !important;
   font-size: 0.9em;
@@ -689,6 +693,10 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
   height: 40px;
 }
 
+.checkout p {
+  font-size: 0.9em;
+}
+
 .checkout p.payment-detail {
   font-size: 0.8em;
 }
@@ -696,6 +704,10 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 .checkout p.payment-money {
   font-size: 1.8em;
   color: #D44d44;
+}
+
+.checkout #explain {
+  height: 65px;
 }
 
 .qrcode-box {

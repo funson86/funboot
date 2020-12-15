@@ -57,7 +57,7 @@ return [
         'rootPath' => '@attachment',
         // 图片
         'image' => [
-            'httpPrefix' => 'http://www.funframe.com/attachment/', // http前缀
+            'httpPrefix' => 'http://www.funboot.com/attachment/', // http前缀
             'originalName' => false, // 是否保留原名
             'fullPath' => true, // 是否开启返回完整的文件路径
             'takeOverUrl' => '', // 配置后，接管所有的上传地址
@@ -83,7 +83,7 @@ return [
         ],
         // 文件
         'file' => [
-            'httpPrefix' => 'http://www.funframe.com/attachment/', // http前缀
+            'httpPrefix' => 'http://www.funboot.com/attachment/', // http前缀
             'originalName' => true, // 是否保留原名
             'fullPath' => true, // 是否开启返回完整的文件路径
             'takeOverUrl' => '', // 配置后，接管所有的上传地址
@@ -103,7 +103,7 @@ return [
         ],
         // 视频
         'video' => [
-            'httpPrefix' => 'http://www.funframe.com/attachment/', // http前缀
+            'httpPrefix' => 'http://www.funboot.com/attachment/', // http前缀
             'originalName' => true, // 是否保留原名
             'fullPath' => true, // 是否开启返回完整的文件路径
             'takeOverUrl' => '', // 配置后，接管所有的上传地址
@@ -118,7 +118,7 @@ return [
         ],
         // 语音
         'voice' => [
-            'httpPrefix' => 'http://www.funframe.com/attachment/', // http前缀
+            'httpPrefix' => 'http://www.funboot.com/attachment/', // http前缀
             'originalName' => true, // 是否保留原名
             'fullPath' => true, // 是否开启返回完整的文件路径
             'takeOverUrl' => '', // 配置后，接管所有的上传地址
