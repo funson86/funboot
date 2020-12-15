@@ -4,6 +4,7 @@ use common\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\pay\Payment as ActiveModel;
+use common\helpers\CommonHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\pay\Payment */
@@ -26,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
                 <div class="col-sm-12 text-center checkout">
-                    <img class="bank-code-img" src="/resources/pay/bank/wechat.png">
+                    <img class="bank-code-img" src="/resources/pay/bank/<?= $model->bank_code ?>.png">
                     <p class="payment-detail">扫一扫付款（元）</p>
                     <p class="payment-money"><?= number_format($model->money, 2) ?></p>
                     <div class="qrcode-box">
@@ -34,18 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         <img src="/resources/pay/bank/<?= $model->bank_code ?>/<?= intval($model->money) ?>.jpg">
                     </div>
 
-                    <p id="qrmobile" style="margin: 10px;text-align: center;">
-                        <span>请长按二维码保存图片至手机后，打开微信使用“扫一扫”，点击右上角“相册”选择刚保存的二维码进行支付</span>
-                    </p>
-                    <p id="qrscan" style="margin: 10px;text-align: center;">
-                        <span>请长按二维码选择“识别图中二维码”进行支付</span>
-                    </p>
-                    <img alt="扫一扫标识" class="explain" id="explain" src="/resources/pay/bank/wechat/wechat-explain.png">
+                    <?= $explain ?>
+
                     <div class="count" id="time-box"></div>
                 </div>
             </div>
             <div class="card-footer text-right">
-                <span>￥<?= $model->money ?></span> <?= Html::submitButton(Yii::t('app', '等待支付...'), ['id' => 'confirm', 'class' => 'btn btn-success', 'disabled' => 'disabled']) ?>
+                <span id="checkoutMoney">￥<?= $model->money ?></span> <?= Html::submitButton(Yii::t('app', '等待支付...'), ['id' => 'confirm', 'class' => 'btn btn-success', 'disabled' => 'disabled']) ?>
             </div>
         </div>
     </div>
@@ -123,7 +119,7 @@ function showMsg(m) {
 }
 
 $(document).ready(function () {
-    $("#remarkModal").modal('show');
+    //$("#remarkModal").modal('show');
     getPaymentQuery();
     countTime();
 });

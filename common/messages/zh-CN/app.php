@@ -314,6 +314,7 @@ return [
 
 
     'Payment' => '支付',
+    'Payments' => '支付',
 
 
     'Shipment' => '配送',

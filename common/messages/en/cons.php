@@ -130,6 +130,7 @@ return [
 
     'STATUS_PAID' => 'Paid',
     'STATUS_UNPAID' => 'Unpaid',
+    'STATUS_PAID_WITHOUT_LIST' => 'Paid Without List',
 
 
 

@@ -98,9 +98,9 @@ $this->title = strlen($store->settings['website_seo_title']) > 5 ? $store->setti
 
     <footer class="main-footer">
         <!-- To the right -->
-        <div class="float-right d-none d-sm-inline">
+        <!--div class="float-right d-none d-sm-inline">
             FunPay
-        </div>
+        </div-->
         <!-- Default to the left -->
         <strong>Copyright &copy; <?= date('Y') ?> <a href="https://funpay.mayicun.com">FunPay</a>.</strong> All rights reserved.
     </footer>

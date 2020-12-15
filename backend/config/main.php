@@ -15,6 +15,9 @@ return [
         'base' => [
             'class' => 'backend\modules\base\Module',
         ],
+        'pay' => [
+            'class' => 'backend\modules\pay\Module',
+        ],
         'cms' => [
             'class' => 'backend\modules\cms\Module',
         ],

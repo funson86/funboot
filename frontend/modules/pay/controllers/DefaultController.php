@@ -128,9 +128,33 @@ class DefaultController extends BaseController
             return $this->goBack();
         }
 
+        $explain = '';
+        if ($model->bank_code == 'wechat') {
+            if (CommonHelper::isWeixin()) {
+                $explain = $this->explain('请长按二维码选择“识别图中二维码”进行支付');
+            } elseif (CommonHelper::isMobile()) {
+                $explain = $this->explain('请长按二维码保存图片至手机后，打开微信使用“扫一扫”，点击右上角“相册”选择刚保存的二维码进行支付');
+            } else {
+                $explain = '<img alt="扫一扫标识" class="explain" id="explain" src="/resources/pay/bank/wechat/wechat-explain.png">';
+            }
+        } elseif ($model->bank_code == 'alipay') {
+            $explain = '<a class="download-alipay" href="https://mobile.alipay.com/index.htm" target="_blank">首次使用请下载手机支付宝</a>';
+        }
+
+
         return $this->render($this->action->id, [
             'model' => $model,
+            'explain' => $explain,
         ]);
+    }
+
+    protected function explain($text, $html = false)
+    {
+        if (!$html) {
+            return '<p class="explain">' . $text . '</p>';
+        }
+
+        return $text;
     }
 
     /**

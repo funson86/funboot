@@ -21,6 +21,6 @@ class PayAsset extends AssetBundle
 
     public $depends = [
         'common\widgets\adminlte\AdminltePayAsset',
-        'common\widgets\funboot\assets\AppAsset',
+        //'common\widgets\funboot\assets\AppAsset',
     ];
 }

@@ -129,8 +129,9 @@ return [
     'TYPE_NEW' => '新品',
     'TYPE_PROMOTION' => '促销',
 
-    'STATUS_PAID' => '支付成功',
-    'STATUS_UNPAID' => '尚未支付',
+    'STATUS_PAID' => '成功',
+    'STATUS_UNPAID' => '待支付',
+    'STATUS_PAID_WITHOUT_LIST' => '成功并不加入捐赠名单',
 
 
 ];

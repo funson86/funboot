@@ -38,6 +38,29 @@ CREATE TABLE `fb_pay_payment` (
   CONSTRAINT `pay_payment_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='支付';
 
+INSERT INTO `fb_base_permission` VALUES ('55', '1', '5', 'Funpay', 'backend', '', '', 'fas fa-dollar-sign', '', '2', '0', '1', '50', '1', '1599358163', '1599358163', '1', '1');
+
+INSERT INTO `fb_base_permission` VALUES ('551', '1', '55', '支付管理', 'backend', '', '/pay/payment/index', 'fas fa-money-check-alt', '', '3', '0', '1', '50', '1', '1', '1602322615', '1', '1');
+
+INSERT INTO `fb_base_permission` VALUES ('5511', '1', '551', '查看', 'backend', '', '/pay/payment/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5512', '1', '551', '编辑', 'backend', '', '/pay/payment/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5513', '1', '551', '删除', 'backend', '', '/pay/payment/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5514', '1', '551', '启禁', 'backend', '', '/pay/payment/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5515', '1', '551', '导出', 'backend', '', '/pay/payment/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5516', '1', '551', '导入', 'backend', '', '/pay/payment/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+
+INSERT INTO `fb_base_role_permission` VALUES ('1020', '1', '', '50', '5', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('1021', '1', '', '50', '55', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('1022', '1', '', '50', '551', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('1023', '1', '', '50', '5511', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('1024', '1', '', '50', '5512', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('1025', '1', '', '50', '5513', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('1026', '1', '', '50', '5514', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('1027', '1', '', '50', '5515', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('1028', '1', '', '50', '5516', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+
+
+
         ";
 
         $this->execute($sql);
