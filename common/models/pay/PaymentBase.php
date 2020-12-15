@@ -34,6 +34,7 @@ class PaymentBase extends BaseModel
     {
         return [
             [['id'], 'safe'],
+            [['email'], 'required'],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
             ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
         ];
