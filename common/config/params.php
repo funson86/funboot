@@ -133,7 +133,7 @@ return [
         ],
     ],
 
-    'FunPay' => [
+    'funPay' => [
         'adminEmail' => '3375074@qq.com',
     ],
 

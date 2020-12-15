@@ -103,7 +103,7 @@ class DefaultController extends BaseController
 
         $subject = 'New payment ' . $model->money . ' from ' . $model->name . ' (' . $model->email . ')  by ' . $model->bank_code;
 
-        $to = Yii::$app->params['FunPay']['adminEmail'];
+        $to = Yii::$app->params['funPay']['adminEmail'];
         $cc = [];
         ValidHelper::isEmail($model->email_exp) && array_push($cc, $model->email_exp);
 
