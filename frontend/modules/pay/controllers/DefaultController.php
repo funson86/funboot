@@ -49,6 +49,7 @@ class DefaultController extends BaseController
     public function actionPay()
     {
         $model = new Payment();
+        $model->id = IdHelper::snowFlakeId();
         $model->store_id = $this->getStoreId();
         $store = Store::findOne($this->getStoreId());
 
@@ -62,6 +63,7 @@ class DefaultController extends BaseController
                 if ($model->load(Yii::$app->request->post())) {
                     $model->sn = substr(IdHelper::snowFlakeId(), -4);
                     $model->money /= 100;
+                    $model->status = Payment::STATUS_UNPAID;
 
                     if ($model->save()) {
 
