@@ -5,7 +5,7 @@ $store = $this->context->store ?? \common\models\Store::findOne(Yii::$app->param
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= $store->settings['website_name'] ?: $store->name ?></title>
+    <title><?= $store->settings['website_name'] ?? $store->name ?></title>
     <style>
         .main {
             margin-top: 40px;
