@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?></h2>
                 <div class="card-tools">
                     <?= Html::createModal() ?>
+                    <?= Html::buttonModal(['config'], Yii::t('app', 'Refresh Config File'), ['class' => 'btn btn-sm btn-warning'], false) ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
                 </div>

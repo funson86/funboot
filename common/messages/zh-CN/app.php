@@ -99,6 +99,7 @@ return [
     'Logs' => '日志',
     'Schedule' => '定时任务',
     'Schedules' => '定时任务',
+    'Refresh Config File' => '更新配置文件',
 
     'Attachment' => '文件管理',
     'Attachments' => '文件管理',

@@ -147,6 +147,20 @@ class StoreController extends BaseController
     }
 
     /**
+     * 重新生成配置文件
+     *
+     * @return mixed
+     */
+    public function actionConfig()
+    {
+        if ($this->generateHostFile()) {
+            return $this->redirectSuccess(Yii::$app->request->referrer);
+        }
+
+        return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Operate Successfully'));
+    }
+
+    /**
      * 设置默认数据
      *
      * @param $model
@@ -166,6 +180,9 @@ class StoreController extends BaseController
         }
         $str .= "];\n";
 
-        file_put_contents(Yii::getAlias('@frontend/runtime/host.php'), $str);
+        if (!file_put_contents(Yii::getAlias('@frontend/runtime/host.php'), $str)) {
+            Yii::$app->logSystem->db('Write host file failed: ' .Yii::getAlias('@frontend/runtime/host.php') . ' ' . $str);
+            return false;
+        }
     }
 }

@@ -96,12 +96,13 @@ class ScheduleController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionRefresh($id)
+    public function actionConfig()
     {
         if ($this->writeSchedule()) {
-            return $this->redirectSuccess(Yii::$app->request->referrer, '刷新执行文件成功');
+            return $this->redirectSuccess(Yii::$app->request->referrer);
         }
-        return $this->redirectError(Yii::$app->request->referrer, '刷新失败，请查看后台数据库日志');
+
+        return $this->redirectError(Yii::$app->request->referrer);
     }
 
     /**
