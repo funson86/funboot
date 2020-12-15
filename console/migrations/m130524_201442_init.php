@@ -629,6 +629,39 @@ INSERT INTO `fb_base_role_permission` VALUES ('29', '1', '', '3', '611', '1', '5
 INSERT INTO `fb_base_role_permission` VALUES ('30', '1', '', '3', '61', '1', '50', '1', '1607671711', '1607671711', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('31', '1', '', '3', '6', '1', '50', '1', '1607671711', '1607671711', '1', '1');
 
+INSERT INTO `fb_base_role_permission` VALUES ('129', '1', '', '50', '6', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('130', '1', '', '50', '61', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('131', '1', '', '50', '560', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('132', '1', '', '50', '56', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('133', '1', '', '50', '562', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('134', '1', '', '50', '567', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('135', '1', '', '50', '611', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('136', '1', '', '50', '5601', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('137', '1', '', '50', '5602', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('138', '1', '', '50', '5603', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('139', '1', '', '50', '5604', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('140', '1', '', '50', '5605', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('141', '1', '', '50', '5606', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('142', '1', '', '50', '5621', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('143', '1', '', '50', '5622', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('144', '1', '', '50', '5623', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('145', '1', '', '50', '5624', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('146', '1', '', '50', '5625', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('147', '1', '', '50', '5626', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('148', '1', '', '50', '5671', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('149', '1', '', '50', '5672', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('150', '1', '', '50', '5673', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('151', '1', '', '50', '5674', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('152', '1', '', '50', '5675', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('153', '1', '', '50', '5676', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('154', '1', '', '50', '6111', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('155', '1', '', '50', '6112', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('156', '1', '', '50', '6113', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('157', '1', '', '50', '6114', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('158', '1', '', '50', '6115', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('159', '1', '', '50', '6116', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+
+
 INSERT INTO `fb_base_user_role` VALUES ('1', '2', '', '2', '50', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_user_role` VALUES ('2', '1', '', '3', '3', '1', '50', '1', '1', '1', '1', '1');
 
