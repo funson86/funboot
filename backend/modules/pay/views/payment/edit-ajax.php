@@ -26,7 +26,6 @@ $form = ActiveForm::begin([
     </div>
     <div class="modal-body">
         <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'store_id')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'bank_code')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'money')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
