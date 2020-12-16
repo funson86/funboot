@@ -8,6 +8,10 @@ body {
   font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';
 }
 
+.content-row {
+  margin: auto 0;
+}
+
 a {
   color: #007bff;
   transition: all .35s;
@@ -842,6 +846,7 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 
 .checkout p {
   font-size: 0.9em;
+  margin: 10px;
 }
 
 .checkout p.payment-detail {

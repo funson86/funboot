@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <section class="content-header">
     &nbsp;
 </section>
-<div class="row">
+<div class="row content-row">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
         <div class="card">
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <p class="payment-money"><?= number_format($model->money, 2) ?></p>
                     <div class="qrcode-box">
                         <div class="timeout" style="display: none">二维码已过期</div>
-                        <img src="/resources/pay/bank/<?= $model->bank_code ?>/<?= intval($model->money) ?>.jpg">
+                        <img src="/resources/pay/bank/<?= $model->bank_code ?>/<?= intval($model->money) ?>.png">
                     </div>
 
                     <?= $explain ?>
