@@ -69,13 +69,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-3 hidden-sm hidden-xs pl-3" id="settingDesc">
         <div class="card">
             <div class="card-body">
-                <h5>说明：</h5>
-                <p>单击标题名称获取配置代码</p>
+                <h5 class="text-red"><?= Yii::t('app', 'Click Save button below after modification') ?></h5>
+                <h5><?= Yii::t('app', 'Description') ?></h5>
+                <p><?= Yii::t('app', 'Click label to get setting code') ?></p>
                 <div class="hr-line-dashed"></div>
                 <h5 class="tag-title"></h5>
                 <?= Html::input('text', 'settingCode', '', ['class' => 'form-control', 'id' => 'settingCode', 'readonly' => 'readonly']); ?>
                 <div class="hr-line-dashed"></div>
-                <div class="clearfix">当前显示 ： <span id="settingName">无</span></div>
+                <div class="clearfix"><?= Yii::t('app', 'Code') ?>:  <span id="settingName">-</span></div>
             </div>
         </div>
     </div>

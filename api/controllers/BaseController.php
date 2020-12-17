@@ -12,7 +12,6 @@ use yii\helpers\Json;
  */
 class BaseController extends \common\components\controller\BaseController
 {
-
     protected function error($code = 500, $msg = null, $data = [])
     {
         return Yii::$app->responseSystem->success($code = -1, $msg = null, $extra = []);

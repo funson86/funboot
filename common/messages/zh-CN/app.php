@@ -73,6 +73,8 @@ return [
     'System' => '系统',
     'Settings' => '设置',
     'Setting' => '设置',
+    'Click Save button below after modification' => '修改后请点击下方的保存按钮',
+    'Click label to get setting code' => '单击标题名称获取配置代码',
     'Operation' => '运营',
     'Cms Catalog' => 'CMS分类',
     'Cms Show' => 'CMS列表页',

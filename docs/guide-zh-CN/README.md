@@ -3,27 +3,43 @@ Funboot开发文档
 
 文档
 
-安装指南
-------------
+### 安装指南
 
-* [系统环境](env.md)
-* [系统安装](installation.md)
-* [线上发布](publish.md)
+* [系统环境](start-env.md)
+* [系统安装](start-installation.md)
+* [伪静态](start-rewrite.md)
+* [线上发布](start-publish.md)
 
 
-系统开发
-------------
+### 系统开发
 
-* [Gii](gii.md)
-* [RBAC权限控制](rbac.md)
+* [目录结构](dev-structure.md)
+* [Funboot系统组件](dev-component.md)：
+* [BaseController](dev-controller.md)：内置store，解决原gii大量生成相同代码问题
+* [RBAC权限控制](dev-rbac.md)：每个用户对应一个角色，不同角色包含不同权限
+* [Funboot日志](dev-log.md)：后台直接查看指定日志
+* [Gii & BaseModel & XxxBase](dev-gii.md)：解决新加字段再次Gii生成代码覆盖model中的代码问题，同时解决注释生成标签且兼容多语言
+* [常用前端代码](dev-html.md)
+* [验收测试](dev-test.md)：解决系统代码变更无需一个个检查
+* [定时任务](dev-schedule.md)
 
+### API接口
+
+* [api接口规划](api.md)
+* [Swagger接口文档](api-swagger.md)
+
+### 子系统
+
+* [FunPay个人收款系统](https://github.com/funson86/funpay) 演示地址：[https://funpay.mayicun.com/](https://funpay.mayicun.com/)
+* [FunCms建站系统](https://github.com/funson86/funcms) 演示地址：[https://funcms.mayicun.com/](https://funcms.mayicun.com/)  [网站模板](https://github.com/funson86/funcms)
 
 附录
 ------------
 
-* [编程规范](code.md)
+* [i18n多语言](dev-i18n.md)：解决前端/后端/api不同地方重复翻译问题
+* [安全](appendix-security.md)
+* [PHP编程规范](appendix-code-style.md)
+* [代码质量提升](appendix-quality.md)
+* [高并发](appendix-high.md)
+* [Phpstorm插件推荐](appendix-phpstorm.md)
 
-
-```
-* * * * *  . /etc/profile; /usr/bin/php /www/funboot/yii schedule/run --scheduleFile=/www/funboot/console/runtime/schedule/schedule.php  1>> /dev/null 2>&1
-```

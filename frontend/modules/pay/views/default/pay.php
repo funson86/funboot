@@ -39,7 +39,7 @@ $this->title = Yii::t('app', '确认订单');
                 <div class="card-body">
                     <div class="col-sm-12">
                         <div class="order-info text-center">
-                            <h1>订单提交成功，请填写捐赠信息</h1>
+                            <h2>订单提交成功，请填写捐赠信息</h2>
                             <p class="order-detail">为减轻后台压力，忘记支付的小同学将在次日9点统一收到支付结果邮件通知</p>
                             <p class="order-detail"></p>
                         </div>

@@ -2,7 +2,6 @@
 namespace api\controllers;
 
 use Yii;
-use api\components\Controller;
 use yii\base\Response;
 use yii\filters\AccessControl;
 use yii\filters\Cors;
@@ -11,7 +10,7 @@ use yii\web\NotFoundHttpException;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     public function behaviors()
     {
@@ -26,7 +25,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return 'funboot';
+        return $this->success('funboot');
     }
 
     /**
@@ -38,8 +37,7 @@ class SiteController extends Controller
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        return $this->success(null, ['token' => 'abc']);
-        return '{"result":"8c008f1599944d6f9537805ed303447b","code":200,"success":true,"message":"登录成功","timestamp":1596788169944}';
+        return $this->success(['token' => 'abc']);
     }
 
     /**
