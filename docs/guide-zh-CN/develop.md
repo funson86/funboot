@@ -22,13 +22,13 @@ Funboot框架可以在定义数据表之后，通过[Funboot的Gii](gii.md)生�
 - id统一使用int(11)，也便于添加删除外键，关联其他表的外键id一般使用 表_id方式，如关联user表，则命名为user_id，批量替换时候也可以根据 _id` 批量替换类型。
 - 如果项目分布式，可以使用雪花算法，修改数据表id为varchar(255) NOT NULL，修改model文件和BaseController中的findModel中new之后添加字符串$model->id;
 - 框架默认的使用如下表结构，建议在此表结构上添加自定义的字段、索引和外键。推荐开发阶段和测试环境添加外键，线上环境去掉外键。
-- 数据表增加COMMENT描述，使用[Funboot的Gii](gii.md)会在ModelBase中会生成带英文版，在Model生成数据表中文注释的，如果需要英文版，则去掉Model中的attributeLabels()方法
+- 数据表增加COMMENT描述，使用[Funboot的Gii](gii.md)会在Model文件中生成中英双语标签，无需编写众多的i18n翻译文件。
 
 ```sql
 DROP TABLE IF EXISTS `fb_template`;
 CREATE TABLE `fb_template` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_id` int(11) NOT NULL DEFAULT '1' COMMENT '商家',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) NOT NULL COMMENT '名称',
   `type` int(11) NOT NULL DEFAULT 1 COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT 50 COMMENT '排序',
@@ -37,11 +37,12 @@ CREATE TABLE `fb_template` (
   `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
   `created_by` int(11) NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `school_student_fk2` (`store_id`),
+  CONSTRAINT `pay_payment_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '模板';
 ```
 
-- 模板表中字段请尽量保留，暂时用不上的，随着系统功能叠加某天会用上时就无需修改数据表。
 
 
 ### Model

@@ -39,7 +39,29 @@ return [
             'errorAction' => 'site/error',
         ],
         'request' => [
-
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
+        'response' => [
+            'class' => 'yii\web\Response',
+            'formatters' => [
+                \yii\web\Response::FORMAT_JSON => [
+                    'class' => 'api\components\response\JsonResponseFormatterSystem',
+                    'prettyPrint' => YII_DEBUG, // use "pretty" output in debug mode
+                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+                ],
+            ],
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                if ($response->statusCode != 200) {
+                    $response->data = [
+                        'success' => $response->isSuccessful,
+                        'data' => $response->data,
+                    ];
+                    $response->statusCode = 200;
+                }
+            },
         ],
         'responseSystem' => [
             'class' => 'api\components\response\ResponseSystem',
@@ -49,14 +71,12 @@ return [
             'showScriptName' => false,
             //'enableStrictParsing' => true,
             'rules' => [
-                'set-store' => 'api/set-store',
-                'products' => 'api/products',
-                'get-store' => 'api/get-store',
-                '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
-                '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+//                '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
+//                '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>'=>'<modules>/<controller>/<action>',
-                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+//                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],

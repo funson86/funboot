@@ -12,6 +12,12 @@ use yii\web\Response;
  */
 class ResultHelper
 {
+    public static function getMsg($code)
+    {
+        $errorCode = Yii::$app->params['errorCode'];
+        return isset($errorCode[$code]) ? Yii::t('app', $errorCode[$code]) : '';
+    }
+
     /**
      * response with error code which defined in /common/config/params.php
      *
@@ -26,8 +32,7 @@ class ResultHelper
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         if (!$msg) {
-            $errorCode = Yii::$app->params['errorCode'];
-            $msg = isset($errorCode[$code]) ? Yii::t('app', $errorCode[$code]) : '';
+            $msg = self::getMsg($code);
         }
 
         return [

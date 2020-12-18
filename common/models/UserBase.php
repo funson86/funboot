@@ -68,6 +68,19 @@ class UserBase extends BaseModel implements IdentityInterface
     }
 
     /**
+     * @return array
+     */
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        // 删除一些包含敏感信息的字段
+        unset($fields['auth_key'], $fields['password_hash'], $fields['password_reset_token']);
+
+        return $fields;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function attributeLabels()

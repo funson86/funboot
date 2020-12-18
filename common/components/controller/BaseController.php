@@ -40,19 +40,7 @@ class BaseController extends Controller
 
     public function beforeAction($action)
     {
-        $allStore = Yii::$app->cacheSystem->getAllStore();
-        $mapHostNameId = ArrayHelper::map($allStore, 'host_name', 'id');
-        $mapIdStore = ArrayHelper::mapIdData($allStore);
-
-        // 计算store，如果没有则使用默认的store
-        $hostName = Yii::$app->request->hostName;
-        $storeId = $mapHostNameId[$hostName] ?? null;
-        if ($storeId) {
-            $model = $mapIdStore[$storeId];
-        } else {
-            $model = Store::findOne(Yii::$app->params['defaultStoreId']);
-        }
-
+        $model = CommonHelper::getHostNameStore();
         $this->store = $model;
         $model->settings = Yii::$app->settingSystem->getSettings($model->id);
         $model->commonData = $this->commonData($model);
@@ -60,9 +48,8 @@ class BaseController extends Controller
         Yii::$app->storeSystem->set($this->store);
 
         // 设置语言
-        $this->setLanguage();
+        Yii::$app->language = CommonHelper::getLanguage($model);
 
-        $this->enableCsrfValidation = false; // 有风险需改进
         return parent::beforeAction($action);
     }
 
@@ -352,21 +339,6 @@ class BaseController extends Controller
 
         $errors = array_values($firstErrors)[0];
         return $errors ? $errors : Yii::t('app', 'Uncaught Error');
-    }
-
-    protected function setLanguage()
-    {
-        $lang = Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id);
-        if (!$lang) {
-            $lang = CommonHelper::parseBrowserLanguage();
-        }
-
-        $langInt = Store::getLanguageCode($lang, true, true);
-        if (!(($langInt & $this->store->language) == $langInt)) {
-            $lang = Yii::$app->params['defaultBackendLanguage'];
-        }
-
-        return Yii::$app->language = $lang;
     }
 
 }

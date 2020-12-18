@@ -5,6 +5,7 @@ Funboot开发文档
 
 ### 安装指南
 
+* [系统简介](../../README.md)
 * [系统环境](start-env.md)
 * [系统安装](start-installation.md)
 * [伪静态](start-rewrite.md)
@@ -14,6 +15,7 @@ Funboot开发文档
 ### 系统开发
 
 * [目录结构](dev-structure.md)
+* [约定优先配置](dev-convention.md)
 * [Funboot系统组件](dev-component.md)：
 * [BaseController](dev-controller.md)：内置store，解决原gii大量生成相同代码问题
 * [RBAC权限控制](dev-rbac.md)：每个用户对应一个角色，不同角色包含不同权限

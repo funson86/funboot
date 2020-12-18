@@ -11,7 +11,7 @@ return [
     'sqlCommentLanguage' => 'zh-CN', //sql的字段注释语言
     'httpProtocol' => 'https://', //网站域名使用https开头
 
-    'defaultBackendLanguage' => 'en', //默认语言
+    'defaultBackendLanguage' => 'zh-CN', //默认语言
     'defaultStoreId' => 2, //默认店铺ID，当不存在时用该id
     'defaultUserId' => 2, //默认用户ID
     'defaultFeedbackMessageId' => 7, //默认在线反馈消息ID

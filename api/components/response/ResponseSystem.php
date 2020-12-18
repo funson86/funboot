@@ -13,7 +13,7 @@ class ResponseSystem extends ResponseAbstract
      * @param array $data
      * @return array|mixed
      */
-    protected function error($code = 500, $msg = null, $data = [])
+    public function error($code = 500, $msg = null, $data = [])
     {
         return ResultHelper::ret($code, $msg, $data);
     }
@@ -25,7 +25,7 @@ class ResponseSystem extends ResponseAbstract
      * @param int $code
      * @return array|mixed
      */
-    protected function success($data = [], $map = [], $msg = '', $code = 200)
+    public function success($data = [], $map = [], $msg = '', $code = 200)
     {
         return ResultHelper::ret($code, $msg, $data, $map);
     }
