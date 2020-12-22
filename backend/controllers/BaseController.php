@@ -510,7 +510,7 @@ class BaseController extends \common\components\controller\BaseController
 
                 $countCreate = $countUpdate = 0;
                 $errorLines = $errorMsgs = [];
-                for ($i = 2; $i < $count; $i++) { // 忽略第0行表头
+                for ($i = 2; $i <= $count; $i++) { // 忽略第1行表头
                     $row = $data[$i];
 
                     $model = new $this->modelClass();
