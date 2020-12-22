@@ -111,8 +111,7 @@ class DefaultController extends BaseController
 
         Yii::$app->urlManager->setBaseUrl('');
 
-        $mailer = new SmtpMailer();
-        return $mailer->send($to, null, $subject, $content, $cc);
+        return Yii::$app->mailSystem->send($to, $subject, $content, $cc);
     }
 
     /**

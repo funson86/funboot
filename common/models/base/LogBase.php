@@ -20,6 +20,7 @@ class LogBase extends BaseModel
     const TYPE_LOGIN = 3;
     const TYPE_DB = 4;
     const TYPE_CONSOLE = 5;
+    const TYPE_MAIL = 6;
 
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
@@ -65,6 +66,7 @@ class LogBase extends BaseModel
             self::TYPE_LOGIN => Yii::t('cons', 'TYPE_LOGIN'),
             self::TYPE_DB => Yii::t('cons', 'TYPE_DB'),
             self::TYPE_CONSOLE => Yii::t('cons', 'TYPE_CONSOLE'),
+            self::TYPE_MAIL => Yii::t('cons', 'TYPE_MAIL'),
         ];
 
         $all && $data += [];

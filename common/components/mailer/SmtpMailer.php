@@ -70,7 +70,7 @@ class SmtpMailer
      * @return bool
      * @throws \Exception
      */
-    public function send($to, $from, $subject, $content, $cc = [])
+    public function send($to, $subject, $content, $cc = [], $from = null)
     {
         if (!ValidHelper::isEmail($to)) {
             Yii::error('Invalid mail: ' . $to . ' ' . $from);

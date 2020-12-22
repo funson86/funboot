@@ -23,3 +23,26 @@ Yii::$app->settingSystem->getValue('website_copyright', 1);
 Yii::$app->dictSystem->getDict('button_type');
 Yii::$app->dictSystem->getDictData('button_type_edit');
 ```
+
+
+### mailSystem 邮件组件 
+
+快速使用smtp方式发送邮件
+
+```php
+Yii::$app->mailSystem->send('funson86@qq.com', '标题：明天有空吗？', '想一起去去公园');
+```
+
+需要先配置系统发件箱，修改common\config\params-local.php文件中增加
+
+```php
+return [
+
+    //SMTP config
+    'smtp_host' => 'smtp.office365.com',
+    'smtp_username' => 'funboot@outlook.com',
+    'smtp_password' => 'xxx',
+    'smtp_port' => '587',
+    'smtp_encryption' => 'tls',
+];
+```

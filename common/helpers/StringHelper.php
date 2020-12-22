@@ -56,11 +56,11 @@ class StringHelper extends BaseStringHelper
     public static function unicodeDecode($str)
     {
         // 转换编码，将Unicode编码转换成可以浏览的utf-8编码
+        $new = '';
         $pattern = '/([\w]+)|(\\\u([\w]{4}))/i';
         preg_match_all($pattern, $str, $matches);
         if (!empty($matches))
         {
-            $new = '';
             for ($j = 0; $j < count($matches[0]); $j++)
             {
                 $str = $matches[0][$j];
@@ -78,6 +78,11 @@ class StringHelper extends BaseStringHelper
                 }
             }
         }
+
+        if (strlen($new) == 0) {
+            $new = $str;
+        }
+
         return $new;
     }
 

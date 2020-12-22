@@ -172,4 +172,23 @@ class LogSystem extends \yii\base\Component
         $model->msg = $msg;
         $model->save();
     }
+
+    /**
+     * @param null $data
+     * @param Request|null $request
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function mail($to, $subject, $content, $cc = [], $from = null, $code = 200)
+    {
+        $model = new Log();
+        $model->type = Log::TYPE_MAIL;
+        $model->name = $to;
+        is_array($cc) && $model->url = implode(';', $cc);
+        $model->code = $code;
+        $model->cost_time = Yii::getLogger()->getElapsedTime();
+        $model->msg = $subject;
+        $model->data = $content;
+        $model->save();
+    }
+
 }

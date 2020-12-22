@@ -54,6 +54,10 @@ return [
         'settingSystem' => [
             'class' => 'common\components\base\SettingSystem',
         ],
+        'mailSystem' => [
+            'class' => 'common\components\base\MailSystem',
+            'queue' => true, //false, // 默认通过队列方式发送邮件
+        ],
         'cacheMall' => [
             'class' => 'common\components\mall\CacheMall',
         ],

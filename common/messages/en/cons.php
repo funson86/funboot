@@ -48,6 +48,7 @@ return [
     'TYPE_LOGIN' => 'Login',
     'TYPE_DB' => 'Database',
     'TYPE_CONSOLE' => 'Console',
+    'TYPE_MAIL' => 'MAIL',
 
     'UPLOAD_TYPE_IMAGE' => 'Image',
     'UPLOAD_TYPE_FILE' => 'File',
