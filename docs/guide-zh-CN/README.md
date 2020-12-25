@@ -18,8 +18,8 @@ Funboot开发文档
 * [Gii & BaseModel & XxxBase](dev-gii.md)：优化新加字段再次Gii生成代码覆盖model中的代码问题，同时解决注释生成标签且兼容多语言
 * [BaseController](dev-controller.md)：内置store，优化原gii大量生成相同代码问题
 * [系统组件](dev-component.md)
-* [RBAC权限控制](dev-rbac.md)：每个用户对应一个角色，不同角色包含不同权限
-* [Funboot日志](dev-log.md)：后台直接查看指定日志
+* [RBAC权限控制组件](dev-rbac.md)：每个用户对应一个角色，不同角色包含不同权限
+* [Funboot日志组件](dev-log.md)：后台直接查看指定日志
 * [常用前端代码](dev-html.md)
 * [验收测试](dev-test.md)：优化系统代码变更无需一个个检查
 * [定时任务](dev-schedule.md)

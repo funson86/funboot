@@ -41,6 +41,7 @@ class MessageSystem extends \yii\base\Component
         foreach ($users as $user) {
 
             $model = new MessageSend();
+            $model->store_id = $user->store_id;
             $model->message_id = $message->id;
             $model->name = $message->name;
             $model->user_id = $user->id;

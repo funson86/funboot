@@ -44,9 +44,27 @@ CREATE TABLE `fb_template` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '模板';
 ```
 
-### RBAC约定
+### RBAC权限控制约定
+
+参见[RBAC权限控制组件](dev-rbac.md)：每个用户对应一个角色，不同角色包含不同权限
 
 
 ### 配置约定
 
+- 推荐使用数据表插入的方式，可以清晰的通过ID查看相关度，每次使用两位代码如10，子ID为1001、1003等。
+
+- Code也使用父code做前缀的方式，10的code为website，1001为website_name，1003为website_logo。
+
+- 一般而言4位代码足够用了
+
+
+```
+INSERT INTO `fb_base_setting_type` VALUES ('10', '1', '0', 'backend', '网站设置', 'website', '', 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('1001', '1', '10', 'backend', '网站标题', 'website_name', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('1003', '1', '10', 'backend', '网站Logo', 'website_logo', '', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+
+```
+
+
+- 如果最终移交给用户，也可以在后台通过界面创建，不过ID变为自增。
 
