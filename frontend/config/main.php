@@ -51,12 +51,6 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'cms/default/list/<id:\d+>' => 'cms/default/list',
-                'list/<id:\d+>' => 'cms/default/list',
-                'list' => 'api/getusers',
-                'getusers' => 'api/getusers',
-                'getorders' => 'api/getorders',
-                'getorderproducts' => 'api/getorderproducts',
                 '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>'=>'<modules>/<controller>/<action>',

@@ -88,8 +88,8 @@ $store = $this->context->store;
             <div class="col-lg-6 my-auto">
                 <div class="header-content mx-auto">
                     <h1 class="mb-5">FunPay 个人收款支付系统<span class="">V1.1</span></h1>
-                    <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">立即体验</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger orange">开发教程</a>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['pay/default/pay']) ?>>" class="btn btn-outline btn-xl js-scroll-trigger">立即体验</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="https://github.com/funson86/funpay" class="btn btn-outline btn-xl js-scroll-trigger orange">开发教程</a>
                 </div>
             </div>
             <div class="col-lg-6 my-auto">
@@ -102,7 +102,7 @@ $store = $this->context->store;
                         <div class="device">
                             <div class="screen">
                                 <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                <img src="/resources/pay/img/demo-screen-1.jpg" class="img-fluid" alt="">
+                                <img src="/resources/pay/img/demo-screen-0.jpg" class="img-fluid" alt="">
                             </div>
                             <div class="button">
                                 <!-- You can hook the "home button" to some JavaScript events or just remove it -->
