@@ -8,21 +8,20 @@ Funboot开发文档
 * [系统简介](../../README.md)
 * [系统环境](start-env.md)
 * [系统安装](start-installation.md)
-* [伪静态](start-rewrite.md)
-* [线上发布](start-publish.md)
+* [常见问题](start-faq.md)
 
 
 ### 系统开发
 
 * [目录结构](dev-structure.md)
 * [约定优先配置](dev-convention.md)
-* [Funboot系统组件](dev-component.md)：
-* [BaseController](dev-controller.md)：内置store，解决原gii大量生成相同代码问题
+* [Gii & BaseModel & XxxBase](dev-gii.md)：优化新加字段再次Gii生成代码覆盖model中的代码问题，同时解决注释生成标签且兼容多语言
+* [BaseController](dev-controller.md)：内置store，优化原gii大量生成相同代码问题
+* [系统组件](dev-component.md)
 * [RBAC权限控制](dev-rbac.md)：每个用户对应一个角色，不同角色包含不同权限
 * [Funboot日志](dev-log.md)：后台直接查看指定日志
-* [Gii & BaseModel & XxxBase](dev-gii.md)：解决新加字段再次Gii生成代码覆盖model中的代码问题，同时解决注释生成标签且兼容多语言
 * [常用前端代码](dev-html.md)
-* [验收测试](dev-test.md)：解决系统代码变更无需一个个检查
+* [验收测试](dev-test.md)：优化系统代码变更无需一个个检查
 * [定时任务](dev-schedule.md)
 
 ### API接口
