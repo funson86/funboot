@@ -91,6 +91,11 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function beforeAction($action)
     {
+        //如果是POST删除，则不校验csrf
+        if (AuthHelper::urlMath($this->action->id, ['delete', 'delete-all'])) {
+            $this->enableCsrfValidation = false;
+        }
+
         if (!parent::beforeAction($action)) {
             return false;
         }
