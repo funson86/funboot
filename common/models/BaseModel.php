@@ -54,6 +54,13 @@ class BaseModel extends ActiveRecord
                 ],
                 'value' => $userId,
             ],
+            [
+                'class' => BlameableBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['store_id'],
+                ],
+                'value' => Yii::$app->storeSystem->getId(),
+            ],
         ];
     }
 

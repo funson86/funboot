@@ -18,6 +18,9 @@ use common\models\base\SettingType;
 use common\models\base\UserRole;
 use common\models\BaseModel;
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model base class for table "{{%store}}" to add your code.
@@ -74,6 +77,28 @@ class StoreBase extends BaseModel
         return [
             [['id'], 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+        ];
+    }
+
+    /**
+     * store里面没有store_id属性，需要删除
+     * created_at, updated_at to now()
+     *
+     */
+    public function behaviors()
+    {
+        // 未登录认为是store管理员登录, console下不一定有Yii::$app->user
+        $userId = isset(Yii::$app->user) && !Yii::$app->user->getIsGuest() ? Yii::$app->user->id : Yii::$app->storeSystem->getUserId();
+        return [
+            TimestampBehavior::class,
+            [
+                'class' => BlameableBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_by', 'updated_by'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_by'],
+                ],
+                'value' => $userId,
+            ],
         ];
     }
 
