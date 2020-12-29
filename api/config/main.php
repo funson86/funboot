@@ -39,6 +39,7 @@ return [
             'errorAction' => 'site/error',
         ],
         'request' => [
+            'csrfParam' => '_csrf-api',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ]
