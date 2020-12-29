@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return Html::edit(['edit', 'id' => $model->id]);
                                 },
                                 'delete' => function ($url, $model, $key) {
-                                    return Html::delete(['delete', 'id' => $model->id, 'soft' => true], Yii::t('app', 'Black List'));
+                                    return Html::delete(['delete', 'id' => $model->id], Yii::t('app', 'Black List'));
                                 },
                             ],
                             'headerOptions' => ['class' => 'action-column action-column-lg'],

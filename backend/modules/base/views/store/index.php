@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return Html::editModal(['edit-ajax', 'id' => $model->id]);
                                 },
                                 'delete' => function ($url, $model, $key) {
-                                    return Html::delete(['delete', 'id' => $model->id, 'soft' => true]);
+                                    return Html::delete(['delete', 'id' => $model->id]);
                                 },
                             ],
                             'headerOptions' => ['class' => 'action-column action-column-lg'],

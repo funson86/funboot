@@ -24,6 +24,12 @@ class DepartmentController extends BaseController
     public $modelClass = Department::class;
 
     /**
+     * 列表是否为树形结构
+     * @var array[]
+     */
+    protected $indexTree = true;
+
+    /**
       * 模糊查询字段
       * @var string[]
       */

@@ -24,6 +24,12 @@ class PermissionController extends BaseController
     public $modelClass = Permission::class;
 
     /**
+     * 列表是否为树形结构
+     * @var array[]
+     */
+    protected $indexTree = true;
+
+    /**
       * 模糊查询字段
       * @var string[]
       */
@@ -46,27 +52,6 @@ class PermissionController extends BaseController
         'name' => 'text',
         'type' => 'select',
     ];
-
-    /**
-    * 列表页
-    *
-    * @return string
-    * @throws \yii\web\NotFoundHttpException
-    */
-    public function actionIndex()
-    {
-        $query = $this->modelClass::find()
-            ->orderBy(['id' => SORT_ASC]);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => false
-        ]);
-
-        return $this->render($this->action->id, [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     /**
      * ajax编辑/创建

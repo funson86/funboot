@@ -448,7 +448,7 @@ class Html extends \yii\helpers\Html
                     return Html::editModal(['edit-ajax', 'id' => $model->id]);
                 },
                 'delete' => function ($url, $model, $key) use ($options) {
-                    return Html::delete(['delete', 'id' => $model->id, 'soft' => ($options['soft'] ?? false), 'tree' => ($options['tree'] ?? false)]);
+                    return Html::delete(['delete', 'id' => $model->id, 'soft' => ($options['soft'] ?? true), 'tree' => ($options['tree'] ?? false)]);
                 },
             ],
             'headerOptions' => ['class' => 'action-column'],

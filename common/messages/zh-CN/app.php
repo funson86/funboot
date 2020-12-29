@@ -33,6 +33,7 @@ return [
     'Delete All' => '清空',
     'Delete All ' => '清空',
     'Recall&Delete' => '撤回并删除',
+    'Delete&Withdraw' => '删除并撤回',
     'Help' => '帮助',
     'More Actions' => '更多操作',
     'Batch ' => '批量',

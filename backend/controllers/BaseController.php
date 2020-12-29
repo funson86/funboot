@@ -15,6 +15,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Yii;
 use yii\base\Model;
 use common\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Inflector;
@@ -31,11 +32,23 @@ use yii\web\Response;
 class BaseController extends \common\components\controller\BaseController
 {
     /**
+     * 列表是否为树形结构
+     * @var array[]
+     */
+    protected $indexTree = false;
+
+    /**
      * 模糊查询字段
      *
      * @var int
      */
     protected $likeAttributes = ['name'];
+
+    /**
+     * 列表默认排序
+     * @var array[]
+     */
+    protected $defaultOrder = ['id' => SORT_DESC];
 
     /**
      * 可编辑字段
@@ -140,13 +153,25 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionIndex()
     {
+        if ($this->indexTree) {
+            $query = $this->modelClass::find()
+                ->orderBy(['id' => SORT_ASC]);
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => false
+            ]);
+
+            return $this->render($this->action->id, [
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
         $searchModel = new ModelSearch([
             'model' => $this->modelClass,
             'scenario' => 'default',
             'likeAttributes' => $this->likeAttributes, // 模糊查询
-            'defaultOrder' => [
-                'id' => SORT_DESC
-            ],
+            'defaultOrder' => $this->defaultOrder,
             'pageSize' => Yii::$app->request->get('page_size', $this->pageSize),
         ]);
 
@@ -154,6 +179,8 @@ class BaseController extends \common\components\controller\BaseController
         $params = Yii::$app->request->queryParams;
         if (!$this->isAdmin()) {
             $params['ModelSearch']['store_id'] = $this->getStoreId();
+        } else {
+            $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
         }
         $dataProvider = $searchModel->search($params);
 
@@ -375,7 +402,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
         }
 
-        $soft = Yii::$app->request->get('soft', false);
+        $soft = Yii::$app->request->get('soft', true);
         $tree = Yii::$app->request->get('tree', false);
         if ($tree) {
             $ids = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->asArray()->all());
@@ -404,7 +431,7 @@ class BaseController extends \common\components\controller\BaseController
             }
         }
 
-        $this->afterDeleteModel($id, $soft = false, $tree = false);
+        $this->afterDeleteModel($id, $soft, $tree);
         return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete Successfully'));
     }
 

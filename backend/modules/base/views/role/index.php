@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return Html::editModal(['edit-ajax', 'id' => $model->id]);
                                 },
                                 'delete' => function ($url, $model, $key) {
-                                    return Html::delete(['delete', 'id' => $model->id]);
+                                    return Html::delete(['delete', 'id' => $model->id, 'soft' => false]);
                                 },
                             ],
                         ],

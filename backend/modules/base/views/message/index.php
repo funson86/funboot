@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return Html::editModal(['edit-ajax', 'id' => $model->id]);
                                 },
                                 'delete' => function ($url, $model, $key) {
-                                    return Html::delete(['delete', 'id' => $model->id, 'soft' => true], '删除撤回');
+                                    return Html::delete(['delete', 'id' => $model->id], Yii::t('app', 'Delete&Withdraw'));
                                 },
                             ],
                             'options' => ['class' => 'operation'],

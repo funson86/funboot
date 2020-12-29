@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'created_by',
                         // 'updated_by',
 
-                        Html::actionsModal(['soft' => true, 'tree' => true]),
+                        Html::actionsModal(['tree' => true]),
                     ]
                 ]); ?>
             </div>
