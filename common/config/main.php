@@ -21,6 +21,10 @@ return [
             'port' => 6379,
             'database' => 0,
         ],
+        'mongodb' => [
+            'class' => '\yii\mongodb\Connection',
+            'dsn' => 'mongodb://localhost:27017/funboot',
+        ],
         'queue' => [
             'class' => \yii\queue\file\Queue::class,
             'as log' => \yii\queue\LogBehavior::class,
@@ -32,6 +36,7 @@ return [
         'logSystem' => [
             'class' => 'common\components\base\LogSystem',
             'queue' => false,//true, // 是否通过队列方式存数据库
+            'driver' => 'mysql', //'mongodb', // 存储方式，mysql数据库或mongodb数据库
             'levels' => ['error', 'warning'], // 记录日志等级error warning info trace
             'ignoreCodes' => [404], // 忽略错误码
         ],

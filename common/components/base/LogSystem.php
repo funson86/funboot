@@ -18,7 +18,12 @@ use yii\base\Exception;
  */
 class LogSystem extends \yii\base\Component
 {
+    const DRIVER_MYSQL = 'mysql';
+    const DRIVER_MONGODB = 'mongodb';
+
     public $queue = false;
+
+    public $driver = 'mysql';
 
     public $levels = ['error'];
 
@@ -109,8 +114,7 @@ class LogSystem extends \yii\base\Component
             $request = Yii::$app->request;
         }
 
-        $model = new Log();
-        $model->id = IdHelper::snowFlakeId();
+        $model = $this->newModel();
         $user = Yii::$app->user ?? null;
         if ($user && $user->identity) {
             $model->name = $user->identity->username;
@@ -163,14 +167,14 @@ class LogSystem extends \yii\base\Component
 
     public function console($command, $code, $msg)
     {
-        $model = new Log();
+        $model = $this->newModel();
         $model->type = Log::TYPE_CONSOLE;
         $model->name = 'system';
         $model->url = $command;
         $model->code = $code;
         $model->cost_time = Yii::getLogger()->getElapsedTime();
         $model->msg = $msg;
-        $model->save();
+        return $model->save();
     }
 
     /**
@@ -180,7 +184,7 @@ class LogSystem extends \yii\base\Component
      */
     public function mail($to, $subject, $content, $cc = [], $from = null, $code = 200)
     {
-        $model = new Log();
+        $model = $this->newModel();
         $model->type = Log::TYPE_MAIL;
         $model->name = $to;
         is_array($cc) && $model->url = implode(';', $cc);
@@ -188,7 +192,22 @@ class LogSystem extends \yii\base\Component
         $model->cost_time = Yii::getLogger()->getElapsedTime();
         $model->msg = $subject;
         $model->data = $content;
-        $model->save();
+        return $model->save();
     }
 
+    /**
+     * @return Log|\common\models\mongodb\Log
+     */
+    protected function newModel()
+    {
+        if ($this->driver == self::DRIVER_MONGODB) {
+            $model = new \common\models\mongodb\Log();
+            $model->_id = IdHelper::snowFlakeId();
+        } else {
+            $model = new Log();
+            $model->id = IdHelper::snowFlakeId();
+        }
+
+        return $model;
+    }
 }

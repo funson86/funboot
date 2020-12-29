@@ -2,11 +2,14 @@
 
 namespace backend\modules\base\controllers;
 
+use common\components\base\LogSystem;
+use common\components\enums\Status;
 use common\helpers\EchartsHelper;
 use Yii;
 use common\models\base\Log;
 use common\models\ModelSearch;
 use backend\controllers\BaseController;
+use yii\data\Pagination;
 
 /**
 * Log
@@ -45,6 +48,16 @@ class LogController extends BaseController
         'type' => 'select',
     ];
 
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            if (Yii::$app->logSystem->driver == LogSystem::DRIVER_MONGODB) {
+                $this->modelClass = \common\models\mongodb\Log::class;
+            }
+            return true;
+        }
+    }
+
     /**
      * 列表页
      * @param int $type
@@ -53,6 +66,19 @@ class LogController extends BaseController
      */
     public function actionIndex($type = 1)
     {
+        if (Yii::$app->logSystem->driver == LogSystem::DRIVER_MONGODB) {
+            $query = $this->modelClass::find()->where(['type' => intval($type)]);
+            $pagination = new Pagination(['totalCount' => $query->count(), 'pageSize' => $this->pageSize]);
+            $models = $query->orderBy(['id' => SORT_DESC])->offset($pagination->offset)->limit($pagination->limit)->all();
+
+            return $this->render($this->action->id, [
+                'models' => $models,
+                'pages' => $pagination,
+                'type' => $type,
+                'driver' => Yii::$app->logSystem->driver,
+            ]);
+        }
+
         $searchModel = new ModelSearch([
             'model' => $this->modelClass,
             'scenario' => 'default',
@@ -73,7 +99,9 @@ class LogController extends BaseController
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'type' => $type,
+            'driver' => Yii::$app->logSystem->driver,
         ]);
+
     }
 
     /**

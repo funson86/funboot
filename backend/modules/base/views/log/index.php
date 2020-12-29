@@ -7,6 +7,7 @@ use common\models\base\Log as ActiveModel;
 use yii\helpers\Inflector;
 use common\helpers\Url;
 use common\helpers\ArrayHelper;
+use common\components\base\LogSystem;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -23,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <ul class="nav nav-pills ml-auto tab-nav">
                     <?php foreach (ActiveModel::getTypeLabels() as $k => $v) { ?>
-                    <li class="nav-item"><a class="nav-link<?= $type == $k ? ' active' : '' ?>" href="<?= Url::to(['index', 'type' => $k]) ?>"><?= $v ?></a></li>
+                        <li class="nav-item"><a class="nav-link<?= $type == $k ? ' active' : '' ?>" href="<?= Url::to(['index', 'type' => $k]) ?>"><?= $v ?></a></li>
                     <?php } ?>
                 </ul>
                 <div class="card-tools">
@@ -32,6 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::buttonModal(['stat-ajax-login'], Yii::t('app', 'Login') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
                 </div>
             </div>
+
+            <?php if (Yii::$app->logSystem->driver == LogSystem::DRIVER_MYSQL) { ?>
+
             <div class="card-body">
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
@@ -104,6 +108,58 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]); ?>
             </div>
+
+            <?php } elseif (Yii::$app->logSystem->driver == LogSystem::DRIVER_MONGODB) { ?>
+
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th><?= Yii::t('app', 'Name') ?></th>
+                        <th><?= Yii::t('app', 'Url') ?></th>
+                        <th><?= Yii::t('app', 'Method') ?></th>
+                        <th><?= Yii::t('app', 'Ip') ?></th>
+                        <th><?= Yii::t('app', 'Ip Info') ?></th>
+                        <th><?= Yii::t('app', 'Code') ?></th>
+                        <th><?= Yii::t('app', 'Msg') ?></th>
+                        <th><?= Yii::t('app', 'Cost Time') ?></th>
+                        <th><?= Yii::t('app', 'Created At') ?></th>
+                        <th><?= Yii::t('app', 'Actions') ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($models as $model){ ?>
+                        <tr id="<?= $model['_id'] ?>">
+                            <td><?= $model['_id'] ?></td>
+                            <td><?= $model['name'] ?></td>
+                            <td><?= $model['url'] ?></td>
+                            <td><?= $model['method'] ?></td>
+                            <td><?= $model['ip'] ?></td>
+                            <td><?= $model['ip_info'] ?></td>
+                            <td><?= $model['code'] ?></td>
+                            <td><?= $model['msg'] ?></td>
+                            <td><?= $model['cost_time'] ?></td>
+                            <td><?= $model['type'] ?></td>
+                            <td>
+                                <?= Html::delete(['delete', 'id' => $model['_id']]); ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+                <p>
+                <?= \yii\widgets\LinkPager::widget([
+                    'pagination' => $pages
+                ]);?>
+                </p>
+            </div>
+            <div class="card-footer">
+            </div>
+
+            <?php } ?>
+
         </div>
     </div>
 </div>
+

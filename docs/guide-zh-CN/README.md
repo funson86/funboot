@@ -15,7 +15,8 @@ Funboot开发文档
 
 * [目录结构](dev-structure.md)
 * [约定优先配置](dev-convention.md)
-* [Gii & BaseModel & XxxBase](dev-gii.md)：优化新加字段再次Gii生成代码覆盖model中的代码问题，同时解决注释生成标签且兼容多语言
+* [Gii](dev-gii.md)：优化新加字段再次Gii生成代码覆盖model中的代码问题，同时解决注释生成标签且兼容多语言
+* [BaseModel & XxxBase](dev-model.md)：优化新加字段再次Gii生成代码覆盖model中的代码问题，同时解决注释生成标签且兼容多语言
 * [BaseController](dev-controller.md)：内置store，优化原gii大量生成相同代码问题
 * [系统组件](dev-component.md)
 * [RBAC权限控制组件](dev-rbac.md)：每个用户对应一个角色，不同角色包含不同权限
@@ -41,6 +42,6 @@ Funboot开发文档
 * [安全](appendix-security.md)
 * [PHP编程规范](appendix-code-style.md)
 * [代码质量提升](appendix-quality.md)
-* [高并发](appendix-high.md)
+* [高并发高性能（SnowFlake/Redis/Mongodb/ElasticSearch）](appendix-high.md)
 * [Phpstorm插件推荐](appendix-phpstorm.md)
 
