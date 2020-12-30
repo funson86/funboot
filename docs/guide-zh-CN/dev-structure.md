@@ -90,3 +90,14 @@
 └── composer.json 依赖文件
 
 ```
+
+- backend/controllers 有BaseController和SiteController，后端所有的类都要继承BaseController, 登录注册相关在SiteController中
+- modules/base/controller 基本功能类在这个模块目录下
+- modules/your/controller 自定义模块，可以用[Gii](gii.md)生成
+
+如果是开发小型项目可以直接写在backend/controllers中，如果是大型项目则使用
+
+- /common/components 组件目录，集成到代码中，可以提供Controller直接访问
+- /common/helpers 公共方法目录，函数都是static，helper一般不与数据库交互
+- /common/services 服务，一般有缓存或者队列操作，需要在启动时加载一些数据
+- /common/widgets 可重用的小部件，一般会渲染html嵌入到其他代码中，一般不提供Controller访问

@@ -191,7 +191,7 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
-     * 编辑/创建
+     * 查看
      *
      * @return mixed
      */
@@ -528,7 +528,7 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
-     * 编辑/创建
+     * 导入
      *
      * @return mixed
      */

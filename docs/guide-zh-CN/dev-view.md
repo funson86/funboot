@@ -1,3 +1,42 @@
+快速开发常用代码
+-------
+
+目录
+
+- 列表中增加一个可编辑字段
+- 树状表格开发
+- 多选字段开发
+- Echarts图表
+
+### 列表中增加一个可编辑字段
+
+增加一个新的可以编辑字段，在对应的Controller的 protected $editAjaxFields = ['name', 'sort'];中增加想要编辑的字段，再参考下面的name字段修改字段。
+```php
+            [
+                'attribute' => 'name', 
+                'format' => 'raw', 
+                'value' => function ($model) { 
+                    return Html::field('name', $model->name); 
+                }, 
+                'filter' => true,
+            ],
+            [
+                'attribute' => 'sort',
+                'value' => function ($model) {
+                    return Html::sort($model->sort);
+                },
+                'filter' => false,
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::status($model->status);
+                },
+                'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),
+            ],
+```
 
 ### 树状表格开发
 如部门分类等树状表格

@@ -1,6 +1,16 @@
 Gii
 -------
 
+目录
+
+- Gii配置
+- model
+- 修改表结构后无限制生成model
+- crud
+- module
+
+### Gii配置
+
 在backend/config/main-local中添加以下代码启动funboot代码模版
 
 ```php
@@ -63,17 +73,6 @@ Base Controller Class: backend\controllers\BaseController
 
 ![](images/gii-crud-1.png)
 ![](images/gii-crud-2.png)
-
-### crud module
-```
-Model Class: common\models\base\Attachment
-Controller Class: backend\modules\base\controllers\AttachmentController
-View Path: @backend\modules\base\views\attachment
-Base Controller Class: backend\controllers\BaseController
-勾选 Enable I18N
-勾选 Code Template: funboot
-```
-![](images/gii-crud-6.png)
 
 ### module
 ``` 

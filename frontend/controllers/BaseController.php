@@ -17,9 +17,9 @@ class BaseController extends \common\components\controller\BaseController
 {
     public function beforeAction($action)
     {
-        // 前台强制为英文
+        // 前台强制为中文
         if (parent::beforeAction($action)) {
-            Yii::$app->language = 'en';
+            Yii::$app->language = 'zh-CN';
         }
         return true;
     }
