@@ -458,6 +458,23 @@ CREATE TABLE `fb_user` (
   CONSTRAINT `base_user_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=156199573910454280 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户';
 
+DROP TABLE IF EXISTS `fb_school_student`;
+CREATE TABLE `fb_school_student` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `name` varchar(255) NOT NULL COMMENT '名称',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT 50 COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` int(11) NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `school_student_fk2` (`store_id`),
+  CONSTRAINT `school_student_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '学生';
+
         ";
 
         $this->execute($sql);

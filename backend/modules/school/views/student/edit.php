@@ -1,6 +1,5 @@
 <?php
 
-use Yii;
 use common\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;

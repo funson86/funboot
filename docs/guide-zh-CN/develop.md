@@ -25,8 +25,8 @@ Funboot框架可以在定义数据表之后，通过[Funboot的Gii](gii.md)生�
 - 数据表增加COMMENT描述，使用[Funboot的Gii](gii.md)会在Model文件中生成中英双语标签，无需编写众多的i18n翻译文件。
 
 ```sql
-DROP TABLE IF EXISTS `fb_template`;
-CREATE TABLE `fb_template` (
+DROP TABLE IF EXISTS `fb_school_student`;
+CREATE TABLE `fb_school_student` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) NOT NULL COMMENT '名称',
@@ -39,8 +39,8 @@ CREATE TABLE `fb_template` (
   `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
   KEY `school_student_fk2` (`store_id`),
-  CONSTRAINT `pay_payment_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '模板';
+  CONSTRAINT `school_student_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '学生';
 ```
 
 

@@ -37,6 +37,7 @@ class Student extends StudentBase
     {
         return array_merge(parent::rules(), [
             [['store_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
         ]);
     }
@@ -46,7 +47,7 @@ class Student extends StudentBase
      */
     public function attributeLabels()
     {
-        if (true) {
+        if (Yii::$app->language == Yii::$app->params['sqlCommentLanguage']) {
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
@@ -60,7 +61,18 @@ class Student extends StudentBase
                 'updated_by' => '更新用户',
             ]);
         } else {
-            return parent::attributeLabels();
+            return array_merge(parent::attributeLabels(), [
+                'id' => Yii::t('app', 'ID'),
+                'store_id' => Yii::t('app', 'Store ID'),
+                'name' => Yii::t('app', 'Name'),
+                'type' => Yii::t('app', 'Type'),
+                'sort' => Yii::t('app', 'Sort'),
+                'status' => Yii::t('app', 'Status'),
+                'created_at' => Yii::t('app', 'Created At'),
+                'updated_at' => Yii::t('app', 'Updated At'),
+                'created_by' => Yii::t('app', 'Created By'),
+                'updated_by' => Yii::t('app', 'Updated By'),
+            ]);
         }
     }
 }

@@ -49,22 +49,22 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
       */
     public $likeAttributes = ['name'];
 
-   /**
-    * 可编辑字段
-    *
-    * @var int
-    */
-   protected $editAjaxFields = ['name', 'sort'];
+    /**
+     * 可编辑字段
+     *
+     * @var int
+     */
+    protected $editAjaxFields = ['name', 'sort'];
 
-   /**
-    * 导入导出字段
-    *
-    * @var int
-    */
-   protected $exportFields = [
-       'id' => 'text',
-       'name' => 'text',
-       'type' => 'select',
-   ];
+    /**
+     * 导入导出字段
+     *
+     * @var int
+     */
+    protected $exportFields = [
+        'id' => 'text',
+        'name' => 'text',
+        'type' => 'select',
+    ];
 
 }

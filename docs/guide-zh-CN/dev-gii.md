@@ -38,17 +38,17 @@ Gii
 
 ### model
 ``` 
-Table Name: fb_permission
-Model Class Name: Permission
-Namespace: common\models
+Table Name: fb_school_student
+Model Class Name: Student
+Namespace: common\models\school
 Base Class: common\models\BaseModel
 勾选 Use Table Prefix
 不勾选 Generate Labels from DB Comments【在ModelBase中会生成带英文版，在Model生成中文注释的，如果需要英文版，则去掉Model中的attributeLabels()方法】
 勾选 Generate Relations from Current Schema
 勾选 Enable I18N
 ```
-![](images/gii-model-1.png)
-![](images/gii-model-2.png)
+![](images/gii-model-03.png)
+![](images/gii-model-05.png)
 
 
 ### 修改表结构后无限制生成model
@@ -63,22 +63,23 @@ Base Class: common\models\BaseModel
 
 ### crud
 ```
-Model Class: common\models\Attachment
-Controller Class: backend\controllers\AttachmentController
-View Path: 可以不填写
+Model Class: common\models\school\Student
+Controller Class: backend\modules\school\controllers\StudentController
+View Path: @backend/modules/school/views/student
 Base Controller Class: backend\controllers\BaseController
 勾选 Enable I18N
 勾选 Code Template: funboot
 ```
 
-![](images/gii-crud-1.png)
-![](images/gii-crud-2.png)
+![](images/gii-crud-03.png)
+![](images/gii-crud-05.png)
 
 ### module
 ``` 
-Module Class: backend\modules\base\Module
-Module ID: base
+Module Class: backend\modules\school\Module
+Module ID: school
+DefaultController Base Class: backend\controllers\BaseController
 Code Template: funboot
 ```
 
-![](images/gii-module.png)
+![](images/gii-module-03.png)

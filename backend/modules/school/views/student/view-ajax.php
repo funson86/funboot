@@ -13,29 +13,29 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Students'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="card mt-2 student-view">
-    <div class="card-header">
-        <?= $model->name ?>
-    </div>
 
-    <div class="card-body">
+<div class="modal-header">
+    <h4 class="modal-title">基本信息</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
 
-        <?= DetailView::widget([
-            'model' => $model,
-            'options' => ['class' => 'table table-bordered table-hover box', 'style' => 'table-layout:fixed; width:100%;'],
-            'attributes' => [
-                'id',
-                'store_id',
-                'name',
-                ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
-                'sort',
-                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
-                'created_at:datetime',
-                'updated_at:datetime',
-                'created_by',
-                'updated_by',
-            ],
-        ]) ?>
+<div class="modal-body student-view">
 
-    </div>
+    <?= DetailView::widget([
+        'model' => $model,
+        'options' => ['class' => 'table table-bordered table-hover box', 'style' => 'table-layout:fixed; width:100%;'],
+        'attributes' => [
+            'id',
+            'store_id',
+            'name',
+            ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
+            'sort',
+            ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
+            'created_at:datetime',
+            'updated_at:datetime',
+            'created_by',
+            'updated_by',
+        ],
+    ]) ?>
+
 </div>
