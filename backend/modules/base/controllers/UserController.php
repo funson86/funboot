@@ -105,7 +105,17 @@ class UserController extends BaseController
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
 
-        $allRoles = ArrayHelper::map(Role::find()->where(['status' => Role::STATUS_ACTIVE])->asArray()->all(), 'id', 'name');
+        $allRoles = [];
+        $userRole = UserRole::find()->where(['user_id' => Yii::$app->user->id])->orderBy(['role_id' => SORT_ASC])->one();
+        if ($userRole) {
+            //默认前端ID，然后按照组别进行区分，只能选择比自己组别小的角色，比如管理员只能设置商家、
+            $roleId = $userRole->id;
+            $minRoleId = Yii::$app->authSystem->maxStoreRoleId + 1;
+            $roleId <= Yii::$app->authSystem->maxAdminRoleId && $minRoleId = Yii::$app->authSystem->maxAdminRoleId + 1;
+            $roleId <= Yii::$app->authSystem->maxSuperAdminRoleId && $minRoleId = Yii::$app->authSystem->maxSuperAdminRoleId + 1;
+
+            $allRoles = ArrayHelper::map(Role::find()->where(['status' => Role::STATUS_ACTIVE])->andWhere(['>=', 'id', $minRoleId])->asArray()->all(), 'id', 'name');
+        }
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
@@ -116,7 +126,7 @@ class UserController extends BaseController
                 if ($model->save()) {
                     // 保存用户角色关系
                     $roles = Yii::$app->request->post('User')['roles'];
-                    if (count($roles) > 0) {
+                    if (is_array($roles) && count($roles) > 0) {
                         foreach ($roles as $roleId) {
                             $userRole = new UserRole();
                             $userRole->user_id = $model->id;
