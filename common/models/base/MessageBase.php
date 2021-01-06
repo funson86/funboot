@@ -52,7 +52,7 @@ class MessageBase extends BaseModel
         ];
 
         if ($id === 0) {
-            return Yii::t('app', 'SEND_TYPE_NONE');
+            return Yii::t('cons', 'SEND_TYPE_NONE');
         } elseif ($id !== null && isset($data[$id])) {
             return $data[$id];
         } else {

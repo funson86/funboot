@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attributes' => array_keys($content),
                             ]);
                         } else {
-                            $content = $model->content;
+                            echo $model->content;
                         }
                     } else {
                         echo $model->message->content;

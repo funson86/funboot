@@ -20,7 +20,8 @@ Funboot开发文档
 * [BaseController](dev-controller.md)：内置store，优化原gii大量生成相同代码
 * [系统组件](dev-component.md)
 * [RBAC权限控制组件](dev-rbac.md)：每个用户对应一个角色，不同角色包含不同权限
-* [Funboot日志组件](dev-log.md)：后台直接查看指定日志
+* [日志组件](dev-log.md)：后台直接查看指定日志
+* [消息组件](dev-message.md)：群发消息&在线反馈
 * [快速开发常用代码](dev-view.md)
 * [验收测试](dev-test.md)：优化系统代码变更无需一个个检查
 * [定时任务](dev-schedule.md)

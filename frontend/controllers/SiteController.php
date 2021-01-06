@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use common\helpers\CommonHelper;
+use common\models\forms\base\FeedbackForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -255,6 +257,23 @@ class SiteController extends BaseController
 
         return $this->render('resendVerificationEmail', [
             'model' => $model
+        ]);
+    }
+
+    public function actionFeedback()
+    {
+        $resultMsg = null;
+
+        $model = new FeedbackForm();
+        $model->checkCaptchaRequired();
+
+        if ($model->load(Yii::$app->request->post()) && $model->create()) {
+            $resultMsg = Yii::t('app', 'Operate Successfully');
+        }
+
+        return $this->render($this->action->id, [
+            'model' => $model,
+            'resultMsg' => $resultMsg,
         ]);
     }
 }
