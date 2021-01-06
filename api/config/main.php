@@ -20,6 +20,10 @@ return [
             'basePath' => '@api/modules/v2',
             'class' => 'api\modules\v2\Module'
         ],
+        'school' => [
+            'basePath' => '@api/modules/school',
+            'class' => 'api\modules\school\Module'
+        ],
     ],
     'components' => [
         'user' => [
@@ -57,8 +61,8 @@ return [
                 $response = $event->sender;
                 if ($response->statusCode != 200) {
                     $response->data = [
-                        'success' => $response->isSuccessful,
                         'data' => $response->data,
+                        'code' => $response->statusCode,
                     ];
                     $response->statusCode = 200;
                 }
@@ -68,11 +72,18 @@ return [
             'class' => 'api\components\response\ResponseSystem',
         ],
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            //'enableStrictParsing' => true,
+            'enableStrictParsing' => true,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'student',
+                        'school/student',
+                    ]
+                ],
 //                '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
 //                '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>'=>'<modules>/<controller>/<action>',
@@ -91,6 +102,9 @@ return [
                 'me' => 'site/me',
             ],
         ],*/
+    ],
+    'as cors' => [
+        'class' => \yii\filters\Cors::class,
     ],
     'params' => $params,
 ];
