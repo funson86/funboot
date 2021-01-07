@@ -59,7 +59,7 @@ class FeedbackForm extends Model
                 'email' => $this->email,
                 'content' => $this->content,
             ];
-            if (Message::create(Yii::t('app', "Feedback Form {$this->name} of {$content['datetime']}"), $content)) {
+            if (Message::create(Yii::t('app', "Feedback from {$this->name}"), $content)) {
                 return true;
             } else {
                 Yii::$app->logSystem->db($content);

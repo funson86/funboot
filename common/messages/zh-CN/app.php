@@ -121,6 +121,8 @@ return [
     'Message Types' => '消息类型',
     'Message' => '消息',
     'Messages' => '消息',
+    'Send Type' => '发送类型',
+    'Send Target' => '发送对象',
     'Send User' => '发送用户',
     'Send Users' => '指定用户',
     'Time' => '时间',
