@@ -27,7 +27,7 @@ $form = ActiveForm::begin([
     <div class="modal-body">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-        <?= $form->field($model, 'send_type')->checkboxList(ActiveModel::getSendTypeLabels()) ?>
+        <?= $form->field($model, 'sendTypes')->checkboxList(ActiveModel::getSendTypeLabels()) ?>
         <?= $form->field($model, 'send_target')->radioList(ActiveModel::getSendTargetLabels()) ?>
         <?= $form->field($model, 'sendUsers')->widget(kartik\select2\Select2::classname(), [
             'data' => $allUsers,

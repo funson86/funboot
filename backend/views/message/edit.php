@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-12">
                     <?= $form->field($model, 'user_id')->textInput() ?>
                     <?= $form->field($model, 'from_id')->textInput() ?>
-                    <?= $form->field($model, 'message_id')->textInput() ?>
+                    <?= $form->field($model, 'message_type_id')->textInput() ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>

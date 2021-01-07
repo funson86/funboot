@@ -67,7 +67,7 @@ class MessageTypeController extends BaseController
             if ($sendUsers && count($sendUsers) > 0) {
                 $model->send_user = implode('|', $sendUsers);
             }
-            $model->send_type = ArrayHelper::arrayToInt($model->send_type);
+            $model->send_type = ArrayHelper::arrayToInt(Yii::$app->request->post('Message')['sendTypes']);
 
             if ($model->save()) {
                 if (!$id) { //编辑的新消息才发送
@@ -83,7 +83,7 @@ class MessageTypeController extends BaseController
         }
 
         $model->sendUsers = explode('|', $model->send_user);
-        $model->send_type = ArrayHelper::intToArray($model->send_type, $this->modelClass::getSendTypeLabels());
+        $model->sendTypes = ArrayHelper::intToArray($model->send_type, $this->modelClass::getSendTypeLabels());
         return $this->renderAjax($this->action->id, [
             'model' => $model,
             'allUsers' => $allUsers,

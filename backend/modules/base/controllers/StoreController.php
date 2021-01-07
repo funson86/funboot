@@ -56,7 +56,7 @@ class StoreController extends BaseController
       * @throws \yii\base\ExitException
       */
     public function actionEditAjax()
-    {$this->generateHostFile();
+    {
         $id = Yii::$app->request->get('id');
         $model = $this->findModel($id);
         if ($id) {

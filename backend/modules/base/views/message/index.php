@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'user_id',
                         ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username; }, 'filter' => true],
                         ['attribute' => 'from_id', 'value' => function ($model) { return $model->from->username; }, 'filter' => true],
-                        // 'message_id',
+                        // 'message_type_id',
                         'name',
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
                         // 'type',

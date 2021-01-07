@@ -147,7 +147,46 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
     }
 ```
 
-### 多选字段开发
+### 多选字段开发（适用于小规模，checkbox）
+
+比如支持的多语言，可选语言
+
+修改StoreBase.php，增加languages字段
+
+```php
+    public $languages;
+
+    public function attributeLabels()
+    {
+            'languages' => Yii::t('app', 'Language'),
+    }
+```
+
+
+在StoreController的actionEdit()或者actionEdit()中增加
+
+```php
+    public function actionEditAjax()
+    {
+        if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
+            $post = Yii::$app->request->post();
+            $model->user_id = Yii::$app->params['defaultUserId'];
+            $model->language = ArrayHelper::arrayToInt($post['Store']['languages']);
+        }
+
+        $model->languages = ArrayHelper::intToArray($model->language, $this->modelClass::getLanguageLabels());
+        return $this->renderAjax($this->action->id, [
+            'model' => $model,
+        ]);
+    }
+```
+在edit.php或者edit-ajax.php中增加
+
+```php
+        <?= $form->field($model, 'languages')->checkboxList(ActiveModel::getLanguageLabels()) ?>
+```
+
+### 多选字段开发（适用于大规模，select2）
 
 比如用户可以设置多个角色
 
@@ -161,7 +200,7 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
     public function attributeLabels()
     {
         return [
-            'roles' => Yii::t('app', '角色'),
+            'roles' => Yii::t('app', 'Role'),
         ];
     }
 ```

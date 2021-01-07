@@ -114,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'user_id',
                         // 'from_id',
                         ['attribute' => 'from_id', 'value' => function ($model) { return $model->from->username; }, 'filter' => false],
-                        // 'message_id',
+                        // 'message_type_id',
                         [
                             'attribute' => 'name',
                             'format' => 'raw',

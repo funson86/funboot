@@ -141,7 +141,7 @@ class MessageBase extends BaseModel
         $model->store_id = $user ? $user->store_id : Yii::$app->storeSystem->getId();
 
         $model->from_id = $fromId ?? Yii::$app->params['defaultUserId'];
-        $model->message_id = $messageId ?? Yii::$app->params['defaultFeedbackMessageId'];
+        $model->message_type_id = $messageId ?? Yii::$app->params['defaultFeedbackMessageTypeId'];
 
         // 处理内容
         if (is_array($content) && count($content) > 0) {

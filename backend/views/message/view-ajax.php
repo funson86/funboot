@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'store_id',
                 'user_id',
                 'from_id',
-                'message_id',
+                'message_type_id',
                 'name',
                 'content:ntext',
                 'type',

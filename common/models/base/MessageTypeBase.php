@@ -27,6 +27,7 @@ class MessageTypeBase extends BaseModel
     const SEND_TARGET_USER = 2;
 
     public $sendUsers = [];
+    public $sendTypes = [];
 
     /**
      * @return array|array[]
@@ -124,6 +125,7 @@ class MessageTypeBase extends BaseModel
             'name' => Yii::t('app', 'Name'),
             'content' => Yii::t('app', 'Content'),
             'send_type' => Yii::t('app', 'Send Type'),
+            'sendTypes' => Yii::t('app', 'Send Type'),
             'send_target' => Yii::t('app', 'Send Target'),
             'send_user' => Yii::t('app', 'Send User'),
             'type' => Yii::t('app', 'Type'),
