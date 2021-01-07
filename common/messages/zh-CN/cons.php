@@ -55,6 +55,12 @@ return [
     'UPLOAD_TYPE_VIDEO' => '视频',
     'UPLOAD_TYPE_VOICE' => '语音',
 
+
+    'TYPE_BOARD' => '公告',
+    'TYPE_NOTICE' => '提醒',
+    'TYPE_PRIVATE' => '私信',
+    'TYPE_FEEDBACK' => '在线反馈',
+
     'SEND_TYPE_NONE' => '-',
     'SEND_TYPE_NEW' => '新用户发送',
     'SEND_TARGET_ALL' => '所有用户',

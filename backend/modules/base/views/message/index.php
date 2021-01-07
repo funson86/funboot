@@ -22,15 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header p-0 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?></a>
+                        <a class="nav-link" href="<?= Url::to(['message-type/index']) ?>"><?= Yii::t('app', 'Message Type') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= Url::to(['message-send/index']) ?>"><?= Yii::t('app', 'Message Send') ?></a>
+                        <a class="nav-link active"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?></a>
                     </li>
                     <li class="nav-tabs-tools">
-                        <?= Html::createModal(['edit-ajax'], null, ['class' => 'btn btn-primary btn-xs']) ?>
                         <!--<?= Html::export() ?>-->
-                        <?= Html::import(null, null, ['class' => 'btn btn-success btn-xs']) ?>
                     </li>
                 </ul>
             </div>
@@ -45,36 +43,32 @@ $this->params['breadcrumbs'][] = $this->title;
                             'visible' => false,
                         ],
 
-                        'id',
+                        // 'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        // ['attribute' => 'store_id', 'value' => function ($model) { return $model->store->name; }, 'filter' => true],
+                        // 'user_id',
+                        ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username; }, 'filter' => true],
+                        ['attribute' => 'from_id', 'value' => function ($model) { return $model->from->username; }, 'filter' => true],
+                        // 'message_id',
                         'name',
-                        //['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
-                        // 'content:ntext',
-                        ['attribute' => 'send_type', 'value' => function ($model) { return ActiveModel::getSendTypeLabels($model->send_type); }, 'filter' => Html::activeDropDownList($searchModel, 'send_type', ActiveModel::getSendTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        ['attribute' => 'send_target', 'value' => function ($model) { return ActiveModel::getSendTargetLabels($model->send_target); }, 'filter' => Html::activeDropDownList($searchModel, 'send_target', ActiveModel::getSendTargetLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        // 'send_user:ntext',
-                        ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => Html::activeDropDownList($searchModel, 'type', ActiveModel::getTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
-                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::status($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        // 'type',
+                        // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
+                        [
+                            'attribute' => 'status',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                $class = $model->status == ActiveModel::STATUS_READ ? 'btn-success' : 'btn-default';
+                                return Html::tag('span', ActiveModel::getStatusLabels($model->status), ['class' => 'btn btn-xs ' . $class]);
+                            },
+                            'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),
+                        ],
                         'created_at:datetime',
                         // 'updated_at:datetime',
                         // 'created_by',
                         // 'updated_by',
 
-                        [
-                            'header' => Yii::t('app', 'Actions'),
-                            'class' => 'yii\grid\ActionColumn',
-                            'template' => '{edit} {delete}',
-                            'buttons' => [
-                                'edit' => function ($url, $model, $key) {
-                                    return Html::editModal(['edit-ajax', 'id' => $model->id]);
-                                },
-                                'delete' => function ($url, $model, $key) {
-                                    return Html::delete(['delete', 'id' => $model->id], Yii::t('app', 'Delete&Withdraw'));
-                                },
-                            ],
-                            'options' => ['class' => 'operation'],
-                        ],
+                        Html::actionsDelete(),
                     ]
                 ]); ?>
             </div>

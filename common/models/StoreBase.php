@@ -8,7 +8,7 @@ use common\models\base\Department;
 use common\models\base\DictData;
 use common\models\base\Log;
 use common\models\base\Message;
-use common\models\base\MessageSend;
+use common\models\base\MessageType;
 use common\models\base\Permission;
 use common\models\base\Role;
 use common\models\base\RolePermission;
@@ -30,7 +30,7 @@ use yii\db\ActiveRecord;
  * @property DictData[] $dictDatas
  * @property Log[] $logs
  * @property Message[] $messages
- * @property MessageSend[] $messageSends
+ * @property MessageType[] $messageTypes
  * @property Permission[] $permissions
  * @property Role[] $roles
  * @property RolePermission[] $rolePermissions
@@ -272,9 +272,9 @@ class StoreBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMessageSends()
+    public function getMessageTypes()
     {
-        return $this->hasMany(MessageSend::className(), ['store_id' => 'id']);
+        return $this->hasMany(MessageType::className(), ['store_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery

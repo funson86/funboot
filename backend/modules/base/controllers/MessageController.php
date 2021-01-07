@@ -2,9 +2,6 @@
 
 namespace backend\modules\base\controllers;
 
-use common\helpers\ArrayHelper;
-use common\models\base\MessageSend;
-use common\models\User;
 use Yii;
 use common\models\base\Message;
 use common\models\ModelSearch;
@@ -48,54 +45,41 @@ class MessageController extends BaseController
     ];
 
     /**
-      * ajax编辑/创建
-      *
-      * @return mixed|string|\yii\web\Response
-      * @throws \yii\base\ExitException
+      * 列表页
+      * @param int $messageTypeId
+      * @return string
+      * @throws \yii\web\NotFoundHttpException
       */
-    public function actionEditAjax()
+    public function actionIndex()
     {
-        $id = Yii::$app->request->get('id', null);
-        $model = $this->findModel($id);
+        $searchModel = new ModelSearch([
+            'model' => $this->modelClass,
+            'scenario' => 'default',
+            'likeAttributes' => $this->likeAttributes,
+            'defaultOrder' => [
+                'id' => SORT_DESC
+            ],
+            'pageSize' => Yii::$app->request->get('page_size', $this->pageSize),
+        ]);
 
-        $allUsers = ArrayHelper::map(User::find()->where(['status' => User::STATUS_ACTIVE])->asArray()->all(), 'id', 'username');
-
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-            $sendUsers = Yii::$app->request->post('Message')['sendUsers'] ?? null;
-            if ($sendUsers && count($sendUsers) > 0) {
-                $model->send_user = implode('|', $sendUsers);
-            }
-            $model->send_type = ArrayHelper::arrayToInt($model->send_type);
-
-            if ($model->save()) {
-                if (!$id) { //编辑的新消息才发送
-                    Yii::$app->messageSystem->send($model, Yii::$app->user->id);
-                }
-                $this->flashSuccess();
-            } else {
-                Yii::$app->logSystem->db($model->errors);
-                $this->flashError($this->getError($model));
-            }
-
-            return $this->redirect(Yii::$app->request->referrer);
+        // 管理员级别才能查看所有数据，其他只能查看本store数据
+        $params = Yii::$app->request->queryParams;
+        if (!$this->isAdmin()) {
+            $params['ModelSearch']['store_id'] = $this->getStoreId();
+            $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
         }
 
-        $model->sendUsers = explode('|', $model->send_user);
-        $model->send_type = ArrayHelper::intToArray($model->send_type, $this->modelClass::getSendTypeLabels());
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-            'allUsers' => $allUsers,
+        $messageTypeId = Yii::$app->request->get('message_type_id', 0);
+        if ($messageTypeId > 0) {
+            $params['ModelSearch']['message_type_id'] = $messageTypeId;
+        }
+
+        $dataProvider = $searchModel->search($params);
+
+        return $this->render($this->action->id, [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 
-    /**
-     * @param $id
-     * @return bool|void
-     */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
-    {
-        MessageSend::deleteAll(['status' => MessageSend::STATUS_DELETED], ['message_id' => $id]);
-    }
 }

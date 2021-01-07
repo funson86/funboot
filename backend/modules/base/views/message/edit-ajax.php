@@ -25,16 +25,9 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
+        <?= $form->field($model, 'user_id')->textInput() ?>
+        <?= $form->field($model, 'message_id')->textInput() ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-        <?= $form->field($model, 'send_type')->checkboxList(ActiveModel::getSendTypeLabels()) ?>
-        <?= $form->field($model, 'send_target')->radioList(ActiveModel::getSendTargetLabels()) ?>
-        <?= $form->field($model, 'sendUsers')->widget(kartik\select2\Select2::classname(), [
-            'data' => $allUsers,
-            'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
-        ]) ?>
-        <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
-        <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
@@ -42,21 +35,3 @@ $form = ActiveForm::begin([
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>
-
-<script>
-$(function () {
-    $('#message-send_target input').change(function () {
-        let value = $('#message-send_target input:checked').val();
-        if (value == 1) {
-            $('.field-message-sendusers').hide();
-        } else {
-            $('.field-message-sendusers').show();
-        }
-    })
-
-    let value = $('#message-send_target input:checked').val();
-    if (value == 1) {
-        $('.field-message-sendusers').hide();
-    }
-});
-</script>

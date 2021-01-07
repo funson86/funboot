@@ -4,16 +4,15 @@ namespace backend\controllers;
 
 use common\helpers\ImageHelper;
 use common\helpers\Url;
-use common\models\base\Message;
 use Yii;
-use common\models\base\MessageSend;
+use common\models\base\Message;
 use common\models\ModelSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\components\controller\BaseController;
 
 /**
- * MessageSend
+ * Message
  *
  * Class MessageController
  * @package backend\controllers
@@ -68,7 +67,7 @@ class MessageController extends BaseController
     public function actionIndex($status = 0)
     {
         $searchModel = new ModelSearch([
-            'model' => MessageSend::class,
+            'model' => Message::class,
             'scenario' => 'default',
             'likeAttributes' => $this->likeAttributes,
             'defaultOrder' => [
@@ -82,7 +81,7 @@ class MessageController extends BaseController
         $params['ModelSearch']['status'] = $status;
         $dataProvider = $searchModel->search($params);
 
-        $unread = MessageSend::find()->where(['user_id' => Yii::$app->user->id, 'status' => MessageSend::STATUS_UNREAD])->count();
+        $unread = Message::find()->where(['user_id' => Yii::$app->user->id, 'status' => Message::STATUS_UNREAD])->count();
 
         return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,
@@ -99,9 +98,9 @@ class MessageController extends BaseController
       */
     public function actionList($status = 0)
     {
-        $unread = MessageSend::find()->where(['user_id' => Yii::$app->user->id, 'status' => MessageSend::STATUS_UNREAD])->count();
+        $unread = Message::find()->where(['user_id' => Yii::$app->user->id, 'status' => Message::STATUS_UNREAD])->count();
 
-        $models = MessageSend::find()->where(['user_id' => Yii::$app->user->id, 'status' => MessageSend::STATUS_UNREAD])
+        $models = Message::find()->where(['user_id' => Yii::$app->user->id, 'status' => Message::STATUS_UNREAD])
             ->with(['from' => function ($query) {
                 $query->select(['username', 'avatar', 'name']);
             }])
@@ -131,15 +130,15 @@ class MessageController extends BaseController
      */
     public function actionView($id)
     {
-        $model = MessageSend::findOne($id);
+        $model = Message::findOne($id);
         if (!$model) {
             return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
         }
 
-        $model->status = MessageSend::STATUS_READ;
+        $model->status = Message::STATUS_READ;
         $model->save();
 
-        $unread = MessageSend::find()->where(['user_id' => Yii::$app->user->id, 'status' => MessageSend::STATUS_UNREAD])->count();
+        $unread = Message::find()->where(['user_id' => Yii::$app->user->id, 'status' => Message::STATUS_UNREAD])->count();
         return $this->render($this->action->id, [
             'model' => $model,
             'unread' => $unread,
@@ -156,12 +155,12 @@ class MessageController extends BaseController
      */
     public function actionDelete($id)
     {
-        $model = MessageSend::findOne($id);
+        $model = Message::findOne($id);
         if (!$model) {
             return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
         }
 
-        $model->status = MessageSend::STATUS_RECYCLE;
+        $model->status = Message::STATUS_RECYCLE;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
             return $this->redirect(Yii::$app->request->referrer);

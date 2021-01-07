@@ -3,10 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\enums\YesNo;
-use common\models\base\MessageSend as ActiveModel;
+use common\models\base\Message as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\base\MessageSend */
+/* @var $model common\models\base\Message */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Message Sends'), 'url' => ['index']];

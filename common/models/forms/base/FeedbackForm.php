@@ -2,7 +2,7 @@
 namespace common\models\forms\base;
 
 use common\helpers\IdHelper;
-use common\models\base\MessageSend;
+use common\models\base\Message;
 use Yii;
 use yii\base\Model;
 
@@ -59,7 +59,7 @@ class FeedbackForm extends Model
                 'email' => $this->email,
                 'content' => $this->content,
             ];
-            if (MessageSend::create(Yii::t('app', "Feedback Form {$this->name} of {$content['datetime']}"), $content)) {
+            if (Message::create(Yii::t('app', "Feedback Form {$this->name} of {$content['datetime']}"), $content)) {
                 return true;
             } else {
                 Yii::$app->logSystem->db($content);

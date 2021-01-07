@@ -3,14 +3,14 @@
 use common\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
-use common\models\base\MessageSend as ActiveModel;
+use common\models\base\MessageType as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\base\MessageSend */
+/* @var $model common\models\base\Message */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Message Send');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Message Sends'), 'url' => ['index']];
+$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Message Type');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Message Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -26,9 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]); ?>
                 <div class="col-sm-12">
-                    <?= $form->field($model, 'user_id')->textInput() ?>
-                    <?= $form->field($model, 'message_id')->textInput() ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+                    <?= $form->field($model, 'send_type')->checkboxList(ActiveModel::getSendTypeLabels()) ?>
+                    <?= $form->field($model, 'send_target')->radioList(YesNo::getLabels()) ?>
+                    <?= $form->field($model, 'send_user')->textarea(['rows' => 6]) ?>
+                    <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
+                    <?= $form->field($model, 'sort')->textInput() ?>
                     <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>
                 <div class="form-group">

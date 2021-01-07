@@ -156,10 +156,10 @@ CREATE TABLE `fb_base_log` (
 ) ENGINE=InnoDB AUTO_INCREMENT=177599032061853697 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='日志';
 
 -- ----------------------------
--- Table structure for fb_base_message
+-- Table structure for fb_base_message_type
 -- ----------------------------
-DROP TABLE IF EXISTS `fb_base_message`;
-CREATE TABLE `fb_base_message` (
+DROP TABLE IF EXISTS `fb_base_message_type`;
+CREATE TABLE `fb_base_message_type` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',
@@ -175,20 +175,20 @@ CREATE TABLE `fb_base_message` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `base_message_fk2` (`store_id`),
-  CONSTRAINT `base_message_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='消息';
+  KEY `base_message_type_fk2` (`store_id`),
+  CONSTRAINT `base_message_type_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='消息类型';
 
 -- ----------------------------
--- Table structure for fb_base_message_send
+-- Table structure for fb_base_message
 -- ----------------------------
-DROP TABLE IF EXISTS `fb_base_message_send`;
-CREATE TABLE `fb_base_message_send` (
+DROP TABLE IF EXISTS `fb_base_message`;
+CREATE TABLE `fb_base_message` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '用户',
   `from_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '发送用户',
-  `message_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '消息',
+  `message_type_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '消息',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标题',
   `content` text COLLATE utf8mb4_unicode_ci COMMENT '内容',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
@@ -199,15 +199,15 @@ CREATE TABLE `fb_base_message_send` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `base_message_send_fk0` (`user_id`),
-  KEY `base_message_send_fk9` (`from_id`),
-  KEY `base_message_send_fk1` (`message_id`),
-  KEY `base_message_send_fk2` (`store_id`),
-  CONSTRAINT `base_message_send_fk0` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `base_message_send_fk1` FOREIGN KEY (`message_id`) REFERENCES `fb_base_message` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `base_message_send_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `base_message_send_fk9` FOREIGN KEY (`from_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='消息发送';
+  KEY `base_message_fk0` (`user_id`),
+  KEY `base_message_fk9` (`from_id`),
+  KEY `base_message_fk1` (`message_type_id`),
+  KEY `base_message_fk2` (`store_id`),
+  CONSTRAINT `base_message_fk0` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `base_message_fk1` FOREIGN KEY (`message_type_id`) REFERENCES `fb_base_message_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `base_message_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `base_message_fk9` FOREIGN KEY (`from_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='消息';
 
 -- ----------------------------
 -- Table structure for fb_base_permission
@@ -491,7 +491,7 @@ INSERT INTO `fb_user` VALUES ('1', '1', '0', 'admin', '', '', '', '$2y$13\$Zsldx
 INSERT INTO `fb_user` VALUES ('2', '2', '0', 'funpay', '', '', '', '$2y$13\$L58QDefrbiUjyxVXy6P/r.Mz9eeTjJpQEnk/hEN3pqZZRDiw4q7LC', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1607395941', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1599808929', '1607395941', '1', '2');
 INSERT INTO `fb_user` VALUES ('3', '1', '0', 'test', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
 
-INSERT INTO `fb_base_message` VALUES ('7', '1', 'feedback', null, '0', '2', null, '7', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_message_type` VALUES ('7', '1', 'feedback', null, '0', '2', null, '7', '50', '1', '1', '1', '1', '1');
 
 INSERT INTO `fb_base_dict` VALUES ('3', '1', '消息类型', 'message_type', '消息类型', '1', '50', '1', '1600778636', '1601181269', '1', '1');
 INSERT INTO `fb_base_dict_data` VALUES ('9', '1', '3', '发给所有用户公告', '1', '公告', '发给所有用户公告', '1', '50', '1', '1601181323', '1601181323', '1', '1');
@@ -518,7 +518,7 @@ INSERT INTO `fb_base_permission` VALUES ('61', '1', '6', '学生', 'backend', ''
 INSERT INTO `fb_base_permission` VALUES ('560', '1', '56', '用户管理', 'backend', '', '/base/user/index', 'fas fa-user', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('561', '1', '56', '店铺管理', 'backend', '', '/base/store/index', 'fab fa-internet-explorer', '', '3', '0', '1', '50', '1', '1', '1602322615', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('562', '1', '56', '部门管理', 'backend', '', '/base/department/index', 'fas fa-code-branch', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('563', '1', '56', '消息管理', 'backend', '', '/base/message/index', 'fas fa-envelope', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('563', '1', '56', '消息类型', 'backend', '', '/base/message-type/index', 'fas fa-envelope', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('564', '1', '56', '文件管理', 'backend', '', '/base/attachment/index', 'fas fa-folder', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('565', '1', '56', '角色权限管理', 'backend', '', '/base/role/index', 'fas fa-users', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('566', '1', '56', '菜单权限管理', 'backend', '', '/base/permission/index', 'fas fa-list', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
@@ -551,12 +551,12 @@ INSERT INTO `fb_base_permission` VALUES ('5623', '1', '562', '删除', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('5624', '1', '562', '启禁', 'backend', '', '/base/department/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5625', '1', '562', '导出', 'backend', '', '/base/department/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5626', '1', '562', '导入', 'backend', '', '/base/department/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('5631', '1', '563', '查看', 'backend', '', '/base/message/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('5632', '1', '563', '编辑', 'backend', '', '/base/message/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('5633', '1', '563', '删除', 'backend', '', '/base/message/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('5634', '1', '563', '启禁', 'backend', '', '/base/message/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('5635', '1', '563', '导出', 'backend', '', '/base/message/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('5636', '1', '563', '导入', 'backend', '', '/base/message/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5631', '1', '563', '查看', 'backend', '', '/base/message-type/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5632', '1', '563', '编辑', 'backend', '', '/base/message-type/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5633', '1', '563', '删除', 'backend', '', '/base/message-type/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5634', '1', '563', '启禁', 'backend', '', '/base/message-type/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5635', '1', '563', '导出', 'backend', '', '/base/message-type/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5636', '1', '563', '导入', 'backend', '', '/base/message-type/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5641', '1', '564', '查看', 'backend', '', '/base/attachement/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5642', '1', '564', '编辑', 'backend', '', '/base/attachement/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5643', '1', '564', '删除', 'backend', '', '/base/attachement/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');

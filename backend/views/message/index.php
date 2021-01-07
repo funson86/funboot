@@ -3,11 +3,11 @@
 use yii\grid\GridView;
 use common\helpers\Html;
 use common\components\enums\YesNo;
-use common\models\base\MessageSend as ActiveModel;
+use common\models\base\Message as ActiveModel;
 use yii\helpers\Inflector;
 use common\helpers\Url;
 use common\helpers\ArrayHelper;
-use common\models\base\Message;
+use common\models\base\MessageType;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
 
                         // 'id',
-                        ['attribute' => 'id', 'label' => ' ', 'format' => 'raw', 'value' => function ($model) { return ($model->type == Message::TYPE_PRIVATE) ?  '<i class="fas fa-star text-warning"></i>' : ''; }, 'filter' => false],
+                        ['attribute' => 'id', 'label' => ' ', 'format' => 'raw', 'value' => function ($model) { return ($model->type == MessageType::TYPE_PRIVATE) ?  '<i class="fas fa-star text-warning"></i>' : ''; }, 'filter' => false],
                         // ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         // 'user_id',
                         // 'from_id',

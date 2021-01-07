@@ -1,7 +1,7 @@
 <?php
 namespace common\models;
 
-use common\models\base\MessageSend;
+use common\models\base\Message;
 use common\models\base\UserRole;
 use Yii;
 use yii\base\NotSupportedException;
@@ -24,8 +24,8 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  *
- * @property MessageSend[] $messageSends
- * @property MessageSend[] $messageSends0
+ * @property Message[] $messages
+ * @property Message[] $message0
  * @property UserRole[] $userRoles
  * @property Store[] $stores
  * @property Store $store
@@ -126,17 +126,17 @@ class UserBase extends BaseModel implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMessageSends()
+    public function getMessages()
     {
-        return $this->hasMany(MessageSend::className(), ['user_id' => 'id']);
+        return $this->hasMany(Message::className(), ['user_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMessageSends0()
+    public function getMessage0()
     {
-        return $this->hasMany(MessageSend::className(), ['from_id' => 'id']);
+        return $this->hasMany(Message::className(), ['from_id' => 'id']);
     }
 
     /**

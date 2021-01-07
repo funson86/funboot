@@ -179,7 +179,6 @@ class BaseController extends \common\components\controller\BaseController
         $params = Yii::$app->request->queryParams;
         if (!$this->isAdmin()) {
             $params['ModelSearch']['store_id'] = $this->getStoreId();
-        } else {
             $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
         }
         $dataProvider = $searchModel->search($params);

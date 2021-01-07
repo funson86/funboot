@@ -55,6 +55,12 @@ return [
     'UPLOAD_TYPE_VIDEO' => 'Video',
     'UPLOAD_TYPE_VOICE' => 'Voice',
 
+
+    'TYPE_BOARD' => 'Board',
+    'TYPE_NOTICE' => 'Notice',
+    'TYPE_PRIVATE' => 'Private',
+    'TYPE_FEEDBACK' => 'Feedback',
+
     'SEND_TYPE_NONE' => '-',
     'SEND_TYPE_NEW' => 'Send New User',
     'SEND_TARGET_ALL' => 'All Users',

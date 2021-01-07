@@ -3,10 +3,10 @@
 use common\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
-use common\models\base\MessageSend as ActiveModel;
+use common\models\base\Message as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\base\MessageSend */
+/* @var $model common\models\base\Message */
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Message Send');

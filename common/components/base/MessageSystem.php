@@ -3,7 +3,7 @@ namespace common\components\base;
 
 use common\job\base\MessageJob;
 use common\models\base\Message;
-use common\models\base\MessageSend;
+use common\models\base\MessageType;
 use common\models\User;
 use Yii;
 
@@ -16,18 +16,18 @@ class MessageSystem extends \yii\base\Component
     public $queue = false;
 
     /**
-     * @param Message $model
+     * @param MessageType $model
      * @param int $fromId
      * @return array|bool
      */
-    public function send(Message $message, $fromId = 1)
+    public function send(MessageType $message, $fromId = 1)
     {
         if (!$message) {
             return false;
         }
 
         $users = [];
-        if ($message->send_target == Message::SEND_TARGET_ALL) {
+        if ($message->send_target == MessageType::SEND_TARGET_ALL) {
             $users = User::find()->all();
         } else {
             $arrUser = explode('|', $message->send_user);
@@ -40,9 +40,9 @@ class MessageSystem extends \yii\base\Component
 
         foreach ($users as $user) {
 
-            $model = new MessageSend();
+            $model = new Message();
             $model->store_id = $user->store_id;
-            $model->message_id = $message->id;
+            $model->message_type_id = $message->id;
             $model->name = $message->name;
             $model->user_id = $user->id;
             $model->from_id = $fromId;

@@ -71,6 +71,7 @@ class DictDataController extends BaseController
         $params = Yii::$app->request->queryParams;
         if (!$this->isAdmin()) {
             $params['ModelSearch']['store_id'] = $this->getStoreId();
+            $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
         }
         $dataProvider = $searchModel->search($params);
 

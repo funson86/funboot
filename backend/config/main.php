@@ -55,9 +55,6 @@ return [
             'showScriptName' => false,
             //'enableStrictParsing' => true,
             'rules' => [
-                'message/index/<status:\d+>' => 'message/index',
-                'base/message-send/index/<messageId:\d+>' => 'base/message-send/index',
-                'base/message-send/index' => 'base/message-send/index',
                 'base/log/index/<type:\d+>' => 'base/log/index',
                 '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
