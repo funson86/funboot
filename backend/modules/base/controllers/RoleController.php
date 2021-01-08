@@ -4,7 +4,9 @@ namespace backend\modules\base\controllers;
 
 use common\components\enums\YesNo;
 use common\helpers\ArrayHelper;
+use common\models\base\Department;
 use common\models\base\Permission;
+use common\models\base\RoleDepartment;
 use common\models\base\RolePermission;
 use http\Exception\InvalidArgumentException;
 use Yii;
@@ -136,6 +138,52 @@ class RoleController extends BaseController
         return $this->renderAjax($this->action->id, [
             'model' => $model,
             'permissions' => $permissions,
+            'selectIds' => $selectIds,
+        ]);
+    }
+
+    /**
+     * ajax编辑/创建
+     *
+     * @return mixed|string|\yii\web\Response
+     * @throws \yii\base\ExitException
+     */
+    public function actionEditAjaxDepartment()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = $this->findModel($id);
+
+        // 先标注为不可用，再更新已有的，新建没有的，最后删除不可用的。
+        if (Yii::$app->request->isPost) {
+            RoleDepartment::updateAll(['status' => RoleDepartment::STATUS_INACTIVE], ['role_id' => $id]);
+
+            $treeIds = Yii::$app->request->post('tree_ids');
+            if (strlen($treeIds) > 0) {
+                $arrTreeId = explode(',', $treeIds);
+                foreach ($arrTreeId as $treeId) {
+                    $roleDepartment = RoleDepartment::find()->where(['role_id' => $id, 'department_id' => $treeId])->one();
+                    if ($roleDepartment) {
+                        $roleDepartment->status = RoleDepartment::STATUS_ACTIVE;
+                    } else {
+                        $roleDepartment = new RoleDepartment();
+                        $roleDepartment->role_id = $id;
+                        $roleDepartment->department_id = $treeId;
+                    }
+                    $roleDepartment->save();
+                }
+            }
+
+            RoleDepartment::deleteAll(['status' => RoleDepartment::STATUS_INACTIVE, 'role_id' => $id]);
+
+            $this->flashSuccess();
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
+        $departments = Department::find()->asArray()->all();
+        $selectIds = ArrayHelper::getColumn(RoleDepartment::find()->where(['role_id' => $id])->all(), 'department_id');
+        return $this->renderAjax($this->action->id, [
+            'model' => $model,
+            'departments' => $departments,
             'selectIds' => $selectIds,
         ]);
     }

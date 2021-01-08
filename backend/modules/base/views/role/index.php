@@ -62,10 +62,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return Html::status($model->status);
                                 },
                                 'permission' => function ($url, $model, $key) {
-                                    return Html::buttonModal(['edit-ajax-permission', 'id' => $model->id], '菜单权限', ['class' => 'btn btn-primary btn-sm']);
+                                    return Html::buttonModal(['edit-ajax-permission', 'id' => $model->id], Yii::t('app', 'Menu Permission'), ['class' => 'btn btn-primary btn-sm']);
                                 },
                                 'department' => function ($url, $model, $key) {
-                                    return Html::buttonModal(['edit-ajax-department', 'id' => $model->id], '数据权限');
+                                    return Html::buttonModal(['edit-ajax-department', 'id' => $model->id], Yii::t('app', 'Data Permission'));
                                 },
                                 'edit' => function ($url, $model, $key) {
                                     return Html::editModal(['edit-ajax', 'id' => $model->id]);

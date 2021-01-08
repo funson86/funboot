@@ -20,14 +20,14 @@ $form = ActiveForm::begin([
 ]);
 ?>
     <div class="modal-header">
-        <h4 class="modal-title"><?= Yii::t('app', 'Menu Permission') ?></h4>
+        <h4 class="modal-title"><?= Yii::t('app', 'Data Permission') ?></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
         <div class="col-md-12">
             <?= \common\widgets\jstree\JsTree::widget([
                 'name' => "modelTree",
-                'defaultData' => $permissions,
+                'defaultData' => $departments,
                 'selectIds' => $selectIds,
             ]) ?>
         </div>

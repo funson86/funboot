@@ -287,6 +287,32 @@ CREATE TABLE `fb_base_role_permission` (
 ) ENGINE=InnoDB AUTO_INCREMENT=176 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色菜单权限';
 
 -- ----------------------------
+-- Table structure for fb_base_role_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `fb_base_role_department`;
+CREATE TABLE `fb_base_role_department` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
+  `role_id` bigint(20) unsigned NOT NULL COMMENT '角色',
+  `department_id` bigint(20) unsigned NOT NULL COMMENT '部门',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `base_role_department_fk2` (`store_id`),
+  KEY `base_role_department_fk0` (`role_id`),
+  KEY `base_role_department_fk1` (`department_id`),
+  CONSTRAINT `base_role_department_fk0` FOREIGN KEY (`role_id`) REFERENCES `fb_base_role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `base_role_department_fk1` FOREIGN KEY (`department_id`) REFERENCES `fb_base_department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `base_role_department_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=176 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色菜单权限';
+
+-- ----------------------------
 -- Table structure for fb_base_schedule
 -- ----------------------------
 DROP TABLE IF EXISTS `fb_base_schedule`;
