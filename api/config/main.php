@@ -84,24 +84,14 @@ return [
                         'school/student',
                     ]
                 ],
-//                '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
-//                '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
+                '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
+                '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>'=>'<modules>/<controller>/<action>',
-//                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
-        /*'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                'bootan/login' => 'site/login',
-                'login' => 'site/login',
-                'get_info' => 'site/me',
-                'me' => 'site/me',
-            ],
-        ],*/
     ],
     'as cors' => [
         'class' => \yii\filters\Cors::class,

@@ -6,6 +6,7 @@ use common\helpers\ArrayHelper;
 use common\helpers\CommonHelper;
 use common\helpers\IdHelper;
 use common\models\Store;
+use common\models\User;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
@@ -18,6 +19,7 @@ use yii\filters\auth\QueryParamAuth;
 use yii\helpers\Json;
 use yii\rest\ActiveController;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class BaseController
@@ -36,7 +38,7 @@ class BaseController extends ActiveController
      *
      * @var int
      */
-    protected $pageSize = 1;
+    protected $pageSize = 10;
 
     /**
      * 是否高并发
@@ -61,7 +63,7 @@ class BaseController extends ActiveController
     public $needAuth = true;
 
     /**
-     * 不需要鉴权的action id
+     * 要鉴权中不需要鉴权的action id
      * @var string[]
      */
     public $optionalAuth = [];
@@ -73,7 +75,7 @@ class BaseController extends ActiveController
     {
         $actions = parent::actions();
         // 注销系统自带的实现方法，只保留option
-        unset($actions['index'], $actions['update'], $actions['create'], $actions['view'], $actions['delete']);
+        unset($actions['index'], $actions['view'], $actions['update'], $actions['create'], $actions['view'], $actions['delete']);
         return $actions;
     }
 

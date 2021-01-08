@@ -2,6 +2,7 @@
 
 namespace api\components\response;
 
+use yii\base\Arrayable;
 use yii\web\Link;
 
 /**
@@ -23,4 +24,23 @@ class Serializer extends \yii\rest\Serializer
             ],
         ];
     }
+
+    /**
+     * Serializes a model object.
+     * @param Arrayable $model
+     * @return array the array representation of the model
+     */
+    protected function serializeModel($model)
+    {
+        if ($this->request->getIsHead()) {
+            return null;
+        }
+
+        list($fields, $expand) = $this->getRequestedFields();
+
+        return [
+            $this->collectionEnvelope => $model->toArray($fields, $expand),
+        ];
+    }
+
 }
