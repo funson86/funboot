@@ -78,6 +78,7 @@ return [
                         'cons' => 'cons.php', // 常量，每个翻译目录都要有，否则常量名很难看
                         'permission' => 'permission.php', // 菜单，默认中文，其他语言目录需要有
                         'setting' => 'setting.php', // 设置，默认中文，其他语言目录需要有
+                        'system' => 'system.php', // 系统信息，默认中文，其他语言目录需要有
                         'frontend' => 'frontend.php', // frontend自定义配置
                         'backend' => 'backend.php', // backend自定义配置
                         'api' => 'api.php', // api自定义配置

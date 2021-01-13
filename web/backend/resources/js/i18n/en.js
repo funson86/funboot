@@ -13,5 +13,11 @@ var i18nLocal = {
     'Page' :'Page',
     'New Message' :'New Message',
 
+    'Cpu/Memory Usage': 'Cpu/Memory Usage',
+    'Memory': 'Memory',
+    'Unit KB/s': 'Unit KB/s',
+    'Output Speed': 'Output Speed',
+    'Input Speed': 'Input Speed',
+
     'End': 'End'
 }

@@ -5,13 +5,19 @@ var i18nLocal = {
     'Do it carefully':'请谨慎操作',
     'Are you sure to delete this record?': "您确定要删除这条记录吗?",
     'Are you sure to do this operation?': "您确定要执行此项操作吗?",
-    'Ok' :'确定',
-    'Cancel' :'取消',
-    'Enable' :'启用',
-    'Disable' :'禁用',
-    'Goto' :'前往',
-    'Page' :'页',
-    'New Message' :'您有新的消息',
+    'Ok': '确定',
+    'Cancel': '取消',
+    'Enable': '启用',
+    'Disable': '禁用',
+    'Goto': '前往',
+    'Page': '页',
+    'New Message': '您有新的消息',
+
+    'Cpu/Memory Usage': 'Cpu/Memory Usage',
+    'Memory': '内存',
+    'Unit KB/s': '单位 KB/s',
+    'Output Speed': '发送速度',
+    'Input Speed': '接收速度',
 
     'End': '结尾'
 }

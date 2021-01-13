@@ -42,7 +42,13 @@ I18n国际化
 
 ### 前端Javascript的
 
-在backend/resources/js/i18n/目录下有对应的i18n语言文件
+在backend/resources/js/i18n/目录下有对应的i18n语言文件，添加标签和翻译后，直接使用fbT函数翻译即可
+
+```
+    fbT('Cpu/Memory Usage')
+```
+
+> 注意fbT函数定义在site.js中，需要将js放在最后，翻译文件修改后需要强制刷新浏览器CTRL+F5后才生效。
 
 
 

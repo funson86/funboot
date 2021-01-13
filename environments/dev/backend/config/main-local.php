@@ -19,6 +19,29 @@ if (!YII_ENV_TEST) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
+        'generators' => [
+            'crud' => [
+                'class' => \common\components\gii\crud\Generator::className(),
+                'templates' => [
+                    'funboot' => '@common/components/gii/crud/default',
+                    'default' => '@vendor/yiisoft/yii2-gii/src/generators/crud/default',
+                ]
+            ],
+            'model' => [
+                'class' => \common\components\gii\model\Generator::className(),
+                'templates' => [
+                    'funboot' => '@common/components/gii/model/default',
+                    'default' => '@vendor/yiisoft/yii2-gii/src/generators/model/default',
+                ]
+            ],
+            'module' => [
+                'class' => \common\components\gii\module\Generator::className(),
+                'templates' => [
+                    'funboot' => '@common/components/gii/module/default',
+                    'default' => '@vendor/yiisoft/yii2-gii/src/generators/module/default',
+                ]
+            ]
+        ],
     ];
 }
 

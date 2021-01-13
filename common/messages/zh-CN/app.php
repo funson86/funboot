@@ -106,6 +106,9 @@ return [
     'Schedules' => '定时任务',
     'Refresh Config File' => '更新配置文件',
 
+    'System Info' => '系统信息',
+    'PHP Info' => 'PHP信息',
+
     'Attachment' => '文件管理',
     'Attachments' => '文件管理',
 
@@ -452,6 +455,15 @@ return [
     'Custom' => '自定义',
     'Cumtom Date' => '自定义日期',
     'Start Time - End Time' => '开始时间 - 结束时间',
+
+    'Days' => '天',
+    ' Days ' => '天',
+    'Hours' => '小时',
+    ' Hours ' => '小时',
+    'Minutes' => '分钟',
+    ' Minutes ' => '分钟',
+    'Seconds' => '秒',
+    ' Seconds ' => '秒',
 
     'No data' => '暂无数据',
     'Error' => '错误',
