@@ -27,6 +27,9 @@ return [
         'school' => [
             'class' => 'backend\modules\school\Module',
         ],
+        'tool' => [
+            'class' => 'backend\modules\tool\Module',
+        ],
     ],
     'components' => [
         'request' => [

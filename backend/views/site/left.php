@@ -48,6 +48,22 @@ foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
 
 }
 if ($this->context->isAdmin()) { //管理员显示
+    if (YII_ENV_DEV) {
+        $subMenu = [
+            ['label' => Yii::t('permission', 'Gii Crud'), 'icon' => 'fas fa-file-signature', 'url' => ['/gii/crud'], 'class' => 'nav-link', 'target' => '_blank'],
+            ['label' => Yii::t('permission', 'Gii Model'), 'icon' => 'fas fa-download', 'url' => ['/gii/model'], 'class' => 'nav-link', 'target' => '_blank'],
+            ['label' => Yii::t('permission', 'Gii All'), 'icon' => 'fas fa-code', 'url' => ['/gii'], 'class' => 'nav-link', 'target' => '_blank'],
+        ];
+        array_push($menus, ['label' => Yii::t('permission', 'Gii'), 'icon' => 'fas fa-code', 'url' => '#', 'class' => ' fbLeftMenuCat', 'items' => $subMenu]);
+
+        $subMenu = [
+            ['label' => Yii::t('permission', 'Crud'), 'icon' => 'fa fa-book', 'url' => '/tool/test', 'class' => 'nav-link J_menuItem', 'target' => '_self'],
+            ['label' => Yii::t('permission', 'Crud Modal'), 'icon' => 'fa fa-book', 'url' => '/tool/test', 'class' => 'nav-link J_menuItem', 'target' => '_self'],
+            ['label' => Yii::t('permission', 'Debug'), 'icon' => 'fas fa-bug', 'url' => ['/debug'], 'class' => 'nav-link', 'target' => '_blank'],
+            ['label' => Yii::t('permission', '接口文档'), 'icon' => 'fas fa-file-alt', 'url' => ['/swagger/index'], 'class' => 'nav-link', 'target' => '_blank'],
+        ];
+        array_push($menus, ['label' => Yii::t('permission', 'Tools'), 'icon' => 'fa fa-book', 'url' => '#', 'class' => ' fbLeftMenuCat', 'items' => $subMenu]);
+    }
     array_push($menus, ['label' => Yii::t('permission', 'Funboot开发指南'), 'icon' => 'fa fa-book', 'url' => 'https://github.com/funson86/funboot/', 'target' => '_blank']);
     array_push($menus, ['label' => Yii::t('permission', 'QQ开发交流群'), 'icon' => 'fab fa-qq', 'url' => 'https://qm.qq.com/cgi-bin/qm/qr?k=jJwNMMAkEelzRPmHrSc-WXS5jrwVH-3x&jump_from=webapi', 'target' => '_blank']);
 }

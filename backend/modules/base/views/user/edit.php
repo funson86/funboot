@@ -64,9 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'area')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'remark')->textarea() ?>
-                    <?= $form->field($model, 'remark')->widget(\common\widgets\markdown\Markdown::class, [
-                        // 'server' => '', // 图片上传路径 + 驱动
-                    ]); ?>
                     <?= $form->field($model, 'access_token')->widget(\common\components\ueditor\Ueditor::class, [
                         // 'server' => '', // 图片上传路径 + 驱动
                     ]); ?>

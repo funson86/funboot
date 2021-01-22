@@ -15,6 +15,7 @@ class AdminlteAsset extends AssetBundle
 
     public $css = [
         'plugins/fontawesome-free/css/all.min.css',
+        'plugins/funboot/funboot.css',
         'plugins/ionicons/ionicons.min.css',
         'plugins/flag-icon-css/css/flag-icon.min.css',
         'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
