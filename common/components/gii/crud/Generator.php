@@ -22,20 +22,21 @@ class Generator extends \yii\gii\generators\crud\Generator
     public function fieldTypes()
     {
         return [
-            'text' => "文本框",
-            'textarea' => "文本域",
-            'time' => "时间",
-            'date' => "日期",
-            'datetime' => "日期时间",
-            'dropDownList' => "下拉选择框",
-            'multipleInput' => "Input组",
-            'radioList' => "单选按钮",
-            'checkboxList' => "复选框",
-            'baiduUEditor' => "百度编辑器",
-            'image' => "图片上传",
-            'images' => "多图上传",
-            'file' => "文件上传",
-            'files' => "多文件上传",
+            'text' => Yii::t('system', 'text'),
+            'textarea' => Yii::t('system', 'textarea'),
+            'time' => Yii::t('system', 'time'),
+            'date' => Yii::t('system', 'date'),
+            'datetime' => Yii::t('system', 'datetime'),
+            'dropDownList' => Yii::t('system', 'dropDownList'),
+            'select2' => Yii::t('system', 'select2'),
+            'multipleInput' => Yii::t('system', 'multipleInput'),
+            'radioList' => Yii::t('system', 'radioList'),
+            'checkboxList' => Yii::t('system', 'checkboxList'),
+            'baiduUEditor' => Yii::t('system', 'baiduUEditor'),
+            'image' => Yii::t('system', 'image'),
+            'images' => Yii::t('system', 'images'),
+            'file' => Yii::t('system', 'file'),
+            'files' => Yii::t('system', 'files'),
         ];
     }
 
@@ -52,12 +53,18 @@ class Generator extends \yii\gii\generators\crud\Generator
     /**
      * Generates code for active field
      * @param string $attribute
+     * @param bool $modal
      * @return string
      */
-    public function generateActiveField($attribute)
+    public function generateActiveFieldFunboot($attribute, $modal = false)
     {
         $tableSchema = $this->getTableSchema();
         $type = $this->inputType[$attribute] ?? '';
+
+        $blank = '        ';
+        if (!$modal) {
+            $blank = '                    ';
+        }
 
         switch ($type) {
             case 'text':
@@ -84,144 +91,150 @@ class Generator extends \yii\gii\generators\crud\Generator
                 break;
             case 'color':
                 return "\$form->field(\$model, '$attribute')->widget(\kartik\color\ColorInput::class, [
-                            'options' => ['placeholder' => '请选择颜色'],
-                    ]);";
+" . $blank . "    'options' => ['placeholder' => '请选择颜色'],
+" . $blank . "]);";
                 break;
             case 'time':
                 return "\$form->field(\$model, '$attribute')->widget(kartik\\time\TimePicker::class, [
-                        'language' => 'zh-CN',
-                        'pluginOptions' => [
-                            'showSeconds' => true
-                        ]
-                    ])";
+" . $blank . "    'language' => 'zh-CN',
+" . $blank . "    'pluginOptions' => [
+" . $blank . "        'showSeconds' => true
+" . $blank . "    ]
+" . $blank . "])";
                 break;
             case 'date':
                 return "\$form->field(\$model, '$attribute')->widget(kartik\date\DatePicker::class, [
-                        'language' => 'zh-CN',
-                        'layout'=>'{picker}{input}',
-                        'pluginOptions' => [
-                            'format' => 'yyyy-mm-dd',
-                            'todayHighlight' => true, // 今日高亮
-                            'autoclose' => true, // 选择后自动关闭
-                            'todayBtn' => true, // 今日按钮显示
-                        ],
-                        'options'=>[
-                            'class' => 'form-control no_bor',
-                        ]
-                    ])";
+" . $blank . "    'language' => 'zh-CN',
+" . $blank . "    'layout'=>'{picker}{input}',
+" . $blank . "    'pluginOptions' => [
+" . $blank . "        'format' => 'yyyy-mm-dd',
+" . $blank . "        'todayHighlight' => true, // 今日高亮
+" . $blank . "        'autoclose' => true, // 选择后自动关闭
+" . $blank . "        'todayBtn' => true, // 今日按钮显示
+" . $blank . "    ],
+" . $blank . "    'options'=>[
+" . $blank . "        'class' => 'form-control no_bor',
+" . $blank . "    ]
+" . $blank . "])";
                 break;
             case 'datetime':
                 return "\$form->field(\$model, '$attribute')->widget(kartik\datetime\DateTimePicker::class, [
-                        'language' => 'zh-CN',
-                        'options' => [
-                            'value' => \$model->isNewRecord ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', \$model->$attribute),
-                        ],
-                        'pluginOptions' => [
-                            'format' => 'yyyy-mm-dd hh:ii',
-                            'todayHighlight' => true, // 今日高亮
-                            'autoclose' => true, // 选择后自动关闭
-                            'todayBtn' => true, // 今日按钮显示
-                        ]
-                    ])";
+" . $blank . "    'language' => 'zh-CN',
+" . $blank . "    'options' => [
+" . $blank . "        'value' => \$model->isNewRecord ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', \$model->$attribute),
+" . $blank . "    ],
+" . $blank . "    'pluginOptions' => [
+" . $blank . "        'format' => 'yyyy-mm-dd hh:ii:ss',
+" . $blank . "        'todayHighlight' => true, // 今日高亮
+" . $blank . "        'autoclose' => true, // 选择后自动关闭
+" . $blank . "        'todayBtn' => true, // 今日按钮显示
+" . $blank . "    ]
+" . $blank . "])";
+                break;
+            case 'select2':
+                return "\$form->field(\$model, '$attribute')->widget(kartik\select2\Select2::class, [
+" . $blank . "    'data' => ['s1', 's2'], //传入变量
+" . $blank . "    'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
+" . $blank . "])";
                 break;
             case 'multipleInput':
                 return "\$form->field(\$model, '$attribute')->widget(unclead\multipleinput\MultipleInput::class, [
-                        'max' => 4,
-                        'columns' => [
-                            [
-                                'name'  => 'user_id',
-                                'type'  => 'dropDownList',
-                                'title' => 'User',
-                                'defaultValue' => 1,
-                                'items' => [
-                                   1 => 'User 1',
-                                    2 => 'User 2'
-                                ]
-                            ],
-                            [
-                                'name'  => 'day',
-                                'type'  => \kartik\date\DatePicker::class,
-                                'title' => 'Day',
-                                'value' => function(\$data) {
-                                    return \$data['day'];
-                                },
-                                'items' => [
-                                    '0' => 'Saturday',
-                                    '1' => 'Monday'
-                                ],
-                                'options' => [
-                                    'pluginOptions' => [
-                                        'format' => 'dd.mm.yyyy',
-                                        'todayHighlight' => true
-                                    ]
-                                ]
-                            ],
-                            [
-                                'name'  => 'priority',
-                                'title' => 'Priority',
-                                'enableError' => true,
-                                'options' => [
-                                    'class' => 'input-priority'
-                                ]
-                            ]
-                        ]
-                     ])";
+" . $blank . "    'max' => 4,
+" . $blank . "    'columns' => [
+" . $blank . "        [
+" . $blank . "            'name'  => 'user_id',
+" . $blank . "            'type'  => 'dropDownList',
+" . $blank . "            'title' => 'User',
+" . $blank . "            'defaultValue' => 1,
+" . $blank . "            'items' => [
+" . $blank . "                1 => 'User 1',
+" . $blank . "                2 => 'User 2'
+" . $blank . "            ]
+" . $blank . "        ],
+" . $blank . "        [
+" . $blank . "            'name'  => 'day',
+" . $blank . "            'type'  => \kartik\date\DatePicker::class,
+" . $blank . "            'title' => 'Day',
+" . $blank . "            'value' => function(\$data) {
+" . $blank . "                return \$data['day'];
+" . $blank . "            },
+" . $blank . "            'items' => [
+" . $blank . "                '0' => 'Saturday',
+" . $blank . "                '1' => 'Monday'
+" . $blank . "            ],
+" . $blank . "            'options' => [
+" . $blank . "                'pluginOptions' => [
+" . $blank . "                    'format' => 'yyyy-mm-dd',
+" . $blank . "                    'todayHighlight' => true
+" . $blank . "                ]
+" . $blank . "            ]
+" . $blank . "        ],
+" . $blank . "        [
+" . $blank . "            'name'  => 'priority',
+" . $blank . "            'title' => 'Priority',
+" . $blank . "            'enableError' => true,
+" . $blank . "            'options' => [
+" . $blank . "                'class' => 'input-priority'
+" . $blank . "            ]
+" . $blank . "        ]
+" . $blank . "    ]
+" . $blank . "])";
                 break;
             case 'image':
                 return "\$form->field(\$model, '$attribute')->widget(\common\components\uploader\FileWidget::class, [
-                        'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
-                        'theme' => 'default',
-                        'themeConfig' => [],
-                        'config' => [
-                            // 可设置自己的上传地址, 不设置则默认地址
-                            // 'server' => '',
-                            'pick' => [
-                                'multiple' => false,
-                            ],
-                        ]
-                    ]);";
+" . $blank . "    'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
+" . $blank . "    'theme' => 'default',
+" . $blank . "    'themeConfig' => [],
+" . $blank . "    'config' => [
+" . $blank . "        // 可设置自己的上传地址, 不设置则默认地址
+" . $blank . "        // 'server' => '',
+" . $blank . "        'pick' => [
+" . $blank . "            'multiple' => false,
+" . $blank . "        ],
+" . $blank . "    ]
+" . $blank . "]);";
                 break;
             case 'images':
                 return "\$form->field(\$model, '$attribute')->widget(\common\components\uploader\FileWidget::class, [
-                        'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
-                        'theme' => 'default',
-                        'themeConfig' => [],
-                        'config' => [
-                            // 可设置自己的上传地址, 不设置则默认地址
-                            // 'server' => '',
-                            'pick' => [
-                                'multiple' => true,
-                            ],
-                        ]
-                    ]);";
+" . $blank . "    'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
+" . $blank . "    'theme' => 'default',
+" . $blank . "    'themeConfig' => [],
+" . $blank . "    'config' => [
+" . $blank . "        // 可设置自己的上传地址, 不设置则默认地址
+" . $blank . "        // 'server' => '',
+" . $blank . "        'pick' => [
+" . $blank . "            'multiple' => true,
+" . $blank . "        ],
+" . $blank . "    ]
+" . $blank . "]);";
                 break;
             case 'file':
                 return "\$form->field(\$model, '$attribute')->widget(\common\components\uploader\FileWidget::class, [
-                        'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_FILE,
-                        'theme' => 'default',
-                        'themeConfig' => [],
-                        'config' => [
-                            // 可设置自己的上传地址, 不设置则默认地址
-                            // 'server' => '',
-                            'pick' => [
-                                'multiple' => true,
-                            ],
-                        ]
-                    ]);";
+" . $blank . "    'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_FILE,
+" . $blank . "    'theme' => 'default',
+" . $blank . "    'themeConfig' => [],
+" . $blank . "    'config' => [
+" . $blank . "        // 可设置自己的上传地址, 不设置则默认地址
+" . $blank . "        // 'server' => '',
+" . $blank . "        'pick' => [
+" . $blank . "            'multiple' => false,
+" . $blank . "        ],
+" . $blank . "    ]
+" . $blank . "]);";
                 break;
             case 'files':
                 return "\$form->field(\$model, '$attribute')->widget(\common\components\uploader\FileWidget::class, [
-                        'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_FILES,
-                        'theme' => 'default',
-                        'themeConfig' => [],
-                        'config' => [
-                            // 可设置自己的上传地址, 不设置则默认地址
-                            // 'server' => '',
-                            'pick' => [
-                                'multiple' => true,
-                            ],
-                        ]
-                    ]);";
+" . $blank . "    'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_FILE,
+" . $blank . "    'theme' => 'default',
+" . $blank . "    'themeConfig' => [],
+" . $blank . "    'config' => [
+" . $blank . "        // 可设置自己的上传地址, 不设置则默认地址
+" . $blank . "        // 'server' => '',
+" . $blank . "        'pick' => [
+" . $blank . "            'multiple' => true,
+" . $blank . "        ],
+" . $blank . "    ]
+" . $blank . "]);";
                 break;
         }
     }

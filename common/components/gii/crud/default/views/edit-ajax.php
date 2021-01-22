@@ -44,12 +44,12 @@ $form = ActiveForm::begin([
 <?php
 if (!empty($generator->formFields)) {
     foreach ($generator->formFields as $attribute) {
-        echo "        <?= " . $generator->generateActiveField($attribute) . " ?>\n";
+        echo "        <?= " . $generator->generateActiveFieldFunboot($attribute, true) . " ?>\n";
     }
 } else {
     foreach ($generator->getColumnNames() as $attribute) {
         if (in_array($attribute, $safeAttributes)) {
-            echo "        <?= " . $generator->generateActiveField($attribute) . " ?>\n";
+            echo "        <?= " . $generator->generateActiveFieldFunboot($attribute, true) . " ?>\n";
         }
     }
 }?>

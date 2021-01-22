@@ -81,7 +81,7 @@ class FileController extends \common\components\controller\BaseController
             'driver' => $driver,
             'multiple' => Yii::$app->request->get('multiple', true),
             'boxId' => Yii::$app->request->get('boxId'),
-            'uploadType' => Yii::$app->request->get('upload_type', Attachment::UPLOAD_TYPE_IMAGE),
+            'uploadType' => Yii::$app->request->get('upload_type', Yii::$app->request->get('upload_type', Attachment::UPLOAD_TYPE_IMAGE)),
         ]);
 
     }
@@ -107,6 +107,15 @@ class FileController extends \common\components\controller\BaseController
     public function actionImage()
     {
         $uploader = new Uploader(Yii::$app->request->post(), Attachment::UPLOAD_TYPE_IMAGE);
+        if ($model = $uploader->save()) {
+            return $this->success($model);
+        }
+        return $this->error(500);
+    }
+
+    public function actionFile()
+    {
+        $uploader = new Uploader(Yii::$app->request->post(), Attachment::UPLOAD_TYPE_FILE);
         if ($model = $uploader->save()) {
             return $this->success($model);
         }
