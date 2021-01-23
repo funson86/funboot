@@ -150,7 +150,7 @@ class SystemController extends BaseController
         $arr['domainIP'] = @get_current_user() . ' - ' . $_SERVER['SERVER_NAME'] . '(' . $domain . ')';
         $arr['flag'] = php_uname();
         $arr['phpOs'] = PHP_OS;
-        $arr['os'] = $os[0] . Yii::t('app', ' Kenerl: ') . ($this->linux() ? $os[2] : $os[1]);
+        $arr['os'] = $os[0] . Yii::t('system', ' Kernel: ') . ($this->linux() ? $os[2] : $os[1]);
         $arr['language'] = @$_SERVER['HTTP_ACCEPT_LANGUAGE'];;
         $arr['name'] = $this->linux() ? $os[1] : $os[2];
         $arr['email'] = @$_SERVER['SERVER_ADMIN'];
