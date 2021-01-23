@@ -69,6 +69,15 @@ Funboot的所有系统组件以XxxxSystem结尾，配置在common/config/main.ph
 
 ### SettingSystem 配置组件
 
+配置组件能大大降低系统需要增加配置时的工作量，只需要在数据表中插入数据或者在后台的配置即可生成配置表单
+
+```
+INSERT INTO `fb_base_setting_type` VALUES ('46', '1', '0', 'backend', '商品管理', 'product', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('4601', '1', '46', 'backend', '名称前显示SKU', 'product_show_sku', '是否在商品名称前显示sku', 'radioList', '0:否,1:是', '0', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('4603', '1', '46', 'backend', '名称后显示第二语言', 'product_show_local', '是否在商品名称后显示第二语言', 'radioList', '0:否,1:是', '0', '50', '1', '1600948360', '1600948360', '1', '1');
+```
+
+
 每个Store的配置ID是不同的，需要传入code和storeId
 
 ```php
