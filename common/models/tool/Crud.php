@@ -15,13 +15,16 @@ use common\models\Store;
  * @property string $description 简介
  * @property string $time 时间
  * @property string $date 日期
- * @property string $started_at 开始时间
- * @property string $ended_at 开始时间
- * @property string $tag 标签
+ * @property int $started_at 开始时间
+ * @property int $ended_at 开始时间
+ * @property string $color 颜色
+ * @property string|null $tag 标签
+ * @property string|null $config 配置
  * @property string $image 图片
- * @property string $images 多图
+ * @property string|null $images 多图
  * @property string $file 文件
- * @property string $files 多文件
+ * @property string|null $files 多文件
+ * @property string|null $location 坐标
  * @property string|null $markdown Markdown编辑器
  * @property string|null $content 内容
  * @property int $type 类型
@@ -48,10 +51,11 @@ class Crud extends CrudBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'started_at', 'ended_at', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
+            [['tag', 'config', 'images', 'files', 'location'], 'safe'],
             [['markdown', 'content'], 'string'],
-            [['name', 'description', 'time', 'date', 'started_at', 'ended_at', 'tag', 'image', 'images', 'file', 'files'], 'string', 'max' => 255],
+            [['name', 'description', 'time', 'date', 'color', 'image', 'file'], 'string', 'max' => 255],
         ]);
     }
 
@@ -70,11 +74,14 @@ class Crud extends CrudBase
                 'date' => '日期',
                 'started_at' => '开始时间',
                 'ended_at' => '开始时间',
+                'color' => '颜色',
                 'tag' => '标签',
+                'config' => '配置',
                 'image' => '图片',
                 'images' => '多图',
                 'file' => '文件',
                 'files' => '多文件',
+                'location' => '坐标',
                 'markdown' => 'Markdown编辑器',
                 'content' => '内容',
                 'type' => '类型',
@@ -95,11 +102,14 @@ class Crud extends CrudBase
                 'date' => Yii::t('app', 'Date'),
                 'started_at' => Yii::t('app', 'Started At'),
                 'ended_at' => Yii::t('app', 'Ended At'),
+                'color' => Yii::t('app', 'Color'),
                 'tag' => Yii::t('app', 'Tag'),
+                'config' => Yii::t('app', 'Config'),
                 'image' => Yii::t('app', 'Image'),
                 'images' => Yii::t('app', 'Images'),
                 'file' => Yii::t('app', 'File'),
                 'files' => Yii::t('app', 'Files'),
+                'location' => Yii::t('app', 'Location'),
                 'markdown' => Yii::t('app', 'Markdown'),
                 'content' => Yii::t('app', 'Content'),
                 'type' => Yii::t('app', 'Type'),

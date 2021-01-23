@@ -28,6 +28,7 @@ class Generator extends \yii\gii\generators\crud\Generator
             'date' => Yii::t('system', 'date'),
             'datetime' => Yii::t('system', 'datetime'),
             'dropDownList' => Yii::t('system', 'dropDownList'),
+            'color' => Yii::t('system', 'color'),
             'select2' => Yii::t('system', 'select2'),
             'multipleInput' => Yii::t('system', 'multipleInput'),
             'radioList' => Yii::t('system', 'radioList'),
@@ -91,7 +92,7 @@ class Generator extends \yii\gii\generators\crud\Generator
                 break;
             case 'color':
                 return "\$form->field(\$model, '$attribute')->widget(\kartik\color\ColorInput::class, [
-" . $blank . "    'options' => ['placeholder' => '请选择颜色'],
+" . $blank . "    'options' => ['placeholder' => Yii::t('system', 'Please Select')],
 " . $blank . "]);";
                 break;
             case 'time':
@@ -255,7 +256,15 @@ class Generator extends \yii\gii\generators\crud\Generator
             return 'ntext';
         }
 
+        if ($column->type === 'json') {
+            return 'json';
+        }
+
         if (stripos($column->name, '_at') !== false && $column->phpType === 'integer') {
+            return 'datetime';
+        }
+
+        if (stripos($column->name, 'time') !== false && $column->phpType === 'integer') {
             return 'datetime';
         }
 

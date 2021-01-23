@@ -59,10 +59,6 @@ class CrudController extends BaseController
                 $post = Yii::$app->request->post();
                 $model->started_at = strtotime($post['Crud']['startedTime']);
                 $model->ended_at = strtotime($post['Crud']['endedTime']);
-                $model->tag = json_encode($post['Crud']['tags']);
-                $model->config = json_encode($post['Crud']['configs']);
-                $model->images = json_encode($post['Crud']['imagess']);
-                $model->files = json_encode($post['Crud']['filess']);
 
                 if ($model->save()) {
                     $this->flashSuccess();
@@ -74,10 +70,6 @@ class CrudController extends BaseController
             }
         }
 
-        $model->tags = json_decode($model->tag, true);
-        $model->configs = json_decode($model->config, true);
-        $model->imagess = json_decode($model->images, true);
-        $model->filess = json_decode($model->files, true);
         return $this->render($this->action->id, [
             'model' => $model,
         ]);

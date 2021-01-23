@@ -17,6 +17,7 @@ return [
     'Cpu Cores' => 'Cpu数量',
     'Cpu Model' => 'Cpu型号',
     'Cpu Vendor' => 'Cpu生产商',
+    ' Kernel: ' => ' 内核：',
     'Load Avg' => '平均负载',
     'Total Memory' => '总内存',
     'Used Memory' => '已使用内存',
@@ -30,5 +31,23 @@ return [
     'Input Speed' => '接收速度',
 
     'Hardware Info' => '硬件信息',
+
+    'text' => "文本框",
+    'textarea' => "文本域",
+    'time' => "时间",
+    'date' => "日期",
+    'datetime' => "日期时间",
+    'dropDownList' => "下拉选择框",
+    'color' => "颜色选择器",
+    'select2' => "多选框",
+    'multipleInput' => "多Input组",
+    'radioList' => "单选按钮",
+    'checkboxList' => "复选框",
+    'baiduUEditor' => "百度编辑器",
+    'image' => "图片上传",
+    'images' => "多图上传",
+    'file' => "文件上传",
+    'files' => "多文件上传",
+    'Please Select' => "请选择",
 
 ];

@@ -2,7 +2,6 @@
 
 use common\helpers\Html;
 use common\helpers\Url;
-use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\base\Role as ActiveModel;

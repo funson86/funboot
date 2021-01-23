@@ -71,6 +71,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             'todayBtn' => true, // 今日按钮显示
                         ]
                     ]) ?>
+                    <?= $form->field($model, 'color')->widget(\kartik\color\ColorInput::class, [
+                        'options' => ['placeholder' => Yii::t('system', 'Please Select')],
+                    ]); ?>
                     <?= $form->field($model, 'tag')->widget(kartik\select2\Select2::class, [
                         'data' => ['s1', 's2'], //传入变量
                         'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],

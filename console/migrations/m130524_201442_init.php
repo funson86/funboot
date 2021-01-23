@@ -310,7 +310,7 @@ CREATE TABLE `fb_base_role_department` (
   CONSTRAINT `base_role_department_fk0` FOREIGN KEY (`role_id`) REFERENCES `fb_base_role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `base_role_department_fk1` FOREIGN KEY (`department_id`) REFERENCES `fb_base_department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `base_role_department_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=176 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色菜单权限';
+) ENGINE=InnoDB AUTO_INCREMENT=176 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色数据权限';
 
 -- ----------------------------
 -- Table structure for fb_base_schedule

@@ -14,6 +14,9 @@ use Yii;
  */
 class CrudBase extends BaseModel
 {
+    public $startedTime = '';
+    public $endedTime = '';
+
     /**
      * @return array|array[]
      */
@@ -40,12 +43,17 @@ class CrudBase extends BaseModel
             'time' => Yii::t('app', 'Time'),
             'date' => Yii::t('app', 'Date'),
             'started_at' => Yii::t('app', 'Started At'),
+            'startedTime' => Yii::t('app', 'Started At'),
             'ended_at' => Yii::t('app', 'Ended At'),
+            'endedTime' => Yii::t('app', 'Ended At'),
+            'color' => Yii::t('app', 'Color'),
             'tag' => Yii::t('app', 'Tag'),
+            'config' => Yii::t('app', 'Config'),
             'image' => Yii::t('app', 'Image'),
             'images' => Yii::t('app', 'Images'),
             'file' => Yii::t('app', 'File'),
             'files' => Yii::t('app', 'Files'),
+            'location' => Yii::t('app', 'Location'),
             'markdown' => Yii::t('app', 'Markdown'),
             'content' => Yii::t('app', 'Content'),
             'type' => Yii::t('app', 'Type'),

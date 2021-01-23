@@ -70,11 +70,14 @@ $form = ActiveForm::begin([
                 'todayBtn' => true, // 今日按钮显示
             ]
         ]) ?>
-        <?= $form->field($model, 'tags')->widget(kartik\select2\Select2::class, [
+        <?= $form->field($model, 'color')->widget(\kartik\color\ColorInput::class, [
+            'options' => ['placeholder' => Yii::t('system', 'Please Select')],
+        ]); ?>
+        <?= $form->field($model, 'tag')->widget(kartik\select2\Select2::class, [
             'data' => ['s1', 's2'], //传入变量
             'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
         ]) ?>
-        <?= $form->field($model, 'configs')->widget(unclead\multipleinput\MultipleInput::class, [
+        <?= $form->field($model, 'config')->widget(unclead\multipleinput\MultipleInput::class, [
             'max' => 4,
             'columns' => [
                 [
@@ -127,7 +130,7 @@ $form = ActiveForm::begin([
                 ],
             ]
         ]); ?>
-        <?= $form->field($model, 'imagess')->widget(\common\components\uploader\FileWidget::class, [
+        <?= $form->field($model, 'images')->widget(\common\components\uploader\FileWidget::class, [
             'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
             'theme' => 'default',
             'themeConfig' => [],
@@ -151,7 +154,7 @@ $form = ActiveForm::begin([
                 ],
             ]
         ]); ?>
-        <?= $form->field($model, 'filess')->widget(\common\components\uploader\FileWidget::class, [
+        <?= $form->field($model, 'files')->widget(\common\components\uploader\FileWidget::class, [
             'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_FILE,
             'theme' => 'default',
             'themeConfig' => [],

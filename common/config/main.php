@@ -107,6 +107,7 @@ return [
             ],
         ],
         'formatter' => [
+            'class' => 'common\components\i18n\Formatter',
             'dateFormat' => 'yyyy-MM-dd',
             'datetimeFormat' => 'yyyy-MM-dd HH:mm:ss',
             'decimalSeparator' => '.',
