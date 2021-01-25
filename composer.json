@@ -22,6 +22,7 @@
         "yiisoft/yii2-queue": "^2.3",
         "yiisoft/yii2-redis": "^2.0",
         "yiisoft/yii2-mongodb": "^2.1",
+        "yiisoft/yii2-elasticsearch": "~2.1.0",
         "hisune/echarts-php": "^1.0",
         "unclead/yii2-multiple-input": "~2.0",
         "kartik-v/yii2-widget-datepicker": "@dev",
@@ -46,10 +47,10 @@
         "omnilight/yii2-scheduling": "^1.1",
         "ext-json": "^1.5",
         "ext-redis": "*",
+        "trntv/probe": "^1.0",
         "e282486518/yii2-console-migration": "@dev",
         "phing/phing": "*",
-        "sebastian/phpcpd": "*",
-        "stripe/stripe-php": "^7.58"
+        "sebastian/phpcpd": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

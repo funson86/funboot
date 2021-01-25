@@ -8,7 +8,7 @@ use Yii;
 use \yii\mongodb\ActiveRecord;
 
 /**
- * This is the model base class for table "{{%school_student}}" to add your code.
+ * This is the model base class for mongodb "{{mongodb_crud}}" to add your code.
  *
  * @property Store $store
  */

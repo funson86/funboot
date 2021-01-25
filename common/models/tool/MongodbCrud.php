@@ -8,7 +8,7 @@ use common\models\User;
 use common\models\Store;
 
 /**
- * This is the model class for mongodb "{{redis_crud}}".
+ * This is the model class for mongodb "{{mongodb_crud}}".
  *
  * @property int $id
  * @property int $store_id 商家

@@ -23,6 +23,14 @@ return [
             'class' => '\yii\mongodb\Connection',
             'dsn' => 'mongodb://localhost:27017/funboot',
         ],
+        'elasticsearch' => [
+            'class' => 'yii\elasticsearch\Connection',
+            'nodes' => [
+                ['http_address' => '127.0.0.1:9200'],
+                // configure more hosts if you have a cluster
+            ],
+            'dslVersion' => 7, // default is 5
+        ],
         'queue' => [
             'class' => \yii\queue\file\Queue::class,
             'as log' => \yii\queue\LogBehavior::class,

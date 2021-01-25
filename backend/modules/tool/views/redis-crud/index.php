@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
+                <h2 class="card-title"><?= $this->title ?></h2>
                 <div class="card-tools">
                     <?= Html::createModal() ?>
                     <?= Html::export() ?>
@@ -37,18 +38,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($models as $model){ ?>
+                    <?php foreach($models as $model) { ?>
                         <tr data-key="<?= $model['id'] ?>">
                             <td><?= $model['id'] ?></td>
                             <td><?= Html::field('name', $model['name']) ?></td>
                             <td><?= ActiveModel::getTypeLabels($model['type']) ?></td>
-                            <td><?= $model['sort'] ?></td>
+                            <td><?= Html::sort($model['sort']) ?></td>
                             <td><?= Html::status($model['status']) ?></td>
                             <td><?= date('Y-m-d H:i:s', $model['created_at']) ?></td>
                             <td>
                                 <?= Html::viewModal(['view-ajax', 'id' => $model['id']]); ?>
                                 <?= Html::editModal(['edit-ajax', 'id' => $model['id']]); ?>
-                                <?= Html::delete(['delete', 'id' => $model['id']]); ?>
+                                <?= Html::delete(['delete', 'id' => $model['id'], 'soft' => false]); ?>
                             </td>
                         </tr>
                     <?php } ?>

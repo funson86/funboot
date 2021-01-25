@@ -59,7 +59,7 @@ class MongodbCrudController extends BaseController
     {
         if (empty($id) || empty(($model = $this->modelClass::findOne($id)))) {
             $model = new $this->modelClass();
-            $model->_id = IdHelper::snowFlakeId();
+            $model->_id = $model->id = IdHelper::snowFlakeId();
             $model->sort = Yii::$app->params['defaultSort'];
             $model->status = $this->modelClass::STATUS_ACTIVE;
 
