@@ -140,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= $model['code'] ?></td>
                             <td><?= $model['msg'] ?></td>
                             <td><?= $model['cost_time'] ?></td>
-                            <td><?= $model['type'] ?></td>
+                            <td><?= date('Y-m-d H:i:s', $model['created_at']) ?></td>
                             <td>
                                 <?= Html::delete(['delete', 'id' => $model['_id']]); ?>
                             </td>
@@ -154,9 +154,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);?>
                 </p>
             </div>
-            <div class="card-footer">
-            </div>
-
             <?php } ?>
 
         </div>

@@ -44,7 +44,7 @@ class BaseModel extends ActiveRecord
     {
         // 未登录认为是store管理员登录, console下不一定有Yii::$app->user
         $userId = isset(Yii::$app->user) && !Yii::$app->user->getIsGuest() ? Yii::$app->user->id : Yii::$app->storeSystem->getUserId();
-        return [
+        return array_merge(parent::behaviors(), [
             TimestampBehavior::class,
             [
                 'class' => BlameableBehavior::class,
@@ -61,7 +61,7 @@ class BaseModel extends ActiveRecord
                 ],
                 'value' => Yii::$app->storeSystem->getId(),
             ],
-        ];
+        ]);
     }
 
     /**

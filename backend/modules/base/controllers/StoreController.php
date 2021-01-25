@@ -130,7 +130,7 @@ class StoreController extends BaseController
      */
     public function actionLogin($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
         }

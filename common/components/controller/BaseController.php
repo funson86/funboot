@@ -4,6 +4,7 @@ namespace common\components\controller;
 
 use common\helpers\ArrayHelper;
 use common\helpers\CommonHelper;
+use common\helpers\IdHelper;
 use common\helpers\ResultHelper;
 use common\models\Store;
 use common\models\User;
@@ -37,6 +38,12 @@ class BaseController extends Controller
      */
     protected $pageSize = 10;
 
+    /**
+     * 是否启用高并发
+     * @var bool
+     */
+    protected $highConcurrency = false;
+
 
     public function beforeAction($action)
     {
@@ -58,20 +65,24 @@ class BaseController extends Controller
      *
      * @param $id
      * @param bool $emptyNew
-     * @param bool $highConcurrency
+     * @param bool $action
      * @return \yii\db\ActiveRecord
      * @throws \Exception
      */
-    protected function findModel($id, $highConcurrency = false)
+    protected function findModel($id, $action = false)
     {
         /* @var $model \yii\db\ActiveRecord */
         $storeId = $this->getStoreId();
         if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
+            if ($action) {
+                return null;
+            }
+
             $model = new $this->modelClass();
             $model->loadDefaultValues();
 
             // 如果配置了高并发
-            if ($highConcurrency || Yii::$app->params['highConcurrency']) {
+            if ($this->highConcurrency || Yii::$app->params['highConcurrency']) {
                 $model->id = IdHelper::snowFlakeId();
             }
 

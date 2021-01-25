@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\components\enums\Status;
 use common\helpers\AuthHelper;
 use common\helpers\IdHelper;
 use common\helpers\OfficeHelper;
@@ -16,6 +17,7 @@ use Yii;
 use yii\base\Model;
 use common\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Inflector;
@@ -32,10 +34,10 @@ use yii\web\Response;
 class BaseController extends \common\components\controller\BaseController
 {
     /**
-     * 列表是否为树形结构
+     * 1带搜索列表 2树形 3非常规表格
      * @var array[]
      */
-    protected $indexTree = false;
+    protected $style = 1;
 
     /**
      * 模糊查询字段
@@ -153,7 +155,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionIndex()
     {
-        if ($this->indexTree) {
+        if ($this->style == 2) {
             $query = $this->modelClass::find()
                 ->orderBy(['id' => SORT_ASC]);
 
@@ -164,6 +166,20 @@ class BaseController extends \common\components\controller\BaseController
 
             return $this->render($this->action->id, [
                 'dataProvider' => $dataProvider,
+            ]);
+        } elseif ($this->style == 3) {
+            $data = $this->modelClass::find()
+                ->where(['>=', 'status', Status::STATUS_INACTIVE])
+                ->andWhere(['store_id' => $this->getStoreId()]);
+            $pages = new Pagination(['totalCount' => $data->count(), 'pageSize' => $this->pageSize]);
+            $models = $data->offset($pages->offset)
+                ->orderBy('id desc')
+                ->limit($pages->limit)
+                ->all();
+
+            return $this->render($this->action->id, [
+                'models' => $models,
+                'pages' => $pages
             ]);
         }
 
@@ -196,7 +212,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionView($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
         }
@@ -213,7 +229,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionViewAjax($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
         }
@@ -262,7 +278,7 @@ class BaseController extends \common\components\controller\BaseController
 
         // ajax 校验
         $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 $this->flashSuccess();
             } else {
@@ -287,7 +303,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionEditAjaxField($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->error(404);
         }
@@ -326,7 +342,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionEditAjaxStatus($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->error(404);
         }
@@ -366,7 +382,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionEditStatus($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
         }
@@ -396,7 +412,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionDelete($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
         }
@@ -608,21 +624,24 @@ class BaseController extends \common\components\controller\BaseController
      * 返回模型
      *
      * @param $id
-     * @param bool $emptyNew
-     * @param bool $highConcurrency
+     * @param bool $action
      * @return \yii\db\ActiveRecord
      * @throws \Exception
      */
-    protected function findModel($id, $highConcurrency = false)
+    protected function findModel($id, $action = false)
     {
         /* @var $model \yii\db\ActiveRecord */
         $storeId = $this->isAdmin() ? null : $this->getStoreId();
         if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
+            if ($action) {
+                return null;
+            }
+
             $model = new $this->modelClass();
             $model->loadDefaultValues();
 
             // 如果配置了高并发
-            if ($highConcurrency || Yii::$app->params['highConcurrency']) {
+            if ($this->highConcurrency || Yii::$app->params['highConcurrency']) {
                 $model->id = IdHelper::snowFlakeId();
             }
 
@@ -635,28 +654,13 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
-     * 要操作的必须先查询有权限的ID
-     * @param $id
-     * @return |null
-     */
-    protected function findModelAction($id)
-    {
-        $storeId = $this->isAdmin() ? null : $this->getStoreId();
-        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
-            return null;
-        }
-
-        return $model;
-    }
-
-    /**
      * @param $model \yii\db\ActiveRecord|Model
      * @throws \yii\base\ExitException
      */
     protected function activeFormValidate($model)
     {
         if (Yii::$app->request->isAjax && !Yii::$app->request->isPjax) {
-            if ($model->load(Yii::$app->request->post())) {
+            if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
                 Yii::$app->response->data = \yii\widgets\ActiveForm::validate($model);
                 Yii::$app->end();

@@ -163,7 +163,7 @@ class BaseController extends ActiveController
      */
     public function actionView($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->error();
         }
@@ -209,7 +209,7 @@ class BaseController extends ActiveController
         }
 
         /* @var $model \yii\db\ActiveRecord */
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->error();
         }
@@ -234,7 +234,7 @@ class BaseController extends ActiveController
      */
     public function actionDelete($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->error();
         }
@@ -288,21 +288,6 @@ class BaseController extends ActiveController
     protected function afterDeleteModel($id, $soft = false, $tree = false)
     {
         return true;
-    }
-
-    /**
-     * 要操作的必须先查询有权限的ID
-     * @param $id
-     * @return |null
-     */
-    protected function findModelAction($id)
-    {
-        $storeId = $this->getStoreId();
-        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id, 'status' => $this->modelClass::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->one())))) {
-            return null;
-        }
-
-        return $model;
     }
 
     /**

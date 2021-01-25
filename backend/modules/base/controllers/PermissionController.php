@@ -24,10 +24,10 @@ class PermissionController extends BaseController
     public $modelClass = Permission::class;
 
     /**
-     * 列表是否为树形结构
+     * 1带搜索列表 2树形 3非常规表格
      * @var array[]
      */
-    protected $indexTree = true;
+    protected $style = 2;
 
     /**
       * 模糊查询字段
