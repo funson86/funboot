@@ -37,7 +37,7 @@ class Log extends LogBase
      */
     public static function collectionName()
     {
-        return 'base_log';
+        return ['funboot', 'base_log'];
     }
 
     /**

@@ -255,6 +255,7 @@ class Html extends \yii\helpers\Html
      * 状态标签
      *
      * @param int $status
+     * @param array $statusLabels
      * @param array $options
      * @return mixed
      */

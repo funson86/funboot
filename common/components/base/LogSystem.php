@@ -205,7 +205,11 @@ class LogSystem extends \yii\base\Component
             $model->_id = IdHelper::snowFlakeId();
         } else {
             $model = new Log();
-            $model->id = IdHelper::snowFlakeId();
+            if (Yii::$app->logSystem->driver == LogSystem::DRIVER_MONGODB) {
+                $model->_id = IdHelper::snowFlakeId();
+            } else {
+                $model->id = IdHelper::snowFlakeId();
+            }
         }
 
         return $model;

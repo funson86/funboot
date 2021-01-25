@@ -50,7 +50,7 @@ class BaseController extends \common\components\controller\BaseController
      * 列表默认排序
      * @var array[]
      */
-    protected $defaultOrder = ['id' => SORT_DESC];
+    protected $defaultOrder = ['sort' => SORT_ASC, 'id' => SORT_DESC];
 
     /**
      * 可编辑字段
@@ -168,12 +168,13 @@ class BaseController extends \common\components\controller\BaseController
                 'dataProvider' => $dataProvider,
             ]);
         } elseif ($this->style == 3) {
+            $storeId = $this->isAdmin() ? null : $this->getStoreId();
             $data = $this->modelClass::find()
-                ->where(['>=', 'status', Status::STATUS_INACTIVE])
-                ->andWhere(['store_id' => $this->getStoreId()]);
+                //->andFilterWhere(['>', 'status', $this->modelClass::STATUS_DELETED])
+                ->andFilterWhere(['store_id' => $storeId]);
             $pages = new Pagination(['totalCount' => $data->count(), 'pageSize' => $this->pageSize]);
             $models = $data->offset($pages->offset)
-                ->orderBy('id desc')
+                ->orderBy(['sort' => SORT_ASC, 'id' => SORT_DESC])
                 ->limit($pages->limit)
                 ->all();
 
