@@ -8,7 +8,7 @@ use common\models\User;
 use common\models\Store;
 
 /**
- * This is the model class for table "{{%school_student}}".
+ * This is the model class for redis "{{redis_crud}}".
  *
  * @property int $id
  * @property int $store_id 商家
@@ -40,11 +40,6 @@ class RedisCrud extends RedisCrudBase
     public function attributes()
     {
         return array_keys($this->attributeLabels());
-    }
-
-    public function loadDefaultValues($skipIfSet = true)
-    {
-        return $this;
     }
 
     /**

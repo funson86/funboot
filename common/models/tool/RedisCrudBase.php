@@ -8,7 +8,7 @@ use Yii;
 use yii\redis\ActiveRecord;
 
 /**
- * This is the model base class for table "{{%school_student}}" to add your code.
+ * This is the model base class for redis "{{redis_crud}}". to add your code.
  *
  * @property Store $store
  */
