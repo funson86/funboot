@@ -59,6 +59,8 @@ if ($this->context->isAdmin()) { //管理员显示
         $subMenu = [
             ['label' => Yii::t('permission', 'Crud'), 'icon' => 'fa fa-book', 'url' => ['/tool/crud'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
             ['label' => Yii::t('permission', 'Crud Modal'), 'icon' => 'fa fa-book', 'url' => ['/tool/crud-modal'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
+            ['label' => Yii::t('permission', 'Mongodb Crud'), 'icon' => 'fa fa-book', 'url' => ['/tool/mongodb-crud'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
+            ['label' => Yii::t('permission', 'Redis Crud'), 'icon' => 'fa fa-book', 'url' => ['/tool/redis-crud'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
             ['label' => Yii::t('permission', 'Debug'), 'icon' => 'fas fa-bug', 'url' => ['/debug'], 'class' => 'nav-link', 'target' => '_blank'],
             ['label' => Yii::t('permission', '接口文档'), 'icon' => 'fas fa-file-alt', 'url' => ['/swagger/index'], 'class' => 'nav-link', 'target' => '_blank'],
         ];
