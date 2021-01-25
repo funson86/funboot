@@ -90,6 +90,7 @@ return [
     'Permissions' => '权限',
     'Menu Permission' => '菜单权限',
     'Data Permission' => '数据权限',
+    'Root Menu' => '顶级菜单',
     'successfully saved' => '创建成功',
     'The Administrator has all permissions' => '该管理员拥有所有权限',
     'successfully updated' => '更新成功',

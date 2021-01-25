@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="card-body">
-    <?= TreeGrid::widget([
+    <?= \jianyan\treegrid\TreeGrid::widget([
         'dataProvider' => $dataProvider,
         'keyColumnName' => 'id',
         'parentColumnName' => 'parent_id',
