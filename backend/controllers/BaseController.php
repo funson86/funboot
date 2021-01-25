@@ -174,7 +174,7 @@ class BaseController extends \common\components\controller\BaseController
                 ->andFilterWhere(['store_id' => $storeId]);
             $pages = new Pagination(['totalCount' => $data->count(), 'pageSize' => $this->pageSize]);
             $models = $data->offset($pages->offset)
-                ->orderBy(['sort' => SORT_ASC, 'id' => SORT_DESC])
+                ->orderBy(['id' => SORT_DESC])
                 ->limit($pages->limit)
                 ->all();
 

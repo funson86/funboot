@@ -129,7 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($models as $model){ ?>
+                    <?php foreach($models as $model) { ?>
                         <tr id="<?= $model['_id'] ?>">
                             <td><?= $model['_id'] ?></td>
                             <td><?= $model['name'] ?></td>
