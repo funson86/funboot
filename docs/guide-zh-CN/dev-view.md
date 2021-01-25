@@ -62,7 +62,7 @@ Controller中index()
 
 view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜索，所有字段的filter都要去掉
 ```php
-                <?= TreeGrid::widget([
+                <?= \jianyan\treegrid\TreeGrid::widget([
                     'dataProvider' => $dataProvider,
                     'keyColumnName' => 'id',
                     'parentColumnName' => 'parent_id',

@@ -27,6 +27,7 @@ return [
     '日志管理' => 'Log',
 
     '二次开发' => 'Develop',
+    '树形表格' => 'Tree',
     '接口文档' => 'Swagger Api',
     'Funboot开发指南' => 'Funboot Develop Docs',
     'QQ开发交流群' => 'Funboot QQ Group',

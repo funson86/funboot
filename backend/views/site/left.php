@@ -59,6 +59,7 @@ if ($this->context->isAdmin()) { //管理员显示
         $subMenu = [
             ['label' => Yii::t('permission', 'Crud'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/crud'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
             ['label' => Yii::t('permission', 'Crud Modal'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/crud-modal'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
+            ['label' => Yii::t('permission', '树形表格'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/tree'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
             ['label' => Yii::t('permission', 'Mongodb Crud'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/mongodb-crud'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
             ['label' => Yii::t('permission', 'Redis Crud'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/redis-crud'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
             ['label' => Yii::t('permission', 'Elasticsearch Crud'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/elasticsearch-crud'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],

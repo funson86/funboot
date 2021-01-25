@@ -34,7 +34,7 @@ use yii\web\Response;
 class BaseController extends \common\components\controller\BaseController
 {
     /**
-     * 1带搜索列表 2树形 3非常规表格
+     * 1带搜索列表 2树形(不分页) 3非常规表格
      * @var array[]
      */
     protected $style = 1;
