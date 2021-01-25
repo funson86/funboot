@@ -141,16 +141,17 @@ class SiteController extends BaseController
             }
 
             return $this->goBack();
-        } else {
-            if (Yii::$app->request->isPost) {
-                Yii::$app->logSystem->login($model->attributes, null, true);
-            }
-
-            $model->password = '';
-            return $this->render('login', [
-                'model' => $model,
-            ]);
         }
+
+        // 如果是提交
+        if (Yii::$app->request->isPost) {
+            Yii::$app->logSystem->login($model->attributes, null, true);
+        }
+
+        $model->password = '';
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
     /**
