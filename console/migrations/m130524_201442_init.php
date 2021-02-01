@@ -539,7 +539,7 @@ INSERT INTO `fb_base_permission` VALUES ('5', '1', '0', 'Funboot系统', 'backen
 INSERT INTO `fb_base_permission` VALUES ('6', '1', '0', '学校管理', 'backend', '', '', 'fas fa-laptop-house', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('56', '1', '5', '系统管理', 'backend', '', '', 'fas fa-cogs', '', '2', '0', '1', '50', '1', '1599358163', '1599358163', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('58', '1', '5', '系统监控', 'backend', '', '', 'fas fa-chart-bar', '', '2', '0', '1', '50', '1', '1599358315', '1599358315', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('61', '1', '6', '学生', 'backend', '', '/base/default/index', 'fas fa-users', '', '2', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('61', '1', '6', '学生', 'backend', '', '', 'fas fa-users', '', '2', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('560', '1', '56', '用户管理', 'backend', '', '/base/user/index', 'fas fa-user', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('561', '1', '56', '店铺管理', 'backend', '', '/base/store/index', 'fab fa-internet-explorer', '', '3', '0', '1', '50', '1', '1', '1602322615', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('562', '1', '56', '部门管理', 'backend', '', '/base/department/index', 'fas fa-code-branch', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');

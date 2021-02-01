@@ -50,6 +50,7 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                    'logFile' => '@runtime/logs/' . date('Ym/d') . '.log',
                 ],
             ],
         ],
