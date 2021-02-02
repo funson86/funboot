@@ -151,6 +151,9 @@ return [
     'ADD_SCENE_PAID' => '支付后关注',
     'ADD_SCENE_OTHERS' => '其他',
 
+    'TYPE_TEMP' => '临时',
+    'TYPE_PERM' => '永久',
+
 
 
 ];

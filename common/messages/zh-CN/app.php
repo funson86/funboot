@@ -506,7 +506,8 @@ return [
     // wechat
     'Fan' => '粉丝',
     'Fans' => '粉丝',
-    'Coupon' => '优惠券',
+    'Qrcodes' => '二维码',
+    'Qrcode' => '二维码',
 
 
 ];

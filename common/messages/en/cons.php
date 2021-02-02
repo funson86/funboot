@@ -151,5 +151,7 @@ return [
     'ADD_SCENE_PAID' => 'Paid',
     'ADD_SCENE_OTHERS' => 'Others',
 
+    'TYPE_TEMP' => 'Temp',
+    'TYPE_PERM' => 'Permanent',
 
 ];
