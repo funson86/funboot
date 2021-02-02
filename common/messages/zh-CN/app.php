@@ -503,4 +503,10 @@ return [
     'Order Report' => '订单报表',
     'User Register Count' => '用户注册数',
 
+    // wechat
+    'Fan' => '粉丝',
+    'Fans' => '粉丝',
+    'Coupon' => '优惠券',
+
+
 ];

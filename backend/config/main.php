@@ -30,6 +30,9 @@ return [
         'tool' => [
             'class' => 'backend\modules\tool\Module',
         ],
+        'wechat' => [
+            'class' => 'backend\modules\wechat\Module',
+        ],
     ],
     'components' => [
         'request' => [

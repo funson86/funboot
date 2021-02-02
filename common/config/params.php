@@ -138,5 +138,11 @@ return [
         'adminEmail' => '3375074@qq.com',
     ],
 
+    // 微信相关
+    'wechat' => [
+        // 微信公众号 参考EasyWechat
+        'wechatConfig' => [],
+    ]
+
 
 ];

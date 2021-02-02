@@ -141,5 +141,15 @@ return [
 
 
 
+    /** wechat */
+    'ADD_SCENE_SEARCH' => 'Search',
+    'ADD_SCENE_ACCOUNT_MIGRATION' => 'Account Migration',
+    'ADD_SCENE_PROFILE_CARD' => 'Profile Card',
+    'ADD_SCENE_QR_CODE' => 'Qr Code',
+    'ADD_SCENE_PROFILE_LINK' => 'Profile Link',
+    'ADD_SCENE_PROFILE_ITEM' => 'Profile Item',
+    'ADD_SCENE_PAID' => 'Paid',
+    'ADD_SCENE_OTHERS' => 'Others',
+
 
 ];

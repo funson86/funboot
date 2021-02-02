@@ -69,6 +69,12 @@ return [
             'class' => 'common\components\base\MailSystem',
             'queue' => true, //false, // 默认通过队列方式发送邮件
         ],
+        'wechat' => [
+            'class' => 'common\components\wechat\WechatSystem',
+            'userOptions' => [],  // 用户身份类参数
+            'sessionParam' => 'wechatUser', // 微信用户信息将存储在会话在这个密钥
+            'returnUrlParam' => '_wechatReturnUrl', // returnUrl 存储在会话中
+        ],
         'cacheMall' => [
             'class' => 'common\components\mall\CacheMall',
         ],
