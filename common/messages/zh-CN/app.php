@@ -44,6 +44,7 @@ return [
     'Submit' => '提交',
     'Save' => '保存',
     'Refresh' => '刷新',
+    'Sync' => '同步',
     'Back' => '返回',
     'Close' => '关闭',
     'Ok' => '确定',
@@ -506,6 +507,10 @@ return [
     // wechat
     'Fan' => '粉丝',
     'Fans' => '粉丝',
+    'Fan Count' => '粉丝数量',
+    'Tags' => '标签',
+    'Sync Select' => '同步选中',
+    'Sync All' => '同步全部',
     'Qrcodes' => '二维码',
     'Qrcode' => '二维码',
 
