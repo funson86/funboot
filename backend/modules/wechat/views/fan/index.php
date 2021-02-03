@@ -1,5 +1,6 @@
 <?php
 
+use common\models\wechat\Tag;
 use yii\grid\GridView;
 use common\helpers\Html;
 use common\components\enums\YesNo;
@@ -14,6 +15,9 @@ use common\helpers\Url;
 
 $this->title = Yii::t('app', 'Fans');
 $this->params['breadcrumbs'][] = $this->title;
+
+$tag = Tag::find()->where(['store_id' => $this->context->getStoreId()])->one();
+$tags = ArrayHelper::map($tag->tags, 'id', 'name');
 ?>
 
 <div class="row">
@@ -22,11 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Fans'] ?? null) ?></h2>
                 <div class="card-tools">
-                    <?php if (\common\helpers\AuthHelper::verify('/wechat/fan/edit-ajax-refresh-select')) { ?>
-                        <span class="btn btn-primary btn-xs" id="refreshSelect"><i class="icon ion-ios-cloud-download-outline"></i> Sync</span>
+                    <?php if (\common\helpers\AuthHelper::verify('/wechat/fan/edit-ajax-sync-select')) { ?>
+                        <span class="btn btn-primary btn-xs" id="syncSelect"><i class="icon ion-ios-cloud-download-outline"></i> <?= Yii::t('app', 'Sync Select') ?></span>
                     <?php } ?>
-                    <?php if (\common\helpers\AuthHelper::verify('/wechat/fan/edit-ajax-refresh-all')) { ?>
-                        <span class="btn btn-primary btn-xs" id="refreshAll"><i class="icon ion-ios-cloud-download-outline"></i> Sync All</span>
+                    <?php if (\common\helpers\AuthHelper::verify('/wechat/fan/edit-ajax-sync-all')) { ?>
+                        <span class="btn btn-primary btn-xs" id="syncAll"><i class="icon ion-ios-cloud-download-outline"></i> <?= Yii::t('app', 'Sync All') ?></span>
                     <?php } ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
@@ -66,10 +70,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         ['attribute' => 'sex', 'value' => function ($model) { return ActiveModel::getSexLabels($model->sex); }, 'filter' => Html::activeDropDownList($searchModel, 'sex', ActiveModel::getSexLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         // 'groupid',
-                        ['attribute' => 'subscribe', 'value' => function ($model) { return YesNo::getLabels($model->subscribe); }, 'filter' => Html::activeDropDownList($searchModel, 'subscribe', YesNo::getLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        'subscribe_time:datetime',
                         ['attribute' => 'subscribe_scene', 'value' => function ($model) { return ActiveModel::getSubscribeSceneLabels($model->subscribe_scene); }, 'filter' => Html::activeDropDownList($searchModel, 'subscribe_scene', ActiveModel::getSubscribeSceneLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        // 'tagid_list:json',
+                        ['attribute' => 'tagid_list', 'value' => function ($model) use ($tags) { return ActiveModel::getTagIdListLabels($model->tagid_list, $tags); }, 'filter' => false,],
                         // 'remark',
                         // 'country',
                         // 'province',
@@ -88,8 +90,26 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'updated_at:datetime',
                         // 'created_by',
                         // 'updated_by',
+                        ['attribute' => 'subscribe', 'format' => 'raw', 'value' => function ($model) { return Html::color($model->subscribe, YesNo::getLabels($model->subscribe), [], [YesNo::NO]); }, 'filter' => Html::activeDropDownList($searchModel, 'subscribe', YesNo::getLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        'subscribe_time:datetime',
 
-                        Html::actionsModal(),
+                        [
+                            'header' => Yii::t('app', 'Actions'),
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{view} {edit-tag} {edit-message}',
+                            'buttons' => [
+                                'view' => function ($url, $model, $key) {
+                                    return Html::viewModal(['view-ajax', 'id' => $model->id]);
+                                },
+                                'edit-tag' => function ($url, $model, $key) {
+                                    return Html::editModal(['edit-ajax-tag', 'id' => $model->id], Yii::t('app', 'Tag'), ['class' => 'btn btn-info']);
+                                },
+                                'edit-message' => function ($url, $model, $key) {
+                                    return Html::editModal(['edit-ajax-message', 'id' => $model->id], Yii::t('app', 'Message'));
+                                },
+                            ],
+                            'headerOptions' => ['class' => 'action-column'],
+                        ],
                     ]
                 ]); ?>
             </div>
@@ -98,15 +118,15 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?php
-$urlFanEditAjaxRefreshSelect = Url::to(['edit-ajax-refresh-select'], false, true);
-$urlFanEditAjaxRefreshAll = Url::to(['edit-ajax-refresh-all'], false, true);
+$urlFanEditAjaxSyncSelect = Url::to(['edit-ajax-sync-select'], false, true);
+$urlFanEditAjaxSyncAll = Url::to(['edit-ajax-sync-all'], false, true);
 
 $js = <<<JS
 
-function refreshAll() {
+function syncAll() {
     $.ajax({
         type: "get",
-        url: "{$urlFanEditAjaxRefreshAll}",
+        url: "{$urlFanEditAjaxSyncAll}",
         dataType: "json",
         success: function (data) {
             if (parseInt(data.code) === 200) {
@@ -116,7 +136,7 @@ function refreshAll() {
     });
 }
 
-$('#refreshSelect').click(function() {
+$('#syncSelect').click(function() {
     var openids = [];
     
     fbInfo('同步中，请不要关闭窗口');
@@ -130,7 +150,7 @@ $('#refreshSelect').click(function() {
 
     $.ajax({
         type: "post",
-        url: "{$urlFanEditAjaxRefreshSelect}",
+        url: "{$urlFanEditAjaxSyncSelect}",
         dataType: "json",
         data: {
             openids: openids
@@ -144,12 +164,12 @@ $('#refreshSelect').click(function() {
 
 });
 
-$('#refreshAll').click(function() {
+$('#syncAll').click(function() {
     var openids = [];
 
     fbInfo('同步中，请不要关闭窗口');
 
-    refreshAll();
+    syncAll();
 });
 
 JS;

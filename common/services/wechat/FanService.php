@@ -18,11 +18,11 @@ class FanService
      * @return array
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      */
-    public static function refreshAll($nextOpenid = null)
+    public static function syncAll($nextOpenid = null)
     {
         $fans = Yii::$app->wechat->app->user->list($nextOpenid);
         foreach ($fans['data']['openid'] as $openid) {
-            self::refreshInfo($openid);
+            self::syncInfo($openid);
         }
 
         return ['total' => $fans['total'], 'count' => $fans['count'], 'nextOpenid' => $fans['next_openid']];
@@ -31,16 +31,19 @@ class FanService
     /**
      * @param $openids
      * @return null
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      */
-    public static function refreshSelect($openids)
+    public static function syncSelect($openids)
     {
         if (empty($openids)) {
             return null;
         }
 
         foreach ($openids as $openid) {
-            self::refreshInfo($openid);
+            self::syncInfo($openid);
         }
+
+        return true;
     }
 
     /**
@@ -48,7 +51,7 @@ class FanService
      * @return null
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      */
-    public static function refreshInfo($openid)
+    public static function syncInfo($openid)
     {
         if (!$openid) {
             return null;
@@ -56,9 +59,14 @@ class FanService
 
         $result = Yii::$app->wechat->app->user->get($openid);
         $user = ArrayHelper::toArray($result);
-        $fan = self::findModelByOpenid($openid);
-        $fan->attributes = $user;
-        $fan->save();
+        $model = self::findModelByOpenid($openid);
+        $model->attributes = $user;
+        if (!$model->save()) {
+            Yii::$app->logSystem->db($model->errors);
+            return false;
+        }
+
+        return true;
     }
 
 

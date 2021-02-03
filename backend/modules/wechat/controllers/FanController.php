@@ -2,7 +2,10 @@
 
 namespace backend\modules\wechat\controllers;
 
+use common\helpers\ArrayHelper;
+use common\models\wechat\Tag;
 use common\services\wechat\FanService;
+use EasyWeChat\Kernel\Messages\Text;
 use Yii;
 use common\models\wechat\Fan;
 use common\models\ModelSearch;
@@ -45,7 +48,7 @@ class FanController extends BaseController
         'type' => 'select',
     ];
 
-    public function actionEditAjaxRefreshSelect()
+    public function actionEditAjaxSyncSelect()
     {
         $openids = Yii::$app->request->post('openids');
         if (empty($openids)) {
@@ -55,22 +58,79 @@ class FanController extends BaseController
         Fan::updateAll(['subscribe' => 0], ['store_id' => $this->getStoreId(), 'openid' => $openids]);
 
         foreach ($openids as $openid) {
-            FanService::refreshInfo($openid);
+            FanService::syncInfo($openid);
         }
 
         return $this->success();
     }
 
-    public function actionEditAjaxRefreshAll()
+    public function actionEditAjaxSyncAll()
     {
         Fan::updateAll(['subscribe' => 0], ['store_id' => $this->getStoreId()]);
 
-        list($total, $count, $nextOpenid) = FanService::refreshAll();
+        list($total, $count, $nextOpenid) = FanService::syncAll();
 
         while ($count > 0) {
-            list($total, $count, $nextOpenid) = FanService::refreshAll();
+            list($total, $count, $nextOpenid) = FanService::syncAll();
         }
 
         return $this->success();
+    }
+
+    public function actionEditAjaxTag()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = $this->findModel($id);
+
+        $tag = Tag::find()->where(['store_id' => $this->storeId])->one();
+
+        // ajax 校验
+        $this->activeFormValidate($model);
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            if (!empty($model->tagid_list)) {
+                $tagIds = [];
+                foreach ($model->tagid_list as $tagId) {
+                    $tagId = intval($tagId);
+                    Yii::$app->wechat->app->user_tag->tagUsers([$model->openid], $tagId);
+                    array_push($tagIds, $tagId);
+                }
+                $model->tagid_list = $tagIds;
+            }
+            if (!$model->save()) {
+                Yii::$app->logSystem->db($model->errors);
+                $this->redirectError(Yii::$app->request->referrer, $this->getError($model));
+            }
+
+            return $this->redirectSuccess();
+        }
+
+        return $this->renderAjax($this->action->id, [
+            'model' => $model,
+            'tags' => ArrayHelper::map($tag->tags, 'id', 'name'),
+        ]);
+    }
+
+    public function actionEditAjaxMessage()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = $this->findModel($id);
+
+        // ajax 校验
+        $this->activeFormValidate($model);
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            $message = new Text('hello');
+            $result = Yii::$app->wechat->app->customer_service->message($message)->to($model->openid)->send();
+
+            if ($msg = Yii::$app->wechat->conductError($result, false)) {
+                Yii::$app->logSystem->db($msg);
+                return $this->redirectError(Yii::$app->request->referrer, $msg);
+            }
+
+            return $this->redirectSuccess();
+        }
+
+        return $this->renderAjax($this->action->id, [
+            'model' => $model,
+        ]);
     }
 }

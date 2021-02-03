@@ -22,7 +22,7 @@ use common\models\Store;
  * @property int $subscribe 关注
  * @property int $subscribe_time 关注时间
  * @property string $subscribe_scene 关注场景
- * @property string|null $tagid_list 标签ID
+ * @property string|null $tagid_list 标签
  * @property string $remark 备注
  * @property string $country 国家
  * @property string $province 省份
@@ -85,7 +85,7 @@ class Fan extends FanBase
                 'subscribe' => '关注',
                 'subscribe_time' => '关注时间',
                 'subscribe_scene' => '关注场景',
-                'tagid_list' => '标签ID',
+                'tagid_list' => '标签',
                 'remark' => '备注',
                 'country' => '国家',
                 'province' => '省份',

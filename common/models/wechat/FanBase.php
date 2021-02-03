@@ -96,6 +96,24 @@ class FanBase extends BaseModel
     }
 
     /**
+     * return label or labels array
+     *
+     * @param null $id
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getTagIdListLabels($ids = [], $data = [])
+    {
+        if (is_array($ids)) {
+            $str = '';
+            foreach ($ids as $id) {
+                    $str .= isset($data[$id]) ? $data[$id] . ' ' : '';
+            }
+            return $str;
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function attributeLabels()
