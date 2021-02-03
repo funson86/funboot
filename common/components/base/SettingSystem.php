@@ -42,8 +42,9 @@ class SettingSystem extends \yii\base\Component
         return null;
     }
 
-    public function getSettings($storeId)
+    public function getSettings($storeId = null)
     {
+        !$storeId && $storeId = Yii::$app->storeSystem->getId();
         $settingTypes = Yii::$app->cacheSystem->getStoreSetting($storeId);
 
         $settings = [];
