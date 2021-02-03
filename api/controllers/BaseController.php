@@ -123,7 +123,7 @@ class BaseController extends ActiveController
         // 鉴权
         $this->checkAccess($action->id, $this->modelClass, Yii::$app->request->get());
 
-        $model = CommonHelper::getHostNameStore();
+        $model = CommonHelper::getStoreByHostName();
         $this->store = $model;
         $model->settings = Yii::$app->settingSystem->getSettings($model->id);
         $model->commonData = $this->commonData($model);

@@ -10,10 +10,22 @@ use Yii;
 class CommonHelper
 {
     /**
+     * 根据id得到对应的store
+     * @return Store|mixed|null
+     */
+    public static function getStoreById($id)
+    {
+        $allStore = Yii::$app->cacheSystem->getAllStore();
+        $mapIdStore = ArrayHelper::mapIdData($allStore);
+
+        return $mapIdStore[$id] ?? null;
+    }
+
+    /**
      * 根据host_name得到对应的store
      * @return Store|mixed|null
      */
-    public static function getHostNameStore()
+    public static function getStoreByHostName()
     {
         $allStore = Yii::$app->cacheSystem->getAllStore();
         $mapHostNameId = ArrayHelper::map($allStore, 'host_name', 'id');
@@ -22,13 +34,8 @@ class CommonHelper
         // 计算store，如果没有则使用默认的store
         $hostName = Yii::$app->request->hostName;
         $storeId = $mapHostNameId[$hostName] ?? null;
-        if ($storeId) {
-            $model = $mapIdStore[$storeId];
-        } else {
-            $model = Store::findOne(Yii::$app->params['defaultStoreId']);
-        }
 
-        return $model;
+        return $storeId ? $mapIdStore[$storeId] : ($mapIdStore[Yii::$app->params['defaultStoreId']] ?? null);
     }
 
     public static function getLanguage($store)

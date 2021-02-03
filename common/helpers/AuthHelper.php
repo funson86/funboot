@@ -24,6 +24,10 @@ class AuthHelper
             return true;
         }
 
+        if (Yii::$app->authSystem->isSuperAdmin()) {
+            return true;
+        }
+
         if (!$list) {
             $list = isset(Yii::$app->params['myPermissions']) ? Yii::$app->params['myPermissions'] : null;
         }

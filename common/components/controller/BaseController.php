@@ -47,8 +47,22 @@ class BaseController extends Controller
 
     public function beforeAction($action)
     {
-        $model = CommonHelper::getHostNameStore();
+        // 优先级从先到后：指定store_id，用户store_id，host_name
+        if (Yii::$app->request->get('store_id')) {
+            $model = CommonHelper::getStoreById(intval(Yii::$app->request->get('store_id')));
+        } elseif (!Yii::$app->user->isGuest) {
+            $model = CommonHelper::getStoreById(Yii::$app->user->identity->store_id);
+        }
+        // 前面两种都没有，则判断host_name
+        if (!$model) {
+            $model = CommonHelper::getStoreByHostName();
+            if (!$model) {
+                return  false;
+            }
+        }
         $this->store = $model;
+
+        // 先赋值再去计算，然后再次对$model赋值
         $model->settings = Yii::$app->settingSystem->getSettings($model->id);
         $model->commonData = $this->commonData($model);
         $this->store = $model;
@@ -219,10 +233,12 @@ class BaseController extends Controller
      * 提示成功并跳转
      *
      * @param string|array $url 跳转链接
+     * @param null $msg
      * @return mixed
      */
-    protected function redirectSuccess($url, $msg = null)
+    protected function redirectSuccess($url = null, $msg = null)
     {
+        !$url && $url = Yii::$app->request->referrer;
         $this->flashSuccess($msg);
         return $this->redirect($url);
     }
@@ -231,10 +247,12 @@ class BaseController extends Controller
      * 提示失败并跳转
      *
      * @param string $url 跳转链接
+     * @param null $msg
      * @return mixed
      */
-    protected function redirectError($url, $msg = null)
+    protected function redirectError($url = null, $msg = null)
     {
+        !$url && $url = Yii::$app->request->referrer;
         $this->flashError($msg);
         return $this->redirect($url);
     }
@@ -245,8 +263,9 @@ class BaseController extends Controller
      * @param string $url 跳转链接
      * @return mixed
      */
-    protected function redirectWarning($url, $msg = null)
+    protected function redirectWarning($url = null, $msg = null)
     {
+        !$url && $url = Yii::$app->request->referrer;
         $this->flashWarning($msg);
         return $this->redirect($url);
     }
@@ -257,8 +276,9 @@ class BaseController extends Controller
      * @param string $url 跳转链接
      * @return mixed
      */
-    protected function redirectInfo($url, $msg = null)
+    protected function redirectInfo($url = null, $msg = null)
     {
+        !$url && $url = Yii::$app->request->referrer;
         $this->flashInfo($msg);
         return $this->redirect($url);
     }
