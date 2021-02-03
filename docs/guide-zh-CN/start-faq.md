@@ -6,6 +6,7 @@
 - linux下提示无访问权限
 - 安装或迁移出现 Specified key was too long; max key length is 767 bytes
 - 样式修改后访问没有变化
+- Curl访问https://开头的地址错误
 
 ### linux下提示无访问权限
 
@@ -48,3 +49,19 @@ extension=php_com_dotnet.dll
 ```
 ; disable_classes = COM
 ```
+
+### Curl访问https://开头的地址错误
+
+下载证书https://curl.haxx.se/ca/cacert.pem，下载后比如放到c:\路径下
+
+在php.ini中开启ca
+
+```
+[curl]
+; A default value for the CURLOPT_CAINFO option. This is required to be an
+; absolute path.
+curl.cainfo =c:\cacert.pem
+```
+
+重启php-fpm或者面板
+ 
