@@ -399,7 +399,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->error(500, $this->getError($model));
         }
 
-        return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Operate Successfully'));
+        return $this->redirectSuccess();
     }
 
     /**
@@ -436,7 +436,7 @@ class BaseController extends \common\components\controller\BaseController
 
         if (!$result) {
             Yii::$app->logSystem->db($model->errors);
-            return $this->redirectError(Yii::$app->request->referrer);
+            return $this->redirectError();
         }
 
         if ($tree) {

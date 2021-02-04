@@ -193,12 +193,12 @@ class SiteController extends BaseController
     {
         $model = User::findOne(Yii::$app->user->id);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer);
+            return $this->redirectError();
         }
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirectSuccess(Yii::$app->request->referrer);
+                return $this->redirectSuccess();
             }
         }
 
@@ -239,7 +239,7 @@ class SiteController extends BaseController
             Yii::$app->cacheSystem->clearUserPermissionIds(Yii::$app->user->id);
             Yii::$app->cacheSystem->clearStoreSetting($this->getStoreId());
         }
-        return $this->redirectSuccess(Yii::$app->request->referrer);
+        return $this->redirectSuccess();
     }
 
     public function actionStat($category = 'user', $type = 'last30Day')

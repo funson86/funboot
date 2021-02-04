@@ -154,10 +154,10 @@ class StoreController extends BaseController
     public function actionConfig()
     {
         if ($this->generateHostFile()) {
-            return $this->redirectSuccess(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
 
-        return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Operate Successfully'));
+        return $this->redirectError();
     }
 
     /**

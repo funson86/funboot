@@ -176,7 +176,7 @@ class DictDataController extends BaseController
 
         if (!$model->delete()) {
             Yii::$app->logSystem->db($model->errors);
-            return $this->redirectError(Yii::$app->request->referrer);
+            return $this->redirectError();
         }
 
         Yii::$app->cacheSystem->clearDict();

@@ -99,10 +99,10 @@ class ScheduleController extends BaseController
     public function actionConfig()
     {
         if ($this->writeSchedule()) {
-            return $this->redirectSuccess(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
 
-        return $this->redirectError(Yii::$app->request->referrer);
+        return $this->redirectError();
     }
 
     /**

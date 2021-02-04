@@ -31,9 +31,9 @@ Funboot默认使用utf8mb4，对出现问题的表修改编码为utf8
 
 ### Class 'COM' not found
 
-- 检查php目录ext文件夹下面php_com_dotnet.dll是否存在
+- Windows下才出现，检查php目录ext文件夹下面php_com_dotnet.dll是否存在
 
-- Windows下出现，在php.ini结尾添加如下代码，重启php-fpm
+- 在php.ini结尾添加如下代码，重启php-fpm
 
 ```
 extension=php_com_dotnet.dll
