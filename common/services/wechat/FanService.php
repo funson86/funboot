@@ -2,6 +2,7 @@
 
 namespace common\services\wechat;
 
+use common\components\enums\YesNo;
 use common\helpers\ArrayHelper;
 use common\models\wechat\Fan;
 use Yii;
@@ -21,8 +22,26 @@ class FanService
     public static function syncAll($nextOpenid = null)
     {
         $fans = Yii::$app->wechat->app->user->list($nextOpenid);
-        foreach ($fans['data']['openid'] as $openid) {
-            self::syncInfo($openid);
+        $count = $fans['total'];
+        $pages = ceil($count / 500);
+        for ($i = 0; $i < $pages; $i++) {
+            $openids = array_slice($fans['data']['openid'], $i * 500, 500);
+            $fanList = Fan::find()->where(['store_id' => Yii::$app->storeSystem->getId(), 'openid' => $openids])->select('openid')->asArray()->all();
+            $existOpenids = ArrayHelper::getColumn($fanList, 'openid');
+
+            $field = ['store_id', 'openid', 'subscribe', 'created_at', 'updated_at', 'created_by', 'updated_by'];
+            $newFans = [];
+            foreach ($openids as $openid) {
+                if (!in_array($openid, $existOpenids)) {
+                    $newFans[] = [Yii::$app->storeSystem->getId(), $openid, YesNo::YES, time(), time(), Yii::$app->user->id, Yii::$app->user->id];
+                }
+            }
+
+            if (!empty($newFans)) {
+                Yii::$app->db->createCommand()->batchInsert(Fan::tableName(), $field, $newFans)->execute();
+            }
+
+            Fan::updateAll(['subscribe' => YesNo::YES], ['openid' => $openids]);
         }
 
         return ['total' => $fans['total'], 'count' => $fans['count'], 'nextOpenid' => $fans['next_openid']];

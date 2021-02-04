@@ -68,13 +68,9 @@ class FanController extends BaseController
     {
         Fan::updateAll(['subscribe' => 0], ['store_id' => $this->getStoreId()]);
 
-        list($total, $count, $nextOpenid) = FanService::syncAll();
+        $result = FanService::syncAll();
 
-        while ($count > 0) {
-            list($total, $count, $nextOpenid) = FanService::syncAll();
-        }
-
-        return $this->success();
+        return $this->success($result);
     }
 
     public function actionEditAjaxTag()
