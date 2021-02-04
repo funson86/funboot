@@ -54,13 +54,11 @@ class QrcodeController extends BaseController
         $this->activeFormValidate($model);
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             $result = QrcodeService::create($model->type, $model->scene_str, $model);
-            if ($result) {
-                $this->flashSuccess();
-            } else {
-                $this->flashError($this->getError($model));
+            if (!$result) {
+                $this->redirectError();
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [

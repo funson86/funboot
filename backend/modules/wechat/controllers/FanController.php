@@ -97,8 +97,7 @@ class FanController extends BaseController
                 $model->tagid_list = $tagIds;
             }
             if (!$model->save()) {
-                Yii::$app->logSystem->db($model->errors);
-                $this->redirectError(Yii::$app->request->referrer, $this->getError($model));
+                $this->redirectError($model);
             }
 
             return $this->redirectSuccess();
@@ -122,8 +121,7 @@ class FanController extends BaseController
             $result = Yii::$app->wechat->app->customer_service->message($message)->to($model->openid)->send();
 
             if ($msg = Yii::$app->wechat->conductError($result, false)) {
-                Yii::$app->logSystem->db($msg);
-                return $this->redirectError(Yii::$app->request->referrer, $msg);
+                return $this->redirectError($msg, null, true);
             }
 
             return $this->redirectSuccess();
