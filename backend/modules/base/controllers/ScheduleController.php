@@ -59,15 +59,12 @@ class ScheduleController extends BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                $this->writeSchedule();
-                $this->flashSuccess();
-            } else {
-                Yii::$app->logSystem->db($model->errors);
-                $this->flashError($this->getError($model));
+            if (!$model->save()) {
+                $this->redirectError($model);
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            $this->writeSchedule();
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [

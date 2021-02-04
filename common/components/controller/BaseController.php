@@ -244,15 +244,23 @@ class BaseController extends Controller
     }
 
     /**
-     * 提示失败并跳转
+     * 保存日志，提示失败并跳转
      *
-     * @param string $url 跳转链接
      * @param null $msg
+     * @param string $url 跳转链接
+     * @param bool $logDb
      * @return mixed
+     * @throws \yii\base\InvalidConfigException
      */
-    protected function redirectError($url = null, $msg = null)
+    protected function redirectError($msg = null, $url = null, $logDb = false)
     {
         !$url && $url = Yii::$app->request->referrer;
+        if ($msg instanceof Model) {
+            Yii::$app->logSystem->db($msg->errors);
+            $msg = $this->getError($msg);
+        } elseif ($logDb) {
+            Yii::$app->logSystem->db($msg->errors);
+        }
         $this->flashError($msg);
         return $this->redirect($url);
     }

@@ -70,14 +70,12 @@ class SettingTypeController extends BaseController
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
-                $this->flashSuccess();
-            } else {
-                $this->flashError($this->getError($model));
+            if (!$model->save()) {
+                $this->redirectError($model);
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [

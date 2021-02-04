@@ -97,18 +97,15 @@ class StoreController extends BaseController
                 $this->setDefaultData($model);
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($user->errors);
-                    $this->flashError($this->getError($user));
+                    $this->redirectError($model);
                 }
 
                 Yii::$app->cacheSystem->clearAllStore();
                 $this->generateHostFile();
-                $this->flashSuccess();
+                $this->redirectSuccess();
             } else {
-                Yii::$app->logSystem->db($model->errors);
-                $this->flashError($this->getError($model));
+                $this->redirectError($model);
             }
-
-            return $this->redirect(Yii::$app->request->referrer);
         }
 
         $model->expiredTime = date('Y-m-d', ($model->expired_at > 0 ? $model->expired_at : time() + 365 * 86400));
@@ -132,7 +129,7 @@ class StoreController extends BaseController
     {
         $model = $this->findModel($id, true);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
         $user = $model->user_id > 0 ? User::findOne($model->user_id) : null;

@@ -69,17 +69,14 @@ class MessageTypeController extends BaseController
             }
             $model->send_type = ArrayHelper::arrayToInt(Yii::$app->request->post('Message')['sendTypes']);
 
-            if ($model->save()) {
-                if (!$id) { //编辑的新消息才发送
-                    Yii::$app->messageSystem->send($model, Yii::$app->user->id);
-                }
-                $this->flashSuccess();
-            } else {
-                Yii::$app->logSystem->db($model->errors);
-                $this->flashError($this->getError($model));
+            if (!$model->save()) {
+                $this->redirectError($model);
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            if (!$id) { //编辑的新消息才发送
+                Yii::$app->messageSystem->send($model, Yii::$app->user->id);
+            }
+            return $this->redirectSuccess();
         }
 
         $model->sendUsers = explode('|', $model->send_user);

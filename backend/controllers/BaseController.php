@@ -215,7 +215,7 @@ class BaseController extends \common\components\controller\BaseController
     {
         $model = $this->findModel($id, true);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
         return $this->render($this->action->id, [
@@ -232,7 +232,7 @@ class BaseController extends \common\components\controller\BaseController
     {
         $model = $this->findModel($id, true);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
         return $this->renderAjax($this->action->id, [
@@ -252,11 +252,9 @@ class BaseController extends \common\components\controller\BaseController
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->save()) {
-                    $this->flashSuccess();
-                    return $this->redirect(['index']);
+                    return $this->redirectSuccess(['index']);
                 } else {
                     Yii::$app->logSystem->db($model->errors);
-                    $this->flashError(Yii::t('app', 'Operation Failed') . json_encode($model->errors));
                 }
             }
         }
@@ -280,14 +278,11 @@ class BaseController extends \common\components\controller\BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                $this->flashSuccess();
-            } else {
-                Yii::$app->logSystem->db($model->errors);
-                $this->flashError($this->getError($model));
+            if (!$model->save()) {
+                $this->redirectError($model);
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [
@@ -385,12 +380,12 @@ class BaseController extends \common\components\controller\BaseController
     {
         $model = $this->findModel($id, true);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
         $status = Yii::$app->request->get('status');
         if ($status === null || !in_array(intval($status), array_keys($this->modelClass::getStatusLabels(null, true)))) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
         $model->status = intval($status);
@@ -415,7 +410,7 @@ class BaseController extends \common\components\controller\BaseController
     {
         $model = $this->findModel($id, true);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
         $soft = Yii::$app->request->get('soft', true);
@@ -610,12 +605,10 @@ class BaseController extends \common\components\controller\BaseController
 
 
             } catch (\Exception $e) {
-                $this->flashError($e->getMessage());
-                return $this->redirect(Yii::$app->request->referrer);
+                return $this->redirectError($e->getMessage(), null, true);
             }
 
-            $this->flashSuccess();
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax('@backend/views/site/' . $this->action->id);

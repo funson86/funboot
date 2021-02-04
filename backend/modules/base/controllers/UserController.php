@@ -66,27 +66,23 @@ class UserController extends BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
+            if (!$model->save()) {
+                $this->redirectError($model);
+            }
+
+            // 权限
             if (isset($model->user_id)) {
                 UserRole::deleteAll(['user_id' => $model->user_id]);
             }
-            if ($model->save()) {
-                // 权限
-                if (count($model->roles) > 0) {
-                    foreach ($model->roles as $roleId) {
-                        $userRole = new UserRole();
-                        $userRole->user_id = $model->id;
-                        $userRole->role_id = $roleId;
-                        $userRole->save();
-                    }
+            if (count($model->roles) > 0) {
+                foreach ($model->roles as $roleId) {
+                    $userRole = new UserRole();
+                    $userRole->user_id = $model->id;
+                    $userRole->role_id = $roleId;
+                    $userRole->save();
                 }
-
-                $this->flashSuccess();
-            } else {
-                Yii::error($model->errors);
-                $this->flashError($this->getError($model));
             }
-
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [
@@ -138,8 +134,7 @@ class UserController extends BaseController
                     }
 
                     Yii::$app->cacheSystem->clearUserPermissionIds($model->id);
-                    $this->flashSuccess();
-                    return $this->redirect(['index']);
+                    return $this->redirectSuccess(['index']);
                 } else {
                     Yii::error($model->errors);
                     $this->flashError('操作失败' . json_encode($model->errors));
@@ -167,14 +162,14 @@ class UserController extends BaseController
     {
         $model = $this->findModel($id, true);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
         $store = $model->store_id > 0 ? Store::findOne($model->store_id) : null;
         if ($model) {
             $model->token = substr(IdHelper::snowFlakeId(), 0, 8);
             if ($model->save()) {
-                return $this->redirect('http://' . $store->host_name . '/site/login-backend?token=' . $model->token);
+                return $this->redirect(Yii::$app->params['httpProtocol'] . $store->host_name . '/site/login-backend?token=' . $model->token);
             }
         }
 

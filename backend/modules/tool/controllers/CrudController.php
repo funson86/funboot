@@ -61,11 +61,9 @@ class CrudController extends BaseController
                 $model->ended_at = strtotime($post['Crud']['endedTime']);
 
                 if ($model->save()) {
-                    $this->flashSuccess();
-                    return $this->redirect(['index']);
+                    return $this->redirectSuccess(['index']);
                 } else {
                     Yii::$app->logSystem->db($model->errors);
-                    $this->flashError(Yii::t('app', 'Operation Failed') . json_encode($model->errors));
                 }
             }
         }
