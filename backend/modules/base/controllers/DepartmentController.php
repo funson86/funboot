@@ -105,14 +105,11 @@ class DepartmentController extends BaseController
                 $model->vice_head = implode('|', $viceHeads);
             }
 
-            if ($model->save()) {
-                $this->flashSuccess();
-            } else {
-                Yii::$app->logSystem->db($model->errors);
-                $this->flashError($this->getError($model));
+            if (!$model->save()) {
+                $this->redirectError($model);
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
 
         $model->heads = explode('|', $model->head);

@@ -98,7 +98,7 @@ class DictDataController extends BaseController
         if (!$model->dict_id) {
             $model->dict_id = Yii::$app->request->get('dict_id', null);
             if (!$model->dict_id) {
-                return $this->redirect(Yii::$app->request->referrer);
+                return $this->redirectError(Yii::t('app', 'Invalid id'));
             }
         }
 
@@ -114,15 +114,12 @@ class DictDataController extends BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
-
-            if ($model->save()) {
-                Yii::$app->cacheSystem->clearDict();
-                $this->flashSuccess();
-            } else {
-                $this->flashError($this->getError($model));
+            if (!$model->save()) {
+                $this->redirectError($model);
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            Yii::$app->cacheSystem->clearDict();
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [
@@ -144,14 +141,12 @@ class DictDataController extends BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                Yii::$app->cacheSystem->clearDict();
-                $this->flashSuccess();
-            } else {
-                $this->flashError($this->getError($model));
+            if (!$model->save()) {
+                $this->redirectError($model);
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            Yii::$app->cacheSystem->clearDict();
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [
@@ -171,12 +166,12 @@ class DictDataController extends BaseController
     {
         $model = Dict::findOne($id);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));;
+            return $this->redirectError(Yii::t('app', 'Invalid id'));;
         }
 
         if (!$model->delete()) {
             Yii::$app->logSystem->db($model->errors);
-            return $this->redirectError(Yii::$app->request->referrer);
+            return $this->redirectError();
         }
 
         Yii::$app->cacheSystem->clearDict();

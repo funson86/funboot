@@ -132,7 +132,7 @@ class MessageController extends BaseController
     {
         $model = Message::findOne($id);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
         $model->status = Message::STATUS_READ;
@@ -157,13 +157,13 @@ class MessageController extends BaseController
     {
         $model = Message::findOne($id);
         if (!$model) {
-            return $this->redirectError(Yii::$app->request->referrer, Yii::t('app', 'Invalid id'));
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
         $model->status = Message::STATUS_RECYCLE;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirectError();
         }
 
         return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete Successfully'));

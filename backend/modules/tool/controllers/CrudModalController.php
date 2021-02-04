@@ -56,14 +56,11 @@ class CrudModalController extends BaseController
             $model->started_at = strtotime($post['Crud']['startedTime']);
             $model->ended_at = strtotime($post['Crud']['endedTime']);
 
-            if ($model->save()) {
-                $this->flashSuccess();
-            } else {
-                Yii::$app->logSystem->db($model->errors);
-                $this->flashError($this->getError($model));
+            if (!$model->save()) {
+                $this->redirectError($model);
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [

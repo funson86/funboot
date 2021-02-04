@@ -74,22 +74,21 @@ class RoleController extends BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                if ($model->is_default == YesNo::YES) {
-                    if ($model->id > Yii::$app->authSystem->maxStoreRoleId) { // 普通用户
-                        $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > ' . Yii::$app->authSystem->maxStoreRoleId);
-                    } elseif ($model->id <= Yii::$app->authSystem->maxAdminRoleId) { // 店铺角色
-                        $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > 1 and id < ' . Yii::$app->authSystem->maxAdminRoleId);
-                    } else { // 管理员
-                        $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > ' . Yii::$app->authSystem->maxAdminRoleId . ' and id <= ' . Yii::$app->authSystem->maxStoreRoleId);
-                    }
-                }
-                $this->flashSuccess();
-            } else {
-                $this->flashError($this->getError($model));
+            if (!$model->save()) {
+                $this->redirectError($model);
             }
 
-            return $this->redirect(Yii::$app->request->referrer);
+            if ($model->is_default == YesNo::YES) {
+                if ($model->id > Yii::$app->authSystem->maxStoreRoleId) { // 普通用户
+                    $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > ' . Yii::$app->authSystem->maxStoreRoleId);
+                } elseif ($model->id <= Yii::$app->authSystem->maxAdminRoleId) { // 店铺角色
+                    $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > 1 and id < ' . Yii::$app->authSystem->maxAdminRoleId);
+                } else { // 管理员
+                    $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > ' . Yii::$app->authSystem->maxAdminRoleId . ' and id <= ' . Yii::$app->authSystem->maxStoreRoleId);
+                }
+            }
+
+            return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [
@@ -130,9 +129,9 @@ class RoleController extends BaseController
 
             RolePermission::deleteAll(['status' => RolePermission::STATUS_INACTIVE, 'role_id' => $id]);
 
-            $this->flashSuccess();
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
+
         $permissions = Permission::find()->asArray()->all();
         $selectIds = ArrayHelper::getColumn(RolePermission::find()->where(['role_id' => $id])->all(), 'permission_id');
         return $this->renderAjax($this->action->id, [
@@ -175,8 +174,7 @@ class RoleController extends BaseController
 
             RoleDepartment::deleteAll(['status' => RoleDepartment::STATUS_INACTIVE, 'role_id' => $id]);
 
-            $this->flashSuccess();
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirectSuccess();
         }
 
         $departments = Department::find()->asArray()->all();
