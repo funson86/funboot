@@ -131,7 +131,9 @@ function syncAll() {
         success: function (data) {
             if (parseInt(data.code) === 200) {
                 fbInfo('同步成功')
-                window.location.reload();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 3000)
             }
         }
     });
@@ -159,7 +161,9 @@ $('#syncSelect').click(function() {
         success: function (data) {
             if (parseInt(data.code) === 200) {
                 fbInfo('同步成功')
-                window.location.reload();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 3000)
             }
         }
     });
