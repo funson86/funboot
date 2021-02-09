@@ -504,4 +504,10 @@ return [
     'Order Report' => '订单报表',
     'User Register Count' => '用户注册数',
 
+    /* cms */
+    'Pages' => '页面',
+    'Page' => '页面',
+    'Catalogs' => '栏目',
+    'Catalog' => '栏目',
+
 ];
