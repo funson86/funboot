@@ -6,6 +6,7 @@ use common\helpers\ArrayHelper;
 use common\helpers\IdHelper;
 use common\models\base\Role;
 use common\models\User;
+use Da\QrCode\QrCode;
 use Yii;
 use common\models\Store;
 use common\models\ModelSearch;
@@ -148,13 +149,28 @@ class StoreController extends BaseController
      *
      * @return mixed
      */
-    public function actionConfig()
+    public function actionEditConfig()
     {
         if ($this->generateHostFile()) {
             return $this->redirectSuccess();
         }
 
         return $this->redirectError();
+    }
+
+    public function actionEditQrcode()
+    {
+        $models = Store::find()->all();
+        foreach ($models as $model) {
+            if ($url = $this->generateQrcode($model)) {
+                $model->qrcode = $url;
+                $model->save();
+            } else {
+                $this->flashError($model->name . ' error');
+            }
+        }
+
+        return $this->redirectSuccess();
     }
 
     /**
@@ -181,5 +197,22 @@ class StoreController extends BaseController
             Yii::$app->logSystem->db('Write host file failed: ' .Yii::getAlias('@frontend/runtime/host.php') . ' ' . $str);
             return false;
         }
+
+        return true;
+    }
+
+    protected function generateQrcode($model)
+    {
+        $url = Yii::$app->params['httpProtocol'] . $model->host_name . ($model->parent_id > 0 ? '?store_id=' . $model->id : '');
+        $qrCode = (new QrCode($url))
+            ->useEncoding('UTF-8')
+            ->setSize(700);
+
+        if (!file_put_contents(Yii::getAlias('@static/resources/qrcode/' . $model->id . '.png'), $qrCode->writeString())) {
+            Yii::$app->logSystem->db('Write host file failed: ' .Yii::getAlias('@frontend/runtime/host.php') . ' ' . $url);
+            return false;
+        }
+
+        return Yii::$app->params['httpProtocol'] . $model->host_name . '/resources/qrcode/' . $model->id . '.png';
     }
 }

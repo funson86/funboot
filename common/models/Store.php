@@ -9,10 +9,12 @@ use common\models\User;
  * This is the model class for table "{{%store}}".
  *
  * @property int $id
+ * @property int $parent_id 父节点
  * @property int $user_id 管理员
  * @property string $name 名称
  * @property string $description 简介
  * @property string $host_name 域名
+ * @property string $qrcode 二维码
  * @property string $route 子系统
  * @property int $expired_at 到期时间
  * @property string|null $remark 备注
@@ -41,10 +43,10 @@ class Store extends StoreBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['user_id', 'expired_at', 'language', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['parent_id', 'user_id', 'expired_at', 'language', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['remark'], 'string'],
-            [['name', 'description', 'host_name', 'route'], 'string', 'max' => 255],
+            [['name', 'description', 'host_name', 'qrcode', 'route'], 'string', 'max' => 255],
         ]);
     }
 
@@ -56,10 +58,12 @@ class Store extends StoreBase
         if (Yii::$app->language == Yii::$app->params['sqlCommentLanguage']) {
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
+                'parent_id' => '父节点',
                 'user_id' => '管理员',
                 'name' => '名称',
                 'description' => '简介',
                 'host_name' => '域名',
+                'qrcode' => '二维码',
                 'route' => '子系统',
                 'expired_at' => '到期时间',
                 'remark' => '备注',
@@ -75,10 +79,12 @@ class Store extends StoreBase
         } else {
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
+                'parent_id' => Yii::t('app', 'Parent ID'),
                 'user_id' => Yii::t('app', 'User ID'),
                 'name' => Yii::t('app', 'Name'),
                 'description' => Yii::t('app', 'Description'),
                 'host_name' => Yii::t('app', 'Host Name'),
+                'qrcode' => Yii::t('app', 'Qrcode'),
                 'route' => Yii::t('app', 'Route'),
                 'expired_at' => Yii::t('app', 'Expired At'),
                 'remark' => Yii::t('app', 'Remark'),

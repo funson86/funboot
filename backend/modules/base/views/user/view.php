@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-
 <div class="card user-view">
     <div class="card-header">
         <?= Html::a(Yii::t('app', 'Update'), ['edit', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -50,14 +49,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'description',
                 ['attribute' => 'sex', 'value' => function ($model) { return ActiveModel::getSexLabels($model->sex); }, ],
                 'area',
+                'province_id',
+                'city_id',
+                'district_id',
                 'address',
                 'birthday',
+                'point',
+                'balance',
                 'remark',
                 'last_login_at:datetime',
                 'last_login_ip',
+                'last_paid_at:datetime',
+                'last_paid_ip',
+                'consume_count',
+                'consume_amount',
                 'type',
                 'sort',
-                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],
+                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
                 'created_at:datetime',
                 'updated_at:datetime',
                 'created_by',
@@ -66,5 +74,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
 
     </div>
-
 </div>

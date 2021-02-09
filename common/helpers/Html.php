@@ -481,12 +481,12 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * 弹框，适用简单的表，无view
+     * 弹框，适用简单的表，无edit
      *
      * @param array $options
      * @return array
      */
-    public static function actionsViewEdit($options = [])
+    public static function actionsViewDelete($options = [])
     {
         return [
             'header' => Yii::t('app', 'Actions'),

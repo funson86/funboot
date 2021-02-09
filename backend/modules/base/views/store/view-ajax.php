@@ -13,33 +13,37 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Stores'), 'url' => [
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="card mt-2 store-view">
-    <div class="card-header">
-        <?= $model->name ?>
-    </div>
 
-    <div class="card-body">
+<div class="modal-header">
+    <h4 class="modal-title"><?= $model->name ?: Yii::t('app', 'Basic info') ?></h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
 
-        <?= DetailView::widget([
-            'model' => $model,
-            'options' => ['class' => 'table table-bordered table-hover box', 'style' => 'table-layout:fixed; width:100%;'],
-            'attributes' => [
-                'id',
-                'user_id',
-                'name',
-                'description',
-                'host_name',
-                'expired_at:datetime',
-                'remark:ntext',
-                'type',
-                'sort',
-                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],
-                'created_at:datetime',
-                'updated_at:datetime',
-                'created_by',
-                'updated_by',
-            ],
-        ]) ?>
+<div class="modal-body store-view">
 
-    </div>
+    <?= DetailView::widget([
+        'model' => $model,
+        'options' => ['class' => 'table table-bordered table-hover box', 'style' => 'table-layout:fixed; width:100%;'],
+        'attributes' => [
+            'id',
+            'parent_id',
+            'user_id',
+            'name',
+            'description',
+            'host_name',
+            'qrcode',
+            'route',
+            'expired_at:datetime',
+            'remark:ntext',
+            'language',
+            'type',
+            'sort',
+            ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
+            'created_at:datetime',
+            'updated_at:datetime',
+            'created_by',
+            'updated_by',
+        ],
+    ]) ?>
+
 </div>

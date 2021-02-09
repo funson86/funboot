@@ -216,11 +216,13 @@ class StoreBase extends BaseModel
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'name' => Yii::t('app', 'Name'),
             'description' => Yii::t('app', 'Description'),
             'host_name' => Yii::t('app', 'Host Name'),
             'router' => Yii::t('app', 'Router'),
+            'qrcode' => Yii::t('app', 'Qrcode'),
             'expired_at' => Yii::t('app', 'Expired At'),
             'expiredTime' => Yii::t('app', 'Expired At'),
             'remark' => Yii::t('app', 'Remark'),

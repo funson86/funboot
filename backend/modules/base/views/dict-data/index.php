@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-9">
         <div class="card card-primary card-outline">
             <div class="card-header">
-                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?></h2>
+                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Dict Datas'] ?? null) ?></h2>
                 <div class="card-tools">
                     <?= Html::createModal(['edit-ajax', 'dict_id' => (Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0)], '添加字典项', ['class' => 'btn btn-sm btn-primary need-id']) ?>
                     <?= Html::export() ?>

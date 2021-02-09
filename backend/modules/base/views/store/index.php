@@ -5,6 +5,7 @@ use common\helpers\Html;
 use common\components\enums\YesNo;
 use common\models\Store as ActiveModel;
 use yii\helpers\Inflector;
+use common\helpers\ImageHelper;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -18,10 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?></h2>
+                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Stores'] ?? null) ?></h2>
                 <div class="card-tools">
                     <?= Html::createModal() ?>
-                    <?= Html::buttonModal(['config'], Yii::t('app', 'Refresh Config File'), ['class' => 'btn btn-sm btn-warning'], false) ?>
+                    <?= Html::buttonModal(['edit-config'], Yii::t('app', 'Refresh Config File'), ['class' => 'btn btn-sm btn-warning'], false) ?>
+                    <?= Html::buttonModal(['edit-qrcode'], Yii::t('app', 'Refresh Qrcode'), ['class' => 'btn btn-sm btn-info'], false) ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
                 </div>
@@ -43,6 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'name',
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
                         'description',
+                        // 'host_name',
+                        ['attribute' => 'qrcode', 'filter' => false, 'format' => 'raw', 'value' => function ($model) { return ImageHelper::fancyBox($model->qrcode); },],
+                        //'route',
+                        ['attribute' => 'route', 'value' => function ($model) { return ActiveModel::getRouteLabels($model->route); }, 'filter' => Html::activeDropDownList($searchModel, 'route', ActiveModel::getRouteLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'expired_at:datetime',
                         // 'remark:ntext',
                         ['attribute' => 'language', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getLanguageLabels($model->language); }, 'filter' => false,],

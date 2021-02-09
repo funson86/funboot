@@ -106,6 +106,7 @@ return [
     'Schedule' => '定时任务',
     'Schedules' => '定时任务',
     'Refresh Config File' => '更新配置文件',
+    'Refresh Qrcode' => '更新二维码',
 
     'System Info' => '系统信息',
     'PHP Info' => 'PHP信息',

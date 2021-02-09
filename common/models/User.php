@@ -26,8 +26,13 @@ use common\models\Store;
  * @property string $description 简述
  * @property int $sex 性别
  * @property string $area 地区
+ * @property int $province_id 省
+ * @property int $city_id 市
+ * @property int $district_id 区
  * @property string $address 地址
  * @property string|null $birthday 生日
+ * @property int $point 积分
+ * @property float $balance 余额
  * @property string $remark 备注
  * @property int $last_login_at 最近登录时间
  * @property string $last_login_ip 最近登录IP
@@ -59,10 +64,10 @@ class User extends UserBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'parent_id', 'auth_role', 'sex', 'last_login_at', 'last_paid_at', 'consume_count', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'parent_id', 'auth_role', 'sex', 'province_id', 'city_id', 'district_id', 'point', 'last_login_at', 'last_paid_at', 'consume_count', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['username'], 'required'],
             [['birthday'], 'safe'],
-            [['consume_amount'], 'number'],
+            [['balance', 'consume_amount'], 'number'],
             [['username'], 'string', 'max' => 190],
             [['auth_key'], 'string', 'max' => 32],
             [['token'], 'string', 'max' => 64],
@@ -97,8 +102,13 @@ class User extends UserBase
                 'description' => '简述',
                 'sex' => '性别',
                 'area' => '地区',
+                'province_id' => '省',
+                'city_id' => '市',
+                'district_id' => '区',
                 'address' => '地址',
                 'birthday' => '生日',
+                'point' => '积分',
+                'balance' => '余额',
                 'remark' => '备注',
                 'last_login_at' => '最近登录时间',
                 'last_login_ip' => '最近登录IP',
@@ -134,8 +144,13 @@ class User extends UserBase
                 'description' => Yii::t('app', 'Description'),
                 'sex' => Yii::t('app', 'Sex'),
                 'area' => Yii::t('app', 'Area'),
+                'province_id' => Yii::t('app', 'Province ID'),
+                'city_id' => Yii::t('app', 'City ID'),
+                'district_id' => Yii::t('app', 'District ID'),
                 'address' => Yii::t('app', 'Address'),
                 'birthday' => Yii::t('app', 'Birthday'),
+                'point' => Yii::t('app', 'Point'),
+                'balance' => Yii::t('app', 'Balance'),
                 'remark' => Yii::t('app', 'Remark'),
                 'last_login_at' => Yii::t('app', 'Last Login At'),
                 'last_login_ip' => Yii::t('app', 'Last Login Ip'),

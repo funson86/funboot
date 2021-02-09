@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="modal-header">
-    <h4 class="modal-title">基本信息</h4>
+    <h4 class="modal-title"><?= $model->name ?: Yii::t('app', 'Basic info') ?></h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 </div>
 
