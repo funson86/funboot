@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // 可设置自己的上传地址, 不设置则默认地址
                                 // 'server' => '',
                                 'pick' => [
-                                    'multiple' => false,
+                                    'multiple' => true,
                                 ],
                             ]
                         ]); ?>
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // 可设置自己的上传地址, 不设置则默认地址
                                 // 'server' => '',
                                 'pick' => [
-                                    'multiple' => false,
+                                    'multiple' => true,
                                 ],
                             ]
                         ]); ?>

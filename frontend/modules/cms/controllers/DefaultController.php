@@ -76,12 +76,12 @@ class DefaultController extends BaseController
         //menu
         $this->allCatalog = Catalog::find()->where([
             'store_id' => $store->id,
-        ])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->asArray()->all();
+        ])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
 
         foreach ($this->allCatalog as $item) {
             $this->mapAllCatalog[$item['id']] = $item;
-            if ($item['status'] == Catalog::STATUS_ACTIVE && $item['is_nav'] == YesNo::YES) {
-                $this->allShowCatalog[] = $item;
+            if ($item->status == Catalog::STATUS_ACTIVE && $item->is_nav == YesNo::YES) {
+                $this->allShowCatalog[] = $item->attributes;
             }
         }
 
@@ -354,16 +354,18 @@ class DefaultController extends BaseController
         $bannerName = $this->isMobile ? 'banner_h5' : 'banner';
 
         $banner = null;
-        $catalogId = intval($catalogId);        var_dump($this->mapAllCatalog[$catalogId]);
+        $catalogId = intval($catalogId);
 
-        if (isset($this->mapAllCatalog[$catalogId]) && empty($this->mapAllCatalog[$catalogId][$bannerName])) {
+        if (isset($this->mapAllCatalog[$catalogId]) && !empty($this->mapAllCatalog[$catalogId][$bannerName])) {
+            $banner = $this->mapAllCatalog[$catalogId][$bannerName];
+        } elseif (isset($this->mapAllCatalog[$catalogId]) && empty($this->mapAllCatalog[$catalogId][$bannerName])) {
             $parentCatalog = $this->mapAllCatalog[$this->mapAllCatalog[$catalogId]['parent_id']] ?? null;
             if (isset($parentCatalog) && !empty($parentCatalog[$bannerName])) {
                 $banner = $parentCatalog[$bannerName];
-            } else {
-                $banner = $this->getStoreBanner(true);
             }
         }
+
+        !$banner && $banner = $this->getStoreBanner(true);
         return $banner;
     }
 }
