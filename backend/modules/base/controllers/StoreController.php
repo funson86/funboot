@@ -158,6 +158,10 @@ class StoreController extends BaseController
         return $this->redirectError();
     }
 
+    /**
+     * 生成二维码
+     * @return mixed
+     */
     public function actionEditQrcode()
     {
         $models = Store::find()->all();

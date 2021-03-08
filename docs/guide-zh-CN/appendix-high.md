@@ -123,5 +123,20 @@
 
 ### 全文索引使用ElasticSearch
 
+修改common/config/main.php，添加mongodb组件，
+
+启动Elasticsearch，默认会监听9200端口
+
+```php
+        'elasticsearch' => [
+            'class' => 'yii\elasticsearch\Connection',
+            'nodes' => [
+                ['http_address' => '127.0.0.1:9200'],
+                // configure more hosts if you have a cluster
+            ],
+            'dslVersion' => 7, // default is 5
+        ],
+```
+
 
 

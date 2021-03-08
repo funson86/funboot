@@ -51,6 +51,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<store_id:\d+>' => 'site/index', // 根据项目情况进行匹配
                 '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>'=>'<modules>/<controller>/<action>',

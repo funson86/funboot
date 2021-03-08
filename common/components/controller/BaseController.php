@@ -47,9 +47,12 @@ class BaseController extends Controller
 
     public function beforeAction($action)
     {
-        // 优先级从先到后：指定store_id，用户store_id，host_name
+        // 优先级从先到后：指定store_id，用户store_id，host_name，其中指定store_id放到session中，后续其他url无需再指定store_id也能匹配
         if (Yii::$app->request->get('store_id')) {
             $model = CommonHelper::getStoreById(intval(Yii::$app->request->get('store_id')));
+            Yii::$app->session->set('currentStore', $model);
+        } elseif (!is_null(Yii::$app->session->get('currentStore'))) {
+            $model = Yii::$app->session->get('currentStore');
         } elseif (!Yii::$app->user->isGuest) {
             $model = CommonHelper::getStoreById(Yii::$app->user->identity->store_id);
         }
