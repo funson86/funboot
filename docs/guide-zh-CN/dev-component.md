@@ -135,6 +135,14 @@ return [
 ];
 ```
 
+如果邮件的内容为需要渲染的内容，可以在controller的action中使用如下代码渲染后发送
+```
+$content = CommonHelper::render(Yii::getAlias('@common/mail/mail.php'), [
+    'model' => $model,
+    'store' => $store,
+], $this, Yii::getAlias('@common/mail/layouts/html.php'));
+Yii::$app->mailSystem->send('funson86@qq.com', '标题：明天有空吗？', '想一起去去公园');
+```
 
 ### Store 组件 
 
