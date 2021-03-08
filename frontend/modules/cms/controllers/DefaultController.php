@@ -199,7 +199,7 @@ class DefaultController extends BaseController
         $query = Page::find()->where(['status' => Page::STATUS_ACTIVE, 'catalog_id' => $ids,]);
 
         $pagination = new Pagination([
-            'defaultPageSize' => $this->model->page_size > 0 ? $this->model->page_size : ($this->store->settings['cms_list_page_size'] ?? 12),
+            'defaultPageSize' => $this->model->page_size > 0 ? $this->model->page_size : ($this->store->settings['cms_list_page_size'] ?: 12),
             'totalCount' => $query->count(),
         ]);
 
@@ -365,7 +365,7 @@ class DefaultController extends BaseController
             }
         }
 
-        !$banner && $banner = $this->getStoreBanner(true);
+        !$banner && $banner = $this->getStoreBanner();
         return $banner;
     }
 }
