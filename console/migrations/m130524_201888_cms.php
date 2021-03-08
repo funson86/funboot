@@ -122,6 +122,7 @@ INSERT INTO `fb_base_setting_type` VALUES (7011, 1, 70, 'backend', '主题', 'cm
 INSERT INTO `fb_base_setting_type` VALUES (7012, 1, 70, 'backend', '模板', 'cms_template', '', 'text', '', 'index', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (7013, 1, 70, 'backend', '横幅', 'cms_banner', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (7014, 1, 70, 'backend', '横幅手机版', 'cms_banner_h5', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (7029, 1, 70, 'backend', '列表页默认每页数量', 'cms_list_page_size', '', 'text', '', '12', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (7043, 1, 70, 'backend', '关于我们', 'cms_about_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (7044, 1, 70, 'backend', '联系我们', 'cms_contact_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (7051, 1, 70, 'backend', '网站参数1', 'cms_param1', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
