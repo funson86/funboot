@@ -458,13 +458,21 @@ return [
     'Cumtom Date' => '自定义日期',
     'Start Time - End Time' => '开始时间 - 结束时间',
 
+    'Day' => '天',
     'Days' => '天',
+    ' Day ' => '天',
     ' Days ' => '天',
+    'Hour' => '小时',
     'Hours' => '小时',
+    ' Hour ' => '小时',
     ' Hours ' => '小时',
+    'Minute' => '分钟',
     'Minutes' => '分钟',
+    ' Minute ' => '分钟',
     ' Minutes ' => '分钟',
+    'Second' => '秒',
     'Seconds' => '秒',
+    ' Second ' => '秒',
     ' Seconds ' => '秒',
 
     'No data' => '暂无数据',
@@ -503,5 +511,11 @@ return [
     'New Users' => '用户量',
     'Order Report' => '订单报表',
     'User Register Count' => '用户注册数',
+
+    /* cms */
+    'Pages' => '页面',
+    'Page' => '页面',
+    'Catalogs' => '栏目',
+    'Catalog' => '栏目',
 
 ];
