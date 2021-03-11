@@ -36,7 +36,7 @@ class DefaultController extends BaseController
     public $mapAllCatalog;
 
     // 所有显示的栏目
-    public $allShowCatalog;
+    public $allShowCatalog = [];
 
     // 判断是否为手机版
     public $isMobile;
