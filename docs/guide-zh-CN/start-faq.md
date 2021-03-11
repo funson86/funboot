@@ -6,6 +6,9 @@
 - linux下提示无访问权限
 - 安装或迁移出现 Specified key was too long; max key length is 767 bytes
 - 样式修改后访问没有变化
+- Class 'COM' not found
+- com() has been disabled for security reasons
+- 网站访问500错误，index.php无法require根目录其他文件
 
 ### linux下提示无访问权限
 
@@ -47,4 +50,19 @@ extension=php_com_dotnet.dll
 
 ```
 ; disable_classes = COM
+```
+
+### 网站访问500错误，index.php无法require根目录其他文件
+
+由于指定/www/funboot/web目录，/www/funboot/web/.user.ini的路径默认为当前路径，对于项目根路径其他文件无法require
+
+修改.user.ini，将另/www/funboot/web修改为/www/funboot
+
+```
+# chattr -i .user.ini
+
+# vi .user.ini
+open_basedir=/www/funboot:/tmp/:/proc/
+
+# chattr +i .user.ini
 ```
