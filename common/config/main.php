@@ -72,6 +72,16 @@ return [
         'cacheMall' => [
             'class' => 'common\components\mall\CacheMall',
         ],
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning'],
+                    'logFile' => '@runtime/logs/' . date('Ym/d') . '.log',
+                ],
+            ],
+        ],
         'i18n' => [
             'translations' => [
                 '*' => [
