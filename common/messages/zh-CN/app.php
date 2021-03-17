@@ -249,6 +249,7 @@ return [
     'Import Data Success. Create: {countCreate}  Update: {countUpdate}' => '导入成功，新建{countCreate}条，更新{countUpdate}条',
     'Promote' => '促销',
     'Promotion' => '促销',
+    'Select Color' => '选择颜色',
 
     'Brand' => '品牌',
     'Brands' => '品牌',
@@ -263,6 +264,8 @@ return [
     'Attribute Value' => '商品属性项',
     'Attribute Values' => '商品属性项',
     'Stock Attribute' => '库存属性',
+    'Image Detail' => '图片详情',
+    'Is Multiple Attribute' => '商品多属性',
 
     'Comment' => '评价',
     'Comments' => '评价',

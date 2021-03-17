@@ -8,17 +8,14 @@ use common\models\User;
 use Yii;
 
 /**
- * This is the model base class for table "{{%mall_attribute}}" to add your code.
+ * This is the model base class for table "{{%mall_product_attribute_value_label}}" to add your code.
  *
+ * @property Product $product
  * @property Store $store
- * @property AttributeValue[] $mallAttributeValues
+ * @property AttributeValue $attributeValue
  */
-class AttributeBase extends BaseModel
+class ProductAttributeValueLabelBase extends BaseModel
 {
-    const TYPE_TEXT = 1;
-    const TYPE_COLOR = 2;
-    const TYPE_IMAGE = 3;
-
     /**
      * @return array|array[]
      */
@@ -26,34 +23,13 @@ class AttributeBase extends BaseModel
     {
         return [
             [['id'], 'safe'],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
+            [['attribute_value_id'], 'exist', 'skipOnError' => true, 'targetClass' => AttributeValue::className(), 'targetAttribute' => ['attribute_value_id' => 'id']],
         ];
     }
 
     /** add function getXxxLabels here, detail in BaseModel **/
-    /**
-     * @param null $id
-     * @param bool $all
-     * @param bool $flip
-     * @return array|mixed|null
-     */
-    public static function getTypeLabels($id = null, $all = false, $flip = false)
-    {
-        $data = [
-            self::TYPE_TEXT => Yii::t('cons', 'ATTRIBUTE_TYPE_TEXT'),
-            self::TYPE_COLOR => Yii::t('cons', 'ATTRIBUTE_TYPE_COLOR'),
-            self::TYPE_IMAGE => Yii::t('cons', 'ATTRIBUTE_TYPE_IMAGE'),
-        ];
-
-        $all && $data += [];
-
-        $flip && $data = array_flip($data);
-
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
-    }
 
     /**
      * {@inheritdoc}
@@ -64,6 +40,10 @@ class AttributeBase extends BaseModel
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
+            'product_id' => Yii::t('app', 'Product ID'),
+            'attribute_id' => Yii::t('app', 'Attribute ID'),
+            'attribute_value_id' => Yii::t('app', 'Attribute Value ID'),
+            'label' => Yii::t('app', 'Label'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
@@ -77,6 +57,14 @@ class AttributeBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStore()
     {
         return $this->hasOne(Store::className(), ['id' => 'store_id']);
@@ -85,9 +73,9 @@ class AttributeBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAttributeValues()
+    public function getAttributeValue()
     {
-        return $this->hasMany(AttributeValue::className(), ['attribute_id' => 'id']);
+        return $this->hasOne(AttributeValue::className(), ['id' => 'attribute_value_id']);
     }
 
 }

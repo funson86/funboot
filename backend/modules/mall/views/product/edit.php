@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\mall\Product as ActiveModel;
 use common\helpers\Url;
+use common\helpers\ImageHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\mall\Product */
@@ -14,6 +15,12 @@ $this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<style>
+    #product-isattribute, #product-status, #product-content, #product-types {
+        width: 100%;
+    }
+</style>
 
 <?php $form = ActiveForm::begin([
     'fieldConfig' => [
@@ -29,111 +36,129 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a class="nav-link active" id="tab-1" data-toggle="pill" href="#tab-content-1"><?= Yii::t('app', 'Basic info') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tab-2" data-toggle="pill" href="#tab-content-2"><?= Yii::t('app', 'Advanced') ?></a>
+                        <a class="nav-link" id="tab-2" data-toggle="pill" href="#tab-content-2"><?= Yii::t('app', 'Stock Attribute') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tab-3" data-toggle="pill" href="#tab-content-3"><?= Yii::t('app', 'Stock Attribute') ?></a>
+                        <a class="nav-link" id="tab-3" data-toggle="pill" href="#tab-content-3"><?= Yii::t('app', 'Image Detail') ?></a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
-                <div class="col-sm-12">
-                    <?= $form->field($model, 'category_id')->dropDownList(\common\models\mall\Category::getIdLabel()) ?>
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'sku')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'stock_code')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'stock')->textInput() ?>
-                    <?= $form->field($model, 'stock_warning')->textInput() ?>
-                    <?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'volume')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'thumb')->widget(\common\components\uploader\FileWidget::class, [
-                        'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
-                        'theme' => 'default',
-                        'themeConfig' => [],
-                        'config' => [
-                            // 可设置自己的上传地址, 不设置则默认地址
-                            // 'server' => '',
-                            'pick' => [
-                                'multiple' => false,
-                            ],
-                        ]
-                    ]); ?>
-                    <?= $form->field($model, 'images')->widget(\common\components\uploader\FileWidget::class, [
-                        'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
-                        'theme' => 'default',
-                        'themeConfig' => [],
-                        'config' => [
-                            // 可设置自己的上传地址, 不设置则默认地址
-                            // 'server' => '',
-                            'pick' => [
-                                'multiple' => true,
-                            ],
-                        ]
-                    ]); ?>
-                    <?= $form->field($model, 'tags')->widget(kartik\select2\Select2::class, [
-                        'data' => ['s1', 's2'], //传入变量
-                        'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
-                    ]) ?>
-                    <?= $form->field($model, 'brief')->textarea(['rows' => 6]) ?>
-                    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-                    <?= $form->field($model, 'seo_title')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'seo_description')->textarea(['rows' => 6]) ?>
-                    <?= $form->field($model, 'brand_id')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'vendor_id')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'star')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'sales')->textInput() ?>
-                    <?= $form->field($model, 'click')->textInput() ?>
-                    <?= $form->field($model, 'type')->textInput() ?>
-                    <?= $form->field($model, 'sort')->textInput() ?>
-                    <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
-
-                    <?= $form->field($model, 'isAttribute')->radioList(YesNo::getLabelsNoYes()) ?>
-
-                    <div class="row field-product-is-attribute-no">
-                        <div class="col-sm-3 pr-3"><?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?> </div>
-                        <div class="col-sm-3 pr-3"><?= $form->field($model, 'market_price')->textInput(['maxlength' => true]) ?> </div>
-                        <div class="col-sm-3 pr-3"><?= $form->field($model, 'cost_price')->textInput(['maxlength' => true]) ?> </div>
-                        <div class="col-sm-3 pr-3"><?= $form->field($model, 'wholesale_price')->textInput(['maxlength' => true]) ?> </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="tab-content-1">
+                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                        <div class="row">
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'category_id')->dropDownList(\common\models\mall\Category::getIdLabel()) ?></div>
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'brand_id')->dropDownList(\common\models\mall\Brand::getIdLabel(true)) ?></div>
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'vendor_id')->dropDownList(\common\models\mall\Vendor::getIdLabel(true)) ?></div>
+                        </div>
+                        <?= $form->field($model, 'tags')->widget(kartik\select2\Select2::class, [
+                            'data' => ['s1', 's2'], //传入变量
+                            'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
+                        ]) ?>
+                        <div class="row">
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'sort')->textInput() ?></div>
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?></div>
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'volume')->textInput(['maxlength' => true]) ?></div>
+                        </div>
+                        <?= $form->field($model, 'types')->checkboxList(ActiveModel::getTypeLabels()) ?>
+                        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                     </div>
 
-                    <div class="field-product-is-attribute-yes">
-                        <?= $form->field($model, 'attribute_set_id')->dropDownList(\common\models\mall\AttributeSet::getIdLabel(true)) ?>
+                    <div class="tab-pane fade show" id="tab-content-2">
+                        <div class="row">
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'stock')->textInput() ?></div>
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'stock_warning')->textInput() ?></div>
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'stock_code')->textInput(['maxlength' => true]) ?></div>
+                        </div>
+                        <?= $form->field($model, 'sku')->textInput(['maxlength' => true]) ?>
 
-                        <dl class="control-group">
-                            <dt><?= Yii::t('app', 'Attribute Value') ?></dt>
-                            <dd>
-                                <table class="table table-product-attribute">
-                                    <tbody>
-                                    <?php foreach ($attributes as $attribute){ ?>
-                                        <tr>
-                                            <td><?= $attribute->name ?></td>
-                                            <td id="attribute-<?= $attribute->id; ?>">
-                                                <?php foreach ($attribute->attributeValues as $value){ ?>
-                                                <span id="attribute-value-<?= $value['id']; ?>" data-type="<?= $attribute['type']; ?>" class="btn btn-default btn-sm" data-id="<?= $value['id']; ?>" data-name="<?= $value['name']; ?>" data-attribute-id="<?= $attribute->id; ?>" data-attribute-name="<?= $attribute->name; ?>" data-sort="<?= $value['sort']; ?>"><?= $value['name']; ?></span>
-                                                <?php } ?>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
-                                <div class="hint-block">点击按钮进行规格值设置, 选择按钮的情况下颜色/图片选项规格值才会被保存</div>
-                            </dd>
-                        </dl>
+                        <?= $form->field($model, 'isAttribute')->radioList(YesNo::getLabelsNoYes()) ?>
 
-                        <dl class="control-group block-product-sku hidden">
-                            <dt><?= Yii::t('app', 'Product Sku') ?></dt>
-                            <dd>
-                                <table class="table table-bordered table-product-sku table-hover">
-                                    <thead></thead>
-                                    <tbody></tbody>
-                                    <tfoot></tfoot>
-                                </table>
-                            </dd>
-                        </dl>
+                        <div class="row field-product-is-attribute-no">
+                            <div class="col-sm-3 pr-3"><?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?> </div>
+                            <div class="col-sm-3 pr-3"><?= $form->field($model, 'market_price')->textInput(['maxlength' => true]) ?> </div>
+                            <div class="col-sm-3 pr-3"><?= $form->field($model, 'cost_price')->textInput(['maxlength' => true]) ?> </div>
+                            <div class="col-sm-3 pr-3"><?= $form->field($model, 'wholesale_price')->textInput(['maxlength' => true]) ?> </div>
+                        </div>
+                        <div class="field-product-is-attribute-yes">
+                            <?= $form->field($model, 'attribute_set_id')->dropDownList(\common\models\mall\AttributeSet::getIdLabel(true)) ?>
+
+                            <dl class="control-group">
+                                <dt><?= Yii::t('app', 'Attribute Value') ?></dt>
+                                <dd>
+                                    <table class="table table-product-attribute">
+                                        <tbody>
+                                        <?php foreach ($attributes as $attribute){ ?>
+                                            <tr>
+                                                <td><?= $attribute->name ?></td>
+                                                <td id="attribute-<?= $attribute->id; ?>">
+                                                    <?php foreach ($attribute->attributeValues as $value){ ?>
+                                                        <span id="attribute-value-<?= $value['id']; ?>" data-type="<?= $attribute['type']; ?>" class="btn btn-default btn-sm btn-attribute" data-id="<?= $value['id']; ?>" data-name="<?= $value['name']; ?>" data-attribute-id="<?= $attribute->id; ?>" data-attribute-name="<?= $attribute->name; ?>" data-sort="<?= $value['sort']; ?>"><?= $value['name']; ?></span>
+
+                                                        <?php if ($attribute['type'] == 2) { ?>
+                                                            <span class="btn btn-sm selectColor" style="background:<?= strlen($value['label']) > 0 ? '#' . $value['label'] : '#000000'; ?>;padding: 10px" data-href="<?= Url::to(['/site/color', 'value' => $value['label']])?>"></span>
+                                                            <?= Html::hiddenInput('productAttributeValueLabels[' . $value['id'] .']', '#' . $value['label'])?>
+                                                        <?php } elseif ($attribute['type'] == 3) { ?>
+                                                            <img src="<?= strlen($value['label']) > 0 ? $value['label'] : ImageHelper::get('/resources/images/add-sku.png'); ?>" class="selectImage" href="<?= Url::to(['/file/index', 'boxId' => 'mall', 'upload_type' => 'image'])?>" data-toggle='modal' data-target='#ajaxModalMax'>
+                                                            <?= Html::hiddenInput('productAttributeValueLabels[' . $value['id'] .']', $value['label'])?>
+                                                        <?php } ?>
+
+                                                    <?php } ?>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                    <div class="hint-block">点击按钮进行属性项设置, 按钮选择的情况下颜色/图片选项属性值才会被保存</div>
+                                </dd>
+                            </dl>
+
+                            <dl class="control-group block-product-sku hidden">
+                                <dt><?= Yii::t('app', 'Product Sku') ?></dt>
+                                <dd>
+                                    <table class="table table-bordered table-product-sku table-hover">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                        <tfoot></tfoot>
+                                    </table>
+                                </dd>
+                            </dl>
+
+                        </div>
 
                     </div>
-
+                    <div class="tab-pane fade show" id="tab-content-3">
+                        <?= $form->field($model, 'thumb')->widget(\common\components\uploader\FileWidget::class, [
+                            'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
+                            'theme' => 'default',
+                            'themeConfig' => [],
+                            'config' => [
+                                // 可设置自己的上传地址, 不设置则默认地址
+                                // 'server' => '',
+                                'pick' => [
+                                    'multiple' => false,
+                                ],
+                            ]
+                        ]); ?>
+                        <?= $form->field($model, 'images')->widget(\common\components\uploader\FileWidget::class, [
+                            'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
+                            'theme' => 'default',
+                            'themeConfig' => [],
+                            'config' => [
+                                // 可设置自己的上传地址, 不设置则默认地址
+                                // 'server' => '',
+                                'pick' => [
+                                    'multiple' => true,
+                                ],
+                            ]
+                        ]); ?>
+                        <?= $form->field($model, 'brief')->textarea(['rows' => 4]) ?>
+                        <?= $form->field($model, 'content')->widget(\common\components\ueditor\Ueditor::class, []) ?>
+                        <?= $form->field($model, 'seo_title')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'seo_description')->textarea(['rows' => 6]) ?>
+                    </div>
 
                 </div>
             </div>
@@ -149,28 +174,19 @@ $this->params['breadcrumbs'][] = $this->title;
 <!-- 属性模板 -->
 <script id="attributeTemplate" type="text/html">
     <tbody>
-    {{each data as val i}}
+    {{each data as attribute i}}
     <tr>
-        <td>{{val.name}}</td>
+        <td>{{attribute.name}}</td>
         <td>
-            {{each val.values as item i}}
-            <span id="option-{{item.id}}" data-type="{{val.type}}" class="btn btn-default btn-sm" data-id="{{item.id}}" data-name="{{item.name}}" data-attribute-id="{{val.id}}" data-attribute-name="{{val.name}}" data-sort="{{item.sort}}">{{item.name}}</span>
-            {{/each}}
-        </td>
-    </tr>
-    {{/each}}
-    </tbody>
-</script>
-
-<!-- sku模板 -->
-<script id="attributeTemplate" type="text/html">
-    <tbody>
-    {{each data as val i}}
-    <tr>
-        <td>{{val.name}}</td>
-        <td>
-            {{each val.values as item i}}
-            <span id="option-{{item.id}}" data-type="{{val.type}}" class="btn btn-default btn-sm" data-id="{{item.id}}" data-title="{{item.name}}" data-name="{{val.name}}" data-sort="{{item.sort}}">{{item.name}}</span>
+            {{each attribute.values as item i}}
+            <span id="option-{{item.id}}" data-type="{{attribute.type}}" class="btn btn-default btn-sm btn-attribute" data-id="{{item.id}}" data-name="{{item.name}}" data-attribute-id="{{attribute.id}}" data-attribute-name="{{attribute.name}}" data-sort="{{item.sort}}">{{item.name}}</span>
+            {{if attribute.type == 2 }}
+            <span class="btn btn-sm selectColor" style="background:#000000;padding: 10px" data-href="<?= Url::to(['/site/color'])?>"></span>
+            <?= Html::hiddenInput('productAttributeValueLabels[{{item.id}}]', '')?>
+            {{else if attribute.type == 3}}
+            <img src="<?= ImageHelper::get('/resources/images/add-sku.png'); ?>" class="selectImage" href="<?= Url::to(['/file/index', 'boxId' => 'mall', 'upload_type' => 'image'])?>" data-toggle='modal' data-target='#ajaxModalMax'>
+            <?= Html::hiddenInput('productAttributeValueLabels[{{item.id}}]', '')?>
+            {{/if}}
             {{/each}}
         </td>
     </tr>
@@ -263,7 +279,7 @@ $this->params['breadcrumbs'][] = $this->title;
     // 存储skus中的值，用来填充表格值
     var skusData = [];
 
-    var addSkuThumb = "<?= \common\helpers\ImageHelper::get('/resources/images/add-sku.png') ?>";
+    var addSkuThumb = "<?= ImageHelper::get('/resources/images/add-sku.png') ?>";
 
     var batchType = 0;
 
@@ -306,12 +322,15 @@ $this->params['breadcrumbs'][] = $this->title;
         })
 
         $('#product-attribute_set_id').change(function() {
+            // 清空数据，删除sku表格
+            allAttribute = skusData = [];
+            createTable();
+
             let id = $(this).val();
             $.get("<?= Url::to(['attribute-set/view-ajax-value']); ?>?id=" + id, function(data, status) {
                 if (status === "success") {
                     if (parseInt(data.code) === 200) {
                         let attributeHtml = template('attributeTemplate', data);
-                        //alert(attributeHtml)
                         $('.table-product-attribute').html(attributeHtml);
                     }
                 }
@@ -319,7 +338,7 @@ $this->params['breadcrumbs'][] = $this->title;
         });
     });
 
-    $(document).on("click", ".table-product-attribute span", function() {
+    $(document).on("click", ".table-product-attribute .btn-attribute", function() {
         let id = $(this).data('id');
         let name = $(this).data('name');
         let attributeId = $(this).data('attribute-id');
@@ -571,3 +590,44 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </script>
 
+<script>
+    var colorUrl = "<?= Url::to(['/site/color', 'value' => ''])?>";
+    var colorObj;
+    // 选择颜色
+    $(document).on("click", ".selectColor",function(){
+        colorObj = $(this);
+        var thisColorUrl = $(this).data('href');
+
+        openIframeSelectColor(thisColorUrl);
+    });
+
+    // 打一个新窗口
+    function openIframeSelectColor(url, color) {
+        layer.open({
+            type: 2,
+            title: '<?= Yii::t('app', 'Select Color') ?>',
+            shade: 0.3,
+            offset: "10%",
+            shadeClose: true,
+            btn: ['<?= Yii::t('app', 'Ok') ?>', '<?= Yii::t('app', 'Close') ?>'],
+            yes: function (index, layero) {
+                var body = layer.getChildFrame('body', index);
+
+                let color = body.find('.spectrum-input').val();
+                $(colorObj).attr('style', "background:" + color + ";padding: 10px");
+                $(colorObj).next().val(color);
+                color = color.substr(1);
+                $(colorObj).data('href', colorUrl + color);
+
+                layer.closeAll();
+            },
+            btn2: function () {
+                layer.closeAll();
+            },
+            area: ['40%', '300px'],
+            content: url
+        });
+
+        return false;
+    }
+</script>

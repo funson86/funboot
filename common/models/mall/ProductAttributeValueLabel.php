@@ -7,19 +7,14 @@ use common\models\User;
 use common\models\Store;
 
 /**
- * This is the model class for table "{{%mall_category}}".
+ * This is the model class for table "{{%mall_product_attribute_value_label}}".
  *
  * @property int $id
  * @property int $store_id 商家
- * @property int $parent_id 父节点
  * @property string $name 名称
- * @property string $brief 简述
- * @property int $is_nav 导航栏显示
- * @property string $banner 封面图
- * @property string $seo_title 搜索优化标题
- * @property string $seo_keywords 搜索关键词
- * @property string|null $seo_description 搜索描述
- * @property string $redirect_url 跳转链接
+ * @property int $product_id 商品
+ * @property int $attribute_value_id 属性值
+ * @property string $label 名称
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -28,14 +23,14 @@ use common\models\Store;
  * @property int $created_by 创建用户
  * @property int $updated_by 更新用户
  */
-class Category extends CategoryBase
+class ProductAttributeValueLabel extends ProductAttributeValueLabelBase
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%mall_category}}';
+        return '{{%mall_product_attribute_value_label}}';
     }
 
     /**
@@ -44,10 +39,9 @@ class Category extends CategoryBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'parent_id', 'is_nav', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name'], 'required'],
-            [['seo_description'], 'string'],
-            [['name', 'brief', 'banner', 'seo_title', 'seo_keywords', 'redirect_url'], 'string', 'max' => 255],
+            [['store_id', 'product_id', 'attribute_value_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['name', 'product_id', 'attribute_value_id'], 'required'],
+            [['name', 'label'], 'string', 'max' => 255],
         ]);
     }
 
@@ -60,15 +54,10 @@ class Category extends CategoryBase
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
-                'parent_id' => '父节点',
                 'name' => '名称',
-                'brief' => '简述',
-                'is_nav' => '导航栏显示',
-                'banner' => '封面图',
-                'seo_title' => '搜索优化标题',
-                'seo_keywords' => '搜索关键词',
-                'seo_description' => '搜索描述',
-                'redirect_url' => '跳转链接',
+                'product_id' => '商品',
+                'attribute_value_id' => '属性值',
+                'label' => '名称',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -81,15 +70,10 @@ class Category extends CategoryBase
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
-                'parent_id' => Yii::t('app', 'Parent ID'),
                 'name' => Yii::t('app', 'Name'),
-                'brief' => Yii::t('app', 'Brief'),
-                'is_nav' => Yii::t('app', 'Is Nav'),
-                'banner' => Yii::t('app', 'Banner'),
-                'seo_title' => Yii::t('app', 'Seo Title'),
-                'seo_keywords' => Yii::t('app', 'Seo Keywords'),
-                'seo_description' => Yii::t('app', 'Seo Description'),
-                'redirect_url' => Yii::t('app', 'Redirect Url'),
+                'product_id' => Yii::t('app', 'Product ID'),
+                'attribute_value_id' => Yii::t('app', 'Attribute Value ID'),
+                'label' => Yii::t('app', 'Label'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

@@ -29,8 +29,8 @@ use common\models\Store;
  * @property string|null $brief 简述
  * @property string|null $content 内容
  * @property string $seo_title 搜索优化标题
- * @property string $seo_keywords 关键词
- * @property string|null $seo_description 描述
+ * @property string $seo_keywords 搜索关键词
+ * @property string|null $seo_description 搜索描述
  * @property int $brand_id 品牌
  * @property int $vendor_id 供应商
  * @property int $attribute_set_id 属性集
@@ -97,8 +97,8 @@ class Product extends ProductBase
                 'brief' => '简述',
                 'content' => '内容',
                 'seo_title' => '搜索优化标题',
-                'seo_keywords' => '关键词',
-                'seo_description' => '描述',
+                'seo_keywords' => '搜索关键词',
+                'seo_description' => '搜索描述',
                 'brand_id' => '品牌',
                 'vendor_id' => '供应商',
                 'attribute_set_id' => '属性集',

@@ -140,5 +140,9 @@ return [
     'STATUS_UNPAID' => '待支付',
     'STATUS_PAID_WITHOUT_LIST' => '成功并不加入捐赠名单',
 
+    // mall
+    'ATTRIBUTE_TYPE_TEXT' => '文字',
+    'ATTRIBUTE_TYPE_COLOR' => '颜色',
+    'ATTRIBUTE_TYPE_IMAGE' => '图片',
 
 ];

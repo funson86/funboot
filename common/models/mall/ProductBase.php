@@ -16,6 +16,11 @@ use Yii;
 class ProductBase extends BaseModel
 {
     public $isAttribute = 1;
+    public $types;
+
+    const TYPE_HOT = 1;
+    const TYPE_NEW = 2;
+    const TYPE_PROMOTION = 4;
 
     /**
      * @return array|array[]
@@ -30,6 +35,30 @@ class ProductBase extends BaseModel
     }
 
     /** add function getXxxLabels here, detail in BaseModel **/
+    /**
+     * return label or labels array
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getTypeLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::TYPE_HOT => Yii::t('cons', 'TYPE_HOT'),
+            self::TYPE_NEW => Yii::t('cons', 'TYPE_NEW'),
+            self::TYPE_PROMOTION => Yii::t('cons', 'TYPE_PROMOTION'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        if (!is_null($id)) {
+            return $data[$id] ?? $id;
+        }
+        return $data;
+    }
 
     /**
      * {@inheritdoc}
@@ -66,12 +95,14 @@ class ProductBase extends BaseModel
             'sales' => Yii::t('app', 'Sales'),
             'click' => Yii::t('app', 'Click'),
             'type' => Yii::t('app', 'Type'),
+            'types' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
+            'isAttribute' => Yii::t('app', 'Is Multiple Attribute'),
         ];
     }
 

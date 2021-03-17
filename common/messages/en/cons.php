@@ -139,7 +139,8 @@ return [
     'STATUS_UNPAID' => 'Unpaid',
     'STATUS_PAID_WITHOUT_LIST' => 'Paid Without List',
 
-
-
+    'ATTRIBUTE_TYPE_TEXT' => 'Text',
+    'ATTRIBUTE_TYPE_COLOR' => 'Color',
+    'ATTRIBUTE_TYPE_IMAGE' => 'Image',
 
 ];

@@ -15,6 +15,8 @@ use Yii;
  */
 class AttributeValueBase extends BaseModel
 {
+    public $label;
+
     /**
      * @return array|array[]
      */
