@@ -27,7 +27,7 @@ return [
     ],
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-frontend',
+            'csrfParam' => '_csrf',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -56,9 +56,12 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '<store_id:\d+>' => 'site/index', // 根据项目情况进行匹配
+                //'product/<id:\d+>' => 'mall/product/view', // url 优化
+                //'product/<action:\w+>/<id:\d+>' => 'mall/product/<action>',
+                //'product/<action:\w+>' => 'mall/product/<action>',
                 '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
-                '<modules:\w+>/<controller:\w+>/<action:\w+>'=>'<modules>/<controller>/<action>',
+                '<modules:\w+>/<controller:\w+>/<action:\w+>' => '<modules>/<controller>/<action>',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
@@ -69,6 +72,22 @@ return [
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'js' => [],
+                    'sourcePath' => null,
+                ],
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [],  // 去除 bootstrap.css
+                    'sourcePath' => null,
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => [],  // 去除 bootstrap.js
+                    'sourcePath' => null,
+                ],
+                'yii\bootstrap4\BootstrapAsset' => [
+                    'css' => [],  // 去除 bootstrap.css
+                    'sourcePath' => null,
+                ],
+                'yii\bootstrap4\BootstrapPluginAsset' => [
+                    'js' => [],  // 去除 bootstrap.js
                     'sourcePath' => null,
                 ],
             ],
