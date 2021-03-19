@@ -109,10 +109,7 @@ class BaseModel extends ActiveRecord
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     public static function afterInsert(AfterSaveEvent $event)
