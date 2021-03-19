@@ -23,12 +23,12 @@ class CacheSystem extends \yii\base\Component
      */
     public function getAllStore()
     {
-        $allStore = Yii::$app->cache->get('allStore');
-        if (!$allStore) {
-            $allStore = Store::find()->all();
-            Yii::$app->cache->set('allStore', $allStore);
+        $data = Yii::$app->cache->get('allStore');
+        if (!$data) {
+            $data = Store::find()->all();
+            Yii::$app->cache->set('allStore', $data);
         }
-        return $allStore;
+        return $data;
     }
 
     /**
@@ -44,12 +44,12 @@ class CacheSystem extends \yii\base\Component
      */
     public function getAllPermission()
     {
-        $allPermission = Yii::$app->cache->get('allPermission');
-        if (!$allPermission) {
-            $allPermission = Permission::find()->where(['status' => Permission::STATUS_ACTIVE])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->asArray()->all();
-            Yii::$app->cache->set('allPermission', $allPermission);
+        $data = Yii::$app->cache->get('allPermission');
+        if (!$data) {
+            $data = Permission::find()->where(['status' => Permission::STATUS_ACTIVE])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->asArray()->all();
+            Yii::$app->cache->set('allPermission', $data);
         }
-        return $allPermission;
+        return $data;
     }
 
     /**
@@ -71,13 +71,13 @@ class CacheSystem extends \yii\base\Component
      */
     public function getUserPermissionIds($userId)
     {
-        $userPermissionIds = Yii::$app->cache->get('userPermissionIds:' . $userId);
-        if (!$userPermissionIds) {
-            $userPermissionIds = UserPermission::getUserPermissions(Yii::$app->user->id);
-            Yii::$app->cache->set('userPermissionIds:' . $userId, $userPermissionIds);
+        $data = Yii::$app->cache->get('userPermissionIds:' . $userId);
+        if (!$data) {
+            $data = UserPermission::getUserPermissions(Yii::$app->user->id);
+            Yii::$app->cache->set('userPermissionIds:' . $userId, $data);
         }
 
-        return $userPermissionIds;
+        return $data;
     }
 
     /**
@@ -93,13 +93,12 @@ class CacheSystem extends \yii\base\Component
      */
     public function getAllDict()
     {
-
-        $allDict = Yii::$app->cache->get('allDict');
-        if (!$allDict) {
-            $allDict = Dict::find()->with('dictDatas')->asArray()->all();
-            Yii::$app->cache->set('allDict', $allDict);
+        $data = Yii::$app->cache->get('allDict');
+        if (!$data) {
+            $data = Dict::find()->with('dictDatas')->asArray()->all();
+            Yii::$app->cache->set('allDict', $data);
         }
-        return $allDict;
+        return $data;
     }
 
     /**
@@ -115,12 +114,12 @@ class CacheSystem extends \yii\base\Component
      */
     public function getAllDictData()
     {
-        $allDictData = Yii::$app->cache->get('allDictData');
-        if (!$allDictData) {
-            $allDictData = DictData::find()->where(['status' => DictData::STATUS_ACTIVE])->asArray()->all();
-            Yii::$app->cache->set('allDictData', $allDictData);
+        $data = Yii::$app->cache->get('allDictData');
+        if (!$data) {
+            $data = DictData::find()->where(['status' => DictData::STATUS_ACTIVE])->asArray()->all();
+            Yii::$app->cache->set('allDictData', $data);
         }
-        return $allDictData;
+        return $data;
     }
 
     /**
@@ -128,9 +127,9 @@ class CacheSystem extends \yii\base\Component
      */
     public function getAllSetting()
     {
-        $allSetting = Yii::$app->cache->get('allSetting');
-        if (!$allSetting) {
-            $stores = Store::find()->all();
+        $data = Yii::$app->cache->get('allSetting');
+        if (!$data) {
+            $stores = self::getAllStore();
             foreach ($stores as $store) {
                 $settingTypes = SettingType::find()->where(['status' => SettingType::STATUS_ACTIVE])
                     ->with(['setting' => function ($query) use ($store) {
@@ -139,11 +138,12 @@ class CacheSystem extends \yii\base\Component
                     ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
                     ->asArray()
                     ->all();
-                $allSetting[$store->id] = $settingTypes;
+                $data[$store->id] = $settingTypes;
             }
 
-            Yii::$app->cache->set('allSetting', $allSetting);
+            Yii::$app->cache->set('allSetting', $data);
         }
+        return $data;
     }
 
     /**
@@ -152,8 +152,8 @@ class CacheSystem extends \yii\base\Component
      */
     public function getStoreSetting($storeId)
     {
-        $allSetting = Yii::$app->cache->get('allSetting');
-        if (!isset($allSetting[$storeId])) {
+        $data = Yii::$app->cache->get('allSetting');
+        if (!isset($data[$storeId])) {
             $settingTypes = SettingType::find()->where(['status' => SettingType::STATUS_ACTIVE])
                 ->with(['setting' => function ($query) use ($storeId) {
                     $query->andWhere(['store_id' => $storeId]);
@@ -162,10 +162,10 @@ class CacheSystem extends \yii\base\Component
                 ->asArray()
                 ->all();
         } else {
-            $settingTypes = $allSetting[$storeId];
+            $settingTypes = $data[$storeId];
         }
-        $allSetting[$storeId] = $settingTypes;
-        Yii::$app->cache->set('allSetting', $allSetting);
+        $data[$storeId] = $settingTypes;
+        Yii::$app->cache->set('allSetting', $data);
         return $settingTypes;
     }
 
@@ -178,13 +178,14 @@ class CacheSystem extends \yii\base\Component
     }
 
     /**
+     * @param $storeId
      * @return bool
      */
     public function clearStoreSetting($storeId)
     {
-        $allSetting = $this->getAllSetting();
-        unset($allSetting[$storeId]);
-        return Yii::$app->cache->set('allSetting', $allSetting);
+        $data = $this->getAllSetting();
+        unset($data[$storeId]);
+        return Yii::$app->cache->set('allSetting', $data);
     }
 
     public function setLanguage($lang, $userId = 0, $sessionId = null)

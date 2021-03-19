@@ -86,7 +86,7 @@ class DepartmentController extends BaseController
         $id = Yii::$app->request->get('id');
         $model = $this->findModel($id);
 
-        $allUsers = ArrayHelper::map(User::find()->where(['status' => User::STATUS_ACTIVE])->asArray()->all(), 'id', 'username');
+        $allUsers = User::getIdLabel(false, 'username');
 
         // ajax 校验
         $this->activeFormValidate($model);

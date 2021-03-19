@@ -84,24 +84,17 @@ function fbPrompt(url, text) {
 }
 
 $(document).ready(function () {
-    // $('.sidebar-menu').tree();
-    // if ($(this).width() < 769) {
-    //     config.isMobile = true;
-    // }
-    //
-    // // 触发插件菜单默认显示值
-    // $('.rfTopMenu').each(function () {
-    //     if (parseInt($(this).data('addon_centre')) === 1) {
-    //         $('.rfLeftMenuAddon').addClass('rfLeftMenu-' + $(this).data('type'));
-    //     }
-    // });
+    $('.sidebar-menu').tree();
+    if ($(this).width() < 769) {
+        config.isMobile = true;
+    }
 
     autoChangeMenu(true);
 });
 
 $(window).resize(function () {
     var leftAuto = true;
-    if (config.isMobile == false) {
+    if (!config.isMobile) {
         leftAuto = false;
     }
 
@@ -111,7 +104,7 @@ $(window).resize(function () {
         config.isMobile = false;
     }
 
-    if (config.isMobile == false && leftAuto == false) {
+    if (!config.isMobile && !leftAuto) {
         autoChangeMenu();
     } else {
         autoChangeMenu(true);
@@ -120,20 +113,20 @@ $(window).resize(function () {
 function autoChangeMenu(leftAuto = false) {
     // 改变框架高度
     var mainContent = window.innerHeight - 143;
-    if (config.isMobile == true) {
+    if (config.isMobile) {
         mainContent = mainContent + 40;
     }
     $(".J_mainContent").height(mainContent);
 
     if (config.isMobile == true) {
         // 显示左边菜单
-        $('.rfLeftMenu').removeClass('hidden');
+        $('.fbLeftMenu').removeClass('hidden');
         // 隐藏tag
         $(".content-tabs").addClass('hidden');
         // 显示退出
         $("#logout").removeClass('hidden');
         // 隐藏头部菜单栏
-        $('.rfTopMenu').each(function (i, data) {
+        $('.fbTopMenu').each(function (i, data) {
             var type = $(this).data('type');
             if (type) {
                 $(this).addClass('hidden');
@@ -141,25 +134,25 @@ function autoChangeMenu(leftAuto = false) {
         });
 
         // 增加样式
-        $(".J_mainContent").addClass('rfMainContent');
+        $(".J_mainContent").addClass('fbMainContent');
         // 底部隐藏
         $(".main-footer").addClass('hidden');
     } else {
         if (leftAuto == true) {
             // 隐藏左边菜单
-            $('.rfLeftMenu').addClass('hidden');
+            $('.fbLeftMenu').addClass('hidden');
             // 默认菜单显示
             $('.is_default_show').removeClass('hidden');
         }
 
         // 头部菜单栏
-        $('.rfTopMenu').removeClass('hidden');
+        $('.fbTopMenu').removeClass('hidden');
         // 显示标签
         $('.content-tabs').removeClass('hidden');
         // 隐藏退出
         $("#logout").addClass('hidden');
         // 移除样式
-        $(".J_mainContent").removeClass('rfMainContent');
+        $(".J_mainContent").removeClass('fbMainContent');
         // 底部显示
         $(".main-footer").removeClass('hidden');
     }
@@ -183,11 +176,11 @@ function autoChangeMenu(leftAuto = false) {
                     $(item).addClass('hidden');
                     $('.hide-menu').removeClass('hidden');
                     // 增加一次的菜单
-                    $('.hide-menu ul li ul').append("<li class='rfTopMenu' data-type=" + $(item).data('type') + " data-addon_centre=" + $(item).data('addon_centre') + ">" + $(item).html() + "</li>")
+                    $('.hide-menu ul li ul').append("<li class='fbTopMenu' data-type=" + $(item).data('type') + " data-addon_centre=" + $(item).data('addon_centre') + ">" + $(item).html() + "</li>")
                 }
 
                 $('.hide-menu ul li ul').find('a').addClass("pointer");
-                $('.hide-menu ul li ul').find('i').addClass("rf-i m-l-sm");
+                $('.hide-menu ul li ul').find('i').addClass("fb-i m-l-sm");
             })
         } else {
             $('.hide-menu').addClass('hidden');

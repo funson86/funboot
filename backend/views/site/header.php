@@ -17,7 +17,7 @@ $store = $this->context->store;
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <?php foreach (\common\helpers\ArrayHelper::tree(Yii::$app->authSystem->userPermissions) as $item) { ?>
-        <li class="nav-item d-none d-sm-inline-block">
+        <li class="nav-item d-none d-sm-inline-block fbTopMenu">
             <a href="javascript:;" class="nav-link fbTopNav" data-id="<?= $item['id'] ?>" >
                 <i class="nav-icon <?= strlen($item['icon']) > 0 ? $item['icon'] : 'fas fa-circle-o' ?>"></i> <?= Yii::t('permission', $item['name']) ?></span>
             </a>

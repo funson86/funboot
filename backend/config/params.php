@@ -21,10 +21,10 @@ return [
 
     'helpUrl' => [
         'en' => [
-            'Coupon Types' => 'https://bitbucket.org/funsonson/quick/src/master/coupon.md',
+            'Coupon Types' => '',
         ],
         'zh-CN' => [
-            'Coupon Types' => 'https://bitbucket.org/funsonson/quick/src/master/coupon.md',
+            'Coupon Types' => '',
         ],
     ]
 ];

@@ -26,6 +26,8 @@ use Yii;
 
 /**
  * This is the model base class for table "<?= $generator->generateTableName($tableName) ?>" to add your code.
+ *
+ * @property Store $store
  */
 class <?= $className ?>Base extends BaseModel
 {
@@ -36,6 +38,7 @@ class <?= $className ?>Base extends BaseModel
     {
         return [
             [['id'], 'safe'],
+            [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
     }
 
@@ -51,6 +54,14 @@ class <?= $className ?>Base extends BaseModel
             <?= "'$name' => " . $generator->generateString($label) . ",\n" ?>
 <?php endforeach; ?>
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStore()
+    {
+        return $this->hasOne(Store::className(), ['id' => 'store_id']);
     }
 
 }
