@@ -11,7 +11,7 @@ use Yii;
  * This is the model base class for table "{{%mall_attribute}}" to add your code.
  *
  * @property Store $store
- * @property AttributeValue[] $mallAttributeValues
+ * @property AttributeValue[] $attributeValues
  */
 class AttributeBase extends BaseModel
 {

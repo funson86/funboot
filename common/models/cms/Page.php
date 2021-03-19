@@ -18,8 +18,8 @@ use common\models\Store;
  * @property string|null $thumb 缩略图
  * @property string|null $images 图片集
  * @property string $seo_title 搜索优化标题
- * @property string $seo_keywords 关键词
- * @property string|null $seo_description 描述
+ * @property string $seo_keywords 搜索关键词
+ * @property string|null $seo_description 搜索描述
  * @property string|null $brief 简述
  * @property string|null $content 内容
  * @property float $price 价格
@@ -85,8 +85,8 @@ class Page extends PageBase
                 'thumb' => '缩略图',
                 'images' => '图片集',
                 'seo_title' => '搜索优化标题',
-                'seo_keywords' => '关键词',
-                'seo_description' => '描述',
+                'seo_keywords' => '搜索关键词',
+                'seo_description' => '搜索描述',
                 'brief' => '简述',
                 'content' => '内容',
                 'price' => '价格',

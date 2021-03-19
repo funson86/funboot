@@ -21,6 +21,9 @@ return [
         'cms' => [
             'class' => 'frontend\modules\cms\Module',
         ],
+        'mall' => [
+            'class' => 'frontend\modules\mall\Module',
+        ],
     ],
     'components' => [
         'request' => [

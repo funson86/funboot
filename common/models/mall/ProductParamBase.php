@@ -8,15 +8,14 @@ use common\models\User;
 use Yii;
 
 /**
- * This is the model base class for table "{{%mall_attribute_set}}" to add your code.
+ * This is the model base class for table "{{%mall_product_param}}" to add your code.
  *
  * @property Store $store
- * @property AttributeSetAttribute[] $attributeSetAttributes
+ * @property Product $product
+ * @property Param $param
  */
-class AttributeSetBase extends BaseModel
+class ProductParamBase extends BaseModel
 {
-    public $attributes;
-
     /**
      * @return array|array[]
      */
@@ -25,6 +24,8 @@ class AttributeSetBase extends BaseModel
         return [
             [['id'], 'safe'],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['param_id'], 'exist', 'skipOnError' => true, 'targetClass' => Param::className(), 'targetAttribute' => ['param_id' => 'id']],
         ];
     }
 
@@ -38,8 +39,10 @@ class AttributeSetBase extends BaseModel
         return [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
+            'product_id' => Yii::t('app', 'Product ID'),
+            'param_id' => Yii::t('app', 'Param ID'),
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
+            'content' => Yii::t('app', 'Content'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
@@ -47,7 +50,6 @@ class AttributeSetBase extends BaseModel
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
-            'attributes' => Yii::t('app', 'Attributes'),
         ];
     }
 
@@ -62,9 +64,17 @@ class AttributeSetBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAttributeSetAttributes()
+    public function getProduct()
     {
-        return $this->hasMany(AttributeSetAttribute::className(), ['attribute_set_id' => 'id'])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC]);
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParam()
+    {
+        return $this->hasOne(Param::className(), ['id' => 'param_id']);
     }
 
 }

@@ -26,10 +26,6 @@ $form = ActiveForm::begin([
     </div>
     <div class="modal-body">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'attribute_ids')->widget(kartik\select2\Select2::class, [
-            'data' => \common\models\mall\Attribute::getIdLabel(), //传入变量
-            'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
-        ]) ?>
         <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>

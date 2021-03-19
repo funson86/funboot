@@ -61,10 +61,6 @@ $form = ActiveForm::begin([
                 ],
             ]
         ]); ?>
-        <?= $form->field($model, 'tags')->widget(kartik\select2\Select2::class, [
-            'data' => ['s1', 's2'], //传入变量
-            'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
-        ]) ?>
         <?= $form->field($model, 'brief')->textarea(['rows' => 6]) ?>
         <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
         <?= $form->field($model, 'seo_title')->textInput(['maxlength' => true]) ?>

@@ -41,7 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'wholesale_price',
             'thumb',
             'images:json',
-            'tags:json',
             'brief:ntext',
             'content:ntext',
             'seo_title',

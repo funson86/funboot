@@ -6,9 +6,10 @@ use common\helpers\ArrayHelper;
 use common\models\mall\Attribute;
 use common\models\mall\AttributeSet;
 use common\models\mall\AttributeValue;
-use common\models\mall\ProductAttribute;
 use common\models\mall\ProductAttributeValueLabel;
 use common\models\mall\ProductSku;
+use common\models\mall\ProductTag;
+use common\models\mall\Tag;
 use Yii;
 use common\models\mall\Product;
 use common\models\ModelSearch;
@@ -69,6 +70,23 @@ class ProductController extends BaseController
                         throw new NotFoundHttpException($this->getError($model));
                     }
 
+                    // 标签
+                    $tags = $post['Product']['tags'];
+                    ProductTag::updateAll(['status' => ProductSku::STATUS_DELETED], ['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
+                    foreach ($tags as $tagId) {
+                        $modelTemp = ProductTag::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'tag_id' => $tagId])->one();
+                        !$modelTemp && $modelTemp = new ProductTag();
+                        $modelTemp->store_id = $this->getStoreId();
+                        $modelTemp->product_id = $model->id;
+                        $modelTemp->tag_id = $tagId;
+                        $modelTemp->status = Tag::STATUS_ACTIVE;
+                        if (!$modelTemp->save()) {
+                            Yii::$app->logSystem->db($modelTemp->errors);
+                            throw new NotFoundHttpException($this->getError($modelTemp));
+                        }
+                    }
+                    ProductTag::deleteAll(['status' => ProductSku::STATUS_DELETED, 'store_id' => $this->getStoreId(), 'product_id' => $model->id]);
+
                     // 计算多属性和sku
                     if ($model->attribute_set_id > 0 && isset($post['skus'])) {
                         $skus = $post['skus'];
@@ -79,7 +97,8 @@ class ProductController extends BaseController
                             $modelTemp = ProductSku::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'attribute_value' => $attributeValue])->one();
                             !$modelTemp && $modelTemp = new ProductSku();
                             $modelTemp->store_id = $this->getStoreId();
-                            $modelTemp->attribute_value = $attributeValue;
+                            $arrAttributeValue = explode(',', $attributeValue);
+                            $modelTemp->attribute_value = implode(',', ArrayHelper::intValue($arrAttributeValue, true));
                             $modelTemp->product_id = $model->id;
                             $modelTemp->sku = $item['sku'];
                             $modelTemp->thumb = $item['thumb'];
@@ -140,7 +159,7 @@ class ProductController extends BaseController
                     return $this->redirectSuccess(['index']);
                 } catch (\Exception $e) {
                     $transaction->rollBack();
-                    return $this->goBack();
+                    return $this->redirectError($e->getMessage());
                 }
 
             }
@@ -159,9 +178,10 @@ class ProductController extends BaseController
 
         if ($model->isAttribute > 0) {
             $attributeSet = AttributeSet::findOne($model->attribute_set_id);
-            if (count($attributeSet->attribute_ids) > 0) {
+            if (count($attributeSet->attributeSetAttributes) > 0) {
                 $attributes = Attribute::find()
-                    ->where(['store_id' => $this->getStoreId(), 'id' => $attributeSet->attribute_ids])->orderBy(['sort' => SORT_ASC])
+                    ->where(['store_id' => $this->getStoreId(), 'id' => ArrayHelper::getColumn($attributeSet->attributeSetAttributes, 'attribute_id')])
+                    ->orderBy(['sort' => SORT_ASC])
                     ->with('attributeValues')
                     ->all();
 
@@ -170,12 +190,14 @@ class ProductController extends BaseController
                         foreach ($attribute->attributeValues as &$attributeValue) {
                             $attributeValue->label = $mapProductAttributeValueAttributeValueIdLabel[$attributeValue->id] ?? '';
                         }
+                        unset($attributeValue);
                     }
+                    unset($attribute);
                 }
             }
         }
 
-        // 计算已经使用的属性项
+        // 计算已经使用的属性值
         $enableValueIds = [];
         $productSkus = ProductSku::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id])->asArray()->all();
         if ($productSkus) {
@@ -192,10 +214,14 @@ class ProductController extends BaseController
         }
 
         $model->types = ArrayHelper::intToArray($model->type, $this->modelClass::getTypeLabels());
+        $allTags = ArrayHelper::map(Tag::find()->where(['store_id' => $this->getStoreId(), 'status' => Tag::STATUS_ACTIVE])->asArray()->all(), 'id', 'name');
+        $model->tags = ArrayHelper::getColumn(ProductTag::find()->filterWhere(['product_id' => $id])->asArray()->all(), 'tag_id');
         return $this->render($this->action->id, [
             'model' => $model,
             'attributes' => $attributes,
             'enableValues' => $enableValues,
+            'productSkus' => $productSkus,
+            'allTags' => $allTags,
             'productSkus' => $productSkus,
         ]);
     }

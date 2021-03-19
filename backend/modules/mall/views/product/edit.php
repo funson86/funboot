@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="col-sm-4 pr-4"><?= $form->field($model, 'vendor_id')->dropDownList(\common\models\mall\Vendor::getIdLabel(true)) ?></div>
                         </div>
                         <?= $form->field($model, 'tags')->widget(kartik\select2\Select2::class, [
-                            'data' => ['s1', 's2'], //传入变量
+                            'data' => $allTags, //传入变量
                             'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
                         ]) ?>
                         <div class="row">
@@ -89,11 +89,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <dd>
                                     <table class="table table-product-attribute">
                                         <tbody>
-                                        <?php foreach ($attributes as $attribute){ ?>
+                                        <?php foreach ($attributes as $attribute) { ?>
                                             <tr>
                                                 <td><?= $attribute->name ?></td>
                                                 <td id="attribute-<?= $attribute->id; ?>">
-                                                    <?php foreach ($attribute->attributeValues as $value){ ?>
+                                                    <?php foreach ($attribute->attributeValues as $value) { ?>
                                                         <span id="attribute-value-<?= $value['id']; ?>" data-type="<?= $attribute['type']; ?>" class="btn btn-default btn-sm btn-attribute" data-id="<?= $value['id']; ?>" data-name="<?= $value['name']; ?>" data-attribute-id="<?= $attribute->id; ?>" data-attribute-name="<?= $attribute->name; ?>" data-sort="<?= $value['sort']; ?>"><?= $value['name']; ?></span>
 
                                                         <?php if ($attribute['type'] == 2) { ?>
@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <?php } ?>
                                         </tbody>
                                     </table>
-                                    <div class="hint-block">点击按钮进行属性项设置, 按钮选择的情况下颜色/图片选项属性值才会被保存</div>
+                                    <div class="hint-block">点击按钮进行属性值设置, 按钮选择的情况下颜色/图片选项属性值才会被保存</div>
                                 </dd>
                             </dl>
 
@@ -267,7 +267,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <script>
 
-    // 已经使用的属性项
+    // 已经使用的属性值
     var enableValues = JSON.parse('<?= json_encode($enableValues); ?>');
 
     // 已经有数据的sku
@@ -289,7 +289,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $('.field-product-is-attribute-no').hide();
             $('.field-product-is-attribute-yes').show();
 
-            // 将属性项变蓝
+            // 将属性值变蓝
             for (let i = 0; i < enableValues.length; i++) {
                 $("#attribute-value-" + enableValues[i]['id']).removeClass('btn-default');
                 $("#attribute-value-" + enableValues[i]['id']).addClass('btn-primary');

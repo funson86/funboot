@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'store_id',
             'name',
-            'attribute_ids:json',
             'description',
             'type',
             'sort',

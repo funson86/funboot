@@ -7,12 +7,13 @@ use common\models\User;
 use common\models\Store;
 
 /**
- * This is the model class for table "{{%mall_attribute_set}}".
+ * This is the model class for table "{{%mall_attribute_set_attribute}}".
  *
  * @property int $id
  * @property int $store_id 商家
  * @property string $name 名称
- * @property string $description 简述
+ * @property int $attribute_set_id 属性集
+ * @property int $attribute_id 属性
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -21,14 +22,14 @@ use common\models\Store;
  * @property int $created_by 创建用户
  * @property int $updated_by 更新用户
  */
-class AttributeSet extends AttributeSetBase
+class AttributeSetAttribute extends AttributeSetAttributeBase
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%mall_attribute_set}}';
+        return '{{%mall_attribute_set_attribute}}';
     }
 
     /**
@@ -37,9 +38,9 @@ class AttributeSet extends AttributeSetBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name'], 'required'],
-            [['name', 'description'], 'string', 'max' => 255],
+            [['store_id', 'attribute_set_id', 'attribute_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['attribute_set_id', 'attribute_id'], 'required'],
+            [['name'], 'string', 'max' => 255],
         ]);
     }
 
@@ -53,7 +54,8 @@ class AttributeSet extends AttributeSetBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
                 'name' => '名称',
-                'description' => '简述',
+                'attribute_set_id' => '属性集',
+                'attribute_id' => '属性',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -67,7 +69,8 @@ class AttributeSet extends AttributeSetBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
                 'name' => Yii::t('app', 'Name'),
-                'description' => Yii::t('app', 'Description'),
+                'attribute_set_id' => Yii::t('app', 'Attribute Set ID'),
+                'attribute_id' => Yii::t('app', 'Attribute ID'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

@@ -8,15 +8,12 @@ use common\models\User;
 use Yii;
 
 /**
- * This is the model base class for table "{{%mall_attribute_set}}" to add your code.
+ * This is the model base class for table "{{%mall_search_log}}" to add your code.
  *
  * @property Store $store
- * @property AttributeSetAttribute[] $attributeSetAttributes
  */
-class AttributeSetBase extends BaseModel
+class SearchLogBase extends BaseModel
 {
-    public $attributes;
-
     /**
      * @return array|array[]
      */
@@ -38,8 +35,9 @@ class AttributeSetBase extends BaseModel
         return [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'session_id' => Yii::t('app', 'Session ID'),
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
@@ -47,7 +45,6 @@ class AttributeSetBase extends BaseModel
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
-            'attributes' => Yii::t('app', 'Attributes'),
         ];
     }
 
@@ -57,14 +54,6 @@ class AttributeSetBase extends BaseModel
     public function getStore()
     {
         return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAttributeSetAttributes()
-    {
-        return $this->hasMany(AttributeSetAttribute::className(), ['attribute_set_id' => 'id'])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC]);
     }
 
 }

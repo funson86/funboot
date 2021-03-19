@@ -16,7 +16,8 @@ use Yii;
 class ProductBase extends BaseModel
 {
     public $isAttribute = 1;
-    public $types;
+    public $types = [];
+    public $tags = [];
 
     const TYPE_HOT = 1;
     const TYPE_NEW = 2;
@@ -120,6 +121,62 @@ class ProductBase extends BaseModel
     public function getStore()
     {
         return $this->hasOne(Store::className(), ['id' => 'store_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCommentsPassed()
+    {
+        return $this->hasMany(Comment::className(), ['product_id' => 'id'])->where(['status' => Comment::STATUS_ACTIVE])->orderBy(['created_at' => SORT_DESC]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCommentsPassedGood()
+    {
+        return $this->hasMany(Comment::className(), ['product_id' => 'id'])->where(['and', 'status =' . Comment::STATUS_ACTIVE, 'star >= 4'])->orderBy(['created_at' => SORT_DESC]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCommentsPassedNormal()
+    {
+        return $this->hasMany(Comment::className(), ['product_id' => 'id'])->where(['and', 'status =' . Comment::STATUS_ACTIVE, 'star >= 2', 'star <= 3'])->orderBy(['created_at' => SORT_DESC]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCommentsPassedBad()
+    {
+        return $this->hasMany(Comment::className(), ['product_id' => 'id'])->where(['status' => Comment::STATUS_ACTIVE, 'star' => 1])->orderBy(['created_at' => SORT_DESC]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getConsultations()
+    {
+        return $this->hasMany(Consultation::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getConsultationsSortTime()
+    {
+        return $this->hasMany(Consultation::className(), ['product_id' => 'id'])->orderBy(['created_at' => SORT_DESC]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getConsultationsPassed()
+    {
+        return $this->hasMany(Consultation::className(), ['product_id' => 'id'])->where(['status' => Consultation::STATUS_ACTIVE])->orderBy(['created_at' => SORT_DESC]);
     }
 
 }

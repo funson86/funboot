@@ -7,12 +7,13 @@ use common\models\User;
 use common\models\Store;
 
 /**
- * This is the model class for table "{{%mall_attribute_set}}".
+ * This is the model class for table "{{%mall_search_log}}".
  *
  * @property int $id
  * @property int $store_id 商家
+ * @property int $user_id 用户
+ * @property string $session_id 会话ID
  * @property string $name 名称
- * @property string $description 简述
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -21,14 +22,14 @@ use common\models\Store;
  * @property int $created_by 创建用户
  * @property int $updated_by 更新用户
  */
-class AttributeSet extends AttributeSetBase
+class SearchLog extends SearchLogBase
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%mall_attribute_set}}';
+        return '{{%mall_search_log}}';
     }
 
     /**
@@ -37,9 +38,9 @@ class AttributeSet extends AttributeSetBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'user_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['name', 'description'], 'string', 'max' => 255],
+            [['session_id', 'name'], 'string', 'max' => 255],
         ]);
     }
 
@@ -52,8 +53,9 @@ class AttributeSet extends AttributeSetBase
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
+                'user_id' => '用户',
+                'session_id' => '会话ID',
                 'name' => '名称',
-                'description' => '简述',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -66,8 +68,9 @@ class AttributeSet extends AttributeSetBase
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
+                'user_id' => Yii::t('app', 'User ID'),
+                'session_id' => Yii::t('app', 'Session ID'),
                 'name' => Yii::t('app', 'Name'),
-                'description' => Yii::t('app', 'Description'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

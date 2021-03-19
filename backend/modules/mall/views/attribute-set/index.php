@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Attribute Sets'] ?? null) ?></h2>
                 <div class="card-tools">
-                    <?= Html::createModal() ?>
+                    <?= Html::create() ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
                 </div>
@@ -40,8 +40,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
-                        'attribute_ids:json',
                         'description',
+                        [
+                            'attribute' => 'attributes',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                $arr = [];
+                                foreach ($model->attributeSetAttributes as $item) {
+                                    $arr[] = $item->attribute0->name;
+                                }
+                                return implode(', ', $arr);
+                            },
+                            'filter' => false,
+                        ],
                         // 'type',
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
                         ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::status($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
@@ -50,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'created_by',
                         // 'updated_by',
 
-                        Html::actionsModal(),
+                        Html::actionsEditDelete(),
                     ]
                 ]); ?>
             </div>
