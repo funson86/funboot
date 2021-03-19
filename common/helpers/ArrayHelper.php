@@ -306,4 +306,36 @@ class ArrayHelper extends BaseArrayHelper
         return $newArray;
     }
 
+    /**
+     * 将数组所有元素转成整型，根据情况进行排序
+     * @param $array
+     * @param bool $sort
+     * @return mixed
+     */
+    public static function intValue($array, $sort = false)
+    {
+        foreach ($array as &$v) {
+            $v = intval($v);
+        }
+
+        $sort && sort($array);
+
+        return $array;
+    }
+
+    /**
+     * 获取数组最小最大值
+     * @param $array
+     * @return null[]
+     */
+    public static function minMax($array)
+    {
+        $min = $max = null;
+        foreach ($array as $v) {
+            intval($min) > $v && $min = $v;
+            intval($max) < $v && $max = $v;
+        }
+
+        return [$min, $max];
+    }
 }
