@@ -297,6 +297,10 @@ return [
     'User ID' => '用户',
     'Keyword' => '关键字',
 
+    'Refund' => '退款',
+    'Refunds' => '退款',
+    'Invoice' => '发票',
+    'Invoices' => '发票',
 
     'Order' => '订单',
     'Orders' => '订单',
