@@ -7,6 +7,7 @@ use common\helpers\ArrayHelper;
 use common\helpers\CommonHelper;
 use common\models\cms\Catalog;
 use common\models\cms\Page;
+use common\models\Store;
 use Yii;
 use common\components\controller\BaseController;
 use yii\data\Pagination;
@@ -69,7 +70,8 @@ class DefaultController extends BaseController
         }
 
         $this->theme = $store->settings['cms_theme'] ?? 'default';
-        $this->layout = '@webroot/resources/cms/' . $this->theme . '/views/main';
+        $this->module->setViewPath('@webroot/resources/cms/' . $this->theme . '/views');
+        $this->layout = 'main';
         $this->prefixStatic = '/resources/cms/' . $this->theme;
         $this->isMobile = CommonHelper::isMobile();
 
@@ -155,9 +157,10 @@ class DefaultController extends BaseController
         $store = $this->store;
 
         // 输入http://www.xxx.com/cms/可以预览网站，外界用户输入http://www.xxx.com显示正在开发
-        if ($store->status == 0 && Yii::$app->request->url == '/') {
+        if ($store->status != Store::STATUS_ACTIVE && Yii::$app->request->url == '/') {
+            $this->module->setViewPath(null);
             $this->layout = 'empty';
-            return $this->render('under-construction');
+            return $this->render($store->status);
         }
 
         // 公司简介
@@ -173,7 +176,7 @@ class DefaultController extends BaseController
             $productList = Page::find()->where(['store_id' => $this->store->id, 'catalog_id' => $two[1]['id']])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->limit(20)->all();
         }
 
-        return $this->render('@webroot/resources/cms/' . $this->theme . '/views/' . ($store->settings['cms_template'] ?? $this->action->id), [
+        return $this->render($store->settings['cms_template'] ?: $this->action->id, [
             'store' => $this->store,
             'banners' => $this->getStoreBanner(true),
             'about' => $about,
@@ -214,7 +217,7 @@ class DefaultController extends BaseController
             ->limit(5)
             ->all();
 
-        return $this->render('@webroot/resources/cms/' . $this->theme . '/views/' . $this->model->template, [
+        return $this->render($this->model->template ?: $this->action->id, [
             'model' => $this->model,
             'models' => $models,
             'pagination' => $pagination,
@@ -229,7 +232,7 @@ class DefaultController extends BaseController
             return $this->goHome();
         }
 
-        return $this->render('@webroot/resources/cms/' . $this->theme . '/views/' . $this->model->template, [
+        return $this->render($this->model->template ?: $this->action->id, [
             'model' => $this->model,
             'store' => $this->store,
         ]);
@@ -259,7 +262,7 @@ class DefaultController extends BaseController
             ->all();
 
         $template = isset($this->mapAllCatalog[$this->model->catalog_id]['template_page']) ? $this->mapAllCatalog[$this->model->catalog_id]['template_page'] : 'page';
-        return $this->render('@webroot/resources/cms/' . $this->theme . '/views/' . $template, [
+        return $this->render($template ?: $this->action->id, [
             'model' => $this->model,
             'store' => $this->store,
             'prev' => $prev,
@@ -297,7 +300,7 @@ class DefaultController extends BaseController
             ->limit($pagination->limit)
             ->all();
 
-        return $this->render('@webroot/resources/cms/' . $this->theme . '/views/list_search', [
+        return $this->render($this->action->id, [
             'catalogId' => isset($rootId) ? $rootId : $catalogId,
             'keyword' => $keyword,
             'models' => $models,
@@ -367,5 +370,10 @@ class DefaultController extends BaseController
 
         !$banner && $banner = $this->getStoreBanner();
         return $banner;
+    }
+
+    public function getImage($name)
+    {
+        return $this->prefixStatic . '/img/' . $name;
     }
 }

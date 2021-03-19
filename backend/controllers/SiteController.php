@@ -36,7 +36,7 @@ class SiteController extends BaseController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'info', 'log', 'change-password', 'me', 'clear-cache', 'stat'],
+                        'actions' => ['logout', 'index', 'info', 'log', 'change-password', 'me', 'clear-cache', 'stat', 'color'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -265,6 +265,18 @@ class SiteController extends BaseController
 
             return $data;
         }, $fields, $time, $format));
+    }
+
+    public function actionColor()
+    {
+        $this->layout = 'simple';
+
+        $value = Yii::$app->request->get('value', '000000');
+        strpos($value, '#') !== 0 && $value = '#' . $value;
+
+        return $this->render($this->action->id, [
+            'value' => $value,
+        ]);
     }
 
     /**

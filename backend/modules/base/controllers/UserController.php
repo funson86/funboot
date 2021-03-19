@@ -53,45 +53,6 @@ class UserController extends BaseController
     ];
 
     /**
-     * ajax编辑/创建
-     *
-     * @return mixed|string|\yii\web\Response
-     * @throws \yii\base\ExitException
-     */
-    public function actionEditAjax()
-    {
-        $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id);
-
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-            if (!$model->save()) {
-                $this->redirectError($model);
-            }
-
-            // 权限
-            if (isset($model->user_id)) {
-                UserRole::deleteAll(['user_id' => $model->user_id]);
-            }
-            if (count($model->roles) > 0) {
-                foreach ($model->roles as $roleId) {
-                    $userRole = new UserRole();
-                    $userRole->user_id = $model->id;
-                    $userRole->role_id = $roleId;
-                    $userRole->save();
-                }
-            }
-            return $this->redirectSuccess();
-        }
-
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-        ]);
-    }
-
-
-    /**
      * 编辑/创建
      *
      * @return mixed

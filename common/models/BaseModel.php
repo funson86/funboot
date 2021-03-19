@@ -31,6 +31,9 @@ class BaseModel extends ActiveRecord
     {
         parent::__construct($config);
 
+        // 设置store_id
+        (isset($this->store_id) && intval($this->store_id) <= 0) && $this->store_id = Yii::$app->storeSystem->getId();
+
         $this->on(self::EVENT_AFTER_INSERT, [get_class($this), 'afterInsert']);
         $this->on(self::EVENT_AFTER_UPDATE, [get_class($this), 'afterUpdate']);
         $this->on(self::EVENT_BEFORE_DELETE, [get_class($this), 'beforeDeleteBase']);
@@ -85,15 +88,13 @@ class BaseModel extends ActiveRecord
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
      * return label or labels array
      * @param null $id
+     * @param bool $all
      * @param bool $flip
      * @return array|mixed
      */
@@ -132,18 +133,37 @@ class BaseModel extends ActiveRecord
     }
 
     /**
-     * @param int $parentId
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @param bool $pleaseFilter
      * @param int $storeId
-     * @param string $rootLabel
      * @return array|string[]
      */
-    public static function getIdLabel($storeId = null)
+    public static function getIdLabel($pleaseFilter = false, $label = 'name', $id = 'id', $storeId = null)
     {
         if (!$storeId && !Yii::$app->authSystem->isAdmin()) {
             $storeId = Yii::$app->storeSystem->getId();
         }
+
         $models = self::find()->where(['status' => self::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->asArray()->all();
-        return ArrayHelper::map($models, 'id', 'name');
+
+        return $pleaseFilter
+            ? ArrayHelper::merge([0 => Yii::t('app', 'Please Filter')], ArrayHelper::map($models, $id, $label))
+            : ArrayHelper::map($models, $id, $label);
     }
 
     /**

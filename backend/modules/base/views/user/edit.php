@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
@@ -63,9 +63,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'area')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'remark')->textarea() ?>
-                    <?= $form->field($model, 'access_token')->widget(\common\components\ueditor\Ueditor::class, [
-                        // 'server' => '', // 图片上传路径 + 驱动
-                    ]); ?>
                 </div>
             </div>
             </div>

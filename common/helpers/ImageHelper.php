@@ -12,6 +12,22 @@ use Yii;
 class ImageHelper
 {
     /**
+     * 默认图片
+     * @param string $path
+     * @return bool|string
+     */
+    public static function get($path)
+    {
+        if (!$path) {
+            return '';
+        }
+        if (strpos($path, '/') === 0) {
+            return Yii::getAlias('@web' . $path);
+        }
+
+        return $path;
+    }
+    /**
      * 默认头像
      * @param string $path
      * @return bool|string
@@ -24,7 +40,7 @@ class ImageHelper
         if (strpos($path, '/') === 0) {
             return Yii::getAlias('@web' . $path);
         }
-        
+
         return $path;
     }
 

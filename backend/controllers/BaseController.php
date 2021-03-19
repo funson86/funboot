@@ -251,7 +251,10 @@ class BaseController extends \common\components\controller\BaseController
         $model = $this->findModel($id);
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
+                $this->beforeEdit($id, $model);
+
                 if ($model->save()) {
+                    $this->afterEdit($id, $model);
                     return $this->redirectSuccess(['index']);
                 } else {
                     Yii::$app->logSystem->db($model->errors);
@@ -278,16 +281,29 @@ class BaseController extends \common\components\controller\BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            $this->beforeEdit($id, $model);
+
             if (!$model->save()) {
                 $this->redirectError($model);
             }
 
+            $this->afterEdit($id, $model);
             return $this->redirectSuccess();
         }
 
         return $this->renderAjax($this->action->id, [
             'model' => $model,
         ]);
+    }
+
+    protected function beforeEdit($id = null, $model = null)
+    {
+        return true;
+    }
+
+    protected function afterEdit($id = null, $model = null)
+    {
+        return true;
     }
 
     /**

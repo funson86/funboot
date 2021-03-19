@@ -16,13 +16,9 @@ use common\models\base\Dict;
  */
 class SettingSystem extends \yii\base\Component
 {
-    public $allSetting;
-
     public function __construct($config = [])
     {
         parent::__construct($config);
-
-        $this->allSetting = Yii::$app->cacheSystem->getAllSetting();
     }
 
     public function getValue($code, $storeId)

@@ -45,31 +45,9 @@ class ScheduleController extends BaseController
         'type' => 'select',
     ];
 
-    /**
-      * ajax编辑/创建
-      *
-      * @return mixed|string|\yii\web\Response
-      * @throws \yii\base\ExitException
-      */
-    public function actionEditAjax()
+    protected function afterEdit($id = null, $model = null)
     {
-        $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id);
-
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-            if (!$model->save()) {
-                $this->redirectError($model);
-            }
-
-            $this->writeSchedule();
-            return $this->redirectSuccess();
-        }
-
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-        ]);
+        $this->writeSchedule();
     }
 
     /**

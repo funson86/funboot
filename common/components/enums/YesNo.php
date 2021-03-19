@@ -36,4 +36,27 @@ class YesNo
         }
         return $data;
     }
+
+    /**
+     * return label or labels array
+     * @param null $id
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getLabelsNoYes($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::NO => Yii::t('cons', 'NO'),
+            self::YES => Yii::t('cons', 'YES'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        if (!is_null($id)) {
+            return $data[$id] ?? $id;
+        }
+        return $data;
+    }
 }

@@ -46,7 +46,7 @@ class CommonHelper
         }
 
         $langInt = Store::getLanguageCode($lang, true, true);
-        if (!(($langInt & $store->language) == $langInt)) {
+        if (($langInt & $store->language) != $langInt) {
             $lang = Yii::$app->params['defaultBackendLanguage'];
         }
 
