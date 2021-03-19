@@ -261,8 +261,8 @@ return [
     'Attribute Sets' => '商品属性集',
     'Attribute' => '商品属性',
     'Attributes' => '商品属性',
-    'Attribute Value' => '商品属性项',
-    'Attribute Values' => '商品属性项',
+    'Attribute Value' => '商品属性值',
+    'Attribute Values' => '商品属性值',
     'Stock Attribute' => '库存属性',
     'Image Detail' => '图片详情',
     'Is Multiple Attribute' => '商品多属性',
@@ -282,6 +282,7 @@ return [
     'Question' => '提问',
     'Answer' => '回答',
 
+    'Search' => '搜索',
     'Search Log' => '搜索记录',
     'Search Logs' => '搜索记录',
     'User ID' => '用户',
@@ -540,5 +541,9 @@ return [
     'Page' => '页面',
     'Catalogs' => '栏目',
     'Catalog' => '栏目',
+
+    /* mall */
+    'Catalog' => '栏目',
+
 
 ];
