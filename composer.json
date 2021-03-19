@@ -50,7 +50,9 @@
         "trntv/probe": "^1.0",
         "e282486518/yii2-console-migration": "@dev",
         "phing/phing": "*",
-        "sebastian/phpcpd": "*"
+        "sebastian/phpcpd": "*",
+        "w7corp/easywechat": "4.x",
+        "league/oauth2-server": "^8.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

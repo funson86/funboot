@@ -139,8 +139,22 @@ return [
     'STATUS_UNPAID' => 'Unpaid',
     'STATUS_PAID_WITHOUT_LIST' => 'Paid Without List',
 
+    // mall
     'ATTRIBUTE_TYPE_TEXT' => 'Text',
     'ATTRIBUTE_TYPE_COLOR' => 'Color',
     'ATTRIBUTE_TYPE_IMAGE' => 'Image',
+
+    /** wechat */
+    'ADD_SCENE_SEARCH' => 'Search',
+    'ADD_SCENE_ACCOUNT_MIGRATION' => 'Account Migration',
+    'ADD_SCENE_PROFILE_CARD' => 'Profile Card',
+    'ADD_SCENE_QR_CODE' => 'Qr Code',
+    'ADD_SCENE_PROFILE_LINK' => 'Profile Link',
+    'ADD_SCENE_PROFILE_ITEM' => 'Profile Item',
+    'ADD_SCENE_PAID' => 'Paid',
+    'ADD_SCENE_OTHERS' => 'Others',
+
+    'TYPE_TEMP' => 'Temp',
+    'TYPE_PERM' => 'Permanent',
 
 ];
