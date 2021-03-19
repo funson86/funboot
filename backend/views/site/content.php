@@ -6,6 +6,13 @@ use common\helpers\Url;
 
 ?>
 
+<!-- 去除双滚动条 但是左侧栏目下滚动太深无法可见，如果要左侧栏目一直可见去掉样式代码 -->
+<style type="text/css">
+    html {
+        overflow:hidden;
+    }
+</style>
+
 <div class="content-wrapper">
     <div class="content-tabs hidden">
         <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-angle-double-left"></i></button>
