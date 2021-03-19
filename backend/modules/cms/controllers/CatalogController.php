@@ -47,31 +47,9 @@ class CatalogController extends BaseController
         'type' => 'select',
     ];
 
-    /**
-     * 编辑/创建
-     *
-     * @return mixed
-     */
-    public function actionEdit()
+    protected function beforeEdit($id = null, $model = null)
     {
-        $id = Yii::$app->request->get('id', null);
-        $model = $this->findModel($id);
-
         $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
-
-        if (Yii::$app->request->isPost) {
-            if ($model->load(Yii::$app->request->post())) {
-                if ($model->save()) {
-                    return $this->redirectSuccess(['index']);
-                } else {
-                    Yii::$app->logSystem->db($model->errors);
-                }
-            }
-        }
-
-        return $this->render($this->action->id, [
-            'model' => $model,
-        ]);
     }
 
     protected function beforeDeleteModel($id, $soft = false, $tree = false)

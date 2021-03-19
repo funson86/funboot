@@ -222,7 +222,6 @@ class ProductController extends BaseController
             'enableValues' => $enableValues,
             'productSkus' => $productSkus,
             'allTags' => $allTags,
-            'productSkus' => $productSkus,
         ]);
     }
 }

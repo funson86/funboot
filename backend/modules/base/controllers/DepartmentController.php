@@ -86,15 +86,12 @@ class DepartmentController extends BaseController
         $id = Yii::$app->request->get('id');
         $model = $this->findModel($id);
 
+        $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
         $allUsers = User::getIdLabel(false, 'username');
 
         // ajax 校验
         $this->activeFormValidate($model);
-        if ($model->parent_id == 0) {
-            $model->parent_id = Yii::$app->request->get('parent_id', 0);
-        }
         if ($model->load(Yii::$app->request->post())) {
-
             $heads = Yii::$app->request->post('Department')['heads'];
             if (is_array($heads) && count($heads) > 0) {
                 $model->head = implode('|', $heads);
@@ -114,7 +111,6 @@ class DepartmentController extends BaseController
 
         $model->heads = explode('|', $model->head);
         $model->viceHeads = explode('|', $model->vice_head);
-
         return $this->renderAjax($this->action->id, [
             'model' => $model,
             'allUsers' => $allUsers,

@@ -34,7 +34,7 @@ use yii\web\Response;
 class BaseController extends \common\components\controller\BaseController
 {
     /**
-     * 1带搜索列表 2树形(不分页) 3非常规表格
+     * 1带搜索列表 11只显示parent_id为0 2树形(不分页) 3非常规表格
      * @var array[]
      */
     protected $style = 1;
@@ -198,6 +198,9 @@ class BaseController extends \common\components\controller\BaseController
             $params['ModelSearch']['store_id'] = $this->getStoreId();
             $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
         }
+        if ($this->style == 11) {
+            $params['ModelSearch']['parent_id'] = 0;
+        }
         $dataProvider = $searchModel->search($params);
 
         return $this->render($this->action->id, [
@@ -249,10 +252,10 @@ class BaseController extends \common\components\controller\BaseController
     {
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
+        $this->beforeEdit($id, $model);
+
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
-                $this->beforeEdit($id, $model);
-
                 if ($model->save()) {
                     $this->afterEdit($id, $model);
                     return $this->redirectSuccess(['index']);

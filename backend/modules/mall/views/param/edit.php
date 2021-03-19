@@ -3,17 +3,15 @@
 use common\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
-use common\models\mall\AttributeSet as ActiveModel;
-use common\models\mall\Attribute;
+use common\models\mall\Param as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\AttributeSet */
+/* @var $model common\models\mall\Param */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Attribute Set');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Attribute Sets'), 'url' => ['index']];
+$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Param');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Params'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$mapAttributeIdLabel = Attribute::getIdLabel()
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -30,24 +28,31 @@ $mapAttributeIdLabel = Attribute::getIdLabel()
                 <div class="col-sm-12">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'sort')->textInput() ?>
                     <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                     <table class="table table-hover">
                         <thead>
                         <tr class="row">
-                            <th class="col-5"><?= Yii::t('app', 'Attribute') ?></th>
-                            <th class="col-5"><?= Yii::t('app', 'Sort') ?></th>
+                            <th class="col-3"><?= Yii::t('app', 'Name') ?></th>
+                            <th class="col-5"><?= Yii::t('app', 'Description') ?></th>
+                            <th class="col-2"><?= Yii::t('app', 'Sort') ?></th>
                             <th class="col-2"><?= Yii::t('app', 'Actions') ?></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($model->attributeSetAttributes as $item) { ?>
-                            <tr id="<?= $item->attribute_id ?>" class="row">
-                                <td class="col-5">
-                                    <?= Html::dropDownList('Sub[attribute_id][]', $item->attribute_id, $mapAttributeIdLabel, [
+                        <?php foreach ($model->children as $item) { ?>
+                            <tr id="<?= $item->id ?>" class="row">
+                                <td class="col-3">
+                                    <?= Html::textInput('Sub[name][]', $item->name, [
                                         'class' => 'form-control name',
                                     ]) ?>
                                 </td>
                                 <td class="col-5">
+                                    <?= Html::textInput('Sub[description][]', $item->name, [
+                                        'class' => 'form-control description',
+                                    ]) ?>
+                                </td>
+                                <td class="col-2">
                                     <?= Html::textInput('Sub[sort][]', $item->sort, [
                                         'class' => 'form-control sort',
                                     ]) ?>
@@ -58,7 +63,7 @@ $mapAttributeIdLabel = Attribute::getIdLabel()
                             </tr>
                         <?php } ?>
                         <tr id="operation">
-                            <td colspan="2"><a href="javascript:" id="add"><i class="icon ion-android-add-circle"></i> <?= Yii::t('app', 'Add') ?> </a></td>
+                            <td colspan="2"><a href="javascript:" id="add"><i class="icon ion-android-add-circle"></i> <?= Yii::t('app', 'Add Child') ?> </a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -75,12 +80,17 @@ $mapAttributeIdLabel = Attribute::getIdLabel()
 
 <script id="addHtml" type="text/html">
     <tr class="row">
-        <td class="col-5">
-            <?= Html::dropDownList('Sub[attribute_id][]', 0, $mapAttributeIdLabel, [
+        <td class="col-3">
+            <?= Html::textInput('Sub[name][]', '', [
                 'class' => 'form-control name',
             ]) ?>
         </td>
         <td class="col-5">
+            <?= Html::textInput('Sub[description][]', '', [
+                'class' => 'form-control description',
+            ]) ?>
+        </td>
+        <td class="col-2">
             <?= Html::textInput('Sub[sort][]', '50', [
                 'class' => 'form-control sort',
             ]) ?>
@@ -103,9 +113,16 @@ $mapAttributeIdLabel = Attribute::getIdLabel()
     $(document).on("click", ".delete", function () {
         $(this).parent().parent().remove()
     });
-    
+
     function beforeSubmit() {
         var submit = true;
+        $('.name').each(function () {
+            if (!$(this).val()) {
+                fbWarning('<?= Yii::t('yii', '{attribute} cannot be blank.', ['attribute' => Yii::t('app', 'Name')]) ?>');
+                submit = false;
+            }
+        })
+
         $('.sort').each(function () {
             if (!$(this).val()) {
                 fbWarning('<?= Yii::t('yii', '{attribute} cannot be blank.', ['attribute' => Yii::t('app', 'Sort')]) ?>');
@@ -123,3 +140,4 @@ $mapAttributeIdLabel = Attribute::getIdLabel()
         }
     }
 </script>
+

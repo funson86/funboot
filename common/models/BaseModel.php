@@ -135,6 +135,22 @@ class BaseModel extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getParent()
+    {
+        return $this->hasOne(self::className(), ['id' => 'parent_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChildren()
+    {
+        return $this->hasMany(self::className(), ['parent_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);

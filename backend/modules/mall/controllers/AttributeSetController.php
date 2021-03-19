@@ -49,7 +49,6 @@ class AttributeSetController extends BaseController
     protected function afterEdit($id = null, $model = null)
     {
         $post = Yii::$app->request->post();
-        var_dump($_POST);
         if (isset($post['Sub']) && is_array($post['Sub']) && count($post['Sub']) > 0) {
             AttributeSetAttribute::updateAll(['status' => AttributeSetAttribute::STATUS_DELETED], ['store_id' => $this->getStoreId(), 'attribute_set_id' => $id]);
 
