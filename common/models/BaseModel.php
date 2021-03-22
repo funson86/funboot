@@ -163,16 +163,24 @@ class BaseModel extends ActiveRecord
 
     /**
      * @param bool $pleaseFilter
+     * @param string $label
+     * @param string $id
      * @param int $storeId
+     * @param null $parentId
      * @return array|string[]
      */
-    public static function getIdLabel($pleaseFilter = false, $label = 'name', $id = 'id', $storeId = null)
+    public static function getIdLabel($pleaseFilter = false, $label = 'name', $id = 'id', $storeId = null, $parentId = null)
     {
         if (!$storeId && !Yii::$app->authSystem->isAdmin()) {
             $storeId = Yii::$app->storeSystem->getId();
         }
 
-        $models = self::find()->where(['status' => self::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->asArray()->all();
+        $models = self::find()
+            ->where(['status' => self::STATUS_ACTIVE])
+            ->andFilterWhere(['store_id' => $storeId])
+            ->andFilterWhere(['parent_id' => $parentId])
+            ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
+            ->asArray()->all();
 
         return $pleaseFilter
             ? ArrayHelper::merge([0 => Yii::t('app', 'Please Filter')], ArrayHelper::map($models, $id, $label))
@@ -191,10 +199,11 @@ class BaseModel extends ActiveRecord
             $storeId = Yii::$app->storeSystem->getId();
         }
         $models = self::find()->where(['status' => self::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->asArray()->all();
-        $mapIdLabel = ArrayHelper::map(ArrayHelper::getTreeIdLabel(0, $models), 'id', 'label');
+        $mapIdLabel = ArrayHelper::map(ArrayHelper::getTreeIdLabel(0, $models,  '└─'), 'id', 'label');
 
         if ($parentId == 0) {
-            return [0 => Yii::t('app', $rootLabel)] + $mapIdLabel;
+            $rootLabel == 'Root Node' && $rootLabel = Yii::t('app', 'Root Node');
+            return [0 => $rootLabel] + $mapIdLabel;
         }
         return $mapIdLabel;
     }

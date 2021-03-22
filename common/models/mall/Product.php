@@ -25,6 +25,7 @@ use common\models\Store;
  * @property float $wholesale_price 拼团价
  * @property string $thumb 缩略图
  * @property string|null $images 图片
+ * @property string|null $tags 标签
  * @property string|null $brief 简述
  * @property string|null $content 内容
  * @property string $seo_title 搜索优化标题
@@ -33,6 +34,7 @@ use common\models\Store;
  * @property int $brand_id 品牌
  * @property int $vendor_id 供应商
  * @property int $attribute_set_id 属性集
+ * @property int $param_id 参数
  * @property float $star 星级
  * @property int $sales 销量
  * @property int $click 浏览量
@@ -60,10 +62,10 @@ class Product extends ProductBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'category_id', 'stock', 'stock_warning', 'brand_id', 'vendor_id', 'attribute_set_id', 'sales', 'click', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'category_id', 'stock', 'stock_warning', 'brand_id', 'vendor_id', 'attribute_set_id', 'param_id', 'sales', 'click', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['category_id', 'name', 'sku'], 'required'],
             [['weight', 'volume', 'price', 'market_price', 'cost_price', 'wholesale_price', 'star'], 'number'],
-            [['images'], 'safe'],
+            [['images', 'tags'], 'safe'],
             [['brief', 'content', 'seo_description'], 'string'],
             [['name', 'sku', 'stock_code', 'thumb', 'seo_title', 'seo_keywords'], 'string', 'max' => 255],
         ]);
@@ -92,6 +94,7 @@ class Product extends ProductBase
                 'wholesale_price' => '拼团价',
                 'thumb' => '缩略图',
                 'images' => '图片',
+                'tags' => '标签',
                 'brief' => '简述',
                 'content' => '内容',
                 'seo_title' => '搜索优化标题',
@@ -100,6 +103,7 @@ class Product extends ProductBase
                 'brand_id' => '品牌',
                 'vendor_id' => '供应商',
                 'attribute_set_id' => '属性集',
+                'param_id' => '参数',
                 'star' => '星级',
                 'sales' => '销量',
                 'click' => '浏览量',
@@ -129,6 +133,7 @@ class Product extends ProductBase
                 'wholesale_price' => Yii::t('app', 'Wholesale Price'),
                 'thumb' => Yii::t('app', 'Thumb'),
                 'images' => Yii::t('app', 'Images'),
+                'tags' => Yii::t('app', 'Tags'),
                 'brief' => Yii::t('app', 'Brief'),
                 'content' => Yii::t('app', 'Content'),
                 'seo_title' => Yii::t('app', 'Seo Title'),
@@ -137,6 +142,7 @@ class Product extends ProductBase
                 'brand_id' => Yii::t('app', 'Brand ID'),
                 'vendor_id' => Yii::t('app', 'Vendor ID'),
                 'attribute_set_id' => Yii::t('app', 'Attribute Set ID'),
+                'param_id' => Yii::t('app', 'Param ID'),
                 'star' => Yii::t('app', 'Star'),
                 'sales' => Yii::t('app', 'Sales'),
                 'click' => Yii::t('app', 'Click'),

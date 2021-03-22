@@ -41,6 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <li class="nav-item">
                         <a class="nav-link" id="tab-3" data-toggle="pill" href="#tab-content-3"><?= Yii::t('app', 'Image Detail') ?></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-4" data-toggle="pill" href="#tab-content-4"><?= Yii::t('app', 'Param') ?></a>
+                    </li>
                 </ul>
             </div>
             <div class="card-body">
@@ -160,6 +163,34 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= $form->field($model, 'seo_description')->textarea(['rows' => 6]) ?>
                     </div>
 
+                    <div class="tab-pane fade show" id="tab-content-4">
+                        <?= $form->field($model, 'param_id')->dropDownList(\common\models\mall\Param::getIdLabel(true, 'name', 'id', null, 0)) ?>
+                        <dl class="control-group">
+                            <!--dt><?= Yii::t('app', 'Param') ?></dt-->
+                            <dd>
+                                <table class="table table-param">
+                                    <tbody>
+
+                                    <?php if (isset($model->param_id) && isset($allParams[$model->param_id]->children)) { foreach ($allParams[$model->param_id]->children as $child2) { ?>
+                                        <tr>
+                                            <td align="center"><?= $child2->name ?></td>
+                                            <td id="attribute-<?= $child2->id ?>"><?= Html::textInput('productParam[' . $child2->id . ']', $productParams[$child2->id] ?? '', ['class' => 'form-control'])?></td>
+                                        </tr>
+                                        <?php foreach ($child2->children as $child3) { ?>
+                                        <tr>
+                                            <td align="right"><?= $child3->name ?></td>
+                                            <td id="attribute-<?= $child3->id ?>"><?= Html::textInput('productParam[' . $child3->id . ']', $productParams[$child3->id] ?? '', ['class' => 'form-control'])?></td>
+                                        </tr>
+                                        <?php } ?>
+                                    <?php } } ?>
+                                    </tbody>
+                                </table>
+                                <div class="hint-block">最多支持3级，如果有第3级，第2级一般做小分类可以不填写内容</div>
+                            </dd>
+                        </dl>
+
+                    </div>
+
                 </div>
             </div>
             <div class="card-footer">
@@ -178,7 +209,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <tr>
         <td>{{attribute.name}}</td>
         <td>
-            {{each attribute.values as item i}}
+            {{each attribute.attributeValues as item i}}
             <span id="option-{{item.id}}" data-type="{{attribute.type}}" class="btn btn-default btn-sm btn-attribute" data-id="{{item.id}}" data-name="{{item.name}}" data-attribute-id="{{attribute.id}}" data-attribute-name="{{attribute.name}}" data-sort="{{item.sort}}">{{item.name}}</span>
             {{if attribute.type == 2 }}
             <span class="btn btn-sm selectColor" style="background:#000000;padding: 10px" data-href="<?= Url::to(['/site/color'])?>"></span>
@@ -190,6 +221,28 @@ $this->params['breadcrumbs'][] = $this->title;
             {{/each}}
         </td>
     </tr>
+    {{/each}}
+    </tbody>
+</script>
+
+<!-- 参数模板 -->
+<script id="paramTemplate" type="text/html">
+    <tbody>
+    {{each data as item i}}
+        <tr>
+            <td align="center">{{item.name}}</td>
+            <td>
+                <?= Html::textInput('productParam[{{item.id}}]', '', ['class' => 'form-control'])?>
+            </td>
+        </tr>
+        {{each item.children as item i}}
+        <tr>
+            <td align="right">{{item.name}}</td>
+            <td>
+                <?= Html::textInput('productParam[{{item.id}}]', '', ['class' => 'form-control'])?>
+            </td>
+        </tr>
+        {{/each}}
     {{/each}}
     </tbody>
 </script>
@@ -308,7 +361,6 @@ $this->params['breadcrumbs'][] = $this->title;
             $('.field-product-is-attribute-no').show();
             $('.field-product-is-attribute-yes').hide();
         }
-
 
         $('#product-isattribute input').change(function () {
             let isAttribute = $('#product-isattribute input:checked').val();
@@ -630,4 +682,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
         return false;
     }
+</script>
+
+<script>
+    $('#product-param_id').change(function() {
+
+        let id = $(this).val();
+        $.get("<?= Url::to(['param/view-ajax-child']); ?>?id=" + id, function(data, status) {
+            if (status === "success") {
+                if (parseInt(data.code) === 200) {
+                    let paramHtml = template('paramTemplate', data);
+                    $('.table-param').html(paramHtml);
+                }
+            }
+        });
+    });
 </script>

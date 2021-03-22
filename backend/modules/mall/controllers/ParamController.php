@@ -76,4 +76,37 @@ class ParamController extends BaseController
             Param::deleteAll(['status' => Param::STATUS_DELETED, 'store_id' => $this->getStoreId(), 'parent_id' => $id]);
         }
     }
+
+    /**
+     * 获取子节点，最多往下3级，默认3级
+     * @param $id
+     * @param int $level
+     * @return array|mixed
+     * @throws \Exception
+     */
+    public function actionViewAjaxChild($id, $level = 3)
+    {
+        $model = $this->findModel($id);
+        if (!$model) {
+            return $this->error();
+        }
+
+        $list = [];
+        foreach ($model->children as $child2) {
+            $item = $child2->attributes;
+
+            if ($level >= 3 && isset($child2->children)) {
+                $sub3 = [];
+                foreach ($child2->children as $child3) {
+                    $sub3[] = $child3->attributes;
+                }
+                $item['children'] = $sub3;
+            }
+
+            $list[] = $item;
+        }
+
+        return $this->success($list);
+    }
+
 }

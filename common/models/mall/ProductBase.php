@@ -89,6 +89,7 @@ class ProductBase extends BaseModel
             'brand_id' => Yii::t('app', 'Brand ID'),
             'vendor_id' => Yii::t('app', 'Vendor ID'),
             'attribute_set_id' => Yii::t('app', 'Attribute Set ID'),
+            'param_id' => Yii::t('app', 'Param ID'),
             'star' => Yii::t('app', 'Star'),
             'sales' => Yii::t('app', 'Sales'),
             'click' => Yii::t('app', 'Click'),

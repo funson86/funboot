@@ -6,7 +6,9 @@ use common\helpers\ArrayHelper;
 use common\models\mall\Attribute;
 use common\models\mall\AttributeSet;
 use common\models\mall\AttributeValue;
+use common\models\mall\Param;
 use common\models\mall\ProductAttributeValueLabel;
+use common\models\mall\ProductParam;
 use common\models\mall\ProductSku;
 use common\models\mall\ProductTag;
 use common\models\mall\Tag;
@@ -57,6 +59,10 @@ class ProductController extends BaseController
     {
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
+
+        $allParams = ArrayHelper::mapIdData(Param::find()->where(['store_id' => $this->getStoreId(), 'status' => Tag::STATUS_ACTIVE])->all());
+        $mapAllParamIdName = ArrayHelper::map($allParams, 'id', 'name');
+
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $post = Yii::$app->request->post();
@@ -97,6 +103,7 @@ class ProductController extends BaseController
                             $modelTemp = ProductSku::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'attribute_value' => $attributeValue])->one();
                             !$modelTemp && $modelTemp = new ProductSku();
                             $modelTemp->store_id = $this->getStoreId();
+                            // 按照id顺序用逗号分隔存储
                             $arrAttributeValue = explode(',', $attributeValue);
                             $modelTemp->attribute_value = implode(',', ArrayHelper::intValue($arrAttributeValue, true));
                             $modelTemp->product_id = $model->id;
@@ -155,6 +162,34 @@ class ProductController extends BaseController
                         ProductAttributeValueLabel::deleteAll(['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
                     }
 
+                    // 计算参数
+                    if ($model->param_id > 0 && isset($post['productParam'])) {
+                        $params = $post['productParam'];
+
+                        ProductParam::updateAll(['status' => ProductParam::STATUS_DELETED], ['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
+
+                        foreach ($params as $id => $content) {
+                            var_dump($id);
+                            $modelTemp = ProductParam::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'param_id' => $id])->one();
+                            !$modelTemp && $modelTemp = new ProductParam();
+                            $modelTemp->store_id = $this->getStoreId();
+                            $modelTemp->product_id = $model->id;
+                            $modelTemp->param_id = $id;
+                            $modelTemp->name = $mapAllParamIdName[$id] ?? '-';
+                            $modelTemp->content = $content;
+                            $modelTemp->status = ProductParam::STATUS_ACTIVE;
+
+                            if (!$modelTemp->save()) {
+                                Yii::$app->logSystem->db($modelTemp->errors);
+                                throw new NotFoundHttpException($this->getError($modelTemp));
+                            }
+                        }
+
+                        ProductParam::deleteAll(['status' => ProductParam::STATUS_DELETED, 'store_id' => $this->getStoreId(), 'product_id' => $model->id]);
+                    } else {
+                        ProductParam::deleteAll(['status' => ProductParam::STATUS_DELETED, 'store_id' => $this->getStoreId(), 'product_id' => $model->id]);
+                    }
+
                     $transaction->commit();
                     return $this->redirectSuccess(['index']);
                 } catch (\Exception $e) {
@@ -197,20 +232,29 @@ class ProductController extends BaseController
             }
         }
 
-        // 计算已经使用的属性值
+        // 计算已经启用的属性值
         $enableValueIds = [];
-        $productSkus = ProductSku::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id])->asArray()->all();
-        if ($productSkus) {
-            $enableValueIds = array_unique(explode(',', implode(',', ArrayHelper::getColumn($productSkus, 'attribute_value'))));
-        }
-        $enableValues = [];
-        $attributeValues = AttributeValue::find()->where(['store_id' => $this->getStoreId(), 'id' => $enableValueIds])->all();
-        foreach ($attributeValues as $attributeValue) {
-            $item = $attributeValue->attributes;
-            $item['attribute_name'] = $mapAttributeIdName[$attributeValue->attribute_id] ?? '';
-            $item['label'] = $mapProductAttributeValueIdLabel[$attributeValue->id] ?? '';
+        $productSkus = [];
+        if ($model->attribute_set_id > 0) {
+            $productSkus = ProductSku::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id])->asArray()->all();
+            if ($productSkus) {
+                $enableValueIds = array_unique(explode(',', implode(',', ArrayHelper::getColumn($productSkus, 'attribute_value'))));
+            }
+            $enableValues = [];
+            $attributeValues = AttributeValue::find()->where(['store_id' => $this->getStoreId(), 'id' => $enableValueIds])->all();
+            foreach ($attributeValues as $attributeValue) {
+                $item = $attributeValue->attributes;
+                $item['attribute_name'] = $mapAttributeIdName[$attributeValue->attribute_id] ?? '';
+                $item['label'] = $mapProductAttributeValueIdLabel[$attributeValue->id] ?? '';
 
-            $enableValues[] = $item;
+                $enableValues[] = $item;
+            }
+        }
+
+        // 计算参数
+        $productParams = [];
+        if ($model->param_id > 0) {
+            $productParams = ArrayHelper::map(ProductParam::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $id])->all(), 'param_id', 'content');
         }
 
         $model->types = ArrayHelper::intToArray($model->type, $this->modelClass::getTypeLabels());
@@ -221,6 +265,8 @@ class ProductController extends BaseController
             'attributes' => $attributes,
             'enableValues' => $enableValues,
             'productSkus' => $productSkus,
+            'allParams' => $allParams,
+            'productParams' => $productParams,
             'allTags' => $allTags,
         ]);
     }

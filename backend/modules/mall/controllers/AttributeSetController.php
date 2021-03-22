@@ -76,6 +76,12 @@ class AttributeSetController extends BaseController
         }
     }
 
+    /**
+     * 获取属性和属性值
+     * @param $id
+     * @return array|mixed
+     * @throws \Exception
+     */
     public function actionViewAjaxValue($id)
     {
         $model = $this->findModel($id);
@@ -92,7 +98,7 @@ class AttributeSetController extends BaseController
                 foreach ($attribute->attributeValues as $value) {
                     $values[] = $value->attributes;
                 }
-                $item['values'] = $values;
+                $item['attributeValues'] = $values;
             }
 
             $list[] = $item;
