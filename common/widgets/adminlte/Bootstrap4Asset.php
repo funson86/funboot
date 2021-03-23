@@ -5,15 +5,13 @@ namespace common\widgets\adminlte;
 use yii\web\AssetBundle;
 
 /**
- * Class HeadJsAsset
+ * Class Bootstrap4Asset
  * @package common\widgets\adminlte
  * @author funson86 <funson86@gmail.com>
  */
-class JqueryAsset extends AssetBundle
+class Bootstrap4Asset extends AssetBundle
 {
-    public $sourcePath = '@common/widgets/adminlte/resources/';
-
-    public $js = [
-        'plugins/jquery/jquery.min.js',
+    public $css = [
+        'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css',
     ];
 }

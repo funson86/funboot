@@ -58,7 +58,7 @@ class BaseModel extends ActiveRecord
                 'value' => $userId,
             ],
             [
-                'class' => BlameableBehavior::class,
+                'class' => TimestampBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['store_id'],
                 ],
@@ -188,12 +188,14 @@ class BaseModel extends ActiveRecord
     }
 
     /**
+     * 显示树状
      * @param int $parentId
-     * @param int $storeId
+     * @param bool $root
      * @param string $rootLabel
+     * @param int $storeId
      * @return array|string[]
      */
-    public static function getTreeIdLabel($storeId = null, $parentId = 0, $rootLabel = 'Root Node')
+    public static function getTreeIdLabel($parentId = 0, $root = true, $rootLabel = null, $storeId = null)
     {
         if (!$storeId && !Yii::$app->authSystem->isAdmin()) {
             $storeId = Yii::$app->storeSystem->getId();
@@ -201,8 +203,8 @@ class BaseModel extends ActiveRecord
         $models = self::find()->where(['status' => self::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->asArray()->all();
         $mapIdLabel = ArrayHelper::map(ArrayHelper::getTreeIdLabel(0, $models,  '└─'), 'id', 'label');
 
-        if ($parentId == 0) {
-            $rootLabel == 'Root Node' && $rootLabel = Yii::t('app', 'Root Node');
+        if ($parentId == 0 && $root) {
+            !$rootLabel && $rootLabel = Yii::t('app', 'Root Node');
             return [0 => $rootLabel] + $mapIdLabel;
         }
         return $mapIdLabel;

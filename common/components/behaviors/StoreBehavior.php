@@ -32,7 +32,7 @@ trait StoreBehavior
                 'value' => $userId,
             ],
             [
-                'class' => BlameableBehavior::class,
+                'class' => TimestampBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['store_id'],
                 ],
