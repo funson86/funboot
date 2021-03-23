@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="tab-pane fade active show" id="tab-content-1">
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                         <div class="row">
-                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'category_id')->dropDownList(\common\models\mall\Category::getIdLabel()) ?></div>
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'category_id')->dropDownList(\common\models\mall\Category::getTreeIdLabel(0, false)) ?></div>
                             <div class="col-sm-4 pr-4"><?= $form->field($model, 'brand_id')->dropDownList(\common\models\mall\Brand::getIdLabel(true)) ?></div>
                             <div class="col-sm-4 pr-4"><?= $form->field($model, 'vendor_id')->dropDownList(\common\models\mall\Vendor::getIdLabel(true)) ?></div>
                         </div>

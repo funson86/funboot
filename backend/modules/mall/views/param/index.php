@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     foreach ($item->children as $child) {
                                         $arrChild[] = $child->name;
                                     }
-                                    $str .= '[' . implode(', ', $arrChild) . ']';
+                                    count($item->children) > 0 && $str .= '(' . implode(', ', $arrChild) . ')';
                                     $arr[] = $str;
                                 }
                                 return implode(', ', $arr);

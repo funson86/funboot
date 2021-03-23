@@ -58,11 +58,11 @@ class ParamController extends BaseController
                 return;
             }
             for ($i = 0; $i < $length; $i++) {
-                $modelTemp = Param::find()->where(['store_id' => $this->getStoreId(), 'parent_id' => $id, 'name' => $sub['name'][$i]])->one();
+                $modelTemp = Param::find()->where(['store_id' => $this->getStoreId(), 'parent_id' => $model->id, 'name' => $sub['name'][$i]])->one();
                 if (!$modelTemp) {
                     $modelTemp = new Param();
                     $modelTemp->store_id = $this->getStoreId();
-                    $modelTemp->parent_id = $id;
+                    $modelTemp->parent_id = $model->id;
                     $modelTemp->name = $sub['name'][$i];
                 }
                 $modelTemp->description = $sub['description'][$i];
