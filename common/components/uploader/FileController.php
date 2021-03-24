@@ -45,6 +45,8 @@ class FileController extends \common\components\controller\BaseController
 
     public function actionIndex($json = false)
     {
+        $storeId = Yii::$app->authSystem->isAdmin() ? null : Yii::$app->storeSystem->getId();
+
         $uploadType = Yii::$app->request->get('upload_type', '');
         $year = Yii::$app->request->get('year', '');
         $month = Yii::$app->request->get('month', '');
@@ -53,6 +55,7 @@ class FileController extends \common\components\controller\BaseController
 
         $query = Attachment::find()
             ->where(['status' => Attachment::STATUS_ACTIVE])
+            ->andFilterWhere(['store_id' => $storeId])
             ->andFilterWhere(['upload_type' => $uploadType])
             ->andFilterWhere(['year' => $year])
             ->andFilterWhere(['month' => $month])

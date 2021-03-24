@@ -107,6 +107,7 @@ class AttachmentBase extends BaseModel
         }
 
         $model = new Attachment();
+        $model->store_id = Yii::$app->storeSystem->getId();
         $model->attributes = $data;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
