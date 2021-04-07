@@ -84,7 +84,6 @@ function fbPrompt(url, text) {
 }
 
 $(document).ready(function () {
-    $('.sidebar-menu').tree();
     if ($(this).width() < 769) {
         config.isMobile = true;
     }
