@@ -67,7 +67,7 @@ class ProductController extends BaseController
             if ($model->load(Yii::$app->request->post())) {
                 $post = Yii::$app->request->post();
 
-                $model->type = ArrayHelper::arrayToInt($post['Product']['types']);
+                $model->type = ArrayHelper::arrayToInt($post['Product']['types'] ?? []);
 
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
