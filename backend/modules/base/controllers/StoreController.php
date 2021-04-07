@@ -71,8 +71,8 @@ class StoreController extends BaseController
         if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
             $post = Yii::$app->request->post();
             $model->user_id = Yii::$app->params['defaultUserId'];
-            $model->language = ArrayHelper::arrayToInt($post['Store']['languages']);
-            $model->type = ArrayHelper::arrayToInt($post['Store']['types']);
+            $model->language = ArrayHelper::arrayToInt($post['Store']['languages'] ?? []);
+            $model->type = ArrayHelper::arrayToInt($post['Store']['types'] ?? []);
             $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
 
             if ($model->save()) {
