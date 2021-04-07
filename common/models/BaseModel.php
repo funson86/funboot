@@ -16,6 +16,11 @@ use yii\log\Logger;
  * Class BaseModel
  * @package common\models
  * @author funson86 <funson86@gmail.com>
+ *
+ * @property User $user
+ * @property User $createdBy
+ * @property User $updatedBy
+ * @property Store $store
  */
 class BaseModel extends ActiveRecord
 {
@@ -112,6 +117,28 @@ class BaseModel extends ActiveRecord
         return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
+    /**
+     * 如果整型或者浮点型，输入为空强制转成0
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if (is_array($this->rules())) {
+                foreach ($this->rules() as $rule) {
+                    if (isset($rule[1]) && (in_array($rule[1], ['integer', 'number'])) && is_array($rule[0])) {
+                        foreach ($rule[0] as $attribute) {
+                            empty($this->{$attribute}) && $this->{$attribute} = 0;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public static function afterInsert(AfterSaveEvent $event)
     {
         Yii::$app->logSystem->operation(Log::CODE_INSERT, $event->sender->getAttributes());
@@ -148,6 +175,28 @@ class BaseModel extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getUser()
+    {
+        if ($this->attributes['user_id']) {
+            return $this->hasOne(Store::className(), ['id' => 'store_id']);
+        }
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStore()
+    {
+        if ($this->attributes['store_id']) {
+            return $this->hasOne(Store::className(), ['id' => 'store_id']);
+        }
+        return null;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
@@ -159,6 +208,18 @@ class BaseModel extends ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * 判断是否为所属
+     * @return bool
+     */
+    public function isOwner()
+    {
+        if (!isset($this->user_id) || is_null(Yii::$app->user->id)) {
+            return false;
+        }
+        return $this->user_id == Yii::$app->user->id;
     }
 
     /**
