@@ -9,8 +9,8 @@ use common\models\base\Message as ActiveModel;
 /* @var $model common\models\base\Message */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Message Send');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Message Sends'), 'url' => ['index']];
+$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Message');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Messages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
