@@ -123,6 +123,7 @@ return [
     'ROUTE_MALL' => '商城',
     'ROUTE_CMS' => '网站',
     'ROUTE_PAY' => '支付',
+    'ROUTE_BBS' => '社区',
 
     'TYPE_LIST' => '列表',
     'TYPE_MENU' => '单页面',

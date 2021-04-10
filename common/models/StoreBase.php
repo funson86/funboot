@@ -47,10 +47,7 @@ class StoreBase extends BaseModel
     const ROUTE_MALL = 'mall';
     const ROUTE_CMS = 'cms';
     const ROUTE_PAY = 'pay';
-
-    const TYPE_TABLE_ORDER = 1;
-    const TYPE_GIFT_VOUCHER = 2;
-    const TYPE_TABLE_QRCODE = 4;
+    const ROUTE_BBS = 'bbs';
 
     const LANGUAGE_EN = 1;
     const LANGUAGE_ZH_CN = 2;
@@ -115,6 +112,7 @@ class StoreBase extends BaseModel
             self::ROUTE_MALL => Yii::t('cons', 'ROUTE_MALL'),
             self::ROUTE_CMS => Yii::t('cons', 'ROUTE_CMS'),
             self::ROUTE_PAY => Yii::t('cons', 'ROUTE_PAY'),
+            self::ROUTE_BBS => Yii::t('cons', 'ROUTE_BBS'),
         ];
 
         $all && $data += [];
@@ -122,36 +120,6 @@ class StoreBase extends BaseModel
         $flip && $data = array_flip($data);
 
         return !is_null($id) ? ($data[$id] ?? $id) : $data;
-    }
-
-    /**
-     * @param null $id
-     * @param bool $all
-     * @param bool $flip
-     * @return array|mixed|null
-     */
-    public static function getTypeLabels($id = null, $all = false, $flip = false)
-    {
-        $data = [
-            self::TYPE_TABLE_ORDER => Yii::t('cons', 'TYPE_TABLE_ORDER'),
-            self::TYPE_GIFT_VOUCHER => Yii::t('cons', 'TYPE_GIFT_VOUCHER'),
-            self::TYPE_TABLE_QRCODE => Yii::t('cons', 'TYPE_TABLE_QRCODE'),
-        ];
-
-        $all && $data += [];
-
-        $flip && $data = array_flip($data);
-
-        if (!is_null($id)) {
-            $str = '';
-            foreach ($data as $k => $v) {
-                if (($id & $k) == $k) {
-                    $str .= $data[$k] . ' ';
-                }
-            }
-            return $str;
-        }
-        return $data;
     }
 
     /**

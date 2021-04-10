@@ -122,6 +122,7 @@ return [
     'ROUTE_MALL' => 'Mall',
     'ROUTE_CMS' => 'Cms',
     'ROUTE_PAY' => 'Pay',
+    'ROUTE_BBS' => 'BBS',
 
     'TYPE_LIST' => 'List',
     'TYPE_MENU' => 'Menu',

@@ -62,13 +62,13 @@ class BaseModel extends ActiveRecord
                 ],
                 'value' => $userId,
             ],
-            [
+            /*[
                 'class' => TimestampBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['store_id'],
                 ],
                 'value' => Yii::$app->storeSystem->getId(),
-            ],
+            ],*/
         ]);
     }
 
@@ -129,11 +129,17 @@ class BaseModel extends ActiveRecord
                 foreach ($this->rules() as $rule) {
                     if (isset($rule[1]) && (in_array($rule[1], ['integer', 'number'])) && is_array($rule[0])) {
                         foreach ($rule[0] as $attribute) {
-                            empty($this->{$attribute}) && $this->{$attribute} = 0;
+                            $this->{$attribute} === '' && $this->{$attribute} = 0;
                         }
                     }
                 }
             }
+
+            // 如果是默认的store id
+            if (!$this->store_id || $this->store_id <= 0 || $this->store_id == Yii::$app->params['defaultStoreId']) {
+                $this->store_id = Yii::$app->storeSystem->getId();
+            }
+
             return true;
         }
         return false;
@@ -178,8 +184,9 @@ class BaseModel extends ActiveRecord
     public function getUser()
     {
         if ($this->attributes['user_id']) {
-            return $this->hasOne(Store::className(), ['id' => 'store_id']);
+            return $this->hasOne(User::className(), ['id' => 'user_id']);
         }
+
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 

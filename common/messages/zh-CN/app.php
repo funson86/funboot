@@ -55,6 +55,7 @@ return [
     'Are you sure you want to delete this item?' => '您确定要删除此项吗？',
     'Are you sure to do this operation?' => '您确定要执行此项操作吗？',
     'Home' => '首页',
+    'Go Home' => '返回首页',
     'Logout' => '注销',
     'Exit' => '注销',
     'Locate Tab' => '定位当前选项卡',
@@ -62,6 +63,7 @@ return [
     'Close Other Tab' => '关闭其他选项卡',
     'Modify Password' => '修改密码',
     'Profile' => '个人资料',
+    'Account Setting' => '帐号设置',
     'Clear Cache' => '清理缓存',
     'ClearCache' => '清理缓存',
     'View all messages' => '查看全部消息',
@@ -276,8 +278,8 @@ return [
     'Param' => '参数',
     'Params' => '参数',
 
-    'Comment' => '评价',
-    'Comments' => '评价',
+    'Rank' => '评价',
+    'Ranks' => '评价',
     'Product ID' => '商品',
     'Order ID' => '订单',
     'Star' => '评分',
@@ -476,6 +478,7 @@ return [
     'Remember Me' => '自动登录',
     'Sign in' => '登录',
     'Login' => '登录',
+    'Sign up' => '注册',
     'Incorrect username or password.' => '帐号或密码不正确',
     'Verification Code' => '验证码',
     'Click to change' => '点击更换',
@@ -554,6 +557,23 @@ return [
     'Page' => '页面',
     'Catalogs' => '栏目',
     'Catalog' => '栏目',
+
+    /* BBS */
+    'Node' => '节点',
+    'Nodes' => '节点',
+    'Meta' => '参数',
+    'Metas' => '参数',
+    'Topic' => '话题',
+    'Topics' => '话题',
+    'Comment' => '评论',
+    'Comments' => '评论',
+    'Newest' => '最新',
+    'Best' => '人气',
+    'Hottest' => '热门',
+    'BBS' => '社区',
+    'Tags' => '标签',
+    'Yellow Pages' => '黄页',
+
 
     /* mall */
     'Catalog' => '栏目',

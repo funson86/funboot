@@ -75,8 +75,11 @@ return [
             'sessionParam' => 'wechatUser', // 微信用户信息将存储在会话在这个密钥
             'returnUrlParam' => '_wechatReturnUrl', // returnUrl 存储在会话中
         ],
-        'cacheMall' => [
-            'class' => 'common\components\mall\CacheMall',
+        'cacheSystemMall' => [
+            'class' => 'common\components\mall\CacheSystemMall',
+        ],
+        'cacheSystemBbs' => [
+            'class' => 'common\components\bbs\CacheSystemBbs',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

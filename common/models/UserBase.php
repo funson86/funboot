@@ -3,6 +3,7 @@ namespace common\models;
 
 use common\models\base\Message;
 use common\models\base\UserRole;
+use Identicon\Identicon;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -396,5 +397,13 @@ class UserBase extends BaseModel implements IdentityInterface
         }
 
         return $model;
+    }
+
+    public function getMixedAvatar($size = 50)
+    {
+        if ($this->avatar) {
+            return $this->avatar;
+        }
+        return (new Identicon())->getImageDataUri($this->email, $size);
     }
 }
