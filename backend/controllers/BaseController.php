@@ -157,6 +157,7 @@ class BaseController extends \common\components\controller\BaseController
     {
         if ($this->style == 2) {
             $query = $this->modelClass::find()
+                ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
                 ->orderBy(['id' => SORT_ASC]);
 
             $dataProvider = new ActiveDataProvider([
@@ -170,7 +171,7 @@ class BaseController extends \common\components\controller\BaseController
         } elseif ($this->style == 3) {
             $storeId = $this->isAdmin() ? null : $this->getStoreId();
             $data = $this->modelClass::find()
-                //->andFilterWhere(['>', 'status', $this->modelClass::STATUS_DELETED])
+                ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
                 ->andFilterWhere(['store_id' => $storeId]);
             $pages = new Pagination(['totalCount' => $data->count(), 'pageSize' => $this->pageSize]);
             $models = $data->offset($pages->offset)
