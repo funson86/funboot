@@ -288,7 +288,7 @@ class ArrayHelper extends BaseArrayHelper
     }
 
     /**
-     * Get the root catalog id, then get the sub catalog of the root
+     * 获取根节点下面的二级节点，适用于导航栏
      * @param int $id  parent catalog id
      * @param array $array  catalog array list
      * @return array  the sub catalog of root catalog Id collections.
@@ -337,5 +337,19 @@ class ArrayHelper extends BaseArrayHelper
         }
 
         return [$min, $max];
+    }
+
+    /**
+     * 获取数组最小最大值
+     * @param $array
+     * @return null[]
+     */
+    public static function trim($array)
+    {
+        foreach ($array as &$v) {
+            $v = trim($v);
+        }
+
+        return $array;
     }
 }

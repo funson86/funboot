@@ -134,8 +134,24 @@ return [
         ],
     ],
 
+    'smtp_host' => 'smtp.office365.com',
+    'smtp_username' => 'xxx@outlook.com',
+    'smtp_password' => '',
+    'smtp_port' => '587',
+    'smtp_encryption' => 'tls',
+
+    'baiduTranslate' => [
+        'appId' => '',
+        'appSecret' => '',
+        'url' => 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+    ],
+
     'funPay' => [
         'adminEmail' => '3375074@qq.com',
+    ],
+
+    'bbs' => [
+        'adminRoleIds' => [50, 106], //管理员role id
     ],
 
     // 微信相关

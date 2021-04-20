@@ -156,9 +156,9 @@ class StringHelper extends BaseStringHelper
      * @param string $target
      * @return string|string[]|null
      */
-    public static function mergeSpace($str, $target = ' ')
+    public static function mergeSpace($str)
     {
-        return preg_replace("/\s(?=\s)/", $target, $str);
+        return preg_replace("/\s(?=\s)/", "\\1", $str);
     }
 
     /**
