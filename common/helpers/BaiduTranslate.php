@@ -6,11 +6,11 @@ use Yii;
 
 class BaiduTranslate
 {
-    static $url = 'http://api.fanyi.baidu.com/api/trans/vip/translate';
-    static $appId = '';
-    static $appSecret = '';
+    public static $url = 'http://api.fanyi.baidu.com/api/trans/vip/translate';
+    public static $appId = '';
+    public static $appSecret = '';
 
-    static $mapI18nCode = [
+    public static $mapI18nCode = [
         'en' => 'en',
         'zh_CN' => 'zh',
     ];
@@ -28,21 +28,21 @@ class BaiduTranslate
      * @param string $from
      * @return string
      */
-	public static function translate($query, $to = 'en', $from = 'auto') : string
-	{
-	    self::init();
+    public static function translate($query, $to = 'en', $from = 'auto') : string
+    {
+        self::init();
 
-	    $params = [
-	        'q' => $query,
+        $params = [
+            'q' => $query,
             'appid' => self::$appId,
             'salt' => time(),
             'from' => self::$mapI18nCode[$from] ?? $from,
             'to' => self::$mapI18nCode[$to] ?? $to,
         ];
 
-	    $params['sign'] = md5(self::$appId . $query . $params['salt'] . self::$appSecret);
+        $params['sign'] = md5(self::$appId . $query . $params['salt'] . self::$appSecret);
 
-	    $result = HttpHelper::call(self::$url, $params);
+        $result = HttpHelper::call(self::$url, $params);
 
         $ret = json_decode($result, true);
 
@@ -52,5 +52,5 @@ class BaiduTranslate
         }
 
         return $ret['trans_result'][0]['dst'] ?? '';
-	}
+    }
 }
