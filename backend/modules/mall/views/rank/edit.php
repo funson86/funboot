@@ -3,14 +3,14 @@
 use common\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
-use common\models\mall\Comment as ActiveModel;
+use common\models\mall\Rank as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\Comment */
+/* @var $model common\models\mall\Rank */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Comment');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Comments'), 'url' => ['index']];
+$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Rank');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Ranks'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

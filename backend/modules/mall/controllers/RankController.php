@@ -3,7 +3,7 @@
 namespace backend\modules\mall\controllers;
 
 use Yii;
-use common\models\mall\Comment;
+use common\models\mall\Rank;
 use common\models\ModelSearch;
 use backend\controllers\BaseController;
 
@@ -13,12 +13,12 @@ use backend\controllers\BaseController;
  * Class CommentController
  * @package backend\modules\mall\controllers
  */
-class CommentController extends BaseController
+class RankController extends BaseController
 {
     /**
-      * @var Comment
+      * @var Rank
       */
-    public $modelClass = Comment::class;
+    public $modelClass = Rank::class;
 
     /**
       * 模糊查询字段

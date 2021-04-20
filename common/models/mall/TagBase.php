@@ -36,6 +36,7 @@ class TagBase extends BaseModel
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
+            'count' => Yii::t('app', 'Count'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),

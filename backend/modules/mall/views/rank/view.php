@@ -3,17 +3,17 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\enums\YesNo;
-use common\models\mall\Comment as ActiveModel;
+use common\models\mall\Rank as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\Comment */
+/* @var $model common\models\mall\Rank */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Comments'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Ranks'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="card comment-view">
+<div class="card rank-view">
     <div class="card-header">
         <?= Html::a(Yii::t('app', 'Update'), ['edit', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [

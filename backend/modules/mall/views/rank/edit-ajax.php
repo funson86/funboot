@@ -4,11 +4,11 @@ use common\helpers\Html;
 use common\helpers\Url;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
-use common\models\mall\Comment as ActiveModel;
+use common\models\mall\Rank as ActiveModel;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\Comment */
+/* @var $model common\models\mall\Rank */
 /* @var $form yii\widgets\ActiveForm */
 
 $form = ActiveForm::begin([

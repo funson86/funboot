@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\enums\YesNo;
-use common\models\mall\Comment as ActiveModel;
+use common\models\mall\Rank as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\Comment */
+/* @var $model common\models\mall\Rank */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Comments'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Ranks'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 </div>
 
-<div class="modal-body comment-view">
+<div class="modal-body rank-view">
 
     <?= DetailView::widget([
         'model' => $model,

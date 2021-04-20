@@ -12,6 +12,7 @@ use common\models\Store;
  * @property int $id
  * @property int $store_id 商家
  * @property string $name 名称
+ * @property int $count 数量
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -36,7 +37,7 @@ class Tag extends TagBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'count', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
         ]);
@@ -52,6 +53,7 @@ class Tag extends TagBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
                 'name' => '名称',
+                'count' => '数量',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -65,6 +67,7 @@ class Tag extends TagBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
                 'name' => Yii::t('app', 'Name'),
+                'count' => Yii::t('app', 'Count'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

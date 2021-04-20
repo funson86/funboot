@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 foreach ($model->children as $item) {
                                     $str = $item->name . Html::a(' <i class="fa fa-edit"></i>', \common\helpers\Url::to(['edit', 'id' => $item->id]));
 
-                                    // 三级节点
+                                    // 3 level node
                                     $arrChild = [];
                                     foreach ($item->children as $child) {
                                         $arrChild[] = $child->name;

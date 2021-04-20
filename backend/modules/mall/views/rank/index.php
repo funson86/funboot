@@ -3,7 +3,7 @@
 use yii\grid\GridView;
 use common\helpers\Html;
 use common\components\enums\YesNo;
-use common\models\mall\Comment as ActiveModel;
+use common\models\mall\Rank as ActiveModel;
 use yii\helpers\Inflector;
 use common\helpers\ArrayHelper;
 
@@ -11,7 +11,7 @@ use common\helpers\ArrayHelper;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $searchModel common\models\ModelSearch */
 
-$this->title = Yii::t('app', 'Comments');
+$this->title = Yii::t('app', 'Ranks');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Comments'] ?? null) ?></h2>
+                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Ranks'] ?? null) ?></h2>
                 <div class="card-tools">
                     <?= Html::createModal() ?>
                     <?= Html::export() ?>
