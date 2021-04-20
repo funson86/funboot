@@ -428,6 +428,13 @@ CREATE TABLE `fb_store` (
   `expired_at` int(11) NOT NULL DEFAULT '0' COMMENT '到期时间',
   `remark` text CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT '备注',
   `language` int(11) NOT NULL DEFAULT '1' COMMENT '语言',
+  `lang_source` varchar(255) NOT NULL DEFAULT 'zh_CN' COMMENT '翻译源语言' AFTER `language`;  
+  `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言' AFTER `lang_source`;  
+  `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言' AFTER `lang_frontend`;  
+  `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言' AFTER `lang_frontend_default`;  
+  `lang_backend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '后端默认语言' AFTER `lang_backend`;  
+  `lang_api` int(11) NOT NULL DEFAULT '3' COMMENT 'API支持语言' AFTER `lang_backend_default`;  
+  `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言' AFTER `lang_api`;  
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -439,6 +446,14 @@ CREATE TABLE `fb_store` (
   KEY `base_store_fk1` (`user_id`),
   CONSTRAINT `base_store_fk1` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='店铺';
+
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_source` varchar(255) NOT NULL DEFAULT 'zh_CN' COMMENT '翻译源语言' AFTER `language`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言' AFTER `lang_source`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言' AFTER `lang_frontend`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言' AFTER `lang_frontend_default`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_backend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '后端默认语言' AFTER `lang_backend`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_api` int(11) NOT NULL DEFAULT '3' COMMENT 'API支持语言' AFTER `lang_backend_default`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言' AFTER `lang_api`;  
 
 -- ----------------------------
 -- Table structure for fb_user
@@ -471,6 +486,7 @@ CREATE TABLE `fb_user` (
   `point` int(11) NOT NULL DEFAULT '0' COMMENT '积分',
   `balance` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '余额',
   `remark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
+  `login_count` int(11) NOT NULL DEFAULT '0' COMMENT '登录次数',
   `last_login_at` int(11) NOT NULL DEFAULT '1' COMMENT '最近登录时间',
   `last_login_ip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '最近登录IP',
   `last_paid_at` int(11) NOT NULL DEFAULT '0' COMMENT '最近消费时间',
@@ -507,6 +523,53 @@ CREATE TABLE `fb_school_student` (
   KEY `school_student_fk2` (`store_id`),
   CONSTRAINT `school_student_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '学生';
+
+DROP TABLE IF EXISTS `fb_base_lang`;
+CREATE TABLE `fb_base_lang` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `source` varchar(255) NOT NULL COMMENT '源语言',
+  `target` varchar(255) NOT NULL COMMENT '目标语言',
+  `table_code` int(11) NOT NULL DEFAULT 0 COMMENT '表代码',
+  `target_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '目标ID',
+  `content` text COMMENT '内容',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT 50 COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` int(11) NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `base_lang_fk2` (`store_id`),
+  CONSTRAINT `base_lang_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '多语言';
+
+DROP TABLE IF EXISTS `fb_base_profile`;
+CREATE TABLE `fb_school_student` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `company` varchar(255) NOT NULL DEFAULT '' COMMENT '公司',
+  `location` varchar(255) NOT NULL DEFAULT '' COMMENT '城市',
+  `topic_count` int(11) NOT NULL DEFAULT 0 COMMENT '主题数',
+  `like_count` int(11) NOT NULL DEFAULT 0 COMMENT '点赞数',
+  `hate_count` int(11) NOT NULL DEFAULT 0 COMMENT '倒彩数',
+  `heart_count` int(11) NOT NULL DEFAULT 0 COMMENT '感谢数',
+  `click` int(11) NOT NULL DEFAULT 0 COMMENT '浏览',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT 50 COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` int(11) NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `base_profile_fk2` (`store_id`),
+  CONSTRAINT `base_profile_fk2` FOREIGN KEY (`id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `base_profile_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '用户资料';
 
         ";
 
@@ -744,8 +807,6 @@ INSERT INTO `fb_base_setting_type` VALUES ('4503', '1', '45', 'backend', 'Smtp P
 INSERT INTO `fb_base_setting_type` VALUES ('4505', '1', '45', 'backend', 'Smtp Username', 'mail_smtp_username', '用户名', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('4507', '1', '45', 'backend', 'Smtp Password', 'mail_smtp_password', '密码', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('4509', '1', '45', 'backend', 'Smtp Encryption', 'mail_smtp_encryption', '加密方式', 'text', '', 'tls', '50', '1', '1600948360', '1600948360', '1', '1');
-
-INSERT INTO `fb_base_setting_type` VALUES ('9001', '1', '90', 'backend', '开发模式', 'system_develop_mode', '开发模式影响', 'radioList', '0:否,1:是', '0', '50', '1', '1600948511', '1600948511', '1', '1');
 
 INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/backup', '', '数据库备份，每天凌晨执行', '* 3 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
 

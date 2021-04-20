@@ -24,6 +24,11 @@ use yii\log\Logger;
  */
 class BaseModel extends ActiveRecord
 {
+    static $tableCode = 0;
+
+    const SORT_DEFAULT = 50;
+    const SORT_TOP = 10;
+
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_EXPIRED = -1;
@@ -135,8 +140,8 @@ class BaseModel extends ActiveRecord
                 }
             }
 
-            // 如果是默认的store id
-            if (!$this->store_id || $this->store_id <= 0 || $this->store_id == Yii::$app->params['defaultStoreId']) {
+            // 如果是默认的store id，弄成当前ID
+            if (!($this instanceof Store) && (!$this->store_id || $this->store_id <= 0 || $this->store_id == Yii::$app->params['defaultStoreId'])) {
                 $this->store_id = Yii::$app->storeSystem->getId();
             }
 
@@ -160,6 +165,11 @@ class BaseModel extends ActiveRecord
     public static function beforeDeleteBase($event)
     {
         Yii::$app->logSystem->operation(Log::CODE_DELETE, $event->sender->getOldAttributes());
+    }
+
+    public static function getTableCode()
+    {
+        return static::$tableCode;
     }
 
     /**

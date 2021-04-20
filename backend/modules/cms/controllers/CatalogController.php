@@ -2,6 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
+use common\models\base\Lang;
 use common\models\cms\Page;
 use Yii;
 use common\models\cms\Catalog;
@@ -46,6 +47,77 @@ class CatalogController extends BaseController
         'name' => 'text',
         'type' => 'select',
     ];
+
+    public $languages = ['zh_CN', 'en'];
+
+    /**
+     * 编辑/创建
+     *
+     * @return mixed
+     */
+    public function actionEdit()
+    {
+        $id = Yii::$app->request->get('id', null);
+        $model = $this->findModel($id);
+        $this->beforeEdit($id, $model);
+
+        // var_dump(Catalog::find()->where(['id' => $id])->with('languages')->one());
+        //Yii::$app->cacheSystem->refreshLang($this->modelClass::getTableCode(), $id);
+        //var_dump(Yii::$app->cacheSystem->getLang($this->modelClass::getTableCode(), $id, 'name', 'zh_CN'));
+        var_dump(fbt($this->modelClass::getTableCode(), $id, 'brief', 'zh_CN'));
+
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                $post = Yii::$app->request->post();
+
+                //vd(Yii::$app->request->post());die();
+                if ($model->save()) {
+                    if (isset($post['Lang'])) {
+                        foreach ($post['Lang'] as $field => $item) {
+                            foreach ($post['Lang'][$field] as $target => $content) {
+                                $lang = new Lang();
+                                $lang->store_id = $this->getStoreId();
+                                $lang->table_code = $this->modelClass::getTableCode();
+                                $lang->name = $field;
+                                $lang->source = 'en';
+                                $lang->target = $target;
+                                $lang->target_id = $model->id;
+                                $lang->content = $content;
+                                $lang->save();
+                            }
+                        }
+                    }
+                    $this->afterEdit($id, $model);
+                    return $this->redirectSuccess(['index']);
+                } else {
+                    Yii::$app->logSystem->db($model->errors);
+                }
+            }
+        }
+
+        $mapLangContent = [];
+        $langItems = Lang::find()
+            ->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode()])
+            ->andFilterWhere(['target_id' => $id])
+            ->orderBy(['name' => SORT_ASC])
+            ->all();
+        foreach ($langItems as $langItem) {
+            $mapLangContent[$langItem->name . '|' . $langItem->target] = $langItem->content;
+        }
+
+        $lang = [];
+        foreach ($this->languages as $target) {
+            foreach ($model->mapLangFieldType as $name => $type) {
+                !$lang[$name] && $lang[$name] = [];
+                $lang[$name][$target] = $mapLangContent[$name . '|' . $target] ?? '';
+            }
+        }
+
+        return $this->render($this->action->id, [
+            'model' => $model,
+            'lang' => $lang,
+        ]);
+    }
 
     protected function beforeEdit($id = null, $model = null)
     {
