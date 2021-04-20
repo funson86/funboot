@@ -6,6 +6,7 @@ use common\helpers\ArrayHelper;
 use common\helpers\CommonHelper;
 use common\helpers\IdHelper;
 use common\helpers\ResultHelper;
+use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
 use Yii;
@@ -83,7 +84,7 @@ class BaseController extends Controller
      * @param $id
      * @param bool $emptyNew
      * @param bool $action
-     * @return \yii\db\ActiveRecord
+     * @return BaseModel
      * @throws \Exception
      */
     protected function findModel($id, $action = false)
