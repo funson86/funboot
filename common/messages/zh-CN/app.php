@@ -62,6 +62,7 @@ return [
     'Close All Tab' => '关闭全部选项卡',
     'Close Other Tab' => '关闭其他选项卡',
     'Modify Password' => '修改密码',
+    'Change Password' => '修改密码',
     'Profile' => '个人资料',
     'Account Setting' => '帐号设置',
     'Clear Cache' => '清理缓存',
@@ -178,6 +179,7 @@ return [
     'Parent ID' => '父节点',
     'Children' => '子节点',
     'Language' => '语言',
+    'Multi Language' => '多语言',
     'Grade' => '级别',
     'GRADE_COUNTRY' => '国',
     'GRADE_PROVINCE' => '省',
@@ -249,6 +251,10 @@ return [
     'Import ' => '导入',
     'Export' => '导出',
     'Export ' => '导出',
+    'Export All' => '导出全部',
+    'Repair' => '修复',
+    'Translate' => '翻译',
+    'Translate ' => '翻译',
     'Thumbs' => '缩略图集',
     'Images' => '图片集',
     'Import File CSV' => '导入CSV文件',
@@ -573,6 +579,7 @@ return [
     'BBS' => '社区',
     'Tags' => '标签',
     'Yellow Pages' => '黄页',
+    'Received {0} reply' => '收到 {0} 个回复',
 
 
     /* mall */

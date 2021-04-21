@@ -71,6 +71,12 @@ class BaseController extends \common\components\controller\BaseController
     ];
 
     /**
+     * 导出排序
+     * @var array
+     */
+    protected $exportSort = ['store_id' => SORT_ASC, 'id' => SORT_ASC];
+
+    /**
      * 行为控制
      *
      * @return array
@@ -548,7 +554,7 @@ class BaseController extends \common\components\controller\BaseController
 
         $ext = Yii::$app->request->get('ext', 'xls');
         $storeId = $this->isAdmin() ? null : $this->getStoreId();
-        $models = $this->modelClass::find()->filterWhere(['store_id' => $storeId]) ->orderBy(['id' => SORT_ASC])->asArray()->all();
+        $models = $this->modelClass::find()->filterWhere(['store_id' => $storeId])->orderBy($this->exportSort)->asArray()->all();
 
         $spreadSheet = $this->arrayToSheet($models, $fields);
 
@@ -576,7 +582,17 @@ class BaseController extends \common\components\controller\BaseController
                 for ($i = 2; $i <= $count; $i++) { // 忽略第1行表头
                     $row = $data[$i];
 
-                    $model = new $this->modelClass();
+                    // 更新的话ID必须在第一行，有数据才查找
+                    if (array_key_exists('id', $this->exportFields) && isset($row[0]) && intval($row[0]) > 0) {
+                        $model = $this->modelClass::find()->where(['store_id' => $this->getStoreId(), 'id' => $row[0]])->one();
+                        if (!$model) {
+                            array_push($errorLines, $i);
+                            $errorData = true;
+                            continue;
+                        }
+                    } else {
+                        $model = new $this->modelClass();
+                    }
                     if (isset($model->store_id)) { // 设置store_id为当前id
                         $model->store_id = $this->getStoreId();
                     }
@@ -607,10 +623,12 @@ class BaseController extends \common\components\controller\BaseController
 
                     //数据无错误才插入
                     if (!$errorData) {
+                        $this->beforeImport($model);
                         if (!$model->save()) {
                             array_push($errorLines, $i);
                             array_push($errorMsgs, json_encode($model->errors));
                         }
+                        $this->afterImport($model);
                         $countCreate++;
                     }
 
@@ -632,6 +650,16 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         return $this->renderAjax('@backend/views/site/' . $this->action->id);
+    }
+
+    protected function beforeImport($model = null)
+    {
+        return true;
+    }
+
+    protected function afterImport($model = null)
+    {
+        return true;
     }
 
     /**
