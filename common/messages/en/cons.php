@@ -75,7 +75,20 @@ return [
     'GRADE_DISTRICT' => 'District',
 
     'LANGUAGE_EN' => 'English',
-    'LANGUAGE_ZH_CN' => 'Chinese',
+    'LANGUAGE_ZH_CN' => '中文',
+    'LANGUAGE_ZH_HK' => '繁体',
+    'LANGUAGE_FR' => 'Français',
+    'LANGUAGE_DE' => 'Deutsch',
+    'LANGUAGE_RU' => 'русский язык',
+    'LANGUAGE_IT' => 'Italiano',
+    'LANGUAGE_ES' => 'Español',
+    'LANGUAGE_PT' => 'Português',
+    'LANGUAGE_TR' => 'Türkçe',
+    'LANGUAGE_AR' => 'عربى',
+    'LANGUAGE_JP' => '日本語',
+    'LANGUAGE_KO' => '한국어',
+    'LANGUAGE_NL' => 'Nederlands',
+    'LANGUAGE_SV' => 'Svenska',
 
     'PAYMENT_METHOD_PAY' => 'Card',
     'PAYMENT_METHOD_COD' => 'Cash',
@@ -144,6 +157,12 @@ return [
     'ATTRIBUTE_TYPE_TEXT' => 'Text',
     'ATTRIBUTE_TYPE_COLOR' => 'Color',
     'ATTRIBUTE_TYPE_IMAGE' => 'Image',
+
+    // bbs
+    'FORMAT_HTML' => 'Html',
+    'FORMAT_MARKDOWN' => 'Markdown',
+    'KIND_NORMAL' => 'Normal',
+    'KIND_EXCELLENT' => 'Excellent',
 
     /** wechat */
     'ADD_SCENE_SEARCH' => 'Search',

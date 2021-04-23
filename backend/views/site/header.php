@@ -28,6 +28,9 @@ $store = $this->context->store;
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
+        <li class="nav-link" id="help">
+            <a href="/help" target="_blank"><i class="fas fa-book"></i></a>
+        </li>
         <li class="nav-item dropdown" id="headerMessage">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-comments"></i>
@@ -108,19 +111,14 @@ $store = $this->context->store;
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="flag-icon flag-icon-<?= Yii::$app->language == 'zh-CN' ? 'cn' : 'gb' ?>"></i>
+                <i class="flag-icon flag-icon-<?= Store::getLanguageFlag(Store::getLanguageCode(Yii::$app->language, true, true)) ?>"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right p-0">
-                <?php if (($store->language & Store::LANGUAGE_EN) == Store::LANGUAGE_EN) { ?>
-                <a href="javascript:;" class="dropdown-item funboot-lang" data-lang="en">
-                    <i class="flag-icon flag-icon-gb mr-2"></i> <?= Yii::t('app', 'English') ?>
+                <?php foreach (Store::getLanguageCode() as $id => $label) { if (($store->language & $id) == $id) {?>
+                <a href="javascript:;" class="dropdown-item funboot-lang" data-lang="<?= $label ?>">
+                    <i class="flag-icon flag-icon-<?= Store::getLanguageFlag($id) ?> mr-2"></i> <?= Store::getLanguageLabels($id) ?>
                 </a>
-                <?php } ?>
-                <?php if (($store->language & Store::LANGUAGE_ZH_CN) == Store::LANGUAGE_ZH_CN) { ?>
-                <a href="javascript:;" class="dropdown-item funboot-lang" data-lang="zh-CN">
-                    <i class="flag-icon flag-icon-cn mr-2"></i> <?= Yii::t('app', 'Chinese') ?>
-                </a>
-                <?php } ?>
+                <?php } } ?>
             </div>
         </li>
 

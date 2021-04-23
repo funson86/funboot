@@ -19,9 +19,8 @@ return [
     'Sort Order' => '排序',
     'Actions' => '操作',
     'Root Node' => '顶级节点',
-
-    'METHOD_GET' => 'GET',
-    'METHOD_POST' => 'POST',
+    'Go Top' => '去顶部',
+    'Go Bottom' => '去底部',
 
     'View' => '查看',
     'View ' => '查看',
@@ -565,6 +564,7 @@ return [
     'Catalog' => '栏目',
 
     /* BBS */
+    'Publish' => '发布',
     'Node' => '节点',
     'Nodes' => '节点',
     'Meta' => '参数',
