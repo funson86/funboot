@@ -17,6 +17,12 @@ use backend\controllers\BaseController;
  */
 class CatalogController extends BaseController
 {
+    /**
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
     protected $style = 2;
 
     /**
@@ -47,87 +53,6 @@ class CatalogController extends BaseController
         'name' => 'text',
         'type' => 'select',
     ];
-
-    /**
-     * 编辑/创建
-     *
-     * @return mixed
-     */
-    public function actionEdit()
-    {
-        $id = Yii::$app->request->get('id', null);
-        $model = $this->findModel($id);
-        $this->beforeEdit($id, $model);
-
-        // var_dump(Catalog::find()->where(['id' => $id])->with('languages')->one());
-        //Yii::$app->cacheSystem->refreshLang($this->modelClass::getTableCode(), $id);
-        //var_dump(Yii::$app->cacheSystem->getLang($this->modelClass::getTableCode(), $id, 'name', 'zh_CN'));
-        var_dump(fbt($this->modelClass::getTableCode(), $id, 'brief', 'zh_CN'));
-
-        if (Yii::$app->request->isPost) {
-            if ($model->load(Yii::$app->request->post())) {
-                $post = Yii::$app->request->post();
-
-                //vd(Yii::$app->request->post());die();
-                if ($model->save()) {
-                    if (isset($post['Lang'])) {
-                        foreach ($post['Lang'] as $field => $item) {
-                            foreach ($post['Lang'][$field] as $target => $content) {
-                                //翻译源语言和目标语言一致则忽略
-                                if ($this->store->lang_source == $target) {
-                                    continue;
-                                }
-                                $lang = Lang::find()->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode(), 'target_id' => $model->id, 'target' => $target, 'name' => $field])->one();
-                                if (!$lang) {
-                                    $lang = new Lang();
-                                    $lang->store_id = $this->getStoreId();
-                                    $lang->table_code = $this->modelClass::getTableCode();
-                                    $lang->name = $field;
-                                    $lang->source = $this->store->lang_source;
-                                    $lang->target = $target;
-                                    $lang->target_id = $model->id;
-                                }
-                                $lang->content = $content;
-                                $lang->save();
-                            }
-                        }
-                    }
-                    $this->afterEdit($id, $model);
-                    return $this->redirectSuccess(['index']);
-                } else {
-                    Yii::$app->logSystem->db($model->errors);
-                }
-            }
-        }
-
-        $mapLangContent = [];
-        $langItems = Lang::find()
-            ->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode()])
-            ->andFilterWhere(['target_id' => $id])
-            ->orderBy(['name' => SORT_ASC])
-            ->all();
-        foreach ($langItems as $langItem) {
-            $mapLangContent[$langItem->name . '|' . $langItem->target] = $langItem->content;
-        }
-
-        $lang = [];
-        foreach (Lang::getLanguageCode($this->store->lang_frontend, false, false, true) as $target) {
-            //翻译源语言和目标语言一致则忽略
-            if ($this->store->lang_source == $target) {
-                continue;
-            }
-
-            foreach ($this->modelClass::getLangFieldType() as $name => $type) {
-                !$lang[$name] && $lang[$name] = [];
-                $lang[$name][$target] = $mapLangContent[$name . '|' . $target] ?? '';
-            }
-        }
-
-        return $this->render($this->action->id, [
-            'model' => $model,
-            'lang' => $lang,
-        ]);
-    }
 
     protected function beforeEdit($id = null, $model = null)
     {

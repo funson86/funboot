@@ -18,10 +18,10 @@ class CatalogBase extends BaseModel
 {
     static $tableCode = 5001;
 
-    public $mapLangFieldType = [
-        'name' => 0,
-        'brief' => 0,
-        'content' => 1,
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'textarea',
+        'content' => 'Ueditor',
     ];
 
     const TYPE_LIST = 'list';

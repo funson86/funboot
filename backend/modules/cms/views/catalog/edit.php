@@ -33,9 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <li class="nav-item">
                         <a class="nav-link" id="tab-2" data-toggle="pill" href="#tab-content-2"><?= Yii::t('app', 'Advanced') ?></a>
                     </li>
+
+                    <?php if ($this->context->isMultiLang) { ?>
                     <li class="nav-item">
                         <a class="nav-link" id="tab-3" data-toggle="pill" href="#tab-content-lang"><?= Yii::t('app', 'Multi Language') ?></a>
                     </li>
+                    <?php } ?>
                 </ul>
             </div>
             <div class="card-body">
@@ -78,10 +81,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ]
                         ]); ?>
-                        <?= $form->field($model, 'content')->widget(\common\components\ueditor\Ueditor::class, []) ?>
+                        <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'control-label control-label-full']])->widget(\common\components\ueditor\Ueditor::class, []) ?>
                     </div>
-                    <div class="tab-pane fade" id="tab-content-lang">
 
+                    <?php if ($this->context->isMultiLang) { ?>
+                    <div class="tab-pane fade" id="tab-content-lang">
                         <div class="row">
                             <div class="col-2 col-sm-2">
                                 <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
@@ -167,6 +171,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
                 <div class="card-footer">
                     <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>

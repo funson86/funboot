@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use common\components\enums\Status;
 use common\helpers\AuthHelper;
+use common\helpers\BaiduTranslate;
 use common\helpers\IdHelper;
 use common\helpers\OfficeHelper;
 use common\helpers\ResultHelper;
+use common\models\base\Lang;
 use common\models\base\Permission;
 use common\models\ModelSearch;
 use common\services\base\UserPermission;
@@ -33,6 +35,18 @@ use yii\web\Response;
  */
 class BaseController extends \common\components\controller\BaseController
 {
+    /**
+     * 开启多语言
+     * @var bool
+     */
+    public $isMultiLang = false;
+
+    /**
+     * 自动翻译多语言，$isMultiLang为true才生效
+     * @var bool 
+     */
+    public $isAutoTranslation = true;
+
     /**
      * 1带搜索列表 11只显示parent_id为0 2树形(不分页) 3非常规表格
      * @var array[]
@@ -260,11 +274,13 @@ class BaseController extends \common\components\controller\BaseController
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
         $this->beforeEdit($id, $model);
+        $lang = $this->isMultiLang ? $this->beforeLang($id, $model) : [];
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->save()) {
                     $this->afterEdit($id, $model);
+                    $this->isMultiLang && $this->afterLang($id, $model);
                     return $this->redirectSuccess(['index']);
                 } else {
                     Yii::$app->logSystem->db($model->errors);
@@ -274,6 +290,7 @@ class BaseController extends \common\components\controller\BaseController
 
         return $this->render($this->action->id, [
             'model' => $model,
+            'lang' => $lang,
         ]);
     }
 
@@ -470,6 +487,78 @@ class BaseController extends \common\components\controller\BaseController
 
         $this->afterDeleteModel($id, $soft, $tree);
         return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete Successfully'));
+    }
+
+    /**
+     * 多语言
+     * @param $id
+     * @param $model
+     * @return array
+     */
+    protected function beforeLang($id, $model)
+    {
+        $mapLangContent = [];
+        $langItems = Lang::find()
+            ->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode()])
+            ->andFilterWhere(['target_id' => $id])
+            ->orderBy(['name' => SORT_ASC])
+            ->all();
+        foreach ($langItems as $langItem) {
+            $mapLangContent[$langItem->name . '|' . $langItem->target] = $langItem->content;
+        }
+
+        $lang = [];
+        foreach (Lang::getLanguageCode($this->store->lang_frontend, false, false, true) as $target) {
+            //翻译源语言和目标语言一致则忽略
+            if ($this->store->lang_source == $target) {
+                continue;
+            }
+
+            foreach ($this->modelClass::getLangFieldType() as $name => $type) {
+                !$lang[$name] && $lang[$name] = [];
+                $lang[$name][$target] = $mapLangContent[$name . '|' . $target] ?? '';
+            }
+        }
+
+        return $lang;
+    }
+
+    /**
+     * 多语言
+     * @param $id
+     * @param $model
+     * @return array
+     */
+    protected function afterLang($id, $model)
+    {
+        $post = Yii::$app->request->post();
+        if (isset($post['Lang'])) {
+            foreach ($post['Lang'] as $field => $item) {
+                foreach ($post['Lang'][$field] as $target => $content) {
+                    //翻译源语言和目标语言一致则忽略
+                    if ($this->store->lang_source == $target) {
+                        continue;
+                    }
+                    $lang = Lang::find()->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode(), 'target_id' => $model->id, 'target' => $target, 'name' => $field])->one();
+                    if (!$lang) {
+                        $lang = new Lang();
+                        $lang->store_id = $this->getStoreId();
+                        $lang->table_code = $this->modelClass::getTableCode();
+                        $lang->name = $field;
+                        $lang->source = $this->store->lang_source;
+                        $lang->target = $target;
+                        $lang->target_id = $model->id;
+                    }
+                    $lang->content = empty($content) ? ($this->isAutoTranslation ? $this->autoTranslate($lang->source, $lang->target, $model->$field) : '') : $content;
+                    $lang->save();
+                }
+            }
+        }
+    }
+
+    protected function autoTranslate($source, $target, $str)
+    {
+        return strlen($str) > 0 ? BaiduTranslate::translate($str, Lang::getLanguageBaiduCode(Lang::getLanguageCode($target, false, true)), Lang::getLanguageBaiduCode(Lang::getLanguageCode($source, false, true))) : '';
     }
 
     /**
@@ -737,8 +826,9 @@ class BaseController extends \common\components\controller\BaseController
         for ($i = 0; $i < $rows; $i++) {
             $col = 1;
             foreach ($fields as $k => $v) {
-                $value = $this->exportFormat($v, $models[$i][$v[0]]);
+                $value = $this->exportFormat($v, $models[$i][$v[0]] ?? '');
                 $sheet->setCellValueExplicit(Coordinate::stringFromColumnIndex($col) . $row, $value, DataType::TYPE_STRING);
+                isset($models[$i]['bg']) && $sheet->getStyle(Coordinate::stringFromColumnIndex($col) . $row)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB($models[$i]['bg']);;
                 $col++;
             }
             $row++;
