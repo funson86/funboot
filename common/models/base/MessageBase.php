@@ -86,13 +86,6 @@ class MessageBase extends BaseModel
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -102,13 +95,6 @@ class MessageBase extends BaseModel
         return $this->hasOne(MessageType::className(), ['id' => 'message_type_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery

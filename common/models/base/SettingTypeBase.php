@@ -111,12 +111,4 @@ class SettingTypeBase extends BaseModel
             ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC]);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
 }

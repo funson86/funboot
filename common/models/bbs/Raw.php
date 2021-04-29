@@ -14,7 +14,7 @@ use common\models\Store;
  * @property int $node_id 节点
  * @property string|null $node_ids 额外节点
  * @property string $name 名称
- * @property string|null $brief 简述
+ * @property string|null $brief 简介
  * @property string|null $content 内容
  * @property string $url 网址
  * @property int $type 类型
@@ -64,7 +64,7 @@ class Raw extends RawBase
                 'node_id' => '节点',
                 'node_ids' => '额外节点',
                 'name' => '名称',
-                'brief' => '简述',
+                'brief' => '简介',
                 'content' => '内容',
                 'url' => '网址',
                 'type' => '类型',
@@ -96,11 +96,5 @@ class Raw extends RawBase
         }
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
+
 }

@@ -48,12 +48,4 @@ class MetaBase extends BaseModel
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
 }

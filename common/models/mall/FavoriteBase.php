@@ -51,13 +51,6 @@ class FavoriteBase extends BaseModel
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -65,14 +58,6 @@ class FavoriteBase extends BaseModel
     public function getProduct()
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
     }
 
 }

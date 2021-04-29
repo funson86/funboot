@@ -284,13 +284,7 @@ class StoreBase extends BaseModel
     {
         return $this->hasMany(UserRole::className(), ['store_id' => 'id']);
     }
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

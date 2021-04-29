@@ -56,14 +56,6 @@ class ProductParamBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getProduct()
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);

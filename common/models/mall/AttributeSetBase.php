@@ -54,14 +54,6 @@ class AttributeSetBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getAttributeSetAttributes()
     {
         return $this->hasMany(AttributeSetAttribute::className(), ['attribute_set_id' => 'id'])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC]);

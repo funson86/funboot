@@ -65,14 +65,6 @@ class ProductAttributeValueLabelBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getAttributeValue()
     {
         return $this->hasOne(AttributeValue::className(), ['id' => 'attribute_value_id']);

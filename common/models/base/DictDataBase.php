@@ -56,11 +56,5 @@ class DictDataBase extends BaseModel
     {
         return $this->hasOne(Dict::className(), ['id' => 'dict_id']);
     }
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
+
 }

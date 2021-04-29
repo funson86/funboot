@@ -68,12 +68,4 @@ class ProductSkuBase extends BaseModel
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
 }

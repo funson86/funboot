@@ -52,13 +52,6 @@ class UserRoleBase extends BaseModel
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -66,14 +59,6 @@ class UserRoleBase extends BaseModel
     public function getRole()
     {
         return $this->hasOne(Role::className(), ['id' => 'role_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
     }
 
     public function getPermission()

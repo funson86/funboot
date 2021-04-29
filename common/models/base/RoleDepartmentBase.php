@@ -67,11 +67,4 @@ class RoleDepartmentBase extends BaseModel
         return $this->hasOne(Department::className(), ['id' => 'department_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
 }

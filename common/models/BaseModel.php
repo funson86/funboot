@@ -218,7 +218,7 @@ class BaseModel extends ActiveRecord
             return $this->hasOne(User::className(), ['id' => 'user_id']);
         }
 
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+        return null;
     }
 
     /**

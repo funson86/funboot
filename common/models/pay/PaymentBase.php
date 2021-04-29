@@ -107,14 +107,6 @@ class PaymentBase extends BaseModel
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
      * 验证码显示判断
      */
     public function captchaRequired()

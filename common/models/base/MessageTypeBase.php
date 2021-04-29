@@ -141,11 +141,4 @@ class MessageTypeBase extends BaseModel
         return $this->hasMany(Message::className(), ['message_type_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
 }

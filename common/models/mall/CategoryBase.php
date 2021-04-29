@@ -55,15 +55,6 @@ class CategoryBase extends BaseModel
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-
-    /**
      * Get all catalog order by parent/child with the space before child label
      * Usage: ArrayHelper::map(Catalog::get(0, Catalog::find()->asArray()->all()), 'id', 'label')
      * @param int $parentId  parent catalog id
@@ -99,7 +90,6 @@ class CategoryBase extends BaseModel
         }
         return $newArray;
     }
-
 
     /**
      * Get all children id as a array

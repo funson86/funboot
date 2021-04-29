@@ -87,14 +87,6 @@ class AttachmentBase extends BaseModel
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
      * return label or labels array
      *
      * @param  integer $id

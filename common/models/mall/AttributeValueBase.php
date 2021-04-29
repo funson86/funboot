@@ -60,12 +60,4 @@ class AttributeValueBase extends BaseModel
         return $this->hasOne(Attribute::className(), ['id' => 'attribute_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
 }

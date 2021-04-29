@@ -164,14 +164,6 @@ class UserBase extends BaseModel implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
      * return label or labels array
      *
      * @param null $id
