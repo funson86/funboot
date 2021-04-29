@@ -13,7 +13,7 @@ use common\models\Store;
  * @property int $store_id 商家
  * @property int $parent_id 父节点
  * @property string $name 名称
- * @property string $brief 简述
+ * @property string $brief 简介
  * @property int $is_nav 导航栏显示
  * @property string $banner 封面图
  * @property string $seo_title 搜索优化标题
@@ -62,7 +62,7 @@ class Category extends CategoryBase
                 'store_id' => '商家',
                 'parent_id' => '父节点',
                 'name' => '名称',
-                'brief' => '简述',
+                'brief' => '简介',
                 'is_nav' => '导航栏显示',
                 'banner' => '封面图',
                 'seo_title' => '搜索优化标题',

@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'mobile',
             'email:email',
             'url:url',
-            'description:ntext',
+            'brief:ntext',
             'type',
             'sort',
             ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],

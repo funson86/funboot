@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'store_id',
             'parent_id',
             'name',
-            'description',
+            'brief',
             'type',
             'sort',
             ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],

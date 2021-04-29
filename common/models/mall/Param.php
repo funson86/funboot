@@ -13,7 +13,7 @@ use common\models\Store;
  * @property int $store_id 商家
  * @property int $parent_id 父节点
  * @property string $name 名称
- * @property string $description 简述
+ * @property string $brief 简介
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -40,7 +40,7 @@ class Param extends ParamBase
         return array_merge(parent::rules(), [
             [['store_id', 'parent_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['name', 'description'], 'string', 'max' => 255],
+            [['name', 'brief'], 'string', 'max' => 255],
         ]);
     }
 
@@ -55,7 +55,7 @@ class Param extends ParamBase
                 'store_id' => '商家',
                 'parent_id' => '父节点',
                 'name' => '名称',
-                'description' => '简述',
+                'brief' => '简介',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -70,7 +70,7 @@ class Param extends ParamBase
                 'store_id' => Yii::t('app', 'Store ID'),
                 'parent_id' => Yii::t('app', 'Parent ID'),
                 'name' => Yii::t('app', 'Name'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

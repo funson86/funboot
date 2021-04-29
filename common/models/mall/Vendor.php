@@ -17,7 +17,7 @@ use common\models\Store;
  * @property string $mobile 手机
  * @property string $email 邮箱
  * @property string $url 网址
- * @property string|null $description 描述
+ * @property string|null $brief 描述
  * @property int $type 排序
  * @property int $sort 排序
  * @property int $status 状态
@@ -44,7 +44,7 @@ class Vendor extends VendorBase
         return array_merge(parent::rules(), [
             [['store_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['description'], 'string'],
+            [['brief'], 'string'],
             [['name', 'consignee', 'address', 'mobile', 'email', 'url'], 'string', 'max' => 255],
         ]);
     }
@@ -64,7 +64,7 @@ class Vendor extends VendorBase
                 'mobile' => '手机',
                 'email' => '邮箱',
                 'url' => '网址',
-                'description' => '描述',
+                'brief' => '描述',
                 'type' => '排序',
                 'sort' => '排序',
                 'status' => '状态',
@@ -83,7 +83,7 @@ class Vendor extends VendorBase
                 'mobile' => Yii::t('app', 'Mobile'),
                 'email' => Yii::t('app', 'Email'),
                 'url' => Yii::t('app', 'Url'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

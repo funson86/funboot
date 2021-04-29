@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'user_id')->dropDownList(ActiveModel::getUserIdLabels()) ?>
                     <?= $form->field($model, 'order_id')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'status')->textInput() ?>

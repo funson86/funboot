@@ -29,7 +29,7 @@ $mapAttributeIdLabel = Attribute::getIdLabel()
             <div class="card-body">
                 <div class="col-sm-12">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                     <table class="table table-hover">
                         <thead>

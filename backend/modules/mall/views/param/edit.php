@@ -27,14 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body">
                 <div class="col-sm-12">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'sort')->textInput() ?>
                     <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                     <table class="table table-hover">
                         <thead>
                         <tr class="row">
                             <th class="col-3"><?= Yii::t('app', 'Name') ?></th>
-                            <th class="col-5"><?= Yii::t('app', 'Description') ?></th>
+                            <th class="col-5"><?= Yii::t('app', 'Brief') ?></th>
                             <th class="col-2"><?= Yii::t('app', 'Sort') ?></th>
                             <th class="col-2"><?= Yii::t('app', 'Actions') ?></th>
                         </tr>
@@ -48,8 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]) ?>
                                 </td>
                                 <td class="col-5">
-                                    <?= Html::textInput('Sub[description][]', $item->name, [
-                                        'class' => 'form-control description',
+                                    <?= Html::textInput('Sub[brief][]', $item->name, [
+                                        'class' => 'form-control brief',
                                     ]) ?>
                                 </td>
                                 <td class="col-2">
@@ -86,8 +86,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </td>
         <td class="col-5">
-            <?= Html::textInput('Sub[description][]', '', [
-                'class' => 'form-control description',
+            <?= Html::textInput('Sub[brief][]', '', [
+                'class' => 'form-control brief',
             ]) ?>
         </td>
         <td class="col-2">

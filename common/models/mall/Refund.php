@@ -14,7 +14,7 @@ use common\models\Store;
  * @property int $user_id 用户
  * @property int $order_id 订单
  * @property string $name 名称
- * @property string $description 简述
+ * @property string $brief 简介
  * @property float $amount 金额
  * @property string $remark 备注
  * @property int $type 类型
@@ -44,7 +44,7 @@ class Refund extends RefundBase
             [['store_id', 'user_id', 'order_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['user_id', 'order_id'], 'required'],
             [['amount'], 'number'],
-            [['name', 'description', 'remark'], 'string', 'max' => 255],
+            [['name', 'brief', 'remark'], 'string', 'max' => 255],
         ]);
     }
 
@@ -60,7 +60,7 @@ class Refund extends RefundBase
                 'user_id' => '用户',
                 'order_id' => '订单',
                 'name' => '名称',
-                'description' => '简述',
+                'brief' => '简介',
                 'amount' => '金额',
                 'remark' => '备注',
                 'type' => '类型',
@@ -78,7 +78,7 @@ class Refund extends RefundBase
                 'user_id' => Yii::t('app', 'User ID'),
                 'order_id' => Yii::t('app', 'Order ID'),
                 'name' => Yii::t('app', 'Name'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'amount' => Yii::t('app', 'Amount'),
                 'remark' => Yii::t('app', 'Remark'),
                 'type' => Yii::t('app', 'Type'),

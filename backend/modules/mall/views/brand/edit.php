@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ]
                     ]); ?>
-                    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+                    <?= $form->field($model, 'brief')->textarea(['rows' => 6]) ?>
                     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>

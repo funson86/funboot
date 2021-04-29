@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, 'filter' => true,],
                         'order_id',
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
-                        'description',
+                        'brief',
                         'amount',
                         'remark',
                         // 'type',

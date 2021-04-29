@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'store_id',
             'name',
             'logo',
-            'description:ntext',
+            'brief:ntext',
             'url:url',
             'type',
             'sort',

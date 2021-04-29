@@ -41,7 +41,7 @@ class VendorBase extends BaseModel
             'mobile' => Yii::t('app', 'Mobile'),
             'email' => Yii::t('app', 'Email'),
             'url' => Yii::t('app', 'Url'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),

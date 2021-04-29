@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'user_id', 'value' => function ($model) { return ActiveModel::getUserIdLabels($model->user_id); }, ],
                 'order_id',
                 'name',
-                'description',
+                'brief',
                 'amount',
                 'remark',
                 'type',

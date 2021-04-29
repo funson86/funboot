@@ -13,7 +13,7 @@ use common\models\Store;
  * @property int $store_id 商家
  * @property string $name 名称
  * @property string $logo Logo
- * @property string|null $description 描述
+ * @property string|null $brief 描述
  * @property string $url 网址
  * @property int $type 排序
  * @property int $sort 排序
@@ -41,7 +41,7 @@ class Brand extends BrandBase
         return array_merge(parent::rules(), [
             [['store_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['description'], 'string'],
+            [['brief'], 'string'],
             [['name', 'logo', 'url'], 'string', 'max' => 255],
         ]);
     }
@@ -57,7 +57,7 @@ class Brand extends BrandBase
                 'store_id' => '商家',
                 'name' => '名称',
                 'logo' => 'Logo',
-                'description' => '描述',
+                'brief' => '描述',
                 'url' => '网址',
                 'type' => '排序',
                 'sort' => '排序',
@@ -73,7 +73,7 @@ class Brand extends BrandBase
                 'store_id' => Yii::t('app', 'Store ID'),
                 'name' => Yii::t('app', 'Name'),
                 'logo' => Yii::t('app', 'Logo'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'url' => Yii::t('app', 'Url'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),

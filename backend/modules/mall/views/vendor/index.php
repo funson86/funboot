@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'mobile',
                         'email:email',
                         // 'url:url',
-                        'description:ntext',
+                        'brief:ntext',
                         // 'type',
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
                         ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::status($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],

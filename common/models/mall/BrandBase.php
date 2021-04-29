@@ -37,7 +37,7 @@ class BrandBase extends BaseModel
             'store_id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
             'logo' => Yii::t('app', 'Logo'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'url' => Yii::t('app', 'Url'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),

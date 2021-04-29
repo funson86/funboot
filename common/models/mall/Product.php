@@ -26,7 +26,7 @@ use common\models\Store;
  * @property string $thumb 缩略图
  * @property string|null $images 图片
  * @property string|null $tags 标签
- * @property string|null $brief 简述
+ * @property string|null $brief 简介
  * @property string|null $content 内容
  * @property string $seo_title 搜索优化标题
  * @property string $seo_keywords 搜索关键词
@@ -95,7 +95,7 @@ class Product extends ProductBase
                 'thumb' => '缩略图',
                 'images' => '图片',
                 'tags' => '标签',
-                'brief' => '简述',
+                'brief' => '简介',
                 'content' => '内容',
                 'seo_title' => '搜索优化标题',
                 'seo_keywords' => '搜索关键词',

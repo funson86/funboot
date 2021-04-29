@@ -31,7 +31,7 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+        <?= $form->field($model, 'brief')->textarea(['rows' => 6]) ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">

@@ -42,7 +42,7 @@ class RefundBase extends BaseModel
             'user_id' => Yii::t('app', 'User ID'),
             'order_id' => Yii::t('app', 'Order ID'),
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'amount' => Yii::t('app', 'Amount'),
             'remark' => Yii::t('app', 'Remark'),
             'type' => Yii::t('app', 'Type'),
