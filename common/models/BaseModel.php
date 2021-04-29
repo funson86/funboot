@@ -25,6 +25,9 @@ use yii\log\Logger;
 class BaseModel extends ActiveRecord
 {
     static $tableCode = 0;
+    static $mapLangFieldType = [
+        'name' => 'text',
+    ];
 
     const SORT_DEFAULT = 50;
     const SORT_TOP = 10;
@@ -114,6 +117,24 @@ class BaseModel extends ActiveRecord
             self::TYPE_A => Yii::t('cons', 'TYPE_A'),
             self::TYPE_B => Yii::t('cons', 'TYPE_B'),
         ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    /**
+     * return label or labels array
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getLangFieldType($id = null, $all = false, $flip = false)
+    {
+        $data = static::$mapLangFieldType;
 
         $all && $data += [];
 

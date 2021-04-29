@@ -6,6 +6,7 @@ use common\helpers\Html;
 use common\models\base\Attachment;
 use common\models\base\Department;
 use common\models\base\DictData;
+use common\models\base\Lang;
 use common\models\base\Log;
 use common\models\base\Message;
 use common\models\base\MessageType;
@@ -56,22 +57,6 @@ class StoreBase extends BaseModel
     const ROUTE_CMS = 'cms';
     const ROUTE_PAY = 'pay';
     const ROUTE_BBS = 'bbs';
-
-    const LANGUAGE_EN = 1 << 0;
-    const LANGUAGE_ZH_CN = 1 << 1;
-    const LANGUAGE_ZH_HK = 1 << 2;
-    const LANGUAGE_FR = 1 << 3;
-    const LANGUAGE_DE = 1 << 4;
-    const LANGUAGE_RU = 1 << 5;
-    const LANGUAGE_IT = 1 << 6;
-    const LANGUAGE_ES = 1 << 7;
-    const LANGUAGE_PT = 1 << 8;
-    const LANGUAGE_TR = 1 << 9;
-    const LANGUAGE_AR = 1 << 10;
-    const LANGUAGE_JP = 1 << 11;
-    const LANGUAGE_KO = 1 << 12;
-    const LANGUAGE_NL = 1 << 13;
-    const LANGUAGE_SV = 1 << 14;
 
     public $expiredTime;
     public $types;
@@ -151,71 +136,19 @@ class StoreBase extends BaseModel
      */
     public static function getLanguageLabels($id = null, $all = false, $flip = false)
     {
-        $data = [
-            self::LANGUAGE_EN => Yii::t('cons', 'LANGUAGE_EN'),
-            self::LANGUAGE_ZH_CN => Yii::t('cons', 'LANGUAGE_ZH_CN'),
-            self::LANGUAGE_ZH_HK => Yii::t('cons', 'LANGUAGE_ZH_HK'),
-            self::LANGUAGE_FR => Yii::t('cons', 'LANGUAGE_FR'),
-            self::LANGUAGE_DE => Yii::t('cons', 'LANGUAGE_DE'),
-            self::LANGUAGE_RU => Yii::t('cons', 'LANGUAGE_RU'),
-            self::LANGUAGE_IT => Yii::t('cons', 'LANGUAGE_IT'),
-            self::LANGUAGE_ES => Yii::t('cons', 'LANGUAGE_ES'),
-            self::LANGUAGE_PT => Yii::t('cons', 'LANGUAGE_PT'),
-            self::LANGUAGE_TR => Yii::t('cons', 'LANGUAGE_TR'),
-            self::LANGUAGE_AR => Yii::t('cons', 'LANGUAGE_AR'),
-            self::LANGUAGE_JP => Yii::t('cons', 'LANGUAGE_JP'),
-            self::LANGUAGE_KO => Yii::t('cons', 'LANGUAGE_KO'),
-            self::LANGUAGE_NL => Yii::t('cons', 'LANGUAGE_NL'),
-            self::LANGUAGE_SV => Yii::t('cons', 'LANGUAGE_SV'),
-        ];
-
-        $all && $data += [];
-
-        $flip && $data = array_flip($data);
-
-        if (!is_null($id)) {
-            $str = '';
-            foreach ($data as $k => $v) {
-                if (($id & $k) == $k) {
-                    $str .= $data[$k] . ' ';
-                }
-            }
-            return $str;
-        }
-        return $data;
+        return Lang::getLanguageLabels($id, $all, $flip);
     }
 
     /**
      * @param null $id
      * @param bool $all
      * @param bool $flip
+     * @param bool $isArray
      * @return array|mixed|null
      */
-    public static function getLanguageCode($id = null, $all = false, $flip = false)
+    public static function getLanguageCode($id = null, $all = false, $flip = false, $isArray = false)
     {
-        $data = [
-            self::LANGUAGE_EN => 'en',
-            self::LANGUAGE_ZH_CN => 'zh-CN',
-            self::LANGUAGE_ZH_HK => 'zh-HK',
-            self::LANGUAGE_FR => 'fr',
-            self::LANGUAGE_DE => 'de',
-            self::LANGUAGE_RU => 'ru',
-            self::LANGUAGE_IT => 'it',
-            self::LANGUAGE_ES => 'es',
-            self::LANGUAGE_PT => 'pt',
-            self::LANGUAGE_TR => 'tr',
-            self::LANGUAGE_AR => 'ar',
-            self::LANGUAGE_JP => 'jp',
-            self::LANGUAGE_KO => 'ko',
-            self::LANGUAGE_NL => 'nl',
-            self::LANGUAGE_SV => 'sv',
-        ];
-
-        $all && $data += [];
-
-        $flip && $data = array_flip($data);
-
-        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+        return Lang::getLanguageCode($id, $all, $flip, $isArray);
     }
 
     /**
@@ -226,29 +159,7 @@ class StoreBase extends BaseModel
      */
     public static function getLanguageBaiduCode($id = null, $all = false, $flip = false)
     {
-        $data = [
-            self::LANGUAGE_EN => 'en',
-            self::LANGUAGE_ZH_CN => 'zh',
-            self::LANGUAGE_ZH_HK => 'cht',
-            self::LANGUAGE_FR => 'fra',
-            self::LANGUAGE_DE => 'de',
-            self::LANGUAGE_RU => 'ru',
-            self::LANGUAGE_IT => 'it',
-            self::LANGUAGE_ES => 'spa',
-            self::LANGUAGE_PT => 'pt',
-            self::LANGUAGE_TR => 'tr',
-            self::LANGUAGE_AR => 'ara',
-            self::LANGUAGE_JP => 'jp',
-            self::LANGUAGE_KO => 'kor',
-            self::LANGUAGE_NL => 'nl',
-            self::LANGUAGE_SV => 'swe',
-        ];
-
-        $all && $data += [];
-
-        $flip && $data = array_flip($data);
-
-        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+        return Lang::getLanguageBaiduCode($id, $all, $flip);
     }
 
     /**
@@ -259,29 +170,7 @@ class StoreBase extends BaseModel
      */
     public static function getLanguageFlag($id = null, $all = false, $flip = false)
     {
-        $data = [
-            self::LANGUAGE_EN => 'gb',
-            self::LANGUAGE_ZH_CN => 'cn',
-            self::LANGUAGE_ZH_HK => 'hk',
-            self::LANGUAGE_FR => 'fr',
-            self::LANGUAGE_DE => 'de',
-            self::LANGUAGE_RU => 'ru',
-            self::LANGUAGE_IT => 'it',
-            self::LANGUAGE_ES => 'es',
-            self::LANGUAGE_PT => 'pt',
-            self::LANGUAGE_TR => 'tr',
-            self::LANGUAGE_AR => 'ar',
-            self::LANGUAGE_JP => 'jp',
-            self::LANGUAGE_KO => 'kr',
-            self::LANGUAGE_NL => 'nl',
-            self::LANGUAGE_SV => 'sv',
-        ];
-
-        $all && $data += [];
-
-        $flip && $data = array_flip($data);
-
-        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+        return Lang::getLanguageFlag($id, $all, $flip);
     }
 
     /**
