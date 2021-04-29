@@ -12,7 +12,7 @@ use common\models\Store;
  * @property int $id
  * @property int $store_id 商家
  * @property string $name 名称
- * @property string $description 简介
+ * @property string $brief 简介
  * @property string $time 时间
  * @property string $date 日期
  * @property int $started_at 开始时间
@@ -55,7 +55,7 @@ class Crud extends CrudBase
             [['name'], 'required'],
             [['tag', 'config', 'images', 'files', 'location'], 'safe'],
             [['markdown', 'content'], 'string'],
-            [['name', 'description', 'time', 'date', 'color', 'image', 'file'], 'string', 'max' => 255],
+            [['name', 'brief', 'time', 'date', 'color', 'image', 'file'], 'string', 'max' => 255],
         ]);
     }
 
@@ -69,7 +69,7 @@ class Crud extends CrudBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
                 'name' => '名称',
-                'description' => '简介',
+                'brief' => '简介',
                 'time' => '时间',
                 'date' => '日期',
                 'started_at' => '开始时间',
@@ -97,7 +97,7 @@ class Crud extends CrudBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
                 'name' => Yii::t('app', 'Name'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'time' => Yii::t('app', 'Time'),
                 'date' => Yii::t('app', 'Date'),
                 'started_at' => Yii::t('app', 'Started At'),

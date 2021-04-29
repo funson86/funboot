@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body">
                 <div class="col-sm-12">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'description')->textarea() ?>
+                    <?= $form->field($model, 'brief')->textarea() ?>
                     <?= $form->field($model, 'time')->widget(kartik\time\TimePicker::class, [
                         'language' => 'zh-CN',
                         'pluginOptions' => [

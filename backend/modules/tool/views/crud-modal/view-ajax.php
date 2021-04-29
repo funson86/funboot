@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'store_id',
             'name',
-            'description',
+            'brief',
             'time',
             'date',
             'started_at:datetime',
