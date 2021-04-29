@@ -20,5 +20,6 @@ class AppAsset extends AssetBundle
         'common\widgets\adminlte\HeadJsAsset',
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'common\widgets\adminlte\BootstrapAsset',
     ];
 }
