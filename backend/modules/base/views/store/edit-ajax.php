@@ -27,7 +27,7 @@ $form = ActiveForm::begin([
     </div>
     <div class="modal-body">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'host_name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'expiredTime')->widget(kartik\date\DatePicker::class, [
             'language' => 'zh-CN',

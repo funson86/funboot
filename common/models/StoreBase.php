@@ -183,7 +183,7 @@ class StoreBase extends BaseModel
             'parent_id' => Yii::t('app', 'Parent ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'host_name' => Yii::t('app', 'Host Name'),
             'router' => Yii::t('app', 'Router'),
             'qrcode' => Yii::t('app', 'Qrcode'),

@@ -35,7 +35,7 @@ class ScheduleBase extends BaseModel
             'store_id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
             'params' => Yii::t('app', 'Params'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'cron' => Yii::t('app', 'Cron'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),

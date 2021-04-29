@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username; }, 'filter' => true],
                         'name',
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
-                        'description',
+                        'brief',
                         // 'host_name',
                         ['attribute' => 'qrcode', 'filter' => false, 'format' => 'raw', 'value' => function ($model) { return ImageHelper::fancyBox($model->qrcode); },],
                         //'route',

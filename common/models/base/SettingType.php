@@ -15,7 +15,7 @@ use common\models\Store;
  * @property string $app_id 子系统
  * @property string $name 名称
  * @property string $code 代码
- * @property string $description 简介
+ * @property string $brief 简介
  * @property string $type 类型
  * @property string $value_range 可选值
  * @property string $value_default 默认值
@@ -44,7 +44,7 @@ class SettingType extends SettingTypeBase
         return array_merge(parent::rules(), [
             [['store_id', 'parent_id', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'code'], 'required'],
-            [['app_id', 'name', 'code', 'description', 'type', 'value_range', 'value_default'], 'string', 'max' => 255],
+            [['app_id', 'name', 'code', 'brief', 'type', 'value_range', 'value_default'], 'string', 'max' => 255],
             [['code'], 'unique'],
         ]);
     }
@@ -62,7 +62,7 @@ class SettingType extends SettingTypeBase
                 'app_id' => '子系统',
                 'name' => '名称',
                 'code' => '代码',
-                'description' => '简介',
+                'brief' => '简介',
                 'type' => '类型',
                 'value_range' => '可选值',
                 'value_default' => '默认值',
@@ -81,7 +81,7 @@ class SettingType extends SettingTypeBase
                 'app_id' => Yii::t('app', 'App ID'),
                 'name' => Yii::t('app', 'Name'),
                 'code' => Yii::t('app', 'Code'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'type' => Yii::t('app', 'Type'),
                 'value_range' => Yii::t('app', 'Value Range'),
                 'value_default' => Yii::t('app', 'Value Default'),

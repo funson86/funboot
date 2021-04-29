@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::tag('span', $str);
                 }
             ],
-            //'description',
+            //'brief',
             //'path',
             //'icon',
             //'tree',

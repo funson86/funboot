@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'app_id',
                 'name',
                 'code',
-                'description',
+                'brief',
                 ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
                 'value_range',
                 'value_default',

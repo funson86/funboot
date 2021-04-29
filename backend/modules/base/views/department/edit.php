@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-12">
                     <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getParentIdLabels()) ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'head')->checkboxList(ActiveModel::getHeadLabels()) ?>
                     <?= $form->field($model, 'vice_head')->checkboxList(ActiveModel::getViceHeadLabels()) ?>
                     <?= $form->field($model, 'sort')->textInput() ?>

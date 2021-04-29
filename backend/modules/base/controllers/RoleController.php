@@ -34,7 +34,7 @@ class RoleController extends BaseController
       * 模糊查询字段
       * @var string[]
       */
-    public $likeAttributes = ['name', 'description'];
+    public $likeAttributes = ['name', 'brief'];
 
     /**
      * 可编辑字段

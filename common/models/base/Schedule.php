@@ -13,7 +13,7 @@ use common\models\Store;
  * @property int $store_id 商家
  * @property string $name 名称
  * @property string $params 参数
- * @property string $description 简介
+ * @property string $brief 简介
  * @property string $cron Cron表达式
  * @property int $type 类型
  * @property int $sort 排序
@@ -41,7 +41,7 @@ class Schedule extends ScheduleBase
         return array_merge(parent::rules(), [
             [['store_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['name', 'params', 'description', 'cron'], 'string', 'max' => 255],
+            [['name', 'params', 'brief', 'cron'], 'string', 'max' => 255],
         ]);
     }
 
@@ -56,7 +56,7 @@ class Schedule extends ScheduleBase
                 'store_id' => '商家',
                 'name' => '名称',
                 'params' => '参数',
-                'description' => '简介',
+                'brief' => '简介',
                 'cron' => 'Cron表达式',
                 'type' => '类型',
                 'sort' => '排序',
@@ -72,7 +72,7 @@ class Schedule extends ScheduleBase
                 'store_id' => Yii::t('app', 'Store ID'),
                 'name' => Yii::t('app', 'Name'),
                 'params' => Yii::t('app', 'Params'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'cron' => Yii::t('app', 'Cron'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),

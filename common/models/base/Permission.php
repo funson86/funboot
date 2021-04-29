@@ -14,7 +14,7 @@ use common\models\Store;
  * @property int $parent_id 父节点
  * @property string $name 名称
  * @property string $app_id 子系统
- * @property string $description 简介
+ * @property string $brief 简介
  * @property string $path 路径
  * @property string $icon 图标
  * @property string $tree 树路径
@@ -46,7 +46,7 @@ class Permission extends PermissionBase
         return array_merge(parent::rules(), [
             [['store_id', 'parent_id', 'level', 'target', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['name', 'app_id', 'description', 'path', 'icon'], 'string', 'max' => 255],
+            [['name', 'app_id', 'brief', 'path', 'icon'], 'string', 'max' => 255],
             [['tree'], 'string', 'max' => 1022],
         ]);
     }
@@ -63,7 +63,7 @@ class Permission extends PermissionBase
                 'parent_id' => '父节点',
                 'name' => '名称',
                 'app_id' => '子系统',
-                'description' => '简介',
+                'brief' => '简介',
                 'path' => '路径',
                 'icon' => '图标',
                 'tree' => '树路径',
@@ -84,7 +84,7 @@ class Permission extends PermissionBase
                 'parent_id' => Yii::t('app', 'Parent ID'),
                 'name' => Yii::t('app', 'Name'),
                 'app_id' => Yii::t('app', 'App ID'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'path' => Yii::t('app', 'Path'),
                 'icon' => Yii::t('app', 'Icon'),
                 'tree' => Yii::t('app', 'Tree'),

@@ -87,7 +87,7 @@ class SettingTypeBase extends BaseModel
             'app_id' => Yii::t('app', 'App ID'),
             'name' => Yii::t('app', 'Name'),
             'code' => Yii::t('app', 'Code'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'type' => Yii::t('app', 'Type'),
             'value_range' => Yii::t('app', 'Value Range'),
             'value_default' => Yii::t('app', 'Value Default'),

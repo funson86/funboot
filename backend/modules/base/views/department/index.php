@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }],
                         // 'app_id',
-                        // 'description',
+                        // 'brief',
                         // 'head',
                         // 'vice_head',
                         // 'level',

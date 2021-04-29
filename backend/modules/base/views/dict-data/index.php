@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'name',
                         'code',
                         'value',
-                        'description',
+                        'brief',
                         //'type',
                         'sort',
                         //'status',

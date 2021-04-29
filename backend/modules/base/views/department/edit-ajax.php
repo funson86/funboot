@@ -27,7 +27,7 @@ $form = ActiveForm::begin([
     <div class="modal-body">
         <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getTreeIdLabel()) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'heads')->widget(kartik\select2\Select2::classname(), [
             'data' => $allUsers,
             'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],

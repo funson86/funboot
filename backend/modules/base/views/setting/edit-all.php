@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card">
             <div class="card-body">
                 <h5 class="text-red"><?= Yii::t('app', 'Click Save button below after modification') ?></h5>
-                <h5><?= Yii::t('app', 'Description') ?></h5>
+                <h5><?= Yii::t('app', 'Brief') ?></h5>
                 <p><?= Yii::t('app', 'Click label to get setting code') ?></p>
                 <div class="hr-line-dashed"></div>
                 <h5 class="tag-title"></h5>

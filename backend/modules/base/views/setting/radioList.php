@@ -9,7 +9,7 @@ $value = $row['setting']['value'] ?? '';
 
 <div class="form-group">
     <?= Html::label(Yii::t('setting', $row['name']), $row['code'], ['class' => 'control-label form-check-label']); ?>
-    <small><?= HtmlPurifier::process(Yii::t('setting', $row['description'])) ?></small>
+    <small><?= HtmlPurifier::process(Yii::t('setting', $row['brief'])) ?></small>
     <div class="col-sm-push-10">
         <?php foreach ($valueRange as $key => $v) { ?>
             <label class="radio-inline">

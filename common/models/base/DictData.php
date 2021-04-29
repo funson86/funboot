@@ -15,7 +15,7 @@ use common\models\Store;
  * @property string $name 名称
  * @property string $code 代码
  * @property string $value 值
- * @property string $description 简介
+ * @property string $brief 简介
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -42,7 +42,7 @@ class DictData extends DictDataBase
         return array_merge(parent::rules(), [
             [['store_id', 'dict_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['code', 'value'], 'required'],
-            [['name', 'code', 'value', 'description'], 'string', 'max' => 255],
+            [['name', 'code', 'value', 'brief'], 'string', 'max' => 255],
         ]);
     }
 
@@ -59,7 +59,7 @@ class DictData extends DictDataBase
                 'name' => '名称',
                 'code' => '代码',
                 'value' => '值',
-                'description' => '简介',
+                'brief' => '简介',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -76,7 +76,7 @@ class DictData extends DictDataBase
                 'name' => Yii::t('app', 'Name'),
                 'code' => Yii::t('app', 'Code'),
                 'value' => Yii::t('app', 'Value'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

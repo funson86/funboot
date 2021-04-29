@@ -104,7 +104,7 @@ class UserBase extends BaseModel implements IdentityInterface
             'auth_role' => Yii::t('app', 'Auth Role'),
             'name' => Yii::t('app', 'Name'),
             'avatar' => Yii::t('app', 'Avatar'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'sex' => Yii::t('app', 'Sex'),
             'area' => Yii::t('app', 'Area'),
             'province_id' => Yii::t('app', 'Province ID'),

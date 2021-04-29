@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         //['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }],
                         // 'code',
-                        // 'description',
+                        // 'brief',
                         // ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => Html::activeDropDownList($searchModel, 'type', ActiveModel::getTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         // 'value_range',
                         // 'value_default',

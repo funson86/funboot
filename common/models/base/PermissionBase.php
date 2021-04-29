@@ -60,7 +60,7 @@ class PermissionBase extends BaseModel
             'parent_id' => Yii::t('app', 'Parent ID'),
             'name' => Yii::t('app', 'Name'),
             'app_id' => Yii::t('app', 'App ID'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'path' => Yii::t('app', 'Path'),
             'icon' => Yii::t('app', 'Icon'),
             'tree' => Yii::t('app', 'Tree'),

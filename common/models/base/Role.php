@@ -13,7 +13,7 @@ use common\models\Store;
  * @property int $store_id 商家
  * @property string $name 名称
  * @property int $is_default 是否为默认
- * @property string $description 简介
+ * @property string $brief 简介
  * @property string $tree 树路径
  * @property int $type 类型
  * @property int $sort 排序
@@ -41,7 +41,7 @@ class Role extends RoleBase
         return array_merge(parent::rules(), [
             [['store_id', 'is_default', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['name', 'description'], 'string', 'max' => 255],
+            [['name', 'brief'], 'string', 'max' => 255],
             [['tree'], 'string', 'max' => 1022],
         ]);
     }
@@ -57,7 +57,7 @@ class Role extends RoleBase
                 'store_id' => '商家',
                 'name' => '名称',
                 'is_default' => '是否为默认',
-                'description' => '简介',
+                'brief' => '简介',
                 'tree' => '树路径',
                 'type' => '类型',
                 'sort' => '排序',
@@ -73,7 +73,7 @@ class Role extends RoleBase
                 'store_id' => Yii::t('app', 'Store ID'),
                 'name' => Yii::t('app', 'Name'),
                 'is_default' => Yii::t('app', 'Is Default'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'tree' => Yii::t('app', 'Tree'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),

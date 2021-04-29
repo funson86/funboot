@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'auth_role',
                 'name',
                 'avatar',
-                'description',
+                'brief',
                 ['attribute' => 'sex', 'value' => function ($model) { return ActiveModel::getSexLabels($model->sex); }, ],
                 'area',
                 'province_id',

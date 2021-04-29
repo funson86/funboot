@@ -38,7 +38,7 @@ class DictDataBase extends BaseModel
             'dict_id' => Yii::t('app', 'Dict ID'),
             'name' => Yii::t('app', 'Name'),
             'value' => Yii::t('app', 'Value'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),

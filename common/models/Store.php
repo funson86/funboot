@@ -46,7 +46,7 @@ class Store extends StoreBase
             [['parent_id', 'user_id', 'expired_at', 'language', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['remark'], 'string'],
-            [['name', 'description', 'host_name', 'qrcode', 'route'], 'string', 'max' => 255],
+            [['name', 'brief', 'host_name', 'qrcode', 'route'], 'string', 'max' => 255],
         ]);
     }
 
@@ -61,7 +61,7 @@ class Store extends StoreBase
                 'parent_id' => '父节点',
                 'user_id' => '管理员',
                 'name' => '名称',
-                'description' => '简介',
+                'brief' => '简介',
                 'host_name' => '域名',
                 'qrcode' => '二维码',
                 'route' => '子系统',
@@ -82,7 +82,7 @@ class Store extends StoreBase
                 'parent_id' => Yii::t('app', 'Parent ID'),
                 'user_id' => Yii::t('app', 'User ID'),
                 'name' => Yii::t('app', 'Name'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'host_name' => Yii::t('app', 'Host Name'),
                 'qrcode' => Yii::t('app', 'Qrcode'),
                 'route' => Yii::t('app', 'Route'),
