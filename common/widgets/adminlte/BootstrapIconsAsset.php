@@ -9,9 +9,9 @@ use yii\web\AssetBundle;
  * @package common\widgets\adminlte
  * @author funson86 <funson86@gmail.com>
  */
-class Bootstrap4Asset extends AssetBundle
+class BootstrapIconsAsset extends AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css',
+        'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css',
     ];
 }

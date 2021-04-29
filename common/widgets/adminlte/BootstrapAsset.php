@@ -9,9 +9,11 @@ use yii\web\AssetBundle;
  * @package common\widgets\adminlte
  * @author funson86 <funson86@gmail.com>
  */
-class Bootstrap4Asset extends AssetBundle
+class BootstrapAsset extends AssetBundle
 {
+    public $sourcePath = '@common/widgets/adminlte/resources/';
+
     public $css = [
-        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css',
+        'plugins/bootstrap/css/bootstrap.min.css',
     ];
 }
