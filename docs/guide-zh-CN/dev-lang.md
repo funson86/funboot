@@ -28,7 +28,7 @@ Funboot将多语言数据存储在fb_base_lang表中，通过对每个需要加�
 ```
 
 
-### 添加view
+### 后台添加view
 
 在view的edit.php中加入如下代码，支持text、textarea、Ueditor、markdown格式，需要支持其他格式实现这一段代码即可
 
@@ -128,6 +128,26 @@ Funboot将多语言数据存储在fb_base_lang表中，通过对每个需要加�
                     </div>
                     <?php } ?>
 ```
+
+### 前端使用多语言
+
+在controller中可以使用
+```php
+fbt(Catalog::getTableCode(), $model->id, 'name', Yii::$app->language);
+
+// 也可以使用
+$this->getLang(Catalog::getTableCode(), $model->id, 'name', Yii::$app->language);
+```
+
+在view中可以使用
+
+```php
+fbt(Catalog::getTableCode(), $model->id, 'name', Yii::$app->language);
+
+// 也可以使用
+$this->context->getLang(Catalog::getTableCode(), $model->id, 'name', Yii::$app->language);
+```
+
 
 ### 自动翻译
 
