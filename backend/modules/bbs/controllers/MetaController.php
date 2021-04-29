@@ -65,7 +65,7 @@ class MetaController extends BaseController
                     $modelTemp->parent_id = $model->id;
                     $modelTemp->name = $sub['name'][$i];
                 }
-                $modelTemp->description = $sub['description'][$i];
+                $modelTemp->brief = $sub['brief'][$i];
                 $modelTemp->sort = $sub['sort'][$i];
                 $modelTemp->status = Meta::STATUS_ACTIVE;
                 if (!$modelTemp->save()) {

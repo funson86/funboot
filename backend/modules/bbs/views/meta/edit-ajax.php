@@ -27,7 +27,7 @@ $form = ActiveForm::begin([
     <div class="modal-body">
         <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getParentIdLabels()) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>

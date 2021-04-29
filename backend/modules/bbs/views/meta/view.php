@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'store_id',
                 ['attribute' => 'parent_id', 'value' => function ($model) { return ActiveModel::getParentIdLabels($model->parent_id); }, ],
                 'name',
-                'description',
+                'brief',
                 'type',
                 'sort',
                 ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
