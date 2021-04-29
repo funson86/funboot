@@ -551,6 +551,7 @@ class BaseController extends \common\components\controller\BaseController
                     }
                     $lang->content = empty($content) ? ($this->isAutoTranslation ? $this->autoTranslate($lang->source, $lang->target, $model->$field) : '') : $content;
                     $lang->save();
+                    Yii::$app->cacheSystem->refreshLang($this->modelClass::getTableCode(), $model->id);
                 }
             }
         }

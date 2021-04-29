@@ -33,6 +33,7 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+/web/help
 
 # ignore generated files
 /frontend/web/index.php
