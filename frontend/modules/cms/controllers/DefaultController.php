@@ -112,7 +112,7 @@ class DefaultController extends BaseController
         $this->mainMenu[0] = $this->mainMenu2[0] = $home;
 
         foreach ($this->allShowCatalog as $catalog) {
-            $item = ['name' => $catalog['name'], 'active'=> ($catalog['id'] == $rootCatalogId)];
+            $item = ['id' => $catalog['id'], 'name' => $catalog['name'], 'active'=> ($catalog['id'] == $rootCatalogId)];
             if ($catalog['type'] == 'link') {// redirect to other site
                 $item['url'] = $catalog['redirect_url'];
             } else {
@@ -125,7 +125,7 @@ class DefaultController extends BaseController
         // sub menu 2
         $allCatalog2 = ArrayHelper::getTreeIdLabel(0, $this->allShowCatalog, '');
         foreach ($allCatalog2 as $catalog) {
-            $item = ['name' => $catalog['name'], 'active' => ($catalog['id'] == $rootCatalogId)];
+            $item = ['id' => $catalog['id'], 'name' => $catalog['name'], 'active' => ($catalog['id'] == $rootCatalogId)];
             if ($catalog['type'] == 'link') {// redirect to other site
                 $item['url'] = $catalog['link'];
             } else {

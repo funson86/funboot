@@ -2,6 +2,7 @@
 
 namespace common\helpers;
 
+use common\models\base\Lang;
 use common\models\Store;
 use yii\helpers\HtmlPurifier;
 use yii\web\View;
@@ -57,7 +58,7 @@ class CommonHelper
             $lang = CommonHelper::parseBrowserLanguage();
         }
 
-        $langInt = Store::getLanguageCode($lang, true, true);
+        $langInt = Lang::getLanguageCode($lang, true, true);
         if (($langInt & $store->language) != $langInt) {
             $lang = Yii::$app->params['defaultBackendLanguage'];
         }
