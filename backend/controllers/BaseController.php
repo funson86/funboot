@@ -45,7 +45,7 @@ class BaseController extends \common\components\controller\BaseController
      * 自动翻译多语言，$isMultiLang为true才生效
      * @var bool 
      */
-    public $isAutoTranslation = true;
+    public $isAutoTranslation = false;
 
     /**
      * 1带搜索列表 11只显示parent_id为0 2树形(不分页) 3非常规表格
