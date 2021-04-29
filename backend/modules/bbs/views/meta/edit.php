@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <thead>
                         <tr class="row">
                             <th class="col-3"><?= Yii::t('app', 'Name') ?></th>
-                            <th class="col-5"><?= Yii::t('app', 'Description') ?></th>
+                            <th class="col-5"><?= Yii::t('app', 'Brief') ?></th>
                             <th class="col-2"><?= Yii::t('app', 'Sort') ?></th>
                             <th class="col-2"><?= Yii::t('app', 'Actions') ?></th>
                         </tr>

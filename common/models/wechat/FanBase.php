@@ -116,7 +116,7 @@ class FanBase extends BaseModel
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'unionid' => Yii::t('app', 'Unionid'),
             'openid' => Yii::t('app', 'Openid'),
             'nickname' => Yii::t('app', 'Nickname'),

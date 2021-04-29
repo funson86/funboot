@@ -12,7 +12,7 @@ use common\models\Store;
  * @property int $id
  * @property int $store_id 商家
  * @property string $name 名称
- * @property string $description 简介
+ * @property string $brief 简介
  * @property string $unionid 唯一微信ID
  * @property string $openid Open Id
  * @property string $nickname 昵称
@@ -61,7 +61,7 @@ class Fan extends FanBase
             [['store_id', 'sex', 'groupid', 'subscribe', 'subscribe_time', 'qr_scene', 'last_updated_at', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['openid'], 'required'],
             [['tagid_list'], 'safe'],
-            [['name', 'description', 'unionid', 'openid', 'nickname', 'headimgurl', 'subscribe_scene', 'remark', 'country', 'province', 'city', 'language', 'qr_scene_str', 'last_longitude', 'last_latitude', 'last_address'], 'string', 'max' => 255],
+            [['name', 'brief', 'unionid', 'openid', 'nickname', 'headimgurl', 'subscribe_scene', 'remark', 'country', 'province', 'city', 'language', 'qr_scene_str', 'last_longitude', 'last_latitude', 'last_address'], 'string', 'max' => 255],
         ]);
     }
 
@@ -75,7 +75,7 @@ class Fan extends FanBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
                 'name' => '名称',
-                'description' => '简介',
+                'brief' => '简介',
                 'unionid' => '唯一微信ID',
                 'openid' => 'Open Id',
                 'nickname' => '昵称',
@@ -110,7 +110,7 @@ class Fan extends FanBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
                 'name' => Yii::t('app', 'Name'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'unionid' => Yii::t('app', 'Unionid'),
                 'openid' => Yii::t('app', 'Openid'),
                 'nickname' => Yii::t('app', 'Nickname'),

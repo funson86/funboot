@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
                 <div class="col-sm-12">
-                    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'status')->textInput() ?>
                 </div>
             </div>
