@@ -4,6 +4,7 @@ namespace common\components\base;
 
 use common\models\base\Dict;
 use common\models\base\DictData;
+use common\models\base\Lang;
 use common\models\base\Permission;
 use common\models\base\SettingType;
 use common\models\Store;
@@ -213,4 +214,51 @@ class CacheSystem extends \yii\base\Component
     {
         return Yii::$app->cache->delete('langS:*');
     }
+
+    /**
+     * @return array|mixed|\yii\db\ActiveRecord[]
+     */
+    /*public function getAllLang()
+    {
+        // 数据量大有风险
+        $data = Yii::$app->cache->get('allLang');
+        if (!$data) {
+            $data = Lang::find()->select(['name', 'target', 'table_code', 'target_id', 'content'])->all();
+
+            foreach ($data as $item) {
+                Yii::$app->cache->set('lang:' . $item->table_code . ':' . $item->target_id . ':' . $item->name . ':' . $item->target, $item->content);
+            }
+
+            Yii::$app->cache->set('allLang', $data);
+        }
+        return $data;
+    }*/
+
+    /**
+     * @return bool
+     */
+    /*public function clearAllLang()
+    {
+        return Yii::$app->cache->delete('allLang');
+    }*/
+
+    public function getLang($tableCode, $targetId, $name, $target, $force = false)
+    {
+        if ($force) {
+            $this->refreshLang($tableCode, $targetId);
+        }
+
+        return Yii::$app->cache->get('lang:' . $tableCode . ':' . $targetId . ':' . $name . ':' . $target);
+    }
+
+    public function refreshLang($tableCode, $targetId)
+    {
+        $data = Lang::find()->where(['table_code' => $tableCode, 'target_id' => $targetId])->all();
+        foreach ($data as $item) {
+            Yii::$app->cache->set('lang:' . $item->table_code . ':' . $item->target_id . ':' . $item->name . ':' . $item->target, $item->content);
+        }
+
+        return true;
+    }
+
 }

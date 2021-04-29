@@ -47,8 +47,8 @@ class SettingController extends BaseController
      */
     protected $exportFields = [
         'id' => 'text',
-        'name' => 'text',
-        'type' => 'select',
+        'code' => 'text',
+        'value' => 'text',
     ];
 
     protected $exportSort = ['store_id' => SORT_ASC, 'setting_type_id' => SORT_DESC];
@@ -100,7 +100,7 @@ class SettingController extends BaseController
                 $model->name = $mapSettingTypeCodeName[$code] ?? '';
                 $model->setting_type_id = $mapSettingTypeCodeId[$code] ?? '';
                 $model->code = $code;
-                $model->value = is_array($value) ? Json::encode($value) : $value;
+                $model->value = is_array($value) ? Json::encode($value) : trim($value);
 
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($model->errors);
@@ -196,7 +196,7 @@ class SettingController extends BaseController
         $storeId = $this->isAdmin() ? null : $this->getStoreId();
 
         $models = [];
-        $settings = $this->modelClass::find()->filterWhere(['store_id' => $storeId])->orderBy($this->exportSort)->asArray()->all();
+        $settings = $this->modelClass::find()->orderBy($this->exportSort)->asArray()->all();
         foreach ($settings as $setting) {
             if (!isset($models[$setting['store_id']])) {
                 $models[$setting['store_id']] = [];
@@ -204,8 +204,9 @@ class SettingController extends BaseController
             }
             $models[$setting['store_id']][$setting['code']] = $setting['value'];
         }
+        //var_dump($models);
 
-        $spreadSheet = $this->arrayToSheet($models, $fields);
+        $spreadSheet = $this->arrayToSheet($models, $fields);//vd($spreadSheet);
 
         $arrModelClass = explode('\\', strtolower($this->modelClass));
         OfficeHelper::write($spreadSheet, $ext, 'settings_' . array_pop($arrModelClass) . '_' . date('mdHis') . '.' . $ext);

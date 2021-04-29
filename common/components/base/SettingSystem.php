@@ -4,10 +4,12 @@ namespace common\components\base;
 
 use common\helpers\ArrayHelper;
 use common\models\base\DictData;
+use common\models\base\Setting;
 use common\models\base\SettingType;
 use common\models\Store;
 use Yii;
 use common\models\base\Dict;
+use yii\helpers\Json;
 
 /**
  * Class SettingSystem
@@ -36,6 +38,33 @@ class SettingSystem extends \yii\base\Component
         }
 
         return null;
+    }
+
+    public function setValue($code, $value, $storeId = null)
+    {
+        !$storeId && $storeId = Yii::$app->storeSystem->getId();
+
+        $settingType = SettingType::find()->where(['code' => $code])->one();
+        if (!$settingType) {
+            return false;
+        }
+
+        $model = Setting::find()->where(['code' => $code, 'store_id' => $storeId])->one();
+        if (!$model) {
+            $model = new Setting();
+            $model->store_id = $storeId;
+            $model->app_id = Yii::$app->id;
+            $model->name = $settingType->name;
+            $model->setting_type_id = $settingType->id;
+            $model->code = $code;
+        }
+        $model->value = is_array($value) ? Json::encode($value) : trim($value);
+        if ($model->save()) {
+            Yii::$app->cacheSystem->clearStoreSetting($storeId);
+            return true;
+        }
+
+        return false;
     }
 
     public function getSettings($storeId = null)

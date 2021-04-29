@@ -194,6 +194,20 @@ class BaseController extends Controller
     }
 
     /**
+     * 获取多语言
+     * @param $tableCode
+     * @param $targetId
+     * @param $name
+     * @param $target
+     * @param bool $force
+     * @return bool
+     */
+    public function getLang($tableCode, $targetId, $name, $target, $force = false)
+    {
+        return Yii::$app->cacheSystem->getLang($tableCode, $targetId, $name, $target, $force);
+    }
+
+    /**
      * @param String $msg
      * @return string
      */
