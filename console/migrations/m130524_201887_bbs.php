@@ -21,7 +21,7 @@ CREATE TABLE `fb_bbs_meta` (
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父节点',
   `name` varchar(255) NOT NULL COMMENT '名称',
-  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '简述',
+  `brief` varchar(255) NOT NULL DEFAULT '' COMMENT '简介',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -79,15 +79,24 @@ CREATE TABLE `fb_bbs_topic` (
   `seo_keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索关键词',
   `seo_description` text COMMENT '搜索描述',
   `meta` json DEFAULT NULL COMMENT '参数',
-  `brief` text COMMENT '简述',
+  `brief` text COMMENT '简介',
   `content` text COMMENT '内容',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '价格',
   `redirect_url` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转链接',
-  `template` varchar(255) NOT NULL DEFAULT 'topic' COMMENT '模板',
+  `template` varchar(255) NOT NULL DEFAULT 'view' COMMENT '模板',
   `click` int(11) NOT NULL DEFAULT '0' COMMENT '浏览量',
   `like` int(11) NOT NULL DEFAULT '0' COMMENT '点赞',
-  `is_comment` varchar(255) NOT NULL DEFAULT 'list' COMMENT '允许评论',
-  `type` varchar(255) NOT NULL DEFAULT 'list' COMMENT '类型',
+  `comment` int(11) NOT NULL DEFAULT '0' COMMENT '评论',
+  `is_comment` int(11) NOT NULL DEFAULT '1' COMMENT '允许评论',
+  `kind` int(11) NOT NULL DEFAULT '0' COMMENT '加精',
+  `format` int(11) NOT NULL DEFAULT '0' COMMENT '格式',
+  `user_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '作者',
+  `username` varchar(255) NOT NULL DEFAULT '' COMMENT '作者',
+  `user_avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '作者头像',
+  `last_comment_user_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '最后回复用户',
+  `last_comment_username` varchar(255) NOT NULL DEFAULT '' COMMENT '最后回复用户名称',
+  `last_comment_updated_at` int(11) NOT NULL DEFAULT '0' COMMENT '最后回复时间',
+  `type`  int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
@@ -97,6 +106,10 @@ CREATE TABLE `fb_bbs_topic` (
   PRIMARY KEY (`id`),
   KEY `bbs_topic_k1` (`node_id`),
   KEY `bbs_topic_k2` (`store_id`),
+  KEY `bbs_topic_k0` (`last_comment_updated_at`),
+  KEY `bbs_topic_k3` (`click`),
+  KEY `bbs_topic_k4` (`like`),
+  KEY `bbs_topic_k5` (`user_id`),
   CONSTRAINT `bbs_topic_fk1` FOREIGN KEY (`node_id`) REFERENCES `fb_bbs_node` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `bbs_topic_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='话题';
@@ -134,7 +147,7 @@ CREATE TABLE `fb_bbs_comment` (
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `content` text COMMENT '内容',
-  `like` int(11) NOT NULL DEFAULT '1' COMMENT '点赞',
+  `like` int(11) NOT NULL DEFAULT '0' COMMENT '点赞',
   `ip` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'IP地址',
   `ip_info` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'IP信息',
   `type` varchar(255) NOT NULL DEFAULT 'list' COMMENT '类型',
@@ -202,7 +215,7 @@ CREATE TABLE `fb_bbs_user_action` (
   `user_id` bigint(20) unsigned NOT NULL COMMENT '标签',
   `target_id` bigint(20) unsigned NOT NULL COMMENT '目标ID',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `target_type` int(11) NOT NULL DEFAULT '1' COMMENT '目标',
+  `action` int(11) NOT NULL DEFAULT '1' COMMENT '动作',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -246,7 +259,7 @@ CREATE TABLE `fb_bbs_raw` (
   `node` varchar(255) NOT NULL DEFAULT '' COMMENT '分类',
   `tag_ids` json DEFAULT NULL COMMENT '标签',
   `name` varchar(255) NOT NULL COMMENT '名称',
-  `brief` text COMMENT '简述',
+  `brief` text COMMENT '简介',
   `content` text COMMENT '内容',
   `site` varchar(255) NOT NULL DEFAULT '' COMMENT '来源',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '网址',
@@ -317,23 +330,21 @@ INSERT INTO `fb_base_permission` VALUES ('5394', '1', '539', '启禁', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('5395', '1', '539', '导出', 'backend', '', '/bbs/meta/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5396', '1', '539', '导入', 'backend', '', '/bbs/meta/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES (53, 1, 0, 'backend', 'Cms网站', 'bbs', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (53, 1, 0, 'backend', 'BBS社区', 'bbs', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (5311, 1, 53, 'backend', '主题', 'bbs_theme', '', 'text', '', 'default', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5312, 1, 53, 'backend', '模板', 'bbs_template', '', 'text', '', 'index', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5313, 1, 53, 'backend', '横幅', 'bbs_banner', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5314, 1, 53, 'backend', '横幅手机版', 'bbs_banner_h5', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5329, 1, 53, 'backend', '列表页默认每页数量', 'bbs_node_page_size', '', 'text', '', '12', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5343, 1, 53, 'backend', '关于我们', 'bbs_about_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5344, 1, 53, 'backend', '联系我们', 'bbs_contact_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5351, 1, 53, 'backend', '网站参数1', 'bbs_param1', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5352, 1, 53, 'backend', '网站参数2', 'bbs_param2', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5353, 1, 53, 'backend', '网站参数3', 'bbs_param3', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5354, 1, 53, 'backend', '网站参数4', 'bbs_param4', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5355, 1, 53, 'backend', '网站参数5', 'bbs_param5', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5356, 1, 53, 'backend', '网站参数6', 'bbs_param6', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5357, 1, 53, 'backend', '网站参数7', 'bbs_param7', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5358, 1, 53, 'backend', '网站参数8', 'bbs_param8', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (5359, 1, 53, 'backend', '网站参数9', 'bbs_param9', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5313, 1, 53, 'backend', '主页模板', 'bbs_template', '', 'text', '', 'index', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5320, 1, 53, 'backend', '列表页默认每页数量', 'bbs_node_page_size', '', 'text', '', '24', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5341, 1, 53, 'backend', '关于我们', 'bbs_about_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5343, 1, 53, 'backend', '联系我们', 'bbs_contact_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5381, 1, 53, 'backend', '网站参数1', 'bbs_param1', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5382, 1, 53, 'backend', '网站参数2', 'bbs_param2', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5383, 1, 53, 'backend', '网站参数3', 'bbs_param3', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5384, 1, 53, 'backend', '网站参数4', 'bbs_param4', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5385, 1, 53, 'backend', '网站参数5', 'bbs_param5', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5386, 1, 53, 'backend', '网站参数6', 'bbs_param6', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5387, 1, 53, 'backend', '网站参数7', 'bbs_param7', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5388, 1, 53, 'backend', '网站参数8', 'bbs_param8', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5389, 1, 53, 'backend', '网站参数9', 'bbs_param9', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
 
 
         ";
