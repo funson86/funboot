@@ -57,7 +57,7 @@ $store = $this->context->store;
                     <?php foreach ($this->context->mainMenu2 as $item) { ?>
                         <?php if (isset($item['items'])) { ?>
                             <li class="dropdown <?php if ($item['active']) { echo 'active'; } ?>">
-                                <a href="<?= $item['url'] ?>" data-toggle="dropdown" class="dropdown-toggle"><?= Yii::$app->cacheSystem->getLang(Catalog::getTableCode(), $item['id'], 'name', Yii::$app->language) ?: $item['name'] ?> <b class="caret"></b></a>
+                                <a href="<?= $item['url'] ?>" data-toggle="dropdown" class="dropdown-toggle"><?= fbt(Catalog::getTableCode(), $item['id'], 'name', Yii::$app->language) ?: $item['name'] ?> <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <?php foreach ($item['items'] as $v) { ?>
                                         <li><a href="<?= $v['url'] ?>"><?= $v['name'] ?></a></li>
@@ -65,7 +65,7 @@ $store = $this->context->store;
                                 </ul>
                             </li>
                         <?php } else { ?>
-                            <li class="<?php if ($item['active']) { echo 'active'; } ?>"><a href="<?= $item['url'] ?>"><?= Yii::$app->cacheSystem->getLang(Catalog::getTableCode(), $item['id'], 'name', Yii::$app->language) ?: $item['name'] ?></a></li>
+                            <li class="<?php if ($item['active']) { echo 'active'; } ?>"><a href="<?= $item['url'] ?>"><?= fbt(Catalog::getTableCode(), $item['id'], 'name', Yii::$app->language) ?: $item['name'] ?></a></li>
                         <?php } ?>
                     <?php } ?>
                     <li class="dropdown nav-item">
@@ -104,8 +104,7 @@ $store = $this->context->store;
 </footer>
 
 <button id="bind" type="button" class="btn btn-scroll-top">
-    <a href="#top">
-        <i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+    <a href="#top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
 </button>
 
 <script src="<?= Yii::getAlias('@web/resources/js/bootstrap.min.js') ?>"></script>
