@@ -19,14 +19,23 @@ use common\models\Store;
  * @property string $seo_keywords 搜索关键词
  * @property string|null $seo_description 搜索描述
  * @property string|null $meta 参数
- * @property string|null $brief 简述
+ * @property string|null $brief 简介
  * @property string|null $content 内容
  * @property float $price 价格
  * @property string $redirect_url 跳转链接
  * @property string $template 模板
  * @property int $click 浏览量
  * @property int $like 点赞
- * @property string $type 类型
+ * @property int $comment 评论
+ * @property int $is_comment 允许评论
+ * @property int $kind 加精
+ * @property int $format 格式
+ * @property int $user_id 作者
+ * @property string $username 作者
+ * @property string $user_avatar 作者头像
+ * @property string $last_comment_username 最后回复用户
+ * @property int $last_comment_updated_at 最后回复时间
+ * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
  * @property int $created_at 创建时间
@@ -50,12 +59,12 @@ class Topic extends TopicBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'node_id', 'click', 'like', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'node_id', 'click', 'like', 'comment', 'is_comment', 'kind', 'format', 'user_id', 'last_comment_updated_at', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['thumb', 'images', 'meta'], 'safe'],
             [['seo_description', 'brief', 'content'], 'string'],
             [['price'], 'number'],
-            [['name', 'seo_title', 'seo_keywords', 'redirect_url', 'template', 'type'], 'string', 'max' => 255],
+            [['name', 'seo_title', 'seo_keywords', 'redirect_url', 'template', 'username', 'user_avatar', 'last_comment_username'], 'string', 'max' => 255],
         ]);
     }
 
@@ -76,13 +85,22 @@ class Topic extends TopicBase
                 'seo_keywords' => '搜索关键词',
                 'seo_description' => '搜索描述',
                 'meta' => '参数',
-                'brief' => '简述',
+                'brief' => '简介',
                 'content' => '内容',
                 'price' => '价格',
                 'redirect_url' => '跳转链接',
                 'template' => '模板',
                 'click' => '浏览量',
                 'like' => '点赞',
+                'comment' => '评论',
+                'is_comment' => '允许评论',
+                'kind' => '加精',
+                'format' => '格式',
+                'user_id' => '作者',
+                'username' => '作者',
+                'user_avatar' => '作者头像',
+                'last_comment_username' => '最后回复用户',
+                'last_comment_updated_at' => '最后回复时间',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -110,6 +128,15 @@ class Topic extends TopicBase
                 'template' => Yii::t('app', 'Template'),
                 'click' => Yii::t('app', 'Click'),
                 'like' => Yii::t('app', 'Like'),
+                'comment' => Yii::t('app', 'Comment'),
+                'is_comment' => Yii::t('app', 'Is Comment'),
+                'kind' => Yii::t('app', 'Kind'),
+                'format' => Yii::t('app', 'Format'),
+                'user_id' => Yii::t('app', 'User ID'),
+                'username' => Yii::t('app', 'Username'),
+                'user_avatar' => Yii::t('app', 'User Avatar'),
+                'last_comment_username' => Yii::t('app', 'Last Comment Username'),
+                'last_comment_updated_at' => Yii::t('app', 'Last Comment Updated At'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

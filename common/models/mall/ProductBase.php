@@ -116,41 +116,33 @@ class ProductBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStore()
+    public function getRanksPassed()
     {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
+        return $this->hasMany(Rank::className(), ['product_id' => 'id'])->where(['status' => Rank::STATUS_ACTIVE])->orderBy(['created_at' => SORT_DESC]);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCommentsPassed()
+    public function getRanksPassedGood()
     {
-        return $this->hasMany(Comment::className(), ['product_id' => 'id'])->where(['status' => Comment::STATUS_ACTIVE])->orderBy(['created_at' => SORT_DESC]);
+        return $this->hasMany(Rank::className(), ['product_id' => 'id'])->where(['and', 'status =' . Rank::STATUS_ACTIVE, 'star >= 4'])->orderBy(['created_at' => SORT_DESC]);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCommentsPassedGood()
+    public function getRanksPassedNormal()
     {
-        return $this->hasMany(Comment::className(), ['product_id' => 'id'])->where(['and', 'status =' . Comment::STATUS_ACTIVE, 'star >= 4'])->orderBy(['created_at' => SORT_DESC]);
+        return $this->hasMany(Rank::className(), ['product_id' => 'id'])->where(['and', 'status =' . Rank::STATUS_ACTIVE, 'star >= 2', 'star <= 3'])->orderBy(['created_at' => SORT_DESC]);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCommentsPassedNormal()
+    public function getRanksPassedBad()
     {
-        return $this->hasMany(Comment::className(), ['product_id' => 'id'])->where(['and', 'status =' . Comment::STATUS_ACTIVE, 'star >= 2', 'star <= 3'])->orderBy(['created_at' => SORT_DESC]);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCommentsPassedBad()
-    {
-        return $this->hasMany(Comment::className(), ['product_id' => 'id'])->where(['status' => Comment::STATUS_ACTIVE, 'star' => 1])->orderBy(['created_at' => SORT_DESC]);
+        return $this->hasMany(Rank::className(), ['product_id' => 'id'])->where(['status' => Rank::STATUS_ACTIVE, 'star' => 1])->orderBy(['created_at' => SORT_DESC]);
     }
 
     /**

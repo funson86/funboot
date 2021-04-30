@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Topics'] ?? null) ?></h2>
                 <div class="card-tools">
                     <?= Html::create() ?>
+                    <?= Html::create(['edit', 'format' => ActiveModel::FORMAT_MARKDOWN], Yii::t('app', 'Create ') . Yii::t('app', 'Markdown')) ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
                 </div>

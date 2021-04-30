@@ -21,6 +21,9 @@ return [
         'cms' => [
             'class' => 'frontend\modules\cms\Module',
         ],
+        'bbs' => [
+            'class' => 'frontend\modules\bbs\Module',
+        ],
         'mall' => [
             'class' => 'frontend\modules\mall\Module',
         ],
@@ -56,9 +59,30 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '<store_id:\d+>' => 'site/index', // 根据项目情况进行匹配
+
+                // pay url 优化
+                'pay/<action:\w+>' => 'pay/default/<action>',
+
+                // cms url 优化
+                'list/<id:\d+>' => 'cms/default/list',
+                'menu/<id:\d+>' => 'cms/default/menu',
+                'page/<id:\d+>' => 'cms/default/page',
+                'cms/search' => 'cms/default/search',
+
+                // mall url 优化
                 //'product/<id:\d+>' => 'mall/product/view', // url 优化
                 //'product/<action:\w+>/<id:\d+>' => 'mall/product/<action>',
                 //'product/<action:\w+>' => 'mall/product/<action>',
+
+                // bbs url 优化
+                'node/<id:\d+>' => 'bbs/default/index',
+                'bbs' => 'bbs/default/index',
+                'bbs/tag' => 'bbs/default/tag',
+                'topic/<id:\d+>' => 'bbs/topic/view',
+                'topic/<action:\w+>/<id:\d+>' => 'bbs/topic/<action>',
+                'topic/<action:\w+>' => 'bbs/topic/<action>',
+                'bbs/user-action/<action:\d+>/<type:\d+>/<id:\d+>' => 'bbs/user-action/index',
+
                 '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>' => '<modules>/<controller>/<action>',
@@ -93,5 +117,11 @@ return [
             ],
         ],
     ],
+
+    'controllerMap' => [
+        'file' => 'common\components\uploader\FileController', // 文件上传公共控制器
+        'ueditor' => 'common\components\ueditor\UeditorController', // 百度编辑器
+    ],
+
     'params' => $params,
 ];

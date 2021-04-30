@@ -81,6 +81,10 @@ return [
         'cacheSystemBbs' => [
             'class' => 'common\components\bbs\CacheSystemBbs',
         ],
+        'qr' => [
+            'class' => '\Da\QrCode\Component\QrCodeComponent',
+            'size' => 500 // big and nice :D
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

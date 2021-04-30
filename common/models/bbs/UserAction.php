@@ -14,7 +14,7 @@ use common\models\Store;
  * @property int $user_id 标签
  * @property int $target_id 目标ID
  * @property string $name 名称
- * @property int $target_type 目标
+ * @property int $action 动作
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -39,7 +39,7 @@ class UserAction extends UserActionBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'user_id', 'target_id', 'target_type', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'user_id', 'target_id', 'action', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['user_id', 'target_id'], 'required'],
             [['name'], 'string', 'max' => 255],
         ]);
@@ -57,7 +57,7 @@ class UserAction extends UserActionBase
                 'user_id' => '标签',
                 'target_id' => '目标ID',
                 'name' => '名称',
-                'target_type' => '目标',
+                'action' => '动作',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -73,7 +73,7 @@ class UserAction extends UserActionBase
                 'user_id' => Yii::t('app', 'User ID'),
                 'target_id' => Yii::t('app', 'Target ID'),
                 'name' => Yii::t('app', 'Name'),
-                'target_type' => Yii::t('app', 'Target Type'),
+                'action' => Yii::t('app', 'Action'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

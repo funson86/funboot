@@ -6,6 +6,8 @@ use Yii;
 use common\models\bbs\Topic;
 use common\models\ModelSearch;
 use backend\controllers\BaseController;
+use yii\base\Model;
+use yii\db\ActiveRecord;
 
 /**
  * Topic
@@ -44,4 +46,14 @@ class TopicController extends BaseController
         'type' => 'select',
     ];
 
+    protected function beforeEdit($id = null, $model = null)
+    {
+        $model->format = Yii::$app->request->get('format', $this->modelClass::FORMAT_HTML);
+        if ($model->isNewRecord) {
+            $model->user_id = Yii::$app->user->id;
+            $model->username = Yii::$app->user->identity->username;
+            $model->user_avatar = Yii::$app->user->identity->avatar ?: Yii::$app->user->identity->email;
+            $model->last_comment_updated_at = time();
+        }
+    }
 }

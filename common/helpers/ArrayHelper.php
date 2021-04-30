@@ -208,7 +208,7 @@ class ArrayHelper extends BaseArrayHelper
     }
 
     /**
-     * 获取子分类的ids
+     * 获取子分类的ids，也包括自己
      * @param int $id
      * @param array $array 从数据表中查询的数组
      * @param string $parentId

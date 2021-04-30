@@ -6,6 +6,9 @@ use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model base class for table "{{%bbs_topic}}" to add your code.
@@ -16,6 +19,12 @@ use Yii;
  */
 class TopicBase extends BaseModel
 {
+    const FORMAT_HTML = 1;
+    const FORMAT_MARKDOWN = 2;
+
+    const KIND_NORMAL = 0;
+    const KIND_EXCELLENT = 1;
+
     /**
      * @return array|array[]
      */
@@ -28,7 +37,53 @@ class TopicBase extends BaseModel
         ];
     }
 
+    public function behaviors()
+    {
+        // 未登录认为是store管理员登录, console下不一定有Yii::$app->user
+        $userId = isset(Yii::$app->user) && !Yii::$app->user->getIsGuest() ? Yii::$app->user->id : Yii::$app->storeSystem->getUserId();
+        return [
+            [
+                'class' => BlameableBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_by', 'updated_by'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_by'],
+                ],
+                'value' => $userId,
+            ],
+        ];
+    }
+
     /** add function getXxxLabels here, detail in BaseModel **/
+
+    public static function getKindLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::KIND_NORMAL => Yii::t('cons', 'KIND_NORMAL'),
+            self::KIND_EXCELLENT => Yii::t('cons', 'KIND_EXCELLENT'),
+        ];
+
+        $all && $data += [
+        ];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    public static function getFormatLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::FORMAT_HTML => Yii::t('cons', 'FORMAT_HTML'),
+            self::FORMAT_MARKDOWN => Yii::t('cons', 'FORMAT_MARKDOWN'),
+        ];
+
+        $all && $data += [
+        ];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
 
     /**
      * {@inheritdoc}
@@ -82,16 +137,33 @@ class TopicBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getTopicTags()
     {
         return $this->hasMany(TopicTag::className(), ['topic_id' => 'id']);
+    }
+
+    public function getLike()
+    {
+        return UserAction::hasAction(UserAction::ACTION_LIKE, UserAction::TYPE_TOPIC, $this->id);
+    }
+
+    public function getHate()
+    {
+        return UserAction::hasAction(UserAction::ACTION_HATE, UserAction::TYPE_TOPIC, $this->id);
+    }
+
+    public function getFollow()
+    {
+        return UserAction::hasAction(UserAction::ACTION_FOLLOW, UserAction::TYPE_TOPIC, $this->id);
+    }
+
+    public function getThanks()
+    {
+        return UserAction::hasAction(UserAction::ACTION_THANKS, UserAction::TYPE_TOPIC, $this->id);
+    }
+
+    public function getFavorite()
+    {
+        return UserAction::hasAction(UserAction::ACTION_FAVORITE, UserAction::TYPE_TOPIC, $this->id);
     }
 }

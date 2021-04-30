@@ -38,8 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="tab-pane fade active show" id="tab-content-1">
                         <?= $form->field($model, 'node_id')->dropDownList(\common\models\bbs\Node::getTreeIdLabel(0, false)) ?>
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                        <?php if ($model->format == ActiveModel::FORMAT_MARKDOWN) { ?>
                         <?= $form->field($model, 'content')->widget(\common\widgets\markdown\Markdown::class, []) ?>
+                        <?php } else { ?>
+                        <?= $form->field($model, 'content')->widget(\common\components\ueditor\Ueditor::class, []) ?>
+                        <?php } ?>
                         <?= $form->field($model, 'template')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'is_comment')->radioList(YesNo::getLabels()) ?>
                         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                     </div>
                     <div class="tab-pane fade" id="tab-content-2">
