@@ -58,6 +58,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-sm-12 pl-3 form-group clearfix">
                         <div class="col-sm-12 text-center">
                             <span type="submit" class="btn btn-primary" onclick="editAjaxSave(<?= $settingType['id'] ?>)"><?= Yii::t('app', 'Save') ?></span>
+                            <?= Html::export() ?>
+                            <?= Html::import() ?>
+                            <?php if ($this->context->isAdmin()) { ?>
+                            <?= Html::buttonModal(['export-all'], Yii::t('app', 'Export All'), ['class' => 'btn btn-sm btn-primary'], false); ?>
+                            <?= Html::buttonModal(['import-repair-setting-type'], Yii::t('app', 'Repair'), ['class' => 'btn btn-sm btn-warning'], false); ?>
+                            <?php } ?>
                         </div>
                     </div>
                     <?php ActiveForm::end(); ?>
@@ -70,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card">
             <div class="card-body">
                 <h5 class="text-red"><?= Yii::t('app', 'Click Save button below after modification') ?></h5>
-                <h5><?= Yii::t('app', 'Description') ?></h5>
+                <h5><?= Yii::t('app', 'Brief') ?></h5>
                 <p><?= Yii::t('app', 'Click label to get setting code') ?></p>
                 <div class="hr-line-dashed"></div>
                 <h5 class="tag-title"></h5>

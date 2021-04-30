@@ -348,3 +348,8 @@ nav.page-tabs .page-tabs-content {
 .active-inactive {
     min-width: 55px;
 }
+
+.control-label-full {
+    display: block;
+    width: 100%;
+}

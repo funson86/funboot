@@ -69,8 +69,21 @@ return [
             'class' => 'common\components\base\MailSystem',
             'queue' => true, //false, // 默认通过队列方式发送邮件
         ],
-        'cacheMall' => [
-            'class' => 'common\components\mall\CacheMall',
+        'wechat' => [
+            'class' => 'common\components\wechat\WechatSystem',
+            'userOptions' => [],  // 用户身份类参数
+            'sessionParam' => 'wechatUser', // 微信用户信息将存储在会话在这个密钥
+            'returnUrlParam' => '_wechatReturnUrl', // returnUrl 存储在会话中
+        ],
+        'cacheSystemMall' => [
+            'class' => 'common\components\mall\CacheSystemMall',
+        ],
+        'cacheSystemBbs' => [
+            'class' => 'common\components\bbs\CacheSystemBbs',
+        ],
+        'qr' => [
+            'class' => '\Da\QrCode\Component\QrCodeComponent',
+            'size' => 500 // big and nice :D
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

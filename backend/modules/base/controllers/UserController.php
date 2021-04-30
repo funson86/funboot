@@ -29,7 +29,7 @@ class UserController extends BaseController
       * 模糊查询字段
       * @var string[]
       */
-    public $likeAttributes = ['username', 'email', 'description'];
+    public $likeAttributes = ['username', 'email', 'brief'];
 
     /**
      * 可编辑字段

@@ -15,6 +15,8 @@ use yii\helpers\Json;
  */
 class BaseController extends \common\components\controller\BaseController
 {
+    public $prefixStatic;
+
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
@@ -37,4 +39,36 @@ class BaseController extends \common\components\controller\BaseController
 
         return $commonData;
     }
+
+    /**
+     * @return \common\models\base\Setting|string
+     */
+    public function getFavicon()
+    {
+        return $this->store->settings['website_favicon'] ?: $this->prefixStatic . '/img/favicon.ico';
+    }
+
+    /**
+     * @return \common\models\base\Setting|string
+     */
+    public function getLogo()
+    {
+        return $this->store->settings['website_logo'] ?: $this->prefixStatic . '/img/logo.png';
+    }
+
+    public function getCss($name)
+    {
+        return $this->prefixStatic . '/css/' . $name;
+    }
+
+    public function getJs($name)
+    {
+        return $this->prefixStatic . '/js/' . $name;
+    }
+
+    public function getImage($name)
+    {
+        return $this->prefixStatic . '/img/' . $name;
+    }
+
 }

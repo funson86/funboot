@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use common\components\enums\Status;
 use common\helpers\AuthHelper;
+use common\helpers\BaiduTranslate;
 use common\helpers\IdHelper;
 use common\helpers\OfficeHelper;
 use common\helpers\ResultHelper;
+use common\models\base\Lang;
 use common\models\base\Permission;
 use common\models\ModelSearch;
 use common\services\base\UserPermission;
@@ -34,7 +36,19 @@ use yii\web\Response;
 class BaseController extends \common\components\controller\BaseController
 {
     /**
-     * 1带搜索列表 2树形(不分页) 3非常规表格
+     * 开启多语言
+     * @var bool
+     */
+    public $isMultiLang = false;
+
+    /**
+     * 自动翻译多语言，$isMultiLang为true才生效
+     * @var bool 
+     */
+    public $isAutoTranslation = false;
+
+    /**
+     * 1带搜索列表 11只显示parent_id为0 2树形(不分页) 3非常规表格
      * @var array[]
      */
     protected $style = 1;
@@ -69,6 +83,12 @@ class BaseController extends \common\components\controller\BaseController
         'name' => 'text',
         'type' => 'select',
     ];
+
+    /**
+     * 导出排序
+     * @var array
+     */
+    protected $exportSort = ['store_id' => SORT_ASC, 'id' => SORT_ASC];
 
     /**
      * 行为控制
@@ -107,7 +127,7 @@ class BaseController extends \common\components\controller\BaseController
     public function beforeAction($action)
     {
         //如果是POST删除，则不校验csrf
-        if (AuthHelper::urlMath($this->action->id, ['delete', 'delete-all'])) {
+        if (AuthHelper::urlMath($this->action->id, ['delete', 'delete-*'])) {
             $this->enableCsrfValidation = false;
         }
 
@@ -157,6 +177,7 @@ class BaseController extends \common\components\controller\BaseController
     {
         if ($this->style == 2) {
             $query = $this->modelClass::find()
+                ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
                 ->orderBy(['id' => SORT_ASC]);
 
             $dataProvider = new ActiveDataProvider([
@@ -170,7 +191,7 @@ class BaseController extends \common\components\controller\BaseController
         } elseif ($this->style == 3) {
             $storeId = $this->isAdmin() ? null : $this->getStoreId();
             $data = $this->modelClass::find()
-                //->andFilterWhere(['>', 'status', $this->modelClass::STATUS_DELETED])
+                ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
                 ->andFilterWhere(['store_id' => $storeId]);
             $pages = new Pagination(['totalCount' => $data->count(), 'pageSize' => $this->pageSize]);
             $models = $data->offset($pages->offset)
@@ -197,6 +218,9 @@ class BaseController extends \common\components\controller\BaseController
         if (!$this->isAdmin()) {
             $params['ModelSearch']['store_id'] = $this->getStoreId();
             $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
+        }
+        if ($this->style == 11) {
+            $params['ModelSearch']['parent_id'] = 0;
         }
         $dataProvider = $searchModel->search($params);
 
@@ -249,12 +273,14 @@ class BaseController extends \common\components\controller\BaseController
     {
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
+        $this->beforeEdit($id, $model);
+        $lang = $this->isMultiLang ? $this->beforeLang($id, $model) : [];
+
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
-                $this->beforeEdit($id, $model);
-
                 if ($model->save()) {
                     $this->afterEdit($id, $model);
+                    $this->isMultiLang && $this->afterLang($id, $model);
                     return $this->redirectSuccess(['index']);
                 } else {
                     Yii::$app->logSystem->db($model->errors);
@@ -264,6 +290,7 @@ class BaseController extends \common\components\controller\BaseController
 
         return $this->render($this->action->id, [
             'model' => $model,
+            'lang' => $lang,
         ]);
     }
 
@@ -463,6 +490,79 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
+     * 多语言
+     * @param $id
+     * @param $model
+     * @return array
+     */
+    protected function beforeLang($id, $model)
+    {
+        $mapLangContent = [];
+        $langItems = Lang::find()
+            ->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode()])
+            ->andFilterWhere(['target_id' => $id])
+            ->orderBy(['name' => SORT_ASC])
+            ->all();
+        foreach ($langItems as $langItem) {
+            $mapLangContent[$langItem->name . '|' . $langItem->target] = $langItem->content;
+        }
+
+        $lang = [];
+        foreach (Lang::getLanguageCode($this->store->lang_frontend, false, false, true) as $target) {
+            //翻译源语言和目标语言一致则忽略
+            if ($this->store->lang_source == $target) {
+                continue;
+            }
+
+            foreach ($this->modelClass::getLangFieldType() as $name => $type) {
+                !$lang[$name] && $lang[$name] = [];
+                $lang[$name][$target] = $mapLangContent[$name . '|' . $target] ?? '';
+            }
+        }
+
+        return $lang;
+    }
+
+    /**
+     * 多语言
+     * @param $id
+     * @param $model
+     * @return array
+     */
+    protected function afterLang($id, $model)
+    {
+        $post = Yii::$app->request->post();
+        if (isset($post['Lang'])) {
+            foreach ($post['Lang'] as $field => $item) {
+                foreach ($post['Lang'][$field] as $target => $content) {
+                    //翻译源语言和目标语言一致则忽略
+                    if ($this->store->lang_source == $target) {
+                        continue;
+                    }
+                    $lang = Lang::find()->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode(), 'target_id' => $model->id, 'target' => $target, 'name' => $field])->one();
+                    if (!$lang) {
+                        $lang = new Lang();
+                        $lang->store_id = $this->getStoreId();
+                        $lang->table_code = $this->modelClass::getTableCode();
+                        $lang->name = $field;
+                        $lang->source = $this->store->lang_source;
+                        $lang->target = $target;
+                        $lang->target_id = $model->id;
+                    }
+                    $lang->content = empty($content) ? ($this->isAutoTranslation ? $this->autoTranslate($lang->source, $lang->target, $model->$field) : '') : $content;
+                    $lang->save();
+                    Yii::$app->cacheSystem->refreshLang($this->modelClass::getTableCode(), $model->id);
+                }
+            }
+        }
+    }
+
+    protected function autoTranslate($source, $target, $str)
+    {
+        return strlen($str) > 0 ? BaiduTranslate::translate($str, Lang::getLanguageBaiduCode(Lang::getLanguageCode($target, false, true)), Lang::getLanguageBaiduCode(Lang::getLanguageCode($source, false, true))) : '';
+    }
+
+    /**
      * 删除动作前处理，子方法只需覆盖该函数即可
      * @return bool
      */
@@ -544,7 +644,7 @@ class BaseController extends \common\components\controller\BaseController
 
         $ext = Yii::$app->request->get('ext', 'xls');
         $storeId = $this->isAdmin() ? null : $this->getStoreId();
-        $models = $this->modelClass::find()->filterWhere(['store_id' => $storeId]) ->orderBy(['id' => SORT_ASC])->asArray()->all();
+        $models = $this->modelClass::find()->filterWhere(['store_id' => $storeId])->orderBy($this->exportSort)->asArray()->all();
 
         $spreadSheet = $this->arrayToSheet($models, $fields);
 
@@ -572,7 +672,17 @@ class BaseController extends \common\components\controller\BaseController
                 for ($i = 2; $i <= $count; $i++) { // 忽略第1行表头
                     $row = $data[$i];
 
-                    $model = new $this->modelClass();
+                    // 更新的话ID必须在第一行，有数据才查找
+                    if (array_key_exists('id', $this->exportFields) && isset($row[0]) && intval($row[0]) > 0) {
+                        $model = $this->modelClass::find()->where(['store_id' => $this->getStoreId(), 'id' => $row[0]])->one();
+                        if (!$model) {
+                            array_push($errorLines, $i);
+                            $errorData = true;
+                            continue;
+                        }
+                    } else {
+                        $model = new $this->modelClass();
+                    }
                     if (isset($model->store_id)) { // 设置store_id为当前id
                         $model->store_id = $this->getStoreId();
                     }
@@ -603,10 +713,12 @@ class BaseController extends \common\components\controller\BaseController
 
                     //数据无错误才插入
                     if (!$errorData) {
+                        $this->beforeImport($model);
                         if (!$model->save()) {
                             array_push($errorLines, $i);
                             array_push($errorMsgs, json_encode($model->errors));
                         }
+                        $this->afterImport($model);
                         $countCreate++;
                     }
 
@@ -628,6 +740,16 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         return $this->renderAjax('@backend/views/site/' . $this->action->id);
+    }
+
+    protected function beforeImport($model = null)
+    {
+        return true;
+    }
+
+    protected function afterImport($model = null)
+    {
+        return true;
     }
 
     /**
@@ -705,8 +827,9 @@ class BaseController extends \common\components\controller\BaseController
         for ($i = 0; $i < $rows; $i++) {
             $col = 1;
             foreach ($fields as $k => $v) {
-                $value = $this->exportFormat($v, $models[$i][$v[0]]);
+                $value = $this->exportFormat($v, $models[$i][$v[0]] ?? '');
                 $sheet->setCellValueExplicit(Coordinate::stringFromColumnIndex($col) . $row, $value, DataType::TYPE_STRING);
+                isset($models[$i]['bg']) && $sheet->getStyle(Coordinate::stringFromColumnIndex($col) . $row)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB($models[$i]['bg']);;
                 $col++;
             }
             $row++;

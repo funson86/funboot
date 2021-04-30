@@ -39,7 +39,7 @@ class CrudBase extends BaseModel
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'time' => Yii::t('app', 'Time'),
             'date' => Yii::t('app', 'Date'),
             'started_at' => Yii::t('app', 'Started At'),
@@ -64,14 +64,6 @@ class CrudBase extends BaseModel
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
     }
 
 }

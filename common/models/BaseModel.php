@@ -16,9 +16,22 @@ use yii\log\Logger;
  * Class BaseModel
  * @package common\models
  * @author funson86 <funson86@gmail.com>
+ *
+ * @property User $user
+ * @property User $createdBy
+ * @property User $updatedBy
+ * @property Store $store
  */
 class BaseModel extends ActiveRecord
 {
+    static $tableCode = 0;
+    static $mapLangFieldType = [
+        'name' => 'text',
+    ];
+
+    const SORT_DEFAULT = 50;
+    const SORT_TOP = 10;
+
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_EXPIRED = -1;
@@ -57,13 +70,13 @@ class BaseModel extends ActiveRecord
                 ],
                 'value' => $userId,
             ],
-            [
-                'class' => BlameableBehavior::class,
+            /*[
+                'class' => TimestampBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['store_id'],
                 ],
                 'value' => Yii::$app->storeSystem->getId(),
-            ],
+            ],*/
         ]);
     }
 
@@ -109,10 +122,53 @@ class BaseModel extends ActiveRecord
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    /**
+     * return label or labels array
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getLangFieldType($id = null, $all = false, $flip = false)
+    {
+        $data = static::$mapLangFieldType;
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    /**
+     * 如果整型或者浮点型，输入为空强制转成0
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if (is_array($this->rules())) {
+                foreach ($this->rules() as $rule) {
+                    if (isset($rule[1]) && (in_array($rule[1], ['integer', 'number'])) && is_array($rule[0])) {
+                        foreach ($rule[0] as $attribute) {
+                            $this->{$attribute} === '' && $this->{$attribute} = 0;
+                        }
+                    }
+                }
+            }
+
+            // 如果是默认的store id，弄成当前ID
+            if (!($this instanceof Store) && (!$this->store_id || $this->store_id <= 0 || $this->store_id == Yii::$app->params['defaultStoreId'])) {
+                $this->store_id = Yii::$app->storeSystem->getId();
+            }
+
+            return true;
         }
-        return $data;
+        return false;
     }
 
     public static function afterInsert(AfterSaveEvent $event)
@@ -132,6 +188,50 @@ class BaseModel extends ActiveRecord
         Yii::$app->logSystem->operation(Log::CODE_DELETE, $event->sender->getOldAttributes());
     }
 
+    public static function getTableCode()
+    {
+        return static::$tableCode;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParent()
+    {
+        return $this->hasOne(self::className(), ['id' => 'parent_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChildren()
+    {
+        return $this->hasMany(self::className(), ['parent_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        if ($this->attributes['user_id']) {
+            return $this->hasOne(User::className(), ['id' => 'user_id']);
+        }
+
+        return null;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStore()
+    {
+        if ($this->attributes['store_id']) {
+            return $this->hasOne(Store::className(), ['id' => 'store_id']);
+        }
+        return null;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -149,17 +249,37 @@ class BaseModel extends ActiveRecord
     }
 
     /**
+     * 判断是否为所属
+     * @return bool
+     */
+    public function isOwner()
+    {
+        if (!isset($this->user_id) || is_null(Yii::$app->user->id)) {
+            return false;
+        }
+        return $this->user_id == Yii::$app->user->id;
+    }
+
+    /**
      * @param bool $pleaseFilter
+     * @param string $label
+     * @param string $id
      * @param int $storeId
+     * @param null $parentId
      * @return array|string[]
      */
-    public static function getIdLabel($pleaseFilter = false, $label = 'name', $id = 'id', $storeId = null)
+    public static function getIdLabel($pleaseFilter = false, $label = 'name', $id = 'id', $storeId = null, $parentId = null)
     {
         if (!$storeId && !Yii::$app->authSystem->isAdmin()) {
             $storeId = Yii::$app->storeSystem->getId();
         }
 
-        $models = self::find()->where(['status' => self::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->asArray()->all();
+        $models = self::find()
+            ->where(['status' => self::STATUS_ACTIVE])
+            ->andFilterWhere(['store_id' => $storeId])
+            ->andFilterWhere(['parent_id' => $parentId])
+            ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
+            ->asArray()->all();
 
         return $pleaseFilter
             ? ArrayHelper::merge([0 => Yii::t('app', 'Please Filter')], ArrayHelper::map($models, $id, $label))
@@ -167,21 +287,24 @@ class BaseModel extends ActiveRecord
     }
 
     /**
+     * 显示树状
      * @param int $parentId
-     * @param int $storeId
+     * @param bool $root
      * @param string $rootLabel
+     * @param int $storeId
      * @return array|string[]
      */
-    public static function getTreeIdLabel($storeId = null, $parentId = 0, $rootLabel = 'Root Node')
+    public static function getTreeIdLabel($parentId = 0, $root = true, $rootLabel = null, $storeId = null)
     {
         if (!$storeId && !Yii::$app->authSystem->isAdmin()) {
             $storeId = Yii::$app->storeSystem->getId();
         }
         $models = self::find()->where(['status' => self::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->asArray()->all();
-        $mapIdLabel = ArrayHelper::map(ArrayHelper::getTreeIdLabel(0, $models), 'id', 'label');
+        $mapIdLabel = ArrayHelper::map(ArrayHelper::getTreeIdLabel(0, $models,  '└─'), 'id', 'label');
 
-        if ($parentId == 0) {
-            return [0 => Yii::t('app', $rootLabel)] + $mapIdLabel;
+        if ($parentId == 0 && $root) {
+            !$rootLabel && $rootLabel = Yii::t('app', 'Root Node');
+            return [0 => $rootLabel] + $mapIdLabel;
         }
         return $mapIdLabel;
     }

@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'parent_id', 'value' => function ($model) { return ActiveModel::getParentIdLabels($model->parent_id); }, ],
                 'name',
                 'app_id',
-                'description',
+                'brief',
                 'head',
                 'vice_head',
                 'level',

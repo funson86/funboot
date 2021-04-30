@@ -27,7 +27,7 @@ class AdminltePayAsset extends AssetBundle
 
     public $depends = [
         'common\widgets\adminlte\HeadJsAsset',
-        'yii\bootstrap4\BootstrapAsset',
-        'yii\bootstrap4\BootstrapPluginAsset'
+        'common\widgets\adminlte\Bootstrap4Asset',
+        'common\widgets\adminlte\Bootstrap4PluginAsset',
     ];
 }

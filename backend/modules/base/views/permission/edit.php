@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-12">
                     <?= $form->field($model, 'parent_id')->textInput() ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'path')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'level')->textInput() ?>

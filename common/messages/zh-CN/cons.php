@@ -75,8 +75,21 @@ return [
     'GRADE_CITY' => '市',
     'GRADE_DISTRICT' => '区',
 
-    'LANGUAGE_EN' => '英语',
+    'LANGUAGE_EN' => 'English',
     'LANGUAGE_ZH_CN' => '中文',
+    'LANGUAGE_ZH_HK' => '繁体',
+    'LANGUAGE_FR' => 'Français',
+    'LANGUAGE_DE' => 'Deutsch',
+    'LANGUAGE_RU' => 'русский язык',
+    'LANGUAGE_IT' => 'Italiano',
+    'LANGUAGE_ES' => 'Español',
+    'LANGUAGE_PT' => 'Português',
+    'LANGUAGE_TR' => 'Türkçe',
+    'LANGUAGE_AR' => 'عربى',
+    'LANGUAGE_JP' => '日本語',
+    'LANGUAGE_KO' => '한국어',
+    'LANGUAGE_NL' => 'Nederlands',
+    'LANGUAGE_SV' => 'Svenska',
 
     'PAYMENT_METHOD_PAY' => 'Card',
     'PAYMENT_METHOD_COD' => 'Cash',
@@ -123,6 +136,7 @@ return [
     'ROUTE_MALL' => '商城',
     'ROUTE_CMS' => '网站',
     'ROUTE_PAY' => '支付',
+    'ROUTE_BBS' => '社区',
 
     'TYPE_LIST' => '列表',
     'TYPE_MENU' => '单页面',
@@ -139,6 +153,31 @@ return [
     'STATUS_PAID' => '成功',
     'STATUS_UNPAID' => '待支付',
     'STATUS_PAID_WITHOUT_LIST' => '成功并不加入捐赠名单',
+
+    // mall
+    'ATTRIBUTE_TYPE_TEXT' => '文字',
+    'ATTRIBUTE_TYPE_COLOR' => '颜色',
+    'ATTRIBUTE_TYPE_IMAGE' => '图片',
+
+    // bbs
+    'FORMAT_HTML' => 'Html',
+    'FORMAT_MARKDOWN' => 'Markdown',
+    'KIND_NORMAL' => '普通',
+    'KIND_EXCELLENT' => '精帖',
+
+    /** wechat */
+    'ADD_SCENE_SEARCH' => '公众号搜索',
+    'ADD_SCENE_ACCOUNT_MIGRATION' => '公众号迁移',
+    'ADD_SCENE_PROFILE_CARD' => '名片分享',
+    'ADD_SCENE_QR_CODE' => '扫描二维码',
+    'ADD_SCENE_PROFILE_LINK' => '图文页内名称点击',
+    'ADD_SCENE_PROFILE_ITEM' => '图文页右上角菜单',
+    'ADD_SCENE_PAID' => '支付后关注',
+    'ADD_SCENE_OTHERS' => '其他',
+
+    'TYPE_TEMP' => '临时',
+    'TYPE_PERM' => '永久',
+
 
 
 ];

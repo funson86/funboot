@@ -75,7 +75,20 @@ return [
     'GRADE_DISTRICT' => 'District',
 
     'LANGUAGE_EN' => 'English',
-    'LANGUAGE_ZH_CN' => 'Chinese',
+    'LANGUAGE_ZH_CN' => '中文',
+    'LANGUAGE_ZH_HK' => '繁体',
+    'LANGUAGE_FR' => 'Français',
+    'LANGUAGE_DE' => 'Deutsch',
+    'LANGUAGE_RU' => 'русский язык',
+    'LANGUAGE_IT' => 'Italiano',
+    'LANGUAGE_ES' => 'Español',
+    'LANGUAGE_PT' => 'Português',
+    'LANGUAGE_TR' => 'Türkçe',
+    'LANGUAGE_AR' => 'عربى',
+    'LANGUAGE_JP' => '日本語',
+    'LANGUAGE_KO' => '한국어',
+    'LANGUAGE_NL' => 'Nederlands',
+    'LANGUAGE_SV' => 'Svenska',
 
     'PAYMENT_METHOD_PAY' => 'Card',
     'PAYMENT_METHOD_COD' => 'Cash',
@@ -122,6 +135,7 @@ return [
     'ROUTE_MALL' => 'Mall',
     'ROUTE_CMS' => 'Cms',
     'ROUTE_PAY' => 'Pay',
+    'ROUTE_BBS' => 'BBS',
 
     'TYPE_LIST' => 'List',
     'TYPE_MENU' => 'Menu',
@@ -139,7 +153,28 @@ return [
     'STATUS_UNPAID' => 'Unpaid',
     'STATUS_PAID_WITHOUT_LIST' => 'Paid Without List',
 
+    // mall
+    'ATTRIBUTE_TYPE_TEXT' => 'Text',
+    'ATTRIBUTE_TYPE_COLOR' => 'Color',
+    'ATTRIBUTE_TYPE_IMAGE' => 'Image',
 
+    // bbs
+    'FORMAT_HTML' => 'Html',
+    'FORMAT_MARKDOWN' => 'Markdown',
+    'KIND_NORMAL' => 'Normal',
+    'KIND_EXCELLENT' => 'Excellent',
 
+    /** wechat */
+    'ADD_SCENE_SEARCH' => 'Search',
+    'ADD_SCENE_ACCOUNT_MIGRATION' => 'Account Migration',
+    'ADD_SCENE_PROFILE_CARD' => 'Profile Card',
+    'ADD_SCENE_QR_CODE' => 'Qr Code',
+    'ADD_SCENE_PROFILE_LINK' => 'Profile Link',
+    'ADD_SCENE_PROFILE_ITEM' => 'Profile Item',
+    'ADD_SCENE_PAID' => 'Paid',
+    'ADD_SCENE_OTHERS' => 'Others',
+
+    'TYPE_TEMP' => 'Temp',
+    'TYPE_PERM' => 'Permanent',
 
 ];

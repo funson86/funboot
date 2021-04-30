@@ -1,5 +1,8 @@
 <?php
 
+use yii\web\NotFoundHttpException;
+use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $name string */
 /* @var $message string */
@@ -16,6 +19,10 @@ $this->title = $name;
     <div class="alert alert-danger">
         <?= nl2br(Html::encode($message)) ?>
     </div>
+
+    <?php if ($exception instanceof NotFoundHttpException) { ?>
+        <h2 class="pb-3"><?= Html::a(Yii::t('app', 'Go Home'), Url::to(['/']), ['class' => 'btn btn-success btn-block']) ?></h2>
+    <?php } ?>
 
     <p>
         The above error occurred while the Web server was processing your request.

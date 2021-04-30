@@ -9,7 +9,7 @@ use common\models\cms\Catalog;
 use common\models\cms\Page;
 use common\models\Store;
 use Yii;
-use common\components\controller\BaseController;
+use frontend\controllers\BaseController;
 use yii\data\Pagination;
 use yii\web\Controller;
 
@@ -112,7 +112,7 @@ class DefaultController extends BaseController
         $this->mainMenu[0] = $this->mainMenu2[0] = $home;
 
         foreach ($this->allShowCatalog as $catalog) {
-            $item = ['name' => $catalog['name'], 'active'=> ($catalog['id'] == $rootCatalogId)];
+            $item = ['id' => $catalog['id'], 'name' => $catalog['name'], 'active'=> ($catalog['id'] == $rootCatalogId)];
             if ($catalog['type'] == 'link') {// redirect to other site
                 $item['url'] = $catalog['redirect_url'];
             } else {
@@ -125,7 +125,7 @@ class DefaultController extends BaseController
         // sub menu 2
         $allCatalog2 = ArrayHelper::getTreeIdLabel(0, $this->allShowCatalog, '');
         foreach ($allCatalog2 as $catalog) {
-            $item = ['name' => $catalog['name'], 'active' => ($catalog['id'] == $rootCatalogId)];
+            $item = ['id' => $catalog['id'], 'name' => $catalog['name'], 'active' => ($catalog['id'] == $rootCatalogId)];
             if ($catalog['type'] == 'link') {// redirect to other site
                 $item['url'] = $catalog['link'];
             } else {
@@ -310,22 +310,6 @@ class DefaultController extends BaseController
     }
 
     /**
-     * @return \common\models\base\Setting|string
-     */
-    public function getFavicon()
-    {
-        return $this->store->settings['website_favicon'] ?: $this->prefixStatic . '/img/favicon.ico';
-    }
-
-    /**
-     * @return \common\models\base\Setting|string
-     */
-    public function getLogo()
-    {
-        return $this->store->settings['website_logo'] ?: $this->prefixStatic . '/img/logo.png';
-    }
-
-    /**
      * @param bool $index
      * @return array|\common\models\base\Setting|mixed|string|string[]
      */
@@ -370,10 +354,5 @@ class DefaultController extends BaseController
 
         !$banner && $banner = $this->getStoreBanner();
         return $banner;
-    }
-
-    public function getImage($name)
-    {
-        return $this->prefixStatic . '/img/' . $name;
     }
 }

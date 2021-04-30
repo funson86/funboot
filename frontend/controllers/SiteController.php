@@ -1,10 +1,14 @@
 <?php
 namespace frontend\controllers;
 
+use common\helpers\BaiduTranslate;
 use common\helpers\CommonHelper;
 use common\models\forms\base\FeedbackForm;
+use Da\QrCode\Action\QrCodeAction;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+use Mekras\Speller\Hunspell\Hunspell;
+use Mekras\Speller\Source\StringSource;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
@@ -65,6 +69,10 @@ class SiteController extends BaseController
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+            'qr' => [
+                'class' => QrCodeAction::className(),
+                // 'component' => 'qr' // if configured in our app as `qr`
             ],
         ];
     }
@@ -275,5 +283,15 @@ class SiteController extends BaseController
             'model' => $model,
             'resultMsg' => $resultMsg,
         ]);
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function actionSetLanguage()
+    {
+        $lang = Yii::$app->request->get('lang', Yii::$app->request->post('lang', 'en'));
+        Yii::$app->cacheSystem->setLanguage($lang, Yii::$app->user->id ?? 0, Yii::$app->session->id);
+        return $this->success();
     }
 }

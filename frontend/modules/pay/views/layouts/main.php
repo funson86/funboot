@@ -7,7 +7,6 @@ use frontend\assets\PayAsset;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-AdminltePayAsset::register($this);
 PayAsset::register($this);
 
 $store = $this->context->store;

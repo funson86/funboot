@@ -20,7 +20,7 @@ CREATE TABLE `fb_tool_crud` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) NOT NULL COMMENT '名称',
-  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '简介',
+  `brief` varchar(255) NOT NULL DEFAULT '' COMMENT '简介',
   `time` varchar(255) NOT NULL DEFAULT '' COMMENT '时间',
   `date` varchar(255) NOT NULL DEFAULT '' COMMENT '日期',
   `started_at` int(11) NOT NULL DEFAULT '1' COMMENT '开始时间',

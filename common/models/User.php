@@ -23,7 +23,7 @@ use common\models\Store;
  * @property int $auth_role 用户类型
  * @property string $name 名称
  * @property string $avatar 头像
- * @property string $description 简述
+ * @property string $brief 简介
  * @property int $sex 性别
  * @property string $area 地区
  * @property int $province_id 省
@@ -71,7 +71,7 @@ class User extends UserBase
             [['username'], 'string', 'max' => 190],
             [['auth_key'], 'string', 'max' => 32],
             [['token'], 'string', 'max' => 64],
-            [['access_token', 'password_hash', 'password_reset_token', 'verification_token', 'email', 'mobile', 'name', 'description', 'area', 'address', 'remark', 'last_login_ip', 'last_paid_ip'], 'string', 'max' => 255],
+            [['access_token', 'password_hash', 'password_reset_token', 'verification_token', 'email', 'mobile', 'name', 'brief', 'area', 'address', 'remark', 'last_login_ip', 'last_paid_ip'], 'string', 'max' => 255],
             [['avatar'], 'string', 'max' => 1022],
             [['username'], 'unique'],
         ]);
@@ -99,7 +99,7 @@ class User extends UserBase
                 'auth_role' => '用户类型',
                 'name' => '名称',
                 'avatar' => '头像',
-                'description' => '简述',
+                'brief' => '简介',
                 'sex' => '性别',
                 'area' => '地区',
                 'province_id' => '省',
@@ -141,7 +141,7 @@ class User extends UserBase
                 'auth_role' => Yii::t('app', 'Auth Role'),
                 'name' => Yii::t('app', 'Name'),
                 'avatar' => Yii::t('app', 'Avatar'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'sex' => Yii::t('app', 'Sex'),
                 'area' => Yii::t('app', 'Area'),
                 'province_id' => Yii::t('app', 'Province ID'),

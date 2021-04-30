@@ -14,7 +14,7 @@ use common\models\Store;
  * @property int $parent_id 父节点
  * @property string $name 名称
  * @property string $app_id 子系统
- * @property string $description 简介
+ * @property string $brief 简介
  * @property string $head 负责人
  * @property string $vice_head 副负责人
  * @property int $level 层级
@@ -44,7 +44,7 @@ class Department extends DepartmentBase
         return array_merge(parent::rules(), [
             [['store_id', 'parent_id', 'level', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['name', 'app_id', 'description', 'head', 'vice_head'], 'string', 'max' => 255],
+            [['name', 'app_id', 'brief', 'head', 'vice_head'], 'string', 'max' => 255],
         ]);
     }
 
@@ -60,7 +60,7 @@ class Department extends DepartmentBase
                 'parent_id' => '父节点',
                 'name' => '名称',
                 'app_id' => '子系统',
-                'description' => '简介',
+                'brief' => '简介',
                 'head' => '负责人',
                 'vice_head' => '副负责人',
                 'level' => '层级',
@@ -79,7 +79,7 @@ class Department extends DepartmentBase
                 'parent_id' => Yii::t('app', 'Parent ID'),
                 'name' => Yii::t('app', 'Name'),
                 'app_id' => Yii::t('app', 'App ID'),
-                'description' => Yii::t('app', 'Description'),
+                'brief' => Yii::t('app', 'Brief'),
                 'head' => Yii::t('app', 'Head'),
                 'vice_head' => Yii::t('app', 'Vice Head'),
                 'level' => Yii::t('app', 'Level'),

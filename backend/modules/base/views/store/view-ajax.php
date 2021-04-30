@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'parent_id',
             'user_id',
             'name',
-            'description',
+            'brief',
             'host_name',
             'qrcode',
             'route',

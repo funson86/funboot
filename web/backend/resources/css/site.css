@@ -1,0 +1,10 @@
+.selectImage {
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    border: 1px solid #eceef1;
+}
+
+.js-batch-form input, .js-batch-form a {
+    margin-right: 10px;
+}

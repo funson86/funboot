@@ -50,10 +50,7 @@ class RoleBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }*/
 
     /**
@@ -66,7 +63,7 @@ class RoleBase extends BaseModel
             'store_id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
             'is_default' => Yii::t('app', 'Is Default'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'tree' => Yii::t('app', 'Tree'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
@@ -78,13 +75,6 @@ class RoleBase extends BaseModel
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery

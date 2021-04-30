@@ -150,4 +150,25 @@ class StringHelper extends BaseStringHelper
         return substr(strtolower(strrchr($fileName, $type)), $length);
     }
 
+    /**
+     * 多个空格合并成一个
+     * @param $str
+     * @param string $target
+     * @return string|string[]|null
+     */
+    public static function mergeSpace($str)
+    {
+        return preg_replace("/\s(?=\s)/", "\\1", $str);
+    }
+
+    /**
+     * 替换回车换行符
+     * @param $str
+     * @param string $target
+     * @return mixed
+     */
+    public static function replaceCrlf($str, $target = ' ')
+    {
+        return str_replace(array("\r\n", "\r", "\n"), $target, $str);
+    }
 }

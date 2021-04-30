@@ -33,7 +33,7 @@ class PermissionController extends BaseController
       * 模糊查询字段
       * @var string[]
       */
-    public $likeAttributes = ['name', 'description'];
+    public $likeAttributes = ['name', 'brief'];
 
     /**
      * 可编辑字段
@@ -63,12 +63,10 @@ class PermissionController extends BaseController
     {
         $id = Yii::$app->request->get('id');
         $model = $this->findModel($id);
+        $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
 
         // ajax 校验
         $this->activeFormValidate($model);
-        if ($model->parent_id == 0) {
-            $model->parent_id = Yii::$app->request->get('parent_id', 0);
-        }
 
         // 计算level
         $model->level = 0;

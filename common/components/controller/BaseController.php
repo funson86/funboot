@@ -6,6 +6,7 @@ use common\helpers\ArrayHelper;
 use common\helpers\CommonHelper;
 use common\helpers\IdHelper;
 use common\helpers\ResultHelper;
+use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
 use Yii;
@@ -83,7 +84,7 @@ class BaseController extends Controller
      * @param $id
      * @param bool $emptyNew
      * @param bool $action
-     * @return \yii\db\ActiveRecord
+     * @return BaseModel
      * @throws \Exception
      */
     protected function findModel($id, $action = false)
@@ -190,6 +191,20 @@ class BaseController extends Controller
     protected function commonData($model)
     {
         return [];
+    }
+
+    /**
+     * 获取多语言
+     * @param $tableCode
+     * @param $targetId
+     * @param $name
+     * @param $target
+     * @param bool $force
+     * @return bool
+     */
+    public function getLang($tableCode, $targetId, $name, $target, $force = false)
+    {
+        return Yii::$app->cacheSystem->getLang($tableCode, $targetId, $name, $target, $force);
     }
 
     /**

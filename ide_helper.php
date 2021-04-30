@@ -24,7 +24,9 @@ class Yii
  * @property \common\components\base\SettingSystem settingSystem
  * @property \common\components\base\MessageSystem messageSystem
  * @property \common\components\base\MailSystem mailSystem
+ * @property \common\components\bbs\CacheSystemBbs cacheSystemBbs
  * @property \api\components\response\ResponseSystem responseSystem
+ * @property \common\components\wechat\WechatSystem wechat
  *
  * @author funson86 <funson86@gmail.com>
  */

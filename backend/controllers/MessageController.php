@@ -102,7 +102,7 @@ class MessageController extends BaseController
 
         $models = Message::find()->where(['user_id' => Yii::$app->user->id, 'status' => Message::STATUS_UNREAD])
             ->with(['from' => function ($query) {
-                $query->select(['username', 'avatar', 'name']);
+                $query->select(['id', 'username', 'avatar', 'name']);
             }])
             ->orderBy(['created_at' => SORT_DESC])
             ->limit(3)

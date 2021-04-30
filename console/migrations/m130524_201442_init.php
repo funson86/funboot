@@ -59,7 +59,7 @@ CREATE TABLE `fb_base_department` (
   `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父节点',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
   `app_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'backend' COMMENT '子系统',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `head` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '负责人',
   `vice_head` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '副负责人',
   `level` int(11) NOT NULL DEFAULT '1' COMMENT '层级',
@@ -84,7 +84,7 @@ CREATE TABLE `fb_base_dict` (
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
   `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '代码',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -108,7 +108,7 @@ CREATE TABLE `fb_base_dict_data` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
   `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '代码',
   `value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '值',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -219,7 +219,7 @@ CREATE TABLE `fb_base_permission` (
   `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父节点',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
   `app_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'backend' COMMENT '子系统',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '路径',
   `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '图标',
   `tree` varchar(1022) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '树路径',
@@ -246,7 +246,7 @@ CREATE TABLE `fb_base_role` (
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
   `is_default` int(11) NOT NULL DEFAULT '0' COMMENT '是否为默认',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `tree` varchar(1022) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '树路径',
   `type` int(11) NOT NULL DEFAULT '60' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
@@ -321,7 +321,7 @@ CREATE TABLE `fb_base_schedule` (
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
   `params` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '参数',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `cron` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '* * * * *' COMMENT 'Cron表达式',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
@@ -370,7 +370,7 @@ CREATE TABLE `fb_base_setting_type` (
   `app_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'backend' COMMENT '子系统',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
   `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '代码',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'text' COMMENT '类型',
   `value_range` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '可选值',
   `value_default` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '默认值',
@@ -421,13 +421,20 @@ CREATE TABLE `fb_store` (
   `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父节点',
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '管理员',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `host_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '域名',
   `qrcode` varchar(255) NOT NULL DEFAULT '' COMMENT '二维码',
   `route` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'site' COMMENT '子系统',
   `expired_at` int(11) NOT NULL DEFAULT '0' COMMENT '到期时间',
   `remark` text CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT '备注',
   `language` int(11) NOT NULL DEFAULT '1' COMMENT '语言',
+  `lang_source` varchar(255) NOT NULL DEFAULT 'zh_CN' COMMENT '翻译源语言' AFTER `language`;  
+  `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言' AFTER `lang_source`;  
+  `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言' AFTER `lang_frontend`;  
+  `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言' AFTER `lang_frontend_default`;  
+  `lang_backend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '后端默认语言' AFTER `lang_backend`;  
+  `lang_api` int(11) NOT NULL DEFAULT '3' COMMENT 'API支持语言' AFTER `lang_backend_default`;  
+  `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言' AFTER `lang_api`;  
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -439,6 +446,14 @@ CREATE TABLE `fb_store` (
   KEY `base_store_fk1` (`user_id`),
   CONSTRAINT `base_store_fk1` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='店铺';
+
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_source` varchar(255) NOT NULL DEFAULT 'zh-CN' COMMENT '翻译源语言' AFTER `language`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言' AFTER `lang_source`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言' AFTER `lang_frontend`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言' AFTER `lang_frontend_default`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_backend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '后端默认语言' AFTER `lang_backend`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_api` int(11) NOT NULL DEFAULT '3' COMMENT 'API支持语言' AFTER `lang_backend_default`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言' AFTER `lang_api`;  
 
 -- ----------------------------
 -- Table structure for fb_user
@@ -460,7 +475,7 @@ CREATE TABLE `fb_user` (
   `auth_role` int(11) NOT NULL DEFAULT '1' COMMENT '用户类型',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
   `avatar` varchar(1022) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '头像',
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简述',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `sex` int(11) NOT NULL DEFAULT '0' COMMENT '性别',
   `area` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '地区',
   `province_id` int(11) NOT NULL DEFAULT '0' COMMENT '省',
@@ -471,6 +486,7 @@ CREATE TABLE `fb_user` (
   `point` int(11) NOT NULL DEFAULT '0' COMMENT '积分',
   `balance` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '余额',
   `remark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
+  `login_count` int(11) NOT NULL DEFAULT '0' COMMENT '登录次数',
   `last_login_at` int(11) NOT NULL DEFAULT '1' COMMENT '最近登录时间',
   `last_login_ip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '最近登录IP',
   `last_paid_at` int(11) NOT NULL DEFAULT '0' COMMENT '最近消费时间',
@@ -508,6 +524,63 @@ CREATE TABLE `fb_school_student` (
   CONSTRAINT `school_student_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '学生';
 
+DROP TABLE IF EXISTS `fb_base_lang`;
+CREATE TABLE `fb_base_lang` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `source` varchar(255) NOT NULL COMMENT '源语言',
+  `target` varchar(255) NOT NULL COMMENT '目标语言',
+  `table_code` int(11) NOT NULL DEFAULT 0 COMMENT '表代码',
+  `target_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '目标ID',
+  `content` text COMMENT '内容',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT 50 COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` int(11) NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `base_lang_fk2` (`store_id`),
+  CONSTRAINT `base_lang_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '多语言';
+
+DROP TABLE IF EXISTS `fb_base_profile`;
+CREATE TABLE `fb_school_student` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `company` varchar(255) NOT NULL DEFAULT '' COMMENT '公司',
+  `location` varchar(255) NOT NULL DEFAULT '' COMMENT '城市',
+  `topic_count` int(11) NOT NULL DEFAULT 0 COMMENT '主题数',
+  `like_count` int(11) NOT NULL DEFAULT 0 COMMENT '点赞数',
+  `hate_count` int(11) NOT NULL DEFAULT 0 COMMENT '倒彩数',
+  `heart_count` int(11) NOT NULL DEFAULT 0 COMMENT '感谢数',
+  `click` int(11) NOT NULL DEFAULT 0 COMMENT '浏览',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT 50 COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` int(11) NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `base_profile_fk2` (`store_id`),
+  CONSTRAINT `base_profile_fk2` FOREIGN KEY (`id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `base_profile_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '用户资料';
+
+-- ALTER TABLE `fb_user` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_store` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_base_setting_type` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_base_schedule` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_base_permission` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_base_dict_data` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_base_dict` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_base_department` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_base_role` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+
         ";
 
         $this->execute($sql);
@@ -521,12 +594,14 @@ INSERT INTO `fb_store` VALUES ('1', '0', '1', 'Funboot', '默认网站', 'www.fu
 INSERT INTO `fb_store` VALUES ('2', '0', '2', 'Funpay', 'Funpay', 'www.funpay.com', '', 'pay', '1634684399', 'Funpay', '3', '0', '50', '1', '1', '1607310522', '1', '1');
 INSERT INTO `fb_store` VALUES ('4', '0', '4', 'Funcms', 'Funcms', 'www.funcms.com', '', '', 'cms', '1634684399', 'Funcms', '3', '0', '50', '1', '1', '1607310522', '1', '1');
 INSERT INTO `fb_store` VALUES ('5', '0', '5', 'Funmall', 'Funmall', 'www.funmall.com', '', '', 'mall', '1634684399', 'Funmall', '3', '0', '50', '1', '1', '1607310522', '1', '1');
+INSERT INTO `fb_store` VALUES ('6', '0', '6', 'Funbbs', 'Funbbs', 'www.funbbs.com', '', '', 'bbs', '1634684399', 'Funbbs', '3', '0', '50', '1', '1', '1607310522', '1', '1');
 
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `description`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('1', '1', '0', 'admin', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `description`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('2', '2', '0', 'funpay', '', '', '', '$2y$13\$L58QDefrbiUjyxVXy6P/r.Mz9eeTjJpQEnk/hEN3pqZZRDiw4q7LC', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1607395941', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1599808929', '1607395941', '1', '2');
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `description`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('3', '1', '0', 'test', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `description`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('4', '4', '0', 'funcms', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `description`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('5', '5', '0', 'funmall', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('1', '1', '0', 'admin', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('2', '2', '0', 'funpay', '', '', '', '$2y$13\$L58QDefrbiUjyxVXy6P/r.Mz9eeTjJpQEnk/hEN3pqZZRDiw4q7LC', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1607395941', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1599808929', '1607395941', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('3', '1', '0', 'test', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('4', '4', '0', 'funcms', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('5', '5', '0', 'funmall', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('6', '6', '0', 'funbbs', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
 
 INSERT INTO `fb_base_message_type` VALUES ('7', '1', 'feedback', null, '0', '2', null, '7', '50', '1', '1', '1', '1', '1');
 
@@ -717,35 +792,33 @@ INSERT INTO `fb_base_user_role` VALUES ('4', '2', '', '4', '50', '1', '50', '1',
 INSERT INTO `fb_base_user_role` VALUES ('5', '2', '', '5', '50', '1', '50', '1', '1', '1', '1', '1');
 
 
-INSERT INTO `fb_base_setting_type` VALUES ('10', '1', '0', 'backend', '网站设置', 'website', '', 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('30', '1', '0', 'backend', '联系方式', 'contact', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('45', '1', '0', 'backend', '邮件设置', 'mail', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('90', '1', '0', 'backend', '系统设置', 'system', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('50', '1', '0', 'backend', '网站设置', 'website', '', 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('53', '1', '0', 'backend', '联系方式', 'contact', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('55', '1', '0', 'backend', '邮件设置', 'mail', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('59', '1', '0', 'backend', '系统设置', 'system', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES ('1001', '1', '10', 'backend', '网站标题', 'website_name', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1003', '1', '10', 'backend', '网站Logo', 'website_logo', '', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1005', '1', '10', 'backend', '网站favicon', 'website_favicon', '浏览器上小图标', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1007', '1', '10', 'backend', '网站banner', 'website_banner', 'Banner图', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1009', '1', '10', 'backend', 'SEO标题', 'website_seo_title', '浏览器标题栏便于搜索引擎收录', 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1010', '1', '10', 'backend', 'SEO关键字', 'website_seo_keywords', '便于搜索引擎收录', 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1011', '1', '10', 'backend', 'SEO描述', 'website_seo_description', '便于搜索引擎收录', 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1013', '1', '10', 'backend', '主题模板', 'website_theme', '', 'dropDownList', 'green:green,black:black', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1015', '1', '10', 'backend', '网站通告', 'website_brief', '', 'text', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1017', '1', '10', 'backend', '版权标识', 'website_copyright', '', 'text', '', '@2020 - 版权所有', '50', '1', '1601003987', '1601003987', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1021', '1', '10', 'backend', '统计代码', 'website_stat', '加载在底部，支持百度统计cnzz等', 'textarea', '', '', '50', '1', '1601008532', '1601008544', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5001', '1', '50', 'backend', '网站标题', 'website_name', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5003', '1', '50', 'backend', '网站Logo', 'website_logo', '', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5005', '1', '50', 'backend', '网站favicon', 'website_favicon', '浏览器上小图标', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5007', '1', '50', 'backend', '网站banner', 'website_banner', 'Banner图', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5009', '1', '50', 'backend', 'SEO标题', 'website_seo_title', '浏览器标题栏便于搜索引擎收录', 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5010', '1', '50', 'backend', 'SEO关键字', 'website_seo_keywords', '便于搜索引擎收录', 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5011', '1', '50', 'backend', 'SEO描述', 'website_seo_description', '便于搜索引擎收录', 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5013', '1', '50', 'backend', '主题模板', 'website_theme', '', 'dropDownList', 'green:green,black:black', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5015', '1', '50', 'backend', '网站通告', 'website_brief', '', 'text', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5017', '1', '50', 'backend', '版权标识', 'website_copyright', '', 'text', '', '@2020 - 版权所有', '50', '1', '1601003987', '1601003987', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5021', '1', '50', 'backend', '统计代码', 'website_stat', '加载在底部，支持百度统计cnzz等', 'textarea', '', '', '50', '1', '1601008532', '1601008544', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES ('3001', '1', '30', 'backend', '电话', 'contact_mobile', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('3003', '1', '30', 'backend', 'Email', 'contact_email', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('3005', '1', '30', 'backend', '邮编', 'contact_zipcode', '', 'text', '计算距离算运费时非常重要', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('3007', '1', '30', 'backend', '地址', 'contact_address', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5301', '1', '53', 'backend', '电话', 'contact_mobile', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5303', '1', '53', 'backend', 'Email', 'contact_email', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5305', '1', '53', 'backend', '邮编', 'contact_zipcode', '', 'text', '计算距离算运费时非常重要', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5307', '1', '53', 'backend', '地址', 'contact_address', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES ('4501', '1', '45', 'backend', 'Smtp Host', 'mail_smtp_host', '邮箱smtp主机地址，请申请outlook邮箱，并在设置中开启smtp，发送测试邮件后请在邮箱中确认', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('4503', '1', '45', 'backend', 'Smtp Port', 'mail_smtp_port', '端口号', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('4505', '1', '45', 'backend', 'Smtp Username', 'mail_smtp_username', '用户名', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('4507', '1', '45', 'backend', 'Smtp Password', 'mail_smtp_password', '密码', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('4509', '1', '45', 'backend', 'Smtp Encryption', 'mail_smtp_encryption', '加密方式', 'text', '', 'tls', '50', '1', '1600948360', '1600948360', '1', '1');
-
-INSERT INTO `fb_base_setting_type` VALUES ('9001', '1', '90', 'backend', '开发模式', 'system_develop_mode', '开发模式影响', 'radioList', '0:否,1:是', '0', '50', '1', '1600948511', '1600948511', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5501', '1', '55', 'backend', 'Smtp Host', 'mail_smtp_host', '邮箱smtp主机地址，请申请outlook邮箱，并在设置中开启smtp，发送测试邮件后请在邮箱中确认', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5503', '1', '55', 'backend', 'Smtp Port', 'mail_smtp_port', '端口号', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5505', '1', '55', 'backend', 'Smtp Username', 'mail_smtp_username', '用户名', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5507', '1', '55', 'backend', 'Smtp Password', 'mail_smtp_password', '密码', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5509', '1', '55', 'backend', 'Smtp Encryption', 'mail_smtp_encryption', '加密方式', 'text', '', 'tls', '50', '1', '1600948360', '1600948360', '1', '1');
 
 INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/backup', '', '数据库备份，每天凌晨执行', '* 3 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
 

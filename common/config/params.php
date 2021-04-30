@@ -134,9 +134,34 @@ return [
         ],
     ],
 
+    'smtp_host' => 'smtp.office365.com',
+    'smtp_username' => 'xxx@outlook.com',
+    'smtp_password' => '',
+    'smtp_port' => '587',
+    'smtp_encryption' => 'tls',
+
+    'baiduTranslate' => [
+        'appId' => '',
+        'appSecret' => '',
+        'url' => 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+    ],
+
     'funPay' => [
         'adminEmail' => '3375074@qq.com',
     ],
+
+    'bbs' => [
+        'adminRoleIds' => [50, 106], //管理员role id
+    ],
+
+    // 微信相关
+    'wechat' => [
+        // 是否直接报错显示微信返回错误数据
+        'wechat_error_exception' => true,
+
+        // 微信公众号 参考EasyWechat
+        'wechatConfig' => [],
+    ]
 
 
 ];

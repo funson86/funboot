@@ -29,9 +29,9 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getTreeIdLabel($this->context->getStoreId(), 0, Yii::t('app', 'Root Menu'))) ?>
+        <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getTreeIdLabel(0, true, Yii::t('app', 'Root Menu'))) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'icon')->widget(\common\widgets\iconpicker\IconPicker::className(), []) ?>
         <?= $form->field($model, 'path')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'target')->radioList(ActiveModel::getTargetLabels()) ?>

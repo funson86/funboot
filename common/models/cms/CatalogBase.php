@@ -2,6 +2,7 @@
 
 namespace common\models\cms;
 
+use common\models\base\Lang;
 use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
@@ -15,6 +16,14 @@ use Yii;
  */
 class CatalogBase extends BaseModel
 {
+    static $tableCode = 5001;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'textarea',
+        'content' => 'Ueditor',
+    ];
+
     const TYPE_LIST = 'list';
     const TYPE_MENU = 'menu';
     const TYPE_LINK = 'link';
@@ -49,10 +58,7 @@ class CatalogBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -86,13 +92,6 @@ class CatalogBase extends BaseModel
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -102,4 +101,8 @@ class CatalogBase extends BaseModel
         return $this->hasMany(Page::className(), ['catalog_id' => 'id']);
     }
 
+    public function getLanguages()
+    {
+        return $this->hasMany(Lang::className(), ['target_id' => 'id'])->where(['table_code' => static::getTableCode()]);
+    }
 }

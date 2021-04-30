@@ -88,7 +88,7 @@ $store = $this->context->store;
             <div class="col-lg-6 my-auto">
                 <div class="header-content mx-auto">
                     <h1 class="mb-5">FunPay 个人收款支付系统<span class="">V1.1</span></h1>
-                    <a href="<?= Yii::$app->urlManager->createUrl(['pay/default/pay']) ?>>" class="btn btn-outline btn-xl js-scroll-trigger">立即体验</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="<?= Yii::$app->urlManager->createUrl(['pay/default/pay']) ?>" class="btn btn-outline btn-xl js-scroll-trigger">立即体验</a> &nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="https://github.com/funson86/funpay" class="btn btn-outline btn-xl js-scroll-trigger orange">开发教程</a>
                 </div>
             </div>

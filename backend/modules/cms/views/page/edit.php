@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body">
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="tab-content-1">
-                        <?= $form->field($model, 'catalog_id')->dropDownList(\common\models\cms\Catalog::getTreeIdLabel()) ?>
+                        <?= $form->field($model, 'catalog_id')->dropDownList(\common\models\cms\Catalog::getTreeIdLabel(0, false)) ?>
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'brief')->textarea() ?>
                         <?= $form->field($model, 'content')->widget(\common\components\ueditor\Ueditor::class, []) ?>
@@ -45,7 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <!--<?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>-->
                         <?= $form->field($model, 'click')->textInput() ?>
                         <?= $form->field($model, 'sort')->textInput() ?>
-                        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>                    </div>
+                        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
+                    </div>
                     <div class="tab-pane fade" id="tab-content-2">
                         <?= $form->field($model, 'seo_title')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?>

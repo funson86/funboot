@@ -30,7 +30,7 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'sex')->radioList(ActiveModel::getSexLabels()) ?>
         <?= $form->field($model, 'area')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>

@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'name',
                         //['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
                         'params',
-                        'description',
+                        'brief',
                         'cron',
                         // 'type',
                         ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],

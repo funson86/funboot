@@ -67,7 +67,7 @@ class MessageTypeController extends BaseController
             if ($sendUsers && count($sendUsers) > 0) {
                 $model->send_user = implode('|', $sendUsers);
             }
-            $model->send_type = ArrayHelper::arrayToInt(Yii::$app->request->post('Message')['sendTypes']);
+            $model->send_type = ArrayHelper::arrayToInt(Yii::$app->request->post('Message')['sendTypes'] ?? []);
 
             if (!$model->save()) {
                 $this->redirectError($model);

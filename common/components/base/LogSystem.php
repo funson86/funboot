@@ -137,16 +137,11 @@ class LogSystem extends \yii\base\Component
         $model->ip = $request instanceof Request ? $request->getRemoteIP() : '';
         $model->ip_info = IpHelper::ip2Location($model->ip);
 
-        if (is_array($data)) {
-            $model->data = json_encode($data);
-        } else {
-            $model->data = $data ?? '';
-        }
-
         $model->cost_time = Yii::getLogger()->getElapsedTime();
         $model->type = $type;
         $model->code = $code;
-        $model->msg = $msg ?? '';
+        $model->data = is_array($data) ? json_encode($data) : $data ?? '';
+        $model->msg = is_array($msg) ? json_encode($msg) : $msg ?? '';
 
         // 插入队列
         if ($this->queue) {

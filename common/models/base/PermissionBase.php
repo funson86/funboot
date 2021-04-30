@@ -46,10 +46,7 @@ class PermissionBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -63,7 +60,7 @@ class PermissionBase extends BaseModel
             'parent_id' => Yii::t('app', 'Parent ID'),
             'name' => Yii::t('app', 'Name'),
             'app_id' => Yii::t('app', 'App ID'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'path' => Yii::t('app', 'Path'),
             'icon' => Yii::t('app', 'Icon'),
             'tree' => Yii::t('app', 'Tree'),
@@ -79,13 +76,7 @@ class PermissionBase extends BaseModel
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

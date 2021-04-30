@@ -45,7 +45,7 @@ class DepartmentBase extends BaseModel
             'parent_id' => Yii::t('app', 'Parent ID'),
             'name' => Yii::t('app', 'Name'),
             'app_id' => Yii::t('app', 'App ID'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'head' => Yii::t('app', 'Head'),
             'vice_head' => Yii::t('app', 'Vice Head'),
             'level' => Yii::t('app', 'Level'),
@@ -59,14 +59,6 @@ class DepartmentBase extends BaseModel
             'heads' => Yii::t('app', '负责人'),
             'viceHeads' => Yii::t('app', '副负责人'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
     }
 
 }

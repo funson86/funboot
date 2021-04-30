@@ -3,6 +3,7 @@ namespace common\models;
 
 use common\models\base\Message;
 use common\models\base\UserRole;
+use Identicon\Identicon;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -103,7 +104,7 @@ class UserBase extends BaseModel implements IdentityInterface
             'auth_role' => Yii::t('app', 'Auth Role'),
             'name' => Yii::t('app', 'Name'),
             'avatar' => Yii::t('app', 'Avatar'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'sex' => Yii::t('app', 'Sex'),
             'area' => Yii::t('app', 'Area'),
             'province_id' => Yii::t('app', 'Province ID'),
@@ -163,14 +164,6 @@ class UserBase extends BaseModel implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
      * return label or labels array
      *
      * @param null $id
@@ -189,10 +182,7 @@ class UserBase extends BaseModel implements IdentityInterface
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -399,5 +389,13 @@ class UserBase extends BaseModel implements IdentityInterface
         }
 
         return $model;
+    }
+
+    public function getMixedAvatar($size = 50)
+    {
+        if ($this->avatar) {
+            return $this->avatar;
+        }
+        return (new Identicon())->getImageDataUri($this->email, $size);
     }
 }

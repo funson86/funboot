@@ -84,7 +84,6 @@ function fbPrompt(url, text) {
 }
 
 $(document).ready(function () {
-    $('.sidebar-menu').tree();
     if ($(this).width() < 769) {
         config.isMobile = true;
     }
@@ -314,3 +313,22 @@ function postLink(url, data = '', name = '_self')
     tempForm.submit();
     document.body.removeChild(tempForm);
 }
+
+jQuery(function ($) {
+
+    // 防止重复提交
+    $(document).on("submit", "form", function() {
+        var $form = $(this),
+            data = $form.data('yiiActiveForm');
+        if (data) {
+            // 如果是第一次 submit 并且 客户端验证有效，那么进行正常 submit 流程
+            if (!$form.data('funboot.submitting') && data.validated) {
+                $form.data('funboot.submitting', true);
+                return true;
+            } else { //  否则阻止提交
+                return false;
+            }
+        }
+    });
+
+});

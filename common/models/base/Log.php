@@ -49,9 +49,9 @@ class Log extends LogBase
     {
         return array_merge(parent::rules(), [
             [['store_id', 'user_id', 'agent_type', 'code', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['params', 'data'], 'string'],
+            [['params', 'msg', 'data'], 'string'],
             [['cost_time'], 'number'],
-            [['name', 'url', 'method', 'user_agent', 'ip_info', 'msg'], 'string', 'max' => 255],
+            [['name', 'url', 'method', 'user_agent', 'ip_info'], 'string', 'max' => 255],
             [['ip'], 'string', 'max' => 16],
         ]);
     }

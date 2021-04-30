@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'parent_id',
             'name',
             'app_id',
-            'description',
+            'brief',
             'path',
             'icon',
             'tree',

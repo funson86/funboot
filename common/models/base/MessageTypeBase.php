@@ -81,10 +81,7 @@ class MessageTypeBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -108,10 +105,7 @@ class MessageTypeBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -147,11 +141,4 @@ class MessageTypeBase extends BaseModel
         return $this->hasMany(Message::className(), ['message_type_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
 }

@@ -6,6 +6,7 @@ use common\helpers\Html;
 use common\models\base\Attachment;
 use common\models\base\Department;
 use common\models\base\DictData;
+use common\models\base\Lang;
 use common\models\base\Log;
 use common\models\base\Message;
 use common\models\base\MessageType;
@@ -43,17 +44,19 @@ use yii\db\ActiveRecord;
  */
 class StoreBase extends BaseModel
 {
+    const SUPPORT_SHIPMENT_DELIVERY = 1;
+    const SUPPORT_SHIPMENT_COLLECTION = 2;
+    const SUPPORT_SHIPMENT_BOTH = 3;
+
+    const SUPPORT_PAYMENT_CARD = 1;
+    const SUPPORT_PAYMENT_CASH = 2;
+    const SUPPORT_PAYMENT_BOTH = 3;
+
     const ROUTE_SITE = 'site';
     const ROUTE_MALL = 'mall';
     const ROUTE_CMS = 'cms';
     const ROUTE_PAY = 'pay';
-
-    const TYPE_TABLE_ORDER = 1;
-    const TYPE_GIFT_VOUCHER = 2;
-    const TYPE_TABLE_QRCODE = 4;
-
-    const LANGUAGE_EN = 1;
-    const LANGUAGE_ZH_CN = 2;
+    const ROUTE_BBS = 'bbs';
 
     public $expiredTime;
     public $types;
@@ -115,46 +118,14 @@ class StoreBase extends BaseModel
             self::ROUTE_MALL => Yii::t('cons', 'ROUTE_MALL'),
             self::ROUTE_CMS => Yii::t('cons', 'ROUTE_CMS'),
             self::ROUTE_PAY => Yii::t('cons', 'ROUTE_PAY'),
+            self::ROUTE_BBS => Yii::t('cons', 'ROUTE_BBS'),
         ];
 
         $all && $data += [];
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
-    }
-
-    /**
-     * @param null $id
-     * @param bool $all
-     * @param bool $flip
-     * @return array|mixed|null
-     */
-    public static function getTypeLabels($id = null, $all = false, $flip = false)
-    {
-        $data = [
-            self::TYPE_TABLE_ORDER => Yii::t('cons', 'TYPE_TABLE_ORDER'),
-            self::TYPE_GIFT_VOUCHER => Yii::t('cons', 'TYPE_GIFT_VOUCHER'),
-            self::TYPE_TABLE_QRCODE => Yii::t('cons', 'TYPE_TABLE_QRCODE'),
-        ];
-
-        $all && $data += [];
-
-        $flip && $data = array_flip($data);
-
-        if (!is_null($id)) {
-            $str = '';
-            foreach ($data as $k => $v) {
-                if (($id & $k) == $k) {
-                    $str .= $data[$k] . ' ';
-                }
-            }
-            return $str;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -165,25 +136,19 @@ class StoreBase extends BaseModel
      */
     public static function getLanguageLabels($id = null, $all = false, $flip = false)
     {
-        $data = [
-            self::LANGUAGE_EN => Yii::t('cons', 'LANGUAGE_EN'),
-            self::LANGUAGE_ZH_CN => Yii::t('cons', 'LANGUAGE_ZH_CN'),
-        ];
+        return Lang::getLanguageLabels($id, $all, $flip);
+    }
 
-        $all && $data += [];
-
-        $flip && $data = array_flip($data);
-
-        if (!is_null($id)) {
-            $str = '';
-            foreach ($data as $k => $v) {
-                if (($id & $k) == $k) {
-                    $str .= $data[$k] . ' ';
-                }
-            }
-            return $str;
-        }
-        return $data;
+    /**
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
+     * @param bool $isArray
+     * @return array|mixed|null
+     */
+    public static function getLanguageCode($id = null, $all = false, $flip = false, $isArray = false)
+    {
+        return Lang::getLanguageCode($id, $all, $flip, $isArray);
     }
 
     /**
@@ -192,21 +157,20 @@ class StoreBase extends BaseModel
      * @param bool $flip
      * @return array|mixed|null
      */
-    public static function getLanguageCode($id = null, $all = false, $flip = false)
+    public static function getLanguageBaiduCode($id = null, $all = false, $flip = false)
     {
-        $data = [
-            self::LANGUAGE_EN => 'en',
-            self::LANGUAGE_ZH_CN => 'zh-CN',
-        ];
+        return Lang::getLanguageBaiduCode($id, $all, $flip);
+    }
 
-        $all && $data += [];
-
-        $flip && $data = array_flip($data);
-
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+    /**
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
+     * @return array|mixed|null
+     */
+    public static function getLanguageFlag($id = null, $all = false, $flip = false)
+    {
+        return Lang::getLanguageFlag($id, $all, $flip);
     }
 
     /**
@@ -219,7 +183,7 @@ class StoreBase extends BaseModel
             'parent_id' => Yii::t('app', 'Parent ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'host_name' => Yii::t('app', 'Host Name'),
             'router' => Yii::t('app', 'Router'),
             'qrcode' => Yii::t('app', 'Qrcode'),
@@ -320,13 +284,7 @@ class StoreBase extends BaseModel
     {
         return $this->hasMany(UserRole::className(), ['store_id' => 'id']);
     }
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -354,10 +312,7 @@ class StoreBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -378,10 +333,7 @@ class StoreBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -402,10 +354,7 @@ class StoreBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
 }

@@ -9,6 +9,7 @@
 - Class 'COM' not found
 - com() has been disabled for security reasons
 - 网站访问500错误，index.php无法require根目录其他文件
+- Curl访问https://开头的地址错误
 
 ### linux下提示无访问权限
 
@@ -52,6 +53,7 @@ extension=php_com_dotnet.dll
 ; disable_classes = COM
 ```
 
+
 ### 网站访问500错误，index.php无法require根目录其他文件
 
 由于指定/www/funboot/web目录，/www/funboot/web/.user.ini的路径默认为当前路径，对于项目根路径其他文件无法require
@@ -66,3 +68,18 @@ open_basedir=/www/funboot:/tmp/:/proc/
 
 # chattr +i .user.ini
 ```
+
+### Curl访问https://开头的地址错误
+
+下载证书https://curl.haxx.se/ca/cacert.pem，下载后比如放到c:\路径下
+
+在php.ini中开启ca
+
+```
+[curl]
+; A default value for the CURLOPT_CAINFO option. This is required to be an
+; absolute path.
+curl.cainfo =c:\cacert.pem
+```
+
+重启php-fpm或者面板

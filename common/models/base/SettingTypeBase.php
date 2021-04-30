@@ -71,10 +71,7 @@ class SettingTypeBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
 
@@ -90,7 +87,7 @@ class SettingTypeBase extends BaseModel
             'app_id' => Yii::t('app', 'App ID'),
             'name' => Yii::t('app', 'Name'),
             'code' => Yii::t('app', 'Code'),
-            'description' => Yii::t('app', 'Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'type' => Yii::t('app', 'Type'),
             'value_range' => Yii::t('app', 'Value Range'),
             'value_default' => Yii::t('app', 'Value Default'),
@@ -112,14 +109,6 @@ class SettingTypeBase extends BaseModel
         return $this->hasOne(Setting::class, ['setting_type_id' => 'id'])
             ->where(['status' => Setting::STATUS_ACTIVE])
             ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC]);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
     }
 
 }

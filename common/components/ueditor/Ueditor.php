@@ -4,7 +4,7 @@ namespace common\components\ueditor;
 
 use common\components\ueditor\assets\AppAsset;
 use yii\helpers\Html;
-use common\helpers\Url;
+use yii\helpers\Url;
 use common\helpers\ArrayHelper;
 use Yii;
 use yii\helpers\Json;
@@ -16,6 +16,8 @@ use yii\helpers\Json;
  */
 class Ueditor extends \yii\widgets\InputWidget
 {
+    public $style = 1;
+
     public $config = [];
 
     public $formData = [];
@@ -51,7 +53,7 @@ class Ueditor extends \yii\widgets\InputWidget
                 [
                     'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
                     'link', 'unlink', '|',
-                    'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'insertcode', 'pagebreak', '|',
+                    'simpleupload', $this->style == 1 ? 'insertimage' : '', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'insertcode', 'pagebreak', '|',
                     'horizontal', 'inserttable', '|',
                     'print', 'preview', 'searchreplace', 'help'
                 ]

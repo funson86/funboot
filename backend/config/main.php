@@ -21,6 +21,9 @@ return [
         'cms' => [
             'class' => 'backend\modules\cms\Module',
         ],
+        'bbs' => [
+            'class' => 'backend\modules\bbs\Module',
+        ],
         'mall' => [
             'class' => 'backend\modules\mall\Module',
         ],
@@ -29,6 +32,9 @@ return [
         ],
         'tool' => [
             'class' => 'backend\modules\tool\Module',
+        ],
+        'wechat' => [
+            'class' => 'backend\modules\wechat\Module',
         ],
     ],
     'components' => [

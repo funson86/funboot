@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'visible' => false,
                         ],
 
-                        // 'id',
+                        'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         ['attribute' => 'catalog_id', 'value' => function ($model) { return $model->catalog->name; }, 'filter' => Html::activeDropDownList($searchModel, 'catalog_id', Catalog::getTreeIdLabel(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'name',

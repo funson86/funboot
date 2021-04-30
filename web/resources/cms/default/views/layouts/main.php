@@ -4,6 +4,8 @@ use frontend\components\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
+use yii\helpers\Url;
+use common\models\cms\Catalog;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -55,7 +57,7 @@ $store = $this->context->store;
                     <?php foreach ($this->context->mainMenu2 as $item) { ?>
                         <?php if (isset($item['items'])) { ?>
                             <li class="dropdown <?php if ($item['active']) { echo 'active'; } ?>">
-                                <a href="<?= $item['url'] ?>" data-toggle="dropdown" class="dropdown-toggle"><?= $item['name'] ?> <b class="caret"></b></a>
+                                <a href="<?= $item['url'] ?>" data-toggle="dropdown" class="dropdown-toggle"><?= fbt(Catalog::getTableCode(), $item['id'], 'name', Yii::$app->language) ?: $item['name'] ?> <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <?php foreach ($item['items'] as $v) { ?>
                                         <li><a href="<?= $v['url'] ?>"><?= $v['name'] ?></a></li>
@@ -63,9 +65,16 @@ $store = $this->context->store;
                                 </ul>
                             </li>
                         <?php } else { ?>
-                            <li class="<?php if ($item['active']) { echo 'active'; } ?>"><a href="<?= $item['url'] ?>"><?= $item['name'] ?></a></li>
+                            <li class="<?php if ($item['active']) { echo 'active'; } ?>"><a href="<?= $item['url'] ?>"><?= fbt(Catalog::getTableCode(), $item['id'], 'name', Yii::$app->language) ?: $item['name'] ?></a></li>
                         <?php } ?>
                     <?php } ?>
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-globe"></i></a>
+                        <div id="w5" class="dropdown-menu">
+                            <a class="funboot-lang dropdown-item" href="javascript:;" data-lang="zh-CN"><i class="flag-icon flag-icon-cn mr-2"></i>中文</a>
+                            <a class="funboot-lang dropdown-item" href="javascript:;" data-lang="en"><i class="flag-icon flag-icon-gb mr-2"></i>English</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -95,16 +104,35 @@ $store = $this->context->store;
 </footer>
 
 <button id="bind" type="button" class="btn btn-scroll-top">
-    <a href="#top">
-        <i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+    <a href="#top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
 </button>
 
 <script src="<?= Yii::getAlias('@web/resources/js/bootstrap.min.js') ?>"></script>
 <script src="<?= Yii::getAlias('@web/resources/js/cms_base.js') ?>"></script>
 <script src="<?= Yii::getAlias('@web/resources/cms/' . $this->context->theme . '/js/main.js') ?>"></script>
 
+<?php
+$urlSetLanguage = Url::to(['/site/set-language'], false, false);
+$js = <<<JS
+$('.funboot-lang').click(function() {
+    let lang = $(this).data('lang')
+    let param = {
+        lang: lang
+    }
+    $.get("{$urlSetLanguage}", param, function(data) {
+        if (parseInt(data.code) === 200) {
+            window.location.reload();
+        }
+    })
+});
+JS;
+
+$this->registerJs($js);
+?>
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
+
+
 

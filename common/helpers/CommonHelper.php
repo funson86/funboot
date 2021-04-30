@@ -2,6 +2,7 @@
 
 namespace common\helpers;
 
+use common\models\base\Lang;
 use common\models\Store;
 use yii\helpers\HtmlPurifier;
 use yii\web\View;
@@ -22,14 +23,26 @@ class CommonHelper
     }
 
     /**
-     * 根据host_name得到对应的store
+     * 根据host_name得到对应的store，store支持|分隔多个域名
      * @return Store|mixed|null
      */
     public static function getStoreByHostName()
     {
         $allStore = Yii::$app->cacheSystem->getAllStore();
-        $mapHostNameId = ArrayHelper::map($allStore, 'host_name', 'id');
         $mapIdStore = ArrayHelper::mapIdData($allStore);
+
+        // host id map
+        $mapHostNameId = [];
+        foreach ($allStore as $store) {
+            if (strpos($store->host_name, '|') !== false) {
+                $arr = explode('|', $store->host_name);
+                foreach ($arr as $item) {
+                    $mapHostNameId[$item] = $store->id;
+                }
+            } else {
+                $mapHostNameId[$store->host_name] = $store->id;
+            }
+        }
 
         // 计算store，如果没有则使用默认的store
         $hostName = Yii::$app->request->hostName;
@@ -45,7 +58,7 @@ class CommonHelper
             $lang = CommonHelper::parseBrowserLanguage();
         }
 
-        $langInt = Store::getLanguageCode($lang, true, true);
+        $langInt = Lang::getLanguageCode($lang, true, true);
         if (($langInt & $store->language) != $langInt) {
             $lang = Yii::$app->params['defaultBackendLanguage'];
         }

@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'store_id',
             'name',
             ['attribute' => 'is_default', 'value' => function ($model) { return ActiveModel::getIsDefaultLabels($model->is_default); }, ],
-            'description',
+            'brief',
             'tree',
             'type',
             'sort',

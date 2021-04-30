@@ -50,10 +50,7 @@ class AttachmentBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            return $data[$id] ?? $id;
-        }
-        return $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -90,14 +87,6 @@ class AttachmentBase extends BaseModel
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
-    }
-
-    /**
      * return label or labels array
      *
      * @param  integer $id
@@ -110,6 +99,7 @@ class AttachmentBase extends BaseModel
         }
 
         $model = new Attachment();
+        $model->store_id = Yii::$app->storeSystem->getId();
         $model->attributes = $data;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
