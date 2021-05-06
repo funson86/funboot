@@ -428,13 +428,13 @@ CREATE TABLE `fb_store` (
   `expired_at` int(11) NOT NULL DEFAULT '0' COMMENT '到期时间',
   `remark` text CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT '备注',
   `language` int(11) NOT NULL DEFAULT '1' COMMENT '语言',
-  `lang_source` varchar(255) NOT NULL DEFAULT 'zh_CN' COMMENT '翻译源语言' AFTER `language`;  
-  `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言' AFTER `lang_source`;  
-  `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言' AFTER `lang_frontend`;  
-  `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言' AFTER `lang_frontend_default`;  
-  `lang_backend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '后端默认语言' AFTER `lang_backend`;  
-  `lang_api` int(11) NOT NULL DEFAULT '3' COMMENT 'API支持语言' AFTER `lang_backend_default`;  
-  `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言' AFTER `lang_api`;  
+  `lang_source` varchar(255) NOT NULL DEFAULT 'zh_CN' COMMENT '翻译源语言',
+  `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言',
+  `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言',
+  `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言',
+  `lang_backend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '后端默认语言',
+  `lang_api` int(11) NOT NULL DEFAULT '3' COMMENT 'API支持语言',
+  `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言',  
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -482,7 +482,7 @@ CREATE TABLE `fb_user` (
   `city_id` int(11) NOT NULL DEFAULT '0' COMMENT '市',
   `district_id` int(11) NOT NULL DEFAULT '0' COMMENT '区',
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '地址',
-  `birthday` date NOT NULL default '' COMMENT '生日',
+  `birthday` varchar(255) NOT NULL default '' COMMENT '生日',
   `point` int(11) NOT NULL DEFAULT '0' COMMENT '积分',
   `balance` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '余额',
   `remark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
@@ -547,7 +547,7 @@ CREATE TABLE `fb_base_lang` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '多语言';
 
 DROP TABLE IF EXISTS `fb_base_profile`;
-CREATE TABLE `fb_school_student` (
+CREATE TABLE `fb_base_profile` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
@@ -567,7 +567,7 @@ CREATE TABLE `fb_school_student` (
   `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
   KEY `base_profile_fk2` (`store_id`),
-  CONSTRAINT `base_profile_fk2` FOREIGN KEY (`id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `base_profile_fk1` FOREIGN KEY (`id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `base_profile_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '用户资料';
 
@@ -590,18 +590,18 @@ CREATE TABLE `fb_school_student` (
         $sql = "
 SET FOREIGN_KEY_CHECKS=0;
 
-INSERT INTO `fb_store` VALUES ('1', '0', '1', 'Funboot', '默认网站', 'www.funboot.com', '', 'site', '1634684399', '默认网站', '3', '0', '50', '1', '1', '1607310522', '1', '1');
-INSERT INTO `fb_store` VALUES ('2', '0', '2', 'Funpay', 'Funpay', 'www.funpay.com', '', 'pay', '1634684399', 'Funpay', '3', '0', '50', '1', '1', '1607310522', '1', '1');
-INSERT INTO `fb_store` VALUES ('4', '0', '4', 'Funcms', 'Funcms', 'www.funcms.com', '', '', 'cms', '1634684399', 'Funcms', '3', '0', '50', '1', '1', '1607310522', '1', '1');
-INSERT INTO `fb_store` VALUES ('5', '0', '5', 'Funmall', 'Funmall', 'www.funmall.com', '', '', 'mall', '1634684399', 'Funmall', '3', '0', '50', '1', '1', '1607310522', '1', '1');
-INSERT INTO `fb_store` VALUES ('6', '0', '6', 'Funbbs', 'Funbbs', 'www.funbbs.com', '', '', 'bbs', '1634684399', 'Funbbs', '3', '0', '50', '1', '1', '1607310522', '1', '1');
+INSERT INTO `fb_store` VALUES ('1', '0', '1', 'Funboot', '默认网站', 'www.funboot.com', '', 'site', '1634684399', '默认网站', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
+INSERT INTO `fb_store` VALUES ('2', '0', '2', 'Funpay', 'Funpay', 'www.funpay.com', '', 'pay', '1634684399', 'Funpay', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
+INSERT INTO `fb_store` VALUES ('4', '0', '4', 'Funcms', 'Funcms', 'www.funcms.com', '', 'cms', '1634684399', 'Funcms', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
+INSERT INTO `fb_store` VALUES ('5', '0', '5', 'Funmall', 'Funmall', 'www.funmall.com', '', 'mall', '1634684399', 'Funmall', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
+INSERT INTO `fb_store` VALUES ('6', '0', '6', 'Funbbs', 'Funbbs', 'www.funbbs.com', '', 'bbs', '1634684399', 'Funbbs', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
 
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('1', '1', '0', 'admin', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('2', '2', '0', 'funpay', '', '', '', '$2y$13\$L58QDefrbiUjyxVXy6P/r.Mz9eeTjJpQEnk/hEN3pqZZRDiw4q7LC', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1607395941', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1599808929', '1607395941', '1', '2');
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('3', '1', '0', 'test', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('4', '4', '0', 'funcms', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('5', '5', '0', 'funmall', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
-INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('6', '6', '0', 'funbbs', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', null, '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('1', '1', '0', 'admin', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', '', '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('2', '2', '0', 'funpay', '', '', '', '$2y$13\$L58QDefrbiUjyxVXy6P/r.Mz9eeTjJpQEnk/hEN3pqZZRDiw4q7LC', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', '', '', '1607395941', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1599808929', '1607395941', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('3', '1', '0', 'test', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', '', '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('4', '4', '0', 'funcms', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', '', '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('5', '5', '0', 'funmall', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', '', '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('6', '6', '0', 'funbbs', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', '', '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
 
 INSERT INTO `fb_base_message_type` VALUES ('7', '1', 'feedback', null, '0', '2', null, '7', '50', '1', '1', '1', '1', '1');
 

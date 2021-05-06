@@ -48,7 +48,7 @@ class TopicController extends BaseController
 
     protected function beforeEdit($id = null, $model = null)
     {
-        $model->format = Yii::$app->request->get('format', $this->modelClass::FORMAT_HTML);
+        $model->format = Yii::$app->request->get('format', $model->format ?: $this->modelClass::FORMAT_HTML);
         if ($model->isNewRecord) {
             $model->user_id = Yii::$app->user->id;
             $model->username = Yii::$app->user->identity->username;
