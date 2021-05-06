@@ -1,0 +1,182 @@
+.acknowledgement {
+    padding:30px;
+    background-color:#fff
+}
+.acknowledgement p.msg {
+    font-size:24px;
+    font-weight:bold;
+    color:#209800;
+    display:inline-block
+}
+.acknowledgement p.info {
+    margin-top:12px;
+    line-height:36px
+}
+.acknowledgement p.info .price {
+    color:#C52E00;
+    margin:0 6px
+}
+.acknowledgement p.info .price em {
+    font-weight:bold;
+    font-size:16px;
+    margin-left:6px
+}
+.acknowledgement p.info .gray {
+    color:#999
+}
+.acknowledgement .ico_ok {
+    background:url(../images/ok_34.jpg) no-repeat;
+    display:inline-block;
+    height:34px;
+    width:34px;
+    vertical-align:middle;
+    margin-right:8px
+}
+.acknowledgement .ico_phone {
+    background:url(../images/phone.jpg) center top no-repeat;
+    display:inline-block;
+    height:26px;
+    width:46px;
+    vertical-align:middle
+}
+.acknowledgement .view_detail {
+    text-decoration:none;
+    margin-left:30px
+}
+.shuom {
+    margin:10px auto
+}
+.shuom li {
+    float:left;
+    margin-right:11px
+}
+.shuom img {
+    border:1px solid #e7e7e7
+}
+.other_buy {
+    margin-top:10px;
+    border:1px solid #e7e7e7;
+    padding-bottom:10px;
+    background-color:#fff
+}
+.other_buy h3 {
+    font-weight:bold;
+    color:#333;
+    padding:10px 20px;
+    border-bottom:1px solid #e7e7e7
+}
+.other_buy .productlist ul {
+    margin:10px 0 0 20px;
+    background:#fff
+}
+.other_buy .productlist li {
+    float:left;
+    margin:0 10px;
+    width:172px
+}
+a.addcart {
+    display:none
+}
+a.productitem {
+    display:inline-block;
+    padding:10px;
+    cursor:pointer;
+    text-decoration:none;
+    position:relative;
+    overflow:hidden
+}
+a.productitem:hover {
+    background-color:#f6f6f6;
+    text-decoration:none
+}
+a.productitem span.productname {
+    width:145px;
+    height:38px;
+    line-height:19px;
+    display:block;
+    overflow:hidden
+}
+a.productitem span.description {
+    width:145px;
+    display:block;
+    color:#999;
+    white-space:nowrap;
+    overflow:hidden
+}
+a.productitem:hover span.productname {
+    color:#d4062e
+}
+a.productitem span.productimg img {
+    width:150px;
+    height:150px;
+    display:block;
+    background:#fff url(../images/imgloading.gif) center center no-repeat;
+    border:1px solid #e7e7e7;
+    cursor:pointer;
+    overflow:hidden
+}
+a.productitem span.nalaprice {
+    color:#d4062e
+}
+a.productitem span.nalaprice b {
+    font-size:16px
+}
+a.productitem span.nalaprice span.promotion {
+    color:#333;
+    font-size:12px;
+    font-weight:normal
+}
+a.productitem span.xszk {
+    padding-left:45px;
+    background:url(../images/product_xszk_bg.png) left center no-repeat
+}
+a.productitem span.discount {
+    width:43px;
+    height:36px;
+    position:absolute;
+    top:12px;
+    right:5px;
+    color:#fff;
+    padding:3px 0 0 1px;
+    line-height:13px;
+    text-align:center;
+    vertical-align:middle;
+    background:url(../images/product_discount_bg.png) top left no-repeat
+}
+a.productitem span.discount strong {
+    display:block;
+    line-height:14px;
+    font-weight:bold
+}
+a.productitem span.tgjg {
+    padding-left:60px;
+    background:url(../images/tuan_price_pic.png) left center no-repeat
+}
+a.productitem span.specialinfo {
+    width:32px;
+    height:32px;
+    position:absolute;
+    top:12px;
+    right:12px;
+    color:#fff;
+    line-height:32px;
+    text-align:center;
+    background:url(../images/product_special_info_bg.png) center center no-repeat
+}
+a.productitem span.sales {
+    color:#d4062e
+}
+a.productitem span.price {
+    display:none;
+    color:#999;
+    font-weight:normal
+}
+a.productitem span.price .line {
+    text-decoration:line-through
+}
+a.productitem span.salerow {
+    color:#999
+}
+#header .bd_bar_bd {
+    width: 1008px;
+}
