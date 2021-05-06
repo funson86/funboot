@@ -51,7 +51,11 @@ class TopicController extends BaseController
     public function actionEdit()
     {
         $id = Yii::$app->request->get('id', null);
+        $nodeId = Yii::$app->request->get('node_id', null);
         $model = $this->findModel($id);
+        if (!($model->node_id > 0 || $nodeId)) {
+            return $this->redirect(['edit-node']);
+        }
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
@@ -108,6 +112,25 @@ class TopicController extends BaseController
             'model' => $model,
             'metas' => $metas ?? [],
             'mapMetaIdContent' => $mapMetaIdContent ?? [],
+        ]);
+
+    }
+
+    public function actionEditNode()
+    {
+        $id = Yii::$app->request->get('id', null);
+
+        $model = $this->findModel($id);
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->node_id > 0) {
+                    return $this->redirect(['edit', 'node_id' => $model->node_id]);
+                }
+            }
+        }
+
+        return $this->render($this->action->id, [
+            'model' => $model,
         ]);
 
     }

@@ -22,9 +22,6 @@ $this->title = Yii::t('app', 'Publish');
                     ],
                 ]); ?>
                 <div class="col-sm-12 p-0">
-                    <?php if (!Yii::$app->request->get('id')) { ?>
-                    <?= $form->field($model, 'node_id')->dropDownList(Node::getTreeIdLabel(0, false)) ?>
-                    <?php } ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?php foreach ($metas as $meta) { ?>
                         <div class="form-group row field-topic-node_id">
