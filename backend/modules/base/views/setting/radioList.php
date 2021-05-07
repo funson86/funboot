@@ -13,7 +13,7 @@ $value = $row['setting']['value'] ?? '';
     <div class="col-sm-push-10">
         <?php foreach ($valueRange as $key => $v) { ?>
             <label class="radio-inline">
-                <input type="radio" name="setting[<?= $row['code'] ?>]" class="radio" value="<?= $key ?>" <?php if ($key == $value || (empty($value) && $key == $valueDefault)) { echo 'checked'; } ?>>
+                <input type="radio" name="setting[<?= $row['code'] ?>]" class="radio" value="<?= $key ?>" <?php if ($key == $value || (is_null($value) && $key == $valueDefault)) { echo 'checked'; } ?>>
                 <?= Yii::t('setting', $v) ?>
             </label>
         <?php } ?>
