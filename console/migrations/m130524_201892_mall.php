@@ -722,7 +722,7 @@ INSERT INTO `fb_base_permission` VALUES ('213', '1', '21', '发票管理', 'back
 INSERT INTO `fb_base_permission` VALUES ('215', '1', '21', '退款管理', 'backend', '', '/mall/refund/index', 'fas fa-hand-holding-usd', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('217', '1', '21', '购物车', 'backend', '', '/mall/cart/index', 'fas fa-shopping-cart', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
 
-INSERT INTO `fb_base_permission` VALUES ('224', '1', '22', '搜索记录', 'backend', '', '/mall/search-log/index', 'fas fa-search-plus', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('224', '1', '22', '搜索记录', 'backend', '', '/base/search-log/index', 'fas fa-search-plus', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('226', '1', '22', '用户地址', 'backend', '', '/mall/address/index', 'fas fa-map-marker-alt', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
 
 INSERT INTO `fb_base_permission` VALUES ('240', '1', '24', '商品列表', 'backend', '', '/mall/product/index', 'fas fa-box', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
@@ -768,12 +768,12 @@ INSERT INTO `fb_base_permission` VALUES ('2174', '1', '217', '启禁', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('2175', '1', '217', '导出', 'backend', '', '/mall/cart/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2176', '1', '217', '导入', 'backend', '', '/mall/cart/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 
-INSERT INTO `fb_base_permission` VALUES ('2241', '1', '224', '查看', 'backend', '', '/mall/search-log/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2242', '1', '224', '编辑', 'backend', '', '/mall/search-log/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2243', '1', '224', '删除', 'backend', '', '/mall/search-log/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2244', '1', '224', '启禁', 'backend', '', '/mall/search-log/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2245', '1', '224', '导出', 'backend', '', '/mall/search-log/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2246', '1', '224', '导入', 'backend', '', '/mall/search-log/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2241', '1', '224', '查看', 'backend', '', '/base/search-log/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2242', '1', '224', '编辑', 'backend', '', '/base/search-log/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2243', '1', '224', '删除', 'backend', '', '/base/search-log/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2244', '1', '224', '启禁', 'backend', '', '/base/search-log/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2245', '1', '224', '导出', 'backend', '', '/base/search-log/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2246', '1', '224', '导入', 'backend', '', '/base/search-log/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2261', '1', '226', '查看', 'backend', '', '/mall/address/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2262', '1', '226', '编辑', 'backend', '', '/mall/address/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2263', '1', '226', '删除', 'backend', '', '/mall/address/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');

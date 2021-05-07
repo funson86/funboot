@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m130524_201891_region extends Migration
+class m130524_201440_region extends Migration
 {
     public function up()
     {
@@ -14,29 +14,6 @@ class m130524_201891_region extends Migration
 
         $sql = "
 SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for fb_base_attachment
--- ----------------------------
-DROP TABLE IF EXISTS `fb_base_search_log`;
-CREATE TABLE `fb_base_region` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
-  `user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `session_id` varchar(255) NOT NULL DEFAULT '' COMMENT '会话ID',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `ip` varchar(255) NOT NULL DEFAULT '' COMMENT '纬度',
-  `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
-  `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
-  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
-  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
-  `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
-  `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
-  PRIMARY KEY (`id`),
-  KEY `base_region_fk2` (`store_id`),
-  CONSTRAINT `base_region_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='搜索记录';
 
 DROP TABLE IF EXISTS `fb_base_region`;
 CREATE TABLE `fb_base_region` (
