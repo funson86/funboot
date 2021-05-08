@@ -25,11 +25,13 @@ use yii\helpers\Url;
 
 <div class="card bbs-sidebar">
     <div class="card-header">
-        <?= Yii::t('app', 'Hottest') ?>
+        <?= Yii::t('app', 'Excellent') ?>
     </div>
     <div class="card-body">
         <ul class="list">
-            <li>Some quick example text to build on the card title and make up the bulk of the card's content.</li>
+            <?php foreach ($excellent as $item) { ?>
+            <li><?= Html::a($item->name, ['/bbs/topic/view', 'id' => $item->id]) ?></li>
+            <?php } ?>
         </ul>
     </div>
 </div>
