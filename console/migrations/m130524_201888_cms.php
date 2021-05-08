@@ -117,23 +117,39 @@ INSERT INTO `fb_base_permission` VALUES ('5434', '1', '543', '启禁', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('5435', '1', '543', '导出', 'backend', '', '/cms/catalog/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5436', '1', '543', '导入', 'backend', '', '/cms/catalog/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES (70, 1, 0, 'backend', 'Cms网站', 'cms', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7011, 1, 70, 'backend', '主题', 'cms_theme', '', 'text', '', 'default', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7012, 1, 70, 'backend', '模板', 'cms_template', '', 'text', '', 'index', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7013, 1, 70, 'backend', '横幅', 'cms_banner', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7014, 1, 70, 'backend', '横幅手机版', 'cms_banner_h5', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7029, 1, 70, 'backend', '列表页默认每页数量', 'cms_list_page_size', '', 'text', '', '12', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7043, 1, 70, 'backend', '关于我们', 'cms_about_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7044, 1, 70, 'backend', '联系我们', 'cms_contact_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7051, 1, 70, 'backend', '网站参数1', 'cms_param1', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7052, 1, 70, 'backend', '网站参数2', 'cms_param2', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7053, 1, 70, 'backend', '网站参数3', 'cms_param3', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7054, 1, 70, 'backend', '网站参数4', 'cms_param4', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7055, 1, 70, 'backend', '网站参数5', 'cms_param5', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7056, 1, 70, 'backend', '网站参数6', 'cms_param6', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7057, 1, 70, 'backend', '网站参数7', 'cms_param7', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7058, 1, 70, 'backend', '网站参数8', 'cms_param8', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7059, 1, 70, 'backend', '网站参数9', 'cms_param9', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (54, 1, 0, 'backend', 'Cms网站', 'cms', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5411, 1, 54, 'backend', '主题', 'cms_theme', '', 'text', '', 'default', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5412, 1, 54, 'backend', '模板', 'cms_template', '', 'text', '', 'index', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5413, 1, 54, 'backend', '横幅', 'cms_banner', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5414, 1, 54, 'backend', '横幅手机版', 'cms_banner_h5', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5429, 1, 54, 'backend', '列表页默认每页数量', 'cms_list_page_size', '', 'text', '', '12', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5443, 1, 54, 'backend', '关于我们', 'cms_about_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5444, 1, 54, 'backend', '联系我们', 'cms_contact_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5451, 1, 54, 'backend', '网站参数1', 'cms_param1', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5452, 1, 54, 'backend', '网站参数2', 'cms_param2', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5453, 1, 54, 'backend', '网站参数3', 'cms_param3', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5454, 1, 54, 'backend', '网站参数4', 'cms_param4', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5455, 1, 54, 'backend', '网站参数5', 'cms_param5', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5456, 1, 54, 'backend', '网站参数6', 'cms_param6', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5457, 1, 54, 'backend', '网站参数7', 'cms_param7', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5458, 1, 54, 'backend', '网站参数8', 'cms_param8', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (5459, 1, 54, 'backend', '网站参数9', 'cms_param9', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+
+INSERT INTO `fb_base_role_permission` VALUES ('321', '1', '', '50', '54', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('322', '1', '', '50', '541', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('323', '1', '', '50', '543', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('333', '1', '', '50', '5411', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('334', '1', '', '50', '5412', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('335', '1', '', '50', '5413', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('336', '1', '', '50', '5414', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('337', '1', '', '50', '5415', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('338', '1', '', '50', '5416', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('343', '1', '', '50', '5431', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('344', '1', '', '50', '5432', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('345', '1', '', '50', '5433', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('346', '1', '', '50', '5434', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('347', '1', '', '50', '5435', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('348', '1', '', '50', '5436', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 
         ";
 

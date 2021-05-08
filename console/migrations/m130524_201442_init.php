@@ -571,6 +571,29 @@ CREATE TABLE `fb_base_profile` (
   CONSTRAINT `base_profile_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '用户资料';
 
+-- ----------------------------
+-- Table structure for fb_base_attachment
+-- ----------------------------
+DROP TABLE IF EXISTS `fb_base_search_log`;
+CREATE TABLE `fb_base_region` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `session_id` varchar(255) NOT NULL DEFAULT '' COMMENT '会话ID',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `ip` varchar(255) NOT NULL DEFAULT '' COMMENT 'IP地址',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `base_region_fk2` (`store_id`),
+  CONSTRAINT `base_region_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='搜索记录';
+
 -- ALTER TABLE `fb_user` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_store` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_base_setting_type` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
@@ -621,7 +644,7 @@ INSERT INTO `fb_base_role` VALUES ('50', '1', 'store商家', '1', 'For Store Adm
 INSERT INTO `fb_base_role` VALUES ('100', '1', 'user前端用户', '1', 'Frontend User', '', '60', '50', '1', '1599737332', '1602327113', '1', '1');
 
 
-INSERT INTO `fb_base_permission` VALUES ('5', '1', '0', 'Funboot系统', 'backend', '', '', 'fas fa-cog', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5', '1', '0', '管理系统', 'backend', '', '', 'fas fa-cog', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('6', '1', '0', '学校管理', 'backend', '', '', 'fas fa-laptop-house', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('56', '1', '5', '系统管理', 'backend', '', '', 'fas fa-cogs', '', '2', '0', '1', '50', '1', '1599358163', '1599358163', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('58', '1', '5', '系统监控', 'backend', '', '', 'fas fa-chart-bar', '', '2', '0', '1', '50', '1', '1599358315', '1599358315', '1', '1');
@@ -790,6 +813,7 @@ INSERT INTO `fb_base_user_role` VALUES ('1', '2', '', '2', '50', '1', '50', '1',
 INSERT INTO `fb_base_user_role` VALUES ('2', '1', '', '3', '3', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_user_role` VALUES ('4', '2', '', '4', '50', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_user_role` VALUES ('5', '2', '', '5', '50', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_user_role` VALUES ('6', '2', '', '5', '50', '1', '50', '1', '1', '1', '1', '1');
 
 
 INSERT INTO `fb_base_setting_type` VALUES ('50', '1', '0', 'backend', '网站设置', 'website', '', 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
