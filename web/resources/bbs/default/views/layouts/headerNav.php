@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 $topicActive = true;
 
-$keyword = Yii::$app->request->get('ModelSearch[name]', '');
+$keyword = Yii::$app->request->get('ModelSearch')['name'] ?? '';
 
 NavBar::begin([
 //     'brandLabel' => Html::img('/images/logo.png'),
