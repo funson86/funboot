@@ -249,20 +249,21 @@ CREATE TABLE `fb_bbs_search_log` (
   CONSTRAINT `bbs_search_log_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='搜索记录';
 
-
 DROP TABLE IF EXISTS `fb_bbs_raw`;
 CREATE TABLE `fb_bbs_raw` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `node_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '节点',
   `node_ids` json DEFAULT NULL COMMENT '额外节点',
-  `node` varchar(255) NOT NULL DEFAULT '' COMMENT '分类',
-  `tag_ids` json DEFAULT NULL COMMENT '标签',
-  `name` varchar(255) NOT NULL COMMENT '名称',
-  `brief` text COMMENT '简介',
-  `content` text COMMENT '内容',
-  `site` varchar(255) NOT NULL DEFAULT '' COMMENT '来源',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '网址',
+  `node` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分类',
+  `tag_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '标签',
+  `tag_ids` json DEFAULT NULL COMMENT '额外标签',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+  `brief` text COLLATE utf8mb4_unicode_ci COMMENT '简述',
+  `content` text COLLATE utf8mb4_unicode_ci COMMENT '内容',
+  `info` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '信息',
+  `site` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '来源',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '网址',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -272,9 +273,10 @@ CREATE TABLE `fb_bbs_raw` (
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
   KEY `bbs_raw_k2` (`store_id`),
+  KEY `bbs_raw_k3` (`created_at`) USING BTREE,
+  KEY `bbs_raw_k4` (`url`) USING BTREE,
   CONSTRAINT `bbs_raw_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='原始数据';
-
         ";
 
         $this->execute($sql);

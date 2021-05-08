@@ -644,7 +644,7 @@ INSERT INTO `fb_base_role` VALUES ('50', '1', 'store商家', '1', 'For Store Adm
 INSERT INTO `fb_base_role` VALUES ('100', '1', 'user前端用户', '1', 'Frontend User', '', '60', '50', '1', '1599737332', '1602327113', '1', '1');
 
 
-INSERT INTO `fb_base_permission` VALUES ('5', '1', '0', 'Funboot系统', 'backend', '', '', 'fas fa-cog', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5', '1', '0', '管理系统', 'backend', '', '', 'fas fa-cog', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('6', '1', '0', '学校管理', 'backend', '', '', 'fas fa-laptop-house', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('56', '1', '5', '系统管理', 'backend', '', '', 'fas fa-cogs', '', '2', '0', '1', '50', '1', '1599358163', '1599358163', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('58', '1', '5', '系统监控', 'backend', '', '', 'fas fa-chart-bar', '', '2', '0', '1', '50', '1', '1599358315', '1599358315', '1', '1');
@@ -813,6 +813,7 @@ INSERT INTO `fb_base_user_role` VALUES ('1', '2', '', '2', '50', '1', '50', '1',
 INSERT INTO `fb_base_user_role` VALUES ('2', '1', '', '3', '3', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_user_role` VALUES ('4', '2', '', '4', '50', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_user_role` VALUES ('5', '2', '', '5', '50', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_user_role` VALUES ('6', '2', '', '5', '50', '1', '50', '1', '1', '1', '1', '1');
 
 
 INSERT INTO `fb_base_setting_type` VALUES ('50', '1', '0', 'backend', '网站设置', 'website', '', 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
