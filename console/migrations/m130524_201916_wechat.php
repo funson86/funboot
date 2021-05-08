@@ -214,29 +214,29 @@ INSERT INTO `fb_base_permission` VALUES ('3535', '1', '353', '导出', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('3536', '1', '353', '导入', 'backend', '', '/wechat/qrcode/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 
 
-INSERT INTO `fb_base_setting_type` VALUES ('72', '1', '0', 'backend', '微信公众号', 'wechat', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('74', '1', '0', 'backend', '微信小程序', 'mini', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('78', '1', '0', 'backend', '支付配置', 'pay', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('32', '1', '0', 'backend', '微信公众号', 'wechat', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('34', '1', '0', 'backend', '微信小程序', 'mini', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('38', '1', '0', 'backend', '支付配置', 'pay', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES ('7201', '1', '72', 'backend', '公众号帐号', 'wechat_account', '公众号帐号，一般为英文帐号或邮箱', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7203', '1', '72', 'backend', '公众号原始ID', 'wechat_id', '建议完善，给用户发客服消息时需要，位于右上角【帐号详情】》【注册信息】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7205', '1', '72', 'backend', '公众号级别', 'wechat_rank', '注意：即使公众平台显示为“未认证”, 但只要【公众号设置】》【账号详情】下【认证情况】显示资质审核通过, 即可认定为认证号.', 'radioList', '1:普通订阅号,2:普通服务号,3:认证订阅号,4:认证服务号/认证媒体/政府订阅号', '1', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7211', '1', '72', 'backend', '开发者ID', 'wechat_appid', '开发者AppID位于左侧【开发】》【基本配置】》【公众号开发信息】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7213', '1', '72', 'backend', '开发者密码App Secret', 'wechat_appsecret', '开发者密码AppSecret位于左侧【开发】》【基本配置】》【公众号开发信息】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7215', '1', '72', 'backend', '令牌Token', 'wechat_token', '令牌Token位于左侧【开发】》【基本配置】》【服务器配置】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7217', '1', '72', 'backend', '加解密密钥', 'wechat_encodingaeskey', '加解密密钥EncodingAESKey位于左侧【开发】》【服务器配置】》【公众号开发信息】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7221', '1', '72', 'backend', '微信公众号二维码', 'wechat_qrcode', '', 'image', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7231', '1', '72', 'backend', '分享标题', 'wechat_share_title', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7233', '1', '72', 'backend', '分享简介', 'wechat_share_brief', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7235', '1', '72', 'backend', '分享图片', 'wechat_share_image', '', 'image', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7237', '1', '72', 'backend', '分享链接', 'wechat_share_url', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3201', '1', '32', 'backend', '公众号帐号', 'wechat_account', '公众号帐号，一般为英文帐号或邮箱', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3203', '1', '32', 'backend', '公众号原始ID', 'wechat_id', '建议完善，给用户发客服消息时需要，位于右上角【帐号详情】》【注册信息】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3205', '1', '32', 'backend', '公众号级别', 'wechat_rank', '注意：即使公众平台显示为“未认证”, 但只要【公众号设置】》【账号详情】下【认证情况】显示资质审核通过, 即可认定为认证号.', 'radioList', '1:普通订阅号,2:普通服务号,3:认证订阅号,4:认证服务号/认证媒体/政府订阅号', '1', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3211', '1', '32', 'backend', '开发者ID', 'wechat_appid', '开发者AppID位于左侧【开发】》【基本配置】》【公众号开发信息】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3213', '1', '32', 'backend', '开发者密码App Secret', 'wechat_appsecret', '开发者密码AppSecret位于左侧【开发】》【基本配置】》【公众号开发信息】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3215', '1', '32', 'backend', '令牌Token', 'wechat_token', '令牌Token位于左侧【开发】》【基本配置】》【服务器配置】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3217', '1', '32', 'backend', '加解密密钥', 'wechat_encodingaeskey', '加解密密钥EncodingAESKey位于左侧【开发】》【服务器配置】》【公众号开发信息】中', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3221', '1', '32', 'backend', '微信公众号二维码', 'wechat_qrcode', '', 'image', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3231', '1', '32', 'backend', '分享标题', 'wechat_share_title', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3233', '1', '32', 'backend', '分享简介', 'wechat_share_brief', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3235', '1', '32', 'backend', '分享图片', 'wechat_share_image', '', 'image', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3237', '1', '32', 'backend', '分享链接', 'wechat_share_url', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES ('7811', '1', '78', 'backend', '微信支付商户号', 'pay_wechat_mchid', '支付的商户账号', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7812', '1', '78', 'backend', '微信支付支付密钥', 'pay_wechat_api_key', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7813', '1', '78', 'backend', '微信支付证书公钥', 'pay_wechat_cert_path', '如需使用敏感接口(如退款、发送红包等)需要配置 API 证书路径(登录商户平台下载 API 证书),注意路径为绝对路径', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7814', '1', '78', 'backend', '微信支付证书私钥', 'pay_wechat_key_path', '如需使用敏感接口(如退款、发送红包等)需要配置 API 证书路径(登录商户平台下载 API 证书),注意路径为绝对路径', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7815', '1', '78', 'backend', '微信支付App ID', 'pay_wechat_open_appid', '主要用于 app 支付，微信开放平台的 appid，如果只需要微信公众号支付，只配置微信公众号那边即可', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('7816', '1', '78', 'backend', '微信支付App ID', 'pay_wechat_rsa_public_key_path', '企业付款需要用到双向证书，请参考：https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=4_3', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3811', '1', '38', 'backend', '微信支付商户号', 'pay_wechat_mchid', '支付的商户账号', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3812', '1', '38', 'backend', '微信支付支付密钥', 'pay_wechat_api_key', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3813', '1', '38', 'backend', '微信支付证书公钥', 'pay_wechat_cert_path', '如需使用敏感接口(如退款、发送红包等)需要配置 API 证书路径(登录商户平台下载 API 证书),注意路径为绝对路径', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3814', '1', '38', 'backend', '微信支付证书私钥', 'pay_wechat_key_path', '如需使用敏感接口(如退款、发送红包等)需要配置 API 证书路径(登录商户平台下载 API 证书),注意路径为绝对路径', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3815', '1', '38', 'backend', '微信支付App ID', 'pay_wechat_open_appid', '主要用于 app 支付，微信开放平台的 appid，如果只需要微信公众号支付，只配置微信公众号那边即可', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3816', '1', '38', 'backend', '微信支付App ID', 'pay_wechat_rsa_public_key_path', '企业付款需要用到双向证书，请参考：https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=4_3', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
 
 
         ";
