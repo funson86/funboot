@@ -159,7 +159,7 @@ class TopicController extends BaseController
             return $this->goBack();
         }
 
-        $model->kind = Yii::$app->request->get('cancel') ? Topic::KIND_NORMAL : Topic::KIND_EXCELLENT;
+        $model->grade = Yii::$app->request->get('cancel') ? Topic::GRADE_NORMAL : Topic::GRADE_EXCELLENT;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
             return $this->redirectError();

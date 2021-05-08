@@ -22,8 +22,8 @@ class TopicBase extends BaseModel
     const FORMAT_HTML = 1;
     const FORMAT_MARKDOWN = 2;
 
-    const KIND_NORMAL = 0;
-    const KIND_EXCELLENT = 1;
+    const GRADE_NORMAL = 0;
+    const GRADE_EXCELLENT = 1;
 
     /**
      * @return array|array[]
@@ -58,8 +58,8 @@ class TopicBase extends BaseModel
     public static function getKindLabels($id = null, $all = false, $flip = false)
     {
         $data = [
-            self::KIND_NORMAL => Yii::t('cons', 'KIND_NORMAL'),
-            self::KIND_EXCELLENT => Yii::t('cons', 'KIND_EXCELLENT'),
+            self::GRADE_NORMAL => Yii::t('cons', 'GRADE_NORMAL'),
+            self::GRADE_EXCELLENT => Yii::t('cons', 'GRADE_EXCELLENT'),
         ];
 
         $all && $data += [
