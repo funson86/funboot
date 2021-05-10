@@ -33,6 +33,7 @@ $this->title = Yii::t('app', 'Publish');
                         <?= $form->field($model, 'content')->widget(\common\widgets\markdown\Markdown::class, []) ?>
                     <?php } else { ?>
                     <?= $form->field($model, 'content')->widget(\common\components\ueditor\Ueditor::class, ['style' => 2]) ?>
+                    <?= $form->field($model, 'tag_id')->dropdownList(\common\models\bbs\Tag::getIdLabel(true)) ?>
                     <?php } ?>
                 </div>
                 <div class="form-group">

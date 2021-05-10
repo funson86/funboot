@@ -55,6 +55,8 @@ class TopicController extends BaseController
         $model = $this->findModel($id);
         if (!($model->node_id > 0 || $nodeId)) {
             return $this->redirect(['edit-node']);
+        } elseif (!$model->node_id && $nodeId) {
+            $model->node_id = $nodeId;
         }
 
         if (Yii::$app->request->isPost) {

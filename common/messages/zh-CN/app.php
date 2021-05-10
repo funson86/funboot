@@ -21,6 +21,8 @@ return [
     'Root Node' => '顶级节点',
     'Go Top' => '去顶部',
     'Go Bottom' => '去底部',
+    'Next' => '下一步',
+    'Go' => '前往',
 
     'View' => '查看',
     'View ' => '查看',
