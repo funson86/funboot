@@ -62,6 +62,7 @@ class TopicController extends BaseController
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $post = Yii::$app->request->post();
+                $model->created_at = $model->updated_at = $model->last_comment_updated_at = time();
 
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($model->errors);

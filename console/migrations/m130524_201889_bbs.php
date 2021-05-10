@@ -88,7 +88,7 @@ CREATE TABLE `fb_bbs_topic` (
   `category` int(11) NOT NULL DEFAULT '0' COMMENT '种类',
   `kind` int(11) NOT NULL DEFAULT '0' COMMENT '特征',
   `grade` int(11) NOT NULL DEFAULT '0' COMMENT '等级',
-  `format` int(11) NOT NULL DEFAULT '0' COMMENT '格式',
+  `format` int(11) NOT NULL DEFAULT '1' COMMENT '格式',
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '作者',
   `username` varchar(255) NOT NULL DEFAULT '' COMMENT '作者',
   `user_avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '作者头像',
