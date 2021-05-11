@@ -63,15 +63,12 @@ CREATE TABLE `fb_bbs_node` (
   CONSTRAINT `bbs_node_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='栏目';
 
-
--- ----------------------------
--- Table structure for fb_bbs_topic
--- ----------------------------
 DROP TABLE IF EXISTS `fb_bbs_topic`;
 CREATE TABLE `fb_bbs_topic` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `node_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '栏目',
+  `tag_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '标签',
   `name` varchar(255) NOT NULL COMMENT '标题',
   `thumb` json DEFAULT NULL COMMENT '缩略图',
   `images` json DEFAULT NULL COMMENT '图片集',
@@ -79,8 +76,8 @@ CREATE TABLE `fb_bbs_topic` (
   `seo_keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索关键词',
   `seo_description` text COMMENT '搜索描述',
   `meta` json DEFAULT NULL COMMENT '参数',
-  `brief` text COMMENT '简介',
-  `content` text COMMENT '内容',
+  `brief` text COMMENT '简述',
+  `content` mediumtext COMMENT '内容',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '价格',
   `redirect_url` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转链接',
   `template` varchar(255) NOT NULL DEFAULT 'view' COMMENT '模板',
@@ -88,15 +85,17 @@ CREATE TABLE `fb_bbs_topic` (
   `like` int(11) NOT NULL DEFAULT '0' COMMENT '点赞',
   `comment` int(11) NOT NULL DEFAULT '0' COMMENT '评论',
   `is_comment` int(11) NOT NULL DEFAULT '1' COMMENT '允许评论',
-  `kind` int(11) NOT NULL DEFAULT '0' COMMENT '加精',
-  `format` int(11) NOT NULL DEFAULT '0' COMMENT '格式',
+  `category` int(11) NOT NULL DEFAULT '0' COMMENT '种类',
+  `kind` int(11) NOT NULL DEFAULT '0' COMMENT '特征',
+  `grade` int(11) NOT NULL DEFAULT '0' COMMENT '等级',
+  `format` int(11) NOT NULL DEFAULT '1' COMMENT '格式',
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '作者',
   `username` varchar(255) NOT NULL DEFAULT '' COMMENT '作者',
   `user_avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '作者头像',
   `last_comment_user_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '最后回复用户',
   `last_comment_username` varchar(255) NOT NULL DEFAULT '' COMMENT '最后回复用户名称',
   `last_comment_updated_at` int(11) NOT NULL DEFAULT '0' COMMENT '最后回复时间',
-  `type`  int(11) NOT NULL DEFAULT '1' COMMENT '类型',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
   `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
@@ -112,7 +111,9 @@ CREATE TABLE `fb_bbs_topic` (
   KEY `bbs_topic_k5` (`user_id`),
   CONSTRAINT `bbs_topic_fk1` FOREIGN KEY (`node_id`) REFERENCES `fb_bbs_node` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `bbs_topic_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='话题';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='话题';
+
+-- ALTER TABLE `fb_bbs_topic` ADD COLUMN  `tag_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '标签' AFTER `node_id`;  
 
 DROP TABLE IF EXISTS `fb_bbs_topic_meta`;
 CREATE TABLE `fb_bbs_topic_meta` (
@@ -148,8 +149,8 @@ CREATE TABLE `fb_bbs_comment` (
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
   `content` text COMMENT '内容',
   `like` int(11) NOT NULL DEFAULT '0' COMMENT '点赞',
-  `ip` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'IP地址',
-  `ip_info` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'IP信息',
+  `ip` varchar(16) NOT NULL DEFAULT '' COMMENT 'IP地址',
+  `ip_info` varchar(255) NOT NULL DEFAULT '' COMMENT 'IP信息',
   `type` varchar(255) NOT NULL DEFAULT 'list' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -255,15 +256,15 @@ CREATE TABLE `fb_bbs_raw` (
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `node_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '节点',
   `node_ids` json DEFAULT NULL COMMENT '额外节点',
-  `node` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分类',
+  `node` varchar(255) NOT NULL DEFAULT '' COMMENT '分类',
   `tag_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '标签',
   `tag_ids` json DEFAULT NULL COMMENT '额外标签',
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
-  `brief` text COLLATE utf8mb4_unicode_ci COMMENT '简述',
-  `content` text COLLATE utf8mb4_unicode_ci COMMENT '内容',
-  `info` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '信息',
-  `site` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '来源',
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '网址',
+  `name` varchar(255) NOT NULL COMMENT '名称',
+  `brief` text COMMENT '简述',
+  `content` text COMMENT '内容',
+  `info` varchar(255) NOT NULL DEFAULT '' COMMENT '信息',
+  `site` varchar(255) NOT NULL DEFAULT '' COMMENT '来源',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '网址',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -367,19 +368,19 @@ INSERT INTO `fb_base_role_permission` VALUES ('445', '1', '', '50', '5333', '1',
 INSERT INTO `fb_base_role_permission` VALUES ('446', '1', '', '50', '5334', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('447', '1', '', '50', '5335', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('448', '1', '', '50', '5336', '1', '50', '1', '1602505044', '1606818825', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('453', '1', '', '50', '5331', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('453', '1', '', '50', '5351', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('454', '1', '', '50', '5352', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('455', '1', '', '50', '5353', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('456', '1', '', '50', '5354', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('457', '1', '', '50', '5355', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('458', '1', '', '50', '5356', '1', '50', '1', '1602505044', '1606818825', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('463', '1', '', '50', '5351', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('463', '1', '', '50', '5361', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('464', '1', '', '50', '5362', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('465', '1', '', '50', '5363', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('466', '1', '', '50', '5364', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('467', '1', '', '50', '5365', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('468', '1', '', '50', '5366', '1', '50', '1', '1602505044', '1606818825', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('483', '1', '', '50', '5361', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('483', '1', '', '50', '5381', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('484', '1', '', '50', '5382', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('485', '1', '', '50', '5383', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('486', '1', '', '50', '5384', '1', '50', '1', '1602505044', '1606818825', '1', '1');

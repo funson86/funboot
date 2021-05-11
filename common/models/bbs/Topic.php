@@ -12,6 +12,7 @@ use common\models\Store;
  * @property int $id
  * @property int $store_id 商家
  * @property int $node_id 栏目
+ * @property int $tag_id 标签
  * @property string $name 标题
  * @property string|null $thumb 缩略图
  * @property string|null $images 图片集
@@ -19,7 +20,7 @@ use common\models\Store;
  * @property string $seo_keywords 搜索关键词
  * @property string|null $seo_description 搜索描述
  * @property string|null $meta 参数
- * @property string|null $brief 简介
+ * @property string|null $brief 简述
  * @property string|null $content 内容
  * @property float $price 价格
  * @property string $redirect_url 跳转链接
@@ -28,12 +29,15 @@ use common\models\Store;
  * @property int $like 点赞
  * @property int $comment 评论
  * @property int $is_comment 允许评论
- * @property int $kind 加精
+ * @property int $category 种类
+ * @property int $kind 特征
+ * @property int $grade 等级
  * @property int $format 格式
  * @property int $user_id 作者
  * @property string $username 作者
  * @property string $user_avatar 作者头像
- * @property string $last_comment_username 最后回复用户
+ * @property string $last_comment_username 最后回复用户名称
+ * @property int $last_comment_user_id 最后回复用户
  * @property int $last_comment_updated_at 最后回复时间
  * @property int $type 类型
  * @property int $sort 排序
@@ -59,7 +63,7 @@ class Topic extends TopicBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'node_id', 'click', 'like', 'comment', 'is_comment', 'kind', 'format', 'user_id', 'last_comment_updated_at', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'node_id', 'tag_id', 'click', 'like', 'comment', 'is_comment', 'category', 'kind', 'grade', 'format', 'user_id', 'last_comment_user_id', 'last_comment_updated_at', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['thumb', 'images', 'meta'], 'safe'],
             [['seo_description', 'brief', 'content'], 'string'],
@@ -78,6 +82,7 @@ class Topic extends TopicBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
                 'node_id' => '栏目',
+                'tag_id' => '标签',
                 'name' => '标题',
                 'thumb' => '缩略图',
                 'images' => '图片集',
@@ -85,7 +90,7 @@ class Topic extends TopicBase
                 'seo_keywords' => '搜索关键词',
                 'seo_description' => '搜索描述',
                 'meta' => '参数',
-                'brief' => '简介',
+                'brief' => '简述',
                 'content' => '内容',
                 'price' => '价格',
                 'redirect_url' => '跳转链接',
@@ -94,12 +99,15 @@ class Topic extends TopicBase
                 'like' => '点赞',
                 'comment' => '评论',
                 'is_comment' => '允许评论',
-                'kind' => '加精',
+                'category' => '种类',
+                'kind' => '特征',
+                'grade' => '等级',
                 'format' => '格式',
                 'user_id' => '作者',
                 'username' => '作者',
                 'user_avatar' => '作者头像',
-                'last_comment_username' => '最后回复用户',
+                'last_comment_username' => '最后回复用户名称',
+                'last_comment_user_id' => '最后回复用户',
                 'last_comment_updated_at' => '最后回复时间',
                 'type' => '类型',
                 'sort' => '排序',
@@ -114,6 +122,7 @@ class Topic extends TopicBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
                 'node_id' => Yii::t('app', 'Node ID'),
+                'tag_id' => Yii::t('app', 'Tag ID'),
                 'name' => Yii::t('app', 'Name'),
                 'thumb' => Yii::t('app', 'Thumb'),
                 'images' => Yii::t('app', 'Images'),
@@ -130,12 +139,15 @@ class Topic extends TopicBase
                 'like' => Yii::t('app', 'Like'),
                 'comment' => Yii::t('app', 'Comment'),
                 'is_comment' => Yii::t('app', 'Is Comment'),
+                'category' => Yii::t('app', 'Category'),
                 'kind' => Yii::t('app', 'Kind'),
+                'grade' => Yii::t('app', 'Grade'),
                 'format' => Yii::t('app', 'Format'),
                 'user_id' => Yii::t('app', 'User ID'),
                 'username' => Yii::t('app', 'Username'),
                 'user_avatar' => Yii::t('app', 'User Avatar'),
                 'last_comment_username' => Yii::t('app', 'Last Comment Username'),
+                'last_comment_user_id' => Yii::t('app', 'Last Comment User ID'),
                 'last_comment_updated_at' => Yii::t('app', 'Last Comment Updated At'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),

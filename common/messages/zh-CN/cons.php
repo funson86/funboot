@@ -162,8 +162,8 @@ return [
     // bbs
     'FORMAT_HTML' => 'Html',
     'FORMAT_MARKDOWN' => 'Markdown',
-    'KIND_NORMAL' => '普通',
-    'KIND_EXCELLENT' => '精帖',
+    'GRADE_NORMAL' => '普通',
+    'GRADE_EXCELLENT' => '精帖',
 
     /** wechat */
     'ADD_SCENE_SEARCH' => '公众号搜索',

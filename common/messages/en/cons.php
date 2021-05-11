@@ -161,8 +161,8 @@ return [
     // bbs
     'FORMAT_HTML' => 'Html',
     'FORMAT_MARKDOWN' => 'Markdown',
-    'KIND_NORMAL' => 'Normal',
-    'KIND_EXCELLENT' => 'Excellent',
+    'GRADE_NORMAL' => 'Normal',
+    'GRADE_EXCELLENT' => 'Excellent',
 
     /** wechat */
     'ADD_SCENE_SEARCH' => 'Search',

@@ -293,11 +293,12 @@ class ArrayHelper extends BaseArrayHelper
      * @param array $array  catalog array list
      * @return array  the sub catalog of root catalog Id collections.
      */
-    static public function getRootSub2($id = 0, $array = [])
+    static public function getRootSub2($id = 0, $array = [], $parent = false)
     {
         $newArray = [];
         $rootId = self::getRootId($id, $array);
         foreach ((array)$array as $v) {
+            ($parent && $v['id'] == $rootId) && array_push($newArray, $v);
             if ($v['parent_id'] == $rootId) {
                 array_push($newArray, $v);
             }

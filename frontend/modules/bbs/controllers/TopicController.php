@@ -55,11 +55,14 @@ class TopicController extends BaseController
         $model = $this->findModel($id);
         if (!($model->node_id > 0 || $nodeId)) {
             return $this->redirect(['edit-node']);
+        } elseif (!$model->node_id && $nodeId) {
+            $model->node_id = $nodeId;
         }
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $post = Yii::$app->request->post();
+                $model->created_at = $model->updated_at = $model->last_comment_updated_at = time();
 
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($model->errors);
@@ -159,7 +162,7 @@ class TopicController extends BaseController
             return $this->goBack();
         }
 
-        $model->kind = Yii::$app->request->get('cancel') ? Topic::KIND_NORMAL : Topic::KIND_EXCELLENT;
+        $model->grade = Yii::$app->request->get('cancel') ? Topic::GRADE_NORMAL : Topic::GRADE_EXCELLENT;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
             return $this->redirectError();

@@ -5,9 +5,12 @@ use yii\widgets\ListView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
+
+$store = $this->context->store;
+
 $this->title = $store->settings['website_seo_title'] . ' - ' . $store->settings['website_name'] ?: $store->name;
-$this->registerMetaTag(["name" => "keywords","content" => $store->settings['website_seo_title']]);
-$this->registerMetaTag(["name" => "description","content" => $store->settings['cms_seo_description']]);
+$this->registerMetaTag(["name" => "keywords", "content" => $store->settings['website_seo_title']]);
+$this->registerMetaTag(["name" => "description", "content" => $store->settings['website_seo_description']]);
 
 ?>
 
@@ -17,15 +20,11 @@ $this->registerMetaTag(["name" => "description","content" => $store->settings['c
         <div class="card">
             <div class="card-header bg-white p-1 pl-3">
                 <ul class="nav nav-pills card-header-pills">
+                    <?php foreach ($listChildren as $item) { ?>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">全部</a>
+                        <a class="nav-link <?= $item['id'] == Yii::$app->request->get('id') ? 'active' : '' ?>" href="<?= Url::to(['/bbs/default/index', 'id' => $item['id']]) ?>"><?= $item['name'] ?></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">新闻</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">资讯</a>
-                    </li>
+                    <?php } ?>
                     <li class="nav-item ml-auto mr-2">
                         <a class="nav-link btn-primary" href="<?= Url::to(['/bbs/topic/edit', 'node_id' => Yii::$app->request->get('id')]) ?>" tabindex="-1" aria-disabled="true"><?= Html::tag('i', '', ['class' => 'bi-pencil']) . ' ' . Yii::t('app', 'Publish') ?></a>
                     </li>

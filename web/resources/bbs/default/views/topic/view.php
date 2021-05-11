@@ -106,9 +106,9 @@ $comment->topic_id = $model->id;
 
                 if ($this->context->isAdmin()) {
                     echo Html::a(
-                        Html::tag('i', '', ['class' => 'bi-trophy']) . ' ' . ($model->kind == ActiveModel::KIND_EXCELLENT ? '取消' : '') . '加精',
-                        ['/bbs/topic/excellent', 'id' => $model->id, 'cancel' => $model->kind == ActiveModel::KIND_EXCELLENT ? 1 : 0],
-                        ['class' => ($model->kind == ActiveModel::KIND_EXCELLENT ? 'icon-active' : '')]
+                        Html::tag('i', '', ['class' => 'bi-trophy']) . ' ' . ($model->grade == ActiveModel::GRADE_EXCELLENT ? '取消' : '') . '加精',
+                        ['/bbs/topic/excellent', 'id' => $model->id, 'cancel' => $model->grade == ActiveModel::GRADE_EXCELLENT ? 1 : 0],
+                        ['class' => ($model->grade == ActiveModel::GRADE_EXCELLENT ? 'icon-active' : '')]
                     );
                     echo Html::a(
                         Html::tag('i', '', ['class' => 'bi-arrow-up-circle']) . ' ' . ($model->sort == 10 ? '取消' : '') . '置顶',

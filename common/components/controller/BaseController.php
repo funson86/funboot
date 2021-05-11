@@ -58,7 +58,7 @@ class BaseController extends Controller
             $model = CommonHelper::getStoreById(Yii::$app->user->identity->store_id);
         }
         // 前面两种都没有，则判断host_name
-        if (!$model) {
+        if (!isset($model) || !$model) {
             $model = CommonHelper::getStoreByHostName();
             if (!$model) {
                 return  false;

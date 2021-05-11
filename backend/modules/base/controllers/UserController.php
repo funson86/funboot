@@ -72,6 +72,8 @@ class UserController extends BaseController
             $roleId <= Yii::$app->authSystem->maxSuperAdminRoleId && $minRoleId = Yii::$app->authSystem->maxSuperAdminRoleId + 1;
 
             $allRoles = ArrayHelper::map(Role::find()->where(['status' => Role::STATUS_ACTIVE])->andWhere(['>=', 'id', $minRoleId])->asArray()->all(), 'id', 'name');
+        } elseif ($this->isSuperAdmin()) {
+            $allRoles = ArrayHelper::map(Role::find()->where(['status' => Role::STATUS_ACTIVE])->asArray()->all(), 'id', 'name');
         }
 
         if (Yii::$app->request->isPost) {
