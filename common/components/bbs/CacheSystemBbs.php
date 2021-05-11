@@ -39,10 +39,13 @@ class CacheSystemBbs extends CacheSystem
     /**
      * @param $storeId
      * @param null $parentId
+     * @param bool $all
+     * @param bool $isArray
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
-    public function getStoreNode($storeId, $parentId = null)
+    public function getStoreNode($storeId = null, $parentId = null, $all = false, $isArray = false)
     {
+        $storeId = is_null($storeId) ? Yii::$app->storeSystem->getId() : $storeId;
         $data = false; //Yii::$app->cache->get('bbsStoreNode:' . $storeId);
         if (!$data) {
             $allNode = $this->getAllNode();
@@ -50,15 +53,21 @@ class CacheSystemBbs extends CacheSystem
             foreach ($allNode as $node) {
                 if ($node->store_id == $storeId) {
                     if (is_null($parentId)) {
-                        $list[] = $node;
+                        if ($all || (!$all && $node->status == Node::STATUS_ACTIVE)) {
+                            $list[] = $isArray ? $node->attributes : $node;
+                        }
                     } else {
-                        $node->parent_id == $parentId && $list[] = $node;
+                        if ($node->parent_id == $parentId) {
+                            if ($all || (!$all && $node->status == Node::STATUS_ACTIVE)) {
+                                $list[] = $isArray ? $node->attributes : $node;;
+                            }
+                        }
                     }
                 }
             }
 
             $data = $list;
-            Yii::$app->cache->set('bbsStoreNode:' . $storeId, $data);
+            // Yii::$app->cache->set('bbsStoreNode:' . $storeId, $data);
         }
         return $data;
     }

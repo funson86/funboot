@@ -2,6 +2,7 @@
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 
 $topicActive = true;
 
@@ -22,20 +23,20 @@ $items = [];
 foreach ($nodes as $node) {
     $item = [];
     $item['label'] = $node->name;
-    $item['url'] = ['/bbs/node/index', 'id' => $node->id];
+    $item['url'] = ['/bbs/default/index', 'id' => $node->id];
     $item['active'] = (Yii::$app->request->get('id', 0) == $node->id);
 
     $items[] = $item;
 }
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav'],
-    'items' => \yii\helpers\ArrayHelper::merge($items, [
-        ['label' => Yii::t('app', 'BBS'), 'url' => ['/'], 'active' => Yii::$app->request->get('id', 0) == 0],
-        ['label' => Yii::t('app', 'Jobs'), 'url' => ['/bbs/default/index', 'id' => 2], 'active' => Yii::$app->request->get('id', 0) == 2],
-        ['label' => Yii::t('app', 'Tags'), 'url' => ['/bbs/default/tag'], 'active' => false],
-        ['label' => Yii::t('app', 'Yellow Pages'), 'url' => ['/bbs/default/index', 'id' => 9], 'active' => false],
-
-    ]),
+    'items' => ArrayHelper::merge([
+            ['label' => Yii::t('app', 'BBS'), 'url' => ['/'], 'active' => Yii::$app->request->get('id', 0) == 0],
+        ], ArrayHelper::merge($items, [
+            ['label' => Yii::t('app', 'Tags'), 'url' => ['/bbs/default/tag'], 'active' => false],
+            ['label' => Yii::t('app', 'Yellow Pages'), 'url' => ['/bbs/default/yellow-page'], 'active' => false],
+        ])
+    ),
     'encodeLabels' => false
 ]);
 

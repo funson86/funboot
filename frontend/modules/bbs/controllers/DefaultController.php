@@ -43,12 +43,19 @@ class DefaultController extends BaseController
         }
 
         // 判断节点
+        $listChildren = [];
         if ($nodeId = Yii::$app->request->get('id')) {
             $node = Node::find()->where(['id' => $nodeId, 'store_id' => $this->getStoreId()])->one();
             if ($node) {
                 $params['ModelSearch']['node_id'] = $node->id;
             }
+
+            $nodes = ArrayHelper::mapIdData(Yii::$app->cacheSystemBbs->getStoreNode());
+            $listChildren = ArrayHelper::getRootSub2($nodeId, Yii::$app->cacheSystemBbs->getStoreNode($this->getStoreId(), null, false, true), true);
+        } else {
+            $listChildren = Yii::$app->params['bbs']['indexNodeChildren'];
         }
+        // var_dump($listChildren);die();
 
         $dataProvider = $searchModel->search($params);
 
@@ -61,6 +68,7 @@ class DefaultController extends BaseController
         return $this->render('../node/index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'listChildren' => $listChildren,
         ]);
     }
 
