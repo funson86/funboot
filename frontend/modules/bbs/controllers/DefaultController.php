@@ -65,7 +65,7 @@ class DefaultController extends BaseController
         $sort->attributes['like']['asc'] = ['like' => SORT_DESC, 'id' => SORT_DESC];
         $sort->attributes['click']['asc'] = ['click' => SORT_DESC, 'id' => SORT_DESC];
 
-        return $this->render('../node/index', [
+        return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'listChildren' => $listChildren,
