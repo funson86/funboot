@@ -575,7 +575,7 @@ CREATE TABLE `fb_base_profile` (
 -- Table structure for fb_base_attachment
 -- ----------------------------
 DROP TABLE IF EXISTS `fb_base_search_log`;
-CREATE TABLE `fb_base_region` (
+CREATE TABLE `fb_base_search_log` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
@@ -590,9 +590,30 @@ CREATE TABLE `fb_base_region` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `base_region_fk2` (`store_id`),
-  CONSTRAINT `base_region_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `base_log_fk0` (`store_id`),
+  CONSTRAINT `base_log_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='搜索记录';
+
+DROP TABLE IF EXISTS `fb_base_stuff`;
+CREATE TABLE `fb_base_stuff` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+  `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '简介',
+  `content` text COLLATE utf8mb4_unicode_ci COMMENT '值',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Url',
+  `position` int(11) NOT NULL DEFAULT '1' COMMENT '位置',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `base_stuff_k0` (`store_id`),
+  CONSTRAINT `base_stuff_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='物料';
 
 -- ALTER TABLE `fb_user` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_store` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  

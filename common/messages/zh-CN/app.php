@@ -23,6 +23,7 @@ return [
     'Go Bottom' => '去底部',
     'Next' => '下一步',
     'Go' => '前往',
+    'All' => '全部',
 
     'View' => '查看',
     'View ' => '查看',
@@ -148,6 +149,8 @@ return [
     'Important' => '重要',
     'Warning' => '提醒',
     'Normal' => '一般',
+    'Stuff' => '物料',
+    'Stuffs' => '物料',
 
     'No Auth' => '没有权限',
     'Non-existent' => '不存在',
