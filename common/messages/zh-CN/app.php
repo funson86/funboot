@@ -393,6 +393,7 @@ return [
     'Country' => '国家',
     'Province' => '省',
     'City' => '市',
+    'Cities' => '城市',
     'District' => '区',
     'Business License' => '营业执照',
     'Pic' => '图集',
