@@ -34,7 +34,7 @@ class RawBase extends BaseModel
         $userId = isset(Yii::$app->user) && !Yii::$app->user->getIsGuest() ? Yii::$app->user->id : Yii::$app->storeSystem->getUserId();
         return ArrayHelper::merge([], [
             [
-                // 'class' => TimestampBehavior::class,  // 行为类
+                'class' => TimestampBehavior::class,  // 行为类
                 'attributes' => [
                     // 当insert时,自动把当前时间戳填充填充指定的属性(created_at),
                     // 当然, 以下键值也可以是数组,
