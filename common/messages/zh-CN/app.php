@@ -570,7 +570,7 @@ return [
     'Catalogs' => '栏目',
     'Catalog' => '栏目',
 
-    /* BBS */
+    /* bbs */
     'Publish' => '发布',
     'Node' => '节点',
     'Nodes' => '节点',
@@ -587,6 +587,10 @@ return [
     'Tags' => '标签',
     'Yellow Pages' => '黄页',
     'Received {0} reply' => '收到 {0} 个回复',
+    'Admin' => '管理员',
+    'Member' => '会员',
+    'Unverified' => '未审核',
+    'Pass' => '审核通过',
 
 
     /* mall */

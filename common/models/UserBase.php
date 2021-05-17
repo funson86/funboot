@@ -2,6 +2,7 @@
 namespace common\models;
 
 use common\models\base\Message;
+use common\models\base\Profile;
 use common\models\base\UserRole;
 use Identicon\Identicon;
 use Yii;
@@ -161,6 +162,14 @@ class UserBase extends BaseModel implements IdentityInterface
     public function getStores()
     {
         return $this->hasMany(Store::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['id' => 'id']);
     }
 
     /**
@@ -384,7 +393,8 @@ class UserBase extends BaseModel implements IdentityInterface
             $model->user_id = $this->id;
             $model->role_id = $roleId;
             if (!$model->save()) {
-                return Yii::$app->logSystem->db($model->errors);
+                Yii::$app->logSystem->db($model->errors);
+                return null;
             }
         }
 

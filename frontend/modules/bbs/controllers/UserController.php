@@ -53,11 +53,10 @@ class UserController extends BaseController
             return $this->goBack();
         }
 
-        if (!Yii::$app->user->isGuest || Yii::$app->user->id != $model->id) {
-            //Yii::$app->queue->push(new CounterJob(['modelClass' => Topic::class, 'id' => $id, 'field' => 'click']));
-        }
-
         $type = Yii::$app->request->get('type');
+        if (!$type) {
+            return $this->redirect(['/bbs/user/view', 'id' => $id, 'type' => 'index']);
+        }
         if ($type == 'topic') {
             $dataProvider = new ActiveDataProvider([
                 'query' => Topic::find()->where(['store_id' => $this->getStoreId(), 'user_id' => $id, 'status' => Comment::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])

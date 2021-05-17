@@ -66,7 +66,7 @@ class UserActionBase extends BaseModel
      * @param bool $flip
      * @return array|mixed
      */
-    public static function getTargetTypeLabels($id = null, $all = false, $flip = false)
+    public static function getActionLabels($id = null, $all = false, $flip = false)
     {
         $data = [
             self::ACTION_LIKE => Yii::t('cons', 'ACTION_LIKE'),
@@ -74,6 +74,30 @@ class UserActionBase extends BaseModel
             self::ACTION_FOLLOW => Yii::t('cons', 'ACTION_FOLLOW'),
             self::ACTION_THANKS => Yii::t('cons', 'ACTION_THANKS'),
             self::ACTION_FAVORITE => Yii::t('cons', 'ACTION_FAVORITE'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    /**
+     * return label or labels array
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getActionProfileField($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::ACTION_LIKE => 'like',
+            self::ACTION_HATE => 'hate',
+            self::ACTION_FOLLOW => 'follow',
+            self::ACTION_THANKS => 'thanks',
+            self::ACTION_FAVORITE => 'favorite',
         ];
 
         $all && $data += [];

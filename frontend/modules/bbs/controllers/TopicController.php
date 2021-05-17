@@ -48,8 +48,8 @@ class TopicController extends BaseController
      */
     public function actionView($id)
     {
-        $model = Topic::find()->where(['store_id' => $this->getStoreId(), 'id' => $id, 'status' => Topic::STATUS_ACTIVE])->one();
-        if (!$model) {
+        $model = Topic::find()->where(['store_id' => $this->getStoreId(), 'id' => $id])->one();
+        if (!$model || (!$this->isAdmin() && $model->status == Topic::STATUS_ACTIVE)) {
             return $this->goBack();
         }
 
@@ -84,6 +84,7 @@ class TopicController extends BaseController
             if ($model->load(Yii::$app->request->post())) {
                 $post = Yii::$app->request->post();
                 $model->created_at = $model->updated_at = $model->last_comment_updated_at = time();
+                $model->isNewRecord && $model->status = $this->isAdmin() ? $this->modelClass::STATUS_ACTIVE : $this->modelClass::STATUS_INACTIVE;
 
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($model->errors);
@@ -199,6 +200,21 @@ class TopicController extends BaseController
         }
 
         $model->sort = Yii::$app->request->get('cancel') ? Topic::SORT_DEFAULT : Topic::SORT_TOP;
+        if (!$model->save()) {
+            Yii::$app->logSystem->db($model->errors);
+            return $this->redirectError();
+        }
+
+        return $this->redirectSuccess();
+    }
+
+    public function actionPass($id)
+    {
+        if (!$this->isAdmin() || !$model = $this->findModel($id, true)) {
+            return $this->goBack();
+        }
+
+        $model->status = Topic::STATUS_ACTIVE;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
             return $this->redirectError();

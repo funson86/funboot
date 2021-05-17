@@ -2,6 +2,9 @@
 
 namespace frontend\modules\bbs\controllers;
 
+use common\models\base\Profile;
+use common\models\bbs\Comment;
+use common\models\bbs\Topic;
 use common\models\bbs\UserAction;
 use yii\filters\AccessControl;
 use Yii;
@@ -37,6 +40,7 @@ class UserActionController extends BaseController
     public function actionIndex($action, $type, $id)
     {
         $model = UserAction::find()->where(['user_id' => Yii::$app->user->id, 'action' => $action, 'type' => $type, 'target_id' => $id])->one();
+        $counter = 1;
         if (!$model) {
             $model = new UserAction([
                 'user_id' => Yii::$app->user->id,
@@ -49,9 +53,15 @@ class UserActionController extends BaseController
                 return $this->error();
             }
         } else {
+            $counter = -1;
             if (!$model->delete()) {
                 return $this->error();
             }
+        }
+
+        $target = ($type == UserAction::TYPE_TOPIC ? Topic::findOne($id) : Comment::findOne($id));
+        if ($target) {
+            Profile::setFieldValue($target->user_id, UserAction::getActionProfileField($action), $counter, true);
         }
 
         return $this->redirectSuccess();

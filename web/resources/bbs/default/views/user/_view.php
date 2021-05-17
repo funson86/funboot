@@ -15,13 +15,8 @@ use yii\helpers\Markdown;
     case 'index':
         // 回复
         if ($model->topic) {
-            echo Html::a(
-                Html::encode($model->topic->name),
-                ["/bbs/topic/view", 'id' => $model->topic->id],
-                ['class' => 'list-group-item-heading']
-            );
-            echo Html::tag('span', Yii::$app->formatter->asDate($model->created_at),
-                ['class' => 'ml5 fade-info']);
+            echo Html::a(Html::encode($model->topic->name), ["/bbs/topic/view", 'id' => $model->topic->id], ['class' => 'list-group-item-heading']);
+            echo Html::tag('span', Yii::$app->formatter->asDate($model->created_at), ['class' => 'ml-2 fade-info']);
             echo Html::tag('div', nl2br($model->content), ['class' => 'markdown-reply']);
         }
         break;
@@ -30,13 +25,8 @@ use yii\helpers\Markdown;
         // 收藏
         echo Html::tag('i', '', ['class' => 'fa fa-bookmark red mr5']);
 
-        echo Html::a(
-            Html::encode($model->topic->name),
-            ["/bbs/topic/view", 'id' => $model->topic->id],
-            ['class' => 'list-group-item-heading']
-        );
-        echo Html::tag('span', Yii::$app->formatter->asRelativeTime($model->topic->created_at),
-            ['class' => 'ml5 fade-info']);
+        echo Html::a(Html::encode($model->topic->name), ["/bbs/topic/view", 'id' => $model->topic->id], ['class' => 'list-group-item-heading']);
+        echo Html::tag('span', Yii::$app->formatter->asRelativeTime($model->topic->created_at), ['class' => 'ml-5 fade-info']);
         echo Html::beginTag('p', ['class' => 'list-group-item-text title-info']);
 
         echo Html::a($model->topic->node->name,
@@ -52,6 +42,6 @@ use yii\helpers\Markdown;
         // 积分
         echo Html::tag('i', '', ['class' => 'fa fa-money red mr5']);
         echo Html::encode($model->brief);
-        echo Html::tag('span', Yii::$app->formatter->asRelativeTime($model->created_at), ['class' => 'ml5 fade-info']);
+        echo Html::tag('span', Yii::$app->formatter->asRelativeTime($model->created_at), ['class' => 'ml-5 fade-info']);
         break;
 } ?>

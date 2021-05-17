@@ -34,6 +34,7 @@ class DefaultController extends BaseController
             'scenario' => 'default',
             'likeAttributes' => $this->likeAttributes,
             'defaultOrder' => [
+                'status' => SORT_ASC,
                 'sort' => SORT_ASC,
                 'id' => SORT_DESC,
             ],
@@ -43,7 +44,11 @@ class DefaultController extends BaseController
         // 管理员级别才能查看所有数据，其他只能查看本store数据
         $params = Yii::$app->request->queryParams;
         $params['ModelSearch']['store_id'] = $this->getStoreId();
-        $params['ModelSearch']['status'] = Topic::STATUS_ACTIVE;
+        if (!$this->isAdmin()) {
+            $params['ModelSearch']['status'] = Topic::STATUS_ACTIVE;
+        } else {
+            $params['ModelSearch']['status'] = [Topic::STATUS_ACTIVE, Topic::STATUS_INACTIVE];
+        }
         if ($nodeId = Yii::$app->request->get('node_id')) {
             $nodeIds = ArrayHelper::getChildrenIds($nodeId, Node::find()->all());
             $params['ModelSearch']['node_id'] = $nodeIds;
@@ -70,9 +75,9 @@ class DefaultController extends BaseController
 
         // 排序
         $sort = $dataProvider->getSort();
-        $sort->attributes['id']['asc'] = ['id' => SORT_DESC];
-        $sort->attributes['like']['asc'] = ['like' => SORT_DESC, 'id' => SORT_DESC];
-        $sort->attributes['click']['asc'] = ['click' => SORT_DESC, 'id' => SORT_DESC];
+        $sort->attributes['id']['asc'] = ['status' => SORT_ASC, 'id' => SORT_DESC];
+        $sort->attributes['like']['asc'] = ['status' => SORT_ASC, 'like' => SORT_DESC, 'id' => SORT_DESC];
+        $sort->attributes['click']['asc'] = ['status' => SORT_ASC, 'click' => SORT_DESC, 'id' => SORT_DESC];
 
         return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,

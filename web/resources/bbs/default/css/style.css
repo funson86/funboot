@@ -124,7 +124,7 @@ footer {
 
 .empty {
     padding: .75rem 1.25rem;
-    background-color: #EFEFEF;
+    background-color: #FFFFFF;
 }
 
 .card-footer a {
@@ -141,4 +141,21 @@ footer {
 
 .user-menu .active a {
     color: #FFF;
+}
+
+.card-header>.card-title {
+    float: left;
+    font-size: 1.4em;
+    line-height: 1.9;
+    margin-bottom: 0;
+}
+
+.card-header>.card-tools {
+    float: right;
+    margin-right: -.625rem;
+}
+
+.fade-info {
+    color: #aaa;
+    font-size: 0.9em;
 }

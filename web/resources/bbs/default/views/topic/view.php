@@ -22,10 +22,10 @@ $comment->topic_id = $model->id;
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h3 class="mt-0 mb-1"><?= $model->name ?></h3>
+                        <h3 class="mt-0 mb-1"><?= $model->name ?><?= $model->status == ActiveModel::STATUS_INACTIVE ? ' ' . Html::a(Yii::t('app', 'Pass'), ['/bbs/topic/pass', 'id' => $model->id], ['class' => 'btn btn-sm btn-success']) : '' ?></h3>
                         <div class="topic-info">
-                            <a class="topic-node" href="<?= Url::to(['/bbs/default/index', 'id' => $model->node_id]) ?>"><?= Html::tag('span', $model->node->name, ['class' => 'btn-sm btn-success']) ?></a> •
-                            <?= $model->tag_id > 0 ? Html::a($model->tag->name, ['/bbs/default/index', 'ModelSearch[tag_id]' => $model->tag_id], ['class' => 'btn-sm btn-success']) : '' ?> •
+                            <a class="topic-node" href="<?= Url::to(['/bbs/default/index', 'id' => $model->node_id]) ?>"><?= Html::tag('span', $model->node->name, ['class' => 'btn-sm btn-info']) ?></a> •
+                            <?= $model->tag_id > 0 ? Html::a($model->tag->name, ['/bbs/default/index', 'ModelSearch[tag_id]' => $model->tag_id], ['class' => 'btn-sm btn-info']) : '' ?> •
                             <a class="remove-padding-left" href="<?= Url::to(['/bbs/topic/view', 'id' => $model->id]) ?>"><span class="bi-hand-thumbs-up"> <?= $model->like ?> </span></a> •
                             <span>最后由<a href="<?= Url::to(['/bbs/user/view', 'id' => $model->user_id]) ?>"><strong> <?= $model->last_comment_username ?> </strong></a>于 <?= Yii::$app->formatter->asDate($model->last_comment_updated_at) ?> 回复</span> •
                             <?= $model->click ?> 次阅读
@@ -101,7 +101,7 @@ $comment->topic_id = $model->id;
                 );
 
 
-                if ($model->isOwner() || $this->context->isAdmin()) {
+                if ($model->isOwner()) {
                     echo Html::a(
                         Html::tag('i', '', ['class' => 'bi-hand-thumbs-up']) . ' ' . Html::tag('span', $model->like) . ' 个赞',
                         'javascript:;'
@@ -126,6 +126,12 @@ $comment->topic_id = $model->id;
 
                 if ($model->isOwner() || $this->context->isAdmin()) {
                     echo '<span class="float-right">';
+                    if ($model->status != ActiveModel::STATUS_ACTIVE) {
+                        echo Html::a(
+                            Html::tag('i', '', ['class' => 'bi-pencil']) . ' 审核通过',
+                            ['/bbs/topic/pass', 'id' => $model->id]
+                        );
+                    }
                     echo Html::a(
                         Html::tag('i', '', ['class' => 'bi-pencil']) . ' 修改',
                         ['/bbs/topic/edit', 'id' => $model->id]

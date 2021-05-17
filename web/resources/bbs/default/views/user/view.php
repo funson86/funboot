@@ -4,11 +4,49 @@ use yii\widgets\Menu;
 use yii\widgets\ListView;
 use common\models\User;
 use yii\helpers\Url;
+
+$this->title = Html::encode($user->username);
 ?>
 <section class="container user-default-index">
 
+    <div class="row pb-5">
     <!--/col-3-->
-    <div class="col-sm-9 list-nav mb20" contenteditable="false" style="">
+    <div class="col-sm-3">
+        <!--left col-->
+        <div class="card">
+            <div class="card-body">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <?= Html::img($model->getMixedAvatar(), ['class' => 'rounded-circle', 'width' => 50, 'height' => 50]) ?>
+                    </div>
+                    <div class="media-body ml-3">
+                        <h6 class="mt5"><?= Html::tag('strong', Html::encode($model->username)) ?></h6>
+                        <div class="pull-left">
+                            <span class="badge badge-success"><?= $this->context->isAdmin() ?  Yii::t('app', 'Admin') : Yii::t('app', 'Member') ?></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="mb-3 mt-3" />
+
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <h3><?= $model->profile->like ?? 0 ?></h3>
+                        <div><?= Yii::t('app', 'Feed Like') ?></div>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <h3><?= $model->profile->thanks ?? 0 ?></h3>
+                        <h6><?= Yii::t('app', 'Heart') ?></h6>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+        <div class="col-sm-9 list-nav mb20" contenteditable="false" style="">
         <nav class="navbar navbar-default">
             <?= \yii\bootstrap4\Nav::widget([
                 'options' => [
@@ -31,5 +69,6 @@ use yii\helpers\Url;
             'itemView' => '_view',
             'options' => ['class' => 'list-group'],
         ]) ?>
+    </div>
     </div>
 </section>
