@@ -13,7 +13,7 @@ use yii\helpers\Url;
     </div>
 
     <div class="media-body small lh-125 border-gray">
-        <div class="media-heading topic-title"><?= Html::a($model->name, ['/bbs/topic/view', 'id' => $model->id]) ?><?= $model->status == ActiveModel::STATUS_INACTIVE ? ' ' . Html::tag('span', Yii::t('app', 'Unverified'), ['class' => 'btn-warning pl-1 pr-1']) : $model->status ?> </div>
+        <div class="media-heading topic-title"><?= Html::a($model->name, ['/bbs/topic/view', 'id' => $model->id]) ?><?= $model->status == ActiveModel::STATUS_INACTIVE ? ' ' . Html::tag('span', Yii::t('app', 'Unverified'), ['class' => 'btn-warning pl-1 pr-1']) : '' ?> </div>
         <div class="topic-info">
             <a class="remove-padding-left" href="<?= Url::to(['/bbs/topic/view', 'id' => $model->id]) ?>"><span class="bi-hand-thumbs-up"> <?= $model->like ?> </span></a> •
             <a class="topic-node" href="<?= Url::to(['/bbs/default/index', 'id' => $model->node_id]) ?>"><?= $model->node->name ?></a> •
