@@ -97,7 +97,6 @@ footer {
 }
 
 .topic-node {
-    padding: 0.3em 1em;
     background-color: #f8f9fa;
 }
 
@@ -109,6 +108,11 @@ footer {
     padding: 1em;
     background-color: #f7f7f7;
     margin-bottom: 0;
+}
+
+.control-label-full {
+    display: block;
+    width: 100%;
 }
 
 .sidebar-fixed {

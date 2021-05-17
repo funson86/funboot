@@ -29,7 +29,7 @@ class BbsSidebar extends \yii\base\Widget
         $excellent = Topic::find()->where(['store_id' => Yii::$app->storeSystem->getId()])->andWhere(['>', 'grade', 0])->orderBy(['sort' => SORT_ASC, 'created_at' => SORT_DESC])->limit(8)->all();
         return $this->render(Inflector::camel2id(StringHelper::basename(get_class($this))), [
             'type' => $this->type,
-            //'model' => $model,
+            'nodeId' => $this->nodeId,
             'category' => $category,
             'excellent' => $excellent,
         ]);

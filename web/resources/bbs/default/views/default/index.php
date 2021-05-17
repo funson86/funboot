@@ -18,6 +18,7 @@ $this->registerMetaTag(["name" => "description", "content" => $store->settings['
     <div class="col-md-9">
 
         <div class="card">
+            <?php if (!empty($listChildren)) { ?>
             <div class="card-header bg-white p-1 pl-3">
                 <ul class="nav nav-pills card-header-pills">
                     <?php foreach ($listChildren as $item) { ?>
@@ -30,6 +31,7 @@ $this->registerMetaTag(["name" => "description", "content" => $store->settings['
                     </li>
                 </ul>
             </div>
+            <?php } ?>
             <div class="card-body bg-light border-bottom card-sort">
                 <p class="card-text text-right">
                     <?= Yii::t('app', 'Sort') ?>:

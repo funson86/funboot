@@ -22,8 +22,9 @@ $comment->topic_id = $model->id;
                     <div class="media-body">
                         <h3 class="mt-0 mb-1"><?= $model->name ?></h3>
                         <div class="topic-info">
+                            <a class="topic-node" href="<?= Url::to(['/bbs/default/index', 'id' => $model->node_id]) ?>"><?= Html::tag('span', $model->node->name, ['class' => 'btn-sm btn-success']) ?></a> •
+                            <?= $model->tag_id > 0 ? Html::a($model->tag->name, ['/bbs/default/index', 'ModelSearch[tag_id]' => $model->tag_id], ['class' => 'btn-sm btn-success']) : '' ?> •
                             <a class="remove-padding-left" href="<?= Url::to(['/bbs/topic/view', 'id' => $model->id]) ?>"><span class="bi-hand-thumbs-up"> <?= $model->like ?> </span></a> •
-                            <a class="topic-node" href="<?= Url::to(['/bbs/default/index', 'id' => $model->node_id]) ?>"><?= Html::tag('span', $model->node->name, ['class' => 'btn-default']) ?></a> •
                             <span>最后由<a href="<?= Url::to(['/bbs/user/view', 'id' => $model->user_id]) ?>"><strong> <?= $model->last_comment_username ?> </strong></a>于 <?= Yii::$app->formatter->asDate($model->last_comment_updated_at) ?> 回复</span> •
                             <?= $model->click ?> 次阅读
                         </div>
@@ -32,6 +33,10 @@ $comment->topic_id = $model->id;
                 </div>
             </div>
             <div class="card-body">
+                <?php if (!empty($model->topicMetas)) { foreach ($model->topicMetas as $item) { ?>
+                <p class="mb-2"><?= $item->name ?>: <?= $item->content ?></p>
+                <?php } } ?>
+
                 <?php if ($model->format == ActiveModel::FORMAT_MARKDOWN) { ?>
                 <?= HtmlPurifier::process(Markdown::process($model->content, 'gfm')) ?>
                 <?php } else { ?>
@@ -148,7 +153,7 @@ $comment->topic_id = $model->id;
 
     <div class="col-md-3 pl-0">
         <div class="sidebar-fixed">
-            <?= \frontend\widgets\BbsSidebar::widget(['type' => 'topic']) ?>
+            <?= \frontend\widgets\BbsSidebar::widget(['type' => 'topic', 'nodeId' => $model->node_id]) ?>
         </div>
     </div><!-- /.col-lg-4 -->
 

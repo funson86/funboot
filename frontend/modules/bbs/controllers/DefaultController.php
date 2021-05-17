@@ -52,6 +52,8 @@ class DefaultController extends BaseController
 
             $nodes = ArrayHelper::mapIdData(Yii::$app->cacheSystemBbs->getStoreNode());
             $listChildren = ArrayHelper::getRootSub2($nodeId, Yii::$app->cacheSystemBbs->getStoreNode($this->getStoreId(), null, false, true), true);
+        } elseif (isset($params['ModelSearch']['tag_id']) && $params['ModelSearch']['tag_id'] > 0) {
+            $listChildren = [];
         } else {
             $listChildren = Yii::$app->params['bbs']['indexNodeChildren'];
         }

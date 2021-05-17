@@ -131,7 +131,6 @@ class TopicBase extends BaseModel
         ];
     }
 
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -143,9 +142,25 @@ class TopicBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getTopicMetas()
+    {
+        return $this->hasMany(TopicMeta::className(), ['topic_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getNode()
     {
         return $this->hasOne(Node::className(), ['id' => 'node_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTag()
+    {
+        return $this->hasOne(Tag::className(), ['id' => 'tag_id']);
     }
 
     /**

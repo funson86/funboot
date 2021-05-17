@@ -12,6 +12,7 @@ use common\models\bbs\TopicTag;
 use common\models\ModelSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -20,6 +21,26 @@ use yii\helpers\ArrayHelper;
 class TopicController extends BaseController
 {
     public $modelClass = Topic::class;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['edit', 'edit-node', 'delete', 'excellent', 'top'],
+                'rules' => [
+                    [
+                        'actions' => ['edit', 'edit-node', 'delete', 'excellent', 'top'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     /**
      * Renders the index view for the module

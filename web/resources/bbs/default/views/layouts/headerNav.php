@@ -28,6 +28,14 @@ foreach ($nodes as $node) {
 
     $items[] = $item;
 }
+
+$listTag = [];
+$tags = Yii::$app->cacheSystemBbs->getStoreTag(Yii::$app->storeSystem->getId());
+foreach ($tags as $tag) {
+    $listTag[] = ['label' => $tag->name, 'url' => ['/bbs/default/index', 'ModelSearch[tag_id]' => $tag->id]];
+}
+$items[] = ['label' => Yii::t('app', 'Cities'), 'active' => false, 'items' => $listTag];
+
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav'],
     'items' => ArrayHelper::merge([

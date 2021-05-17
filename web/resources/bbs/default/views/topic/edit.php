@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use common\models\bbs\Node;
 use common\models\bbs\Topic as ActiveModel;
 
-$this->title = Yii::t('app', 'Publish');
+$this->title = Yii::t('app', 'Publish') . $model->node->name;
 
 ?>
 <div class="row">
@@ -17,23 +17,22 @@ $this->title = Yii::t('app', 'Publish');
             <div class="card-body">
                 <?php $form = ActiveForm::begin([
                     'fieldConfig' => [
-                        'template' => "<div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
                         'options' => ['class' => 'form-group row'],
                     ],
                 ]); ?>
-                <div class="col-sm-12 p-0">
+                <div class="col-sm-12">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'tag_id')->dropdownList(\common\models\bbs\Tag::getIdLabel(true))->label(Yii::t('app', 'Cities')) ?>
                     <?php foreach ($metas as $meta) { ?>
                         <div class="form-group row field-topic-node_id">
-                            <div class="col-sm-2 text-right"><label class="control-label" for="topic-node_id"><?= $meta->name ?></label></div>
-                            <div class="col-sm-10"><?= Html::textInput("Meta[$meta->id]", $mapMetaIdContent[$meta->id] ?? '', ['class' => 'form-control']) ?></div>
+                            <label class="control-label" for="topic-node_id"><?= $meta->name ?></label>
+                            <?= Html::textInput("Meta[$meta->id]", $mapMetaIdContent[$meta->id] ?? '', ['class' => 'form-control']) ?>
                         </div>
                     <?php } ?>
                     <?php if ($model->format == ActiveModel::FORMAT_MARKDOWN) { ?>
                         <?= $form->field($model, 'content')->widget(\common\widgets\markdown\Markdown::class, []) ?>
                     <?php } else { ?>
-                    <?= $form->field($model, 'content')->widget(\common\components\ueditor\Ueditor::class, ['style' => 2]) ?>
-                    <?= $form->field($model, 'tag_id')->dropdownList(\common\models\bbs\Tag::getIdLabel(true)) ?>
+                    <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'control-label control-label-full']])->widget(\common\components\ueditor\Ueditor::class, ['style' => 2]) ?>
                     <?php } ?>
                 </div>
                 <div class="form-group">

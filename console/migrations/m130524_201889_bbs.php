@@ -393,6 +393,34 @@ INSERT INTO `fb_base_role_permission` VALUES ('496', '1', '', '50', '5394', '1',
 INSERT INTO `fb_base_role_permission` VALUES ('497', '1', '', '50', '5395', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('498', '1', '', '50', '5396', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 
+update fb_bbs_topic set `name` = replace(`name`, '餐饮信息汇总', '英国餐饮信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '伦敦英国餐饮信息汇总', '伦敦餐饮信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '伯明翰英国餐饮信息汇总', '伯明翰餐饮信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '曼彻斯特英国餐饮信息汇总', '曼彻斯特餐饮信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '格拉斯哥英国餐饮信息汇总', '格拉斯哥餐饮信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '卡迪夫英国餐饮信息汇总', '卡迪夫餐饮信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '贝尔法斯特英国餐饮信息汇总', '贝尔法斯特餐饮信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '社区信息汇总', '英国社区信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '伦敦英国社区信息汇总', '伦敦社区信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '伯明翰英国社区信息汇总', '伯明翰社区信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '曼彻斯特英国社区信息汇总', '曼彻斯特社区信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '格拉斯哥英国社区信息汇总', '格拉斯哥社区信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '卡迪夫英国社区信息汇总', '卡迪夫社区信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '贝尔法斯特英国社区信息汇总', '贝尔法斯特社区信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '生活信息汇总', '英国生活信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '伦敦英国生活信息汇总', '伦敦生活信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '伯明翰英国生活信息汇总', '伯明翰生活信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '曼彻斯特英国生活信息汇总', '曼彻斯特生活信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '格拉斯哥英国生活信息汇总', '格拉斯哥生活信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '卡迪夫英国生活信息汇总', '卡迪夫生活信息汇总');
+update fb_bbs_topic set `name` = replace(`name`, '贝尔法斯特英国生活信息汇总', '贝尔法斯特生活信息汇总');
+
+update fb_bbs_topic set tag_id = 101 where `name` like '%伦敦%';
+update fb_bbs_topic set tag_id = 102 where `name` like '%伯明翰%';
+update fb_bbs_topic set tag_id = 103 where `name` like '%曼彻斯特%';
+update fb_bbs_topic set tag_id = 106 where `name` like '%格拉斯哥%';
+update fb_bbs_topic set tag_id = 107 where `name` like '%卡迪夫%';
+update fb_bbs_topic set tag_id = 108 where `name` like '%贝尔法斯特%';
         ";
 
         //add user: admin  password: 123456
