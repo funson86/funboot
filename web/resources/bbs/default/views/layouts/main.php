@@ -24,7 +24,7 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => BbsAsset::
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?> - <?= Html::encode($store->settings['website_seo_title'] ?: $store->settings['website_name']) ?></title>
+    <title><?= Html::encode($this->title) ?> - <?= Html::encode($store->settings['website_seo_title'] ?: ($store->settings['website_name'] ?: $store->name)) ?></title>
     <meta name="keywords" content="<?= Html::encode($store->settings['website_seo_keywords'] ?: $store->settings['website_name']) ?>"/>
     <meta name="description" content="<?= Html::encode($store->settings['website_seo_keywords'] ?: $store->settings['website_name']) ?>"/>
     <link rel="icon" href="<?= $this->context->getFavicon() ?>" type="image/x-icon" />

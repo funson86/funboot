@@ -7,33 +7,39 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+$this->title = Yii::t('app', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<div class="login-page">
     <div class="row">
-        <div class="col-md-4 col-sm-offset-3">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div style="color:#999;margin:1em 0">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                    <br>
-                    Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
+        <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+            <div class="card mt-5 message-send-view">
+                <div class="card-header">
+                    <?= Html::encode($this->title) ?>
                 </div>
 
-                <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
+                <div class="card-body">
 
-            <?php ActiveForm::end(); ?>
-        </div>
+                    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+
+                        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+
+                        <?= $form->field($model, 'password')->passwordInput() ?>
+
+                        <?= $form->field($model, 'rememberMe')->checkbox() ?>
+
+                        <div style="color:#999;margin:1em 0; display: flex; flex-direction: row; justify-content: space-between">
+                            <?= Html::a('Forgot Password?', ['/bbs/default/request-password-reset']) ?>
+                            <?= Html::a('Resend Verification Email?', ['/bbs/default/resend-verification-email']) ?>
+                        </div>
+
+                        <div class="form-group">
+                            <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                        </div>
+
+                    <?php ActiveForm::end(); ?>
+                </div>
+            </div>
+
     </div>
 </div>

@@ -9,6 +9,8 @@ use common\models\bbs\Topic as ActiveModel;
 /* @var $model \common\models\bbs\Topic */
 /* @var $dataProvider \yii\data\ActiveDataProvider */
 
+$this->title = $model->name;
+
 $comment = new \common\models\bbs\Comment();
 $comment->topic_id = $model->id;
 ?>

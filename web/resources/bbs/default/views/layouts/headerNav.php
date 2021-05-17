@@ -39,7 +39,6 @@ $items[] = ['label' => Yii::t('app', 'Cities'), 'active' => false, 'items' => $l
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav'],
     'items' => ArrayHelper::merge([
-            ['label' => Yii::t('app', 'BBS'), 'url' => ['/'], 'active' => Yii::$app->request->get('id', 0) == 0],
         ], ArrayHelper::merge($items, [
             ['label' => Yii::t('app', 'Tags'), 'url' => ['/bbs/default/tag'], 'active' => false],
             ['label' => Yii::t('app', 'Yellow Pages'), 'url' => ['/bbs/default/yellow-page'], 'active' => false],
@@ -48,22 +47,22 @@ echo Nav::widget([
     'encodeLabels' => false
 ]);
 
-    echo '<ul class="navbar-nav mr-auto ml-3"><li class="nav-item"><form class="navbar-form navbar-left" role="search" action="/bbs/default/index" method="get">
-                <div class="form-group mb-0">
-                    <input type="text" value="' . $keyword . '" name="ModelSearch[name]" class="form-control search_input" id="navbar-search" placeholder="搜索..." data-placement="bottom" data-content="请输入要搜索的关键词！">
-                </div>
-            </form></li></ul>';
+echo '<ul class="navbar-nav mr-auto ml-3"><li class="nav-item"><form class="navbar-form navbar-left" role="search" action="/bbs/default/index" method="get">
+        <div class="form-group mb-0">
+            <input type="text" value="' . $keyword . '" name="ModelSearch[name]" class="form-control search_input" id="navbar-search" placeholder="' . Yii::t('app', 'Search') . '..." data-placement="bottom" />
+        </div>
+    </form></li></ul>';
 
 if (Yii::$app->user->isGuest) {
-    $menuItems[] = ['label' => Yii::t('app', 'Sign up'), 'url' => ['/bbs/site/signup']];
-    $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/bbs/site/login']];
+    $menuItems[] = ['label' => Yii::t('app', 'Sign up'), 'url' => ['/bbs/default/signup']];
+    $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/bbs/default/login']];
 } else {
-    // 撰写
-    $menuItems[] = [
+    // 通知
+    /*$menuItems[] = [
         'label' => Html::tag('i', '', ['class' => 'bi-bell-fill']) . (1 > 0 ?Html::tag('span', 1, ['class' => 'badge badge-danger']) : ''),
         'url' => ['/notice/index'],
         'options' => ['class' => 'notice-count'],
-    ];
+    ];*/
 
     // 个人中心
     $menuItems[] = [

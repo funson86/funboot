@@ -53,8 +53,6 @@ class UserController extends BaseController
             return $this->goBack();
         }
 
-        $percent = 0;similar_text('hello', 'hello', $percent);
-        vd ($percent);
         if (!Yii::$app->user->isGuest || Yii::$app->user->id != $model->id) {
             //Yii::$app->queue->push(new CounterJob(['modelClass' => Topic::class, 'id' => $id, 'field' => 'click']));
         }

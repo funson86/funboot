@@ -306,3 +306,7 @@
         display: none !important;
     }
 }
+
+.help-block-error {
+    color: #FF0000;
+}

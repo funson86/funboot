@@ -118,3 +118,15 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.card-header>.card-title {
+    float: left;
+    font-size: 1.4em;
+    line-height: 1.9;
+    margin-bottom: 0;
+}
+
+.card-header>.card-tools {
+    float: right;
+    margin-right: -.625rem;
+}

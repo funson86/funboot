@@ -82,6 +82,7 @@ return [
                 'topic/<action:\w+>/<id:\d+>' => 'bbs/topic/<action>',
                 'topic/<action:\w+>' => 'bbs/topic/<action>',
                 'bbs/user-action/<action:\d+>/<type:\d+>/<id:\d+>' => 'bbs/user-action/index',
+                'bbs/<alias:login|logout|signup|request-password-reset|reset-password|verify-email|resend-verification-email|tag|yellow-page>' => 'bbs/default/<alias>',
 
                 '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',

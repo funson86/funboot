@@ -490,6 +490,7 @@ return [
     'Sign in' => '登录',
     'Login' => '登录',
     'Sign up' => '注册',
+    'Signup' => '注册',
     'Incorrect username or password.' => '帐号或密码不正确',
     'Verification Code' => '验证码',
     'Click to change' => '点击更换',

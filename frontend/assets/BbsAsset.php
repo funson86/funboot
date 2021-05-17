@@ -12,6 +12,7 @@ class BbsAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        '/resources/css/site.css',
     ];
 
     public $js = [
@@ -24,6 +25,7 @@ class BbsAsset extends AssetBundle
         'common\widgets\adminlte\Bootstrap4PluginAsset',
         'common\widgets\adminlte\BootstrapIconsAsset',
         'common\widgets\adminlte\FlagIconAsset',
+        'common\widgets\funboot\assets\FunbootBootstrapFixAsset',
 //        'yii\bootstrap\BootstrapAsset',
     ];
 }
