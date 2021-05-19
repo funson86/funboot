@@ -32,6 +32,7 @@ class LoginEmailForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['email', 'validateStatus'],
             ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
         ];
     }
@@ -49,6 +50,23 @@ class LoginEmailForm extends Model
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, Yii::t('app', 'Incorrect email or password.'));
+            }
+        }
+    }
+
+    /**
+     * Check status.
+     * This method serves as the inline validation for password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
+     */
+    public function validateStatus($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $user = $this->getUser();
+            if ($user->status != User::STATUS_ACTIVE) {
+                $this->addError($attribute, Yii::t('app', 'Please check your inbox for verification email to enable account.'));
             }
         }
     }
@@ -89,6 +107,7 @@ class LoginEmailForm extends Model
      */
     protected function getUser()
     {
+        !$this->storeId && $this->storeId = Yii::$app->storeSystem->getId();
         if ($this->_user === null) {
             $this->_user = User::findByEmailAndStoreId($this->email, $this->storeId);
         }

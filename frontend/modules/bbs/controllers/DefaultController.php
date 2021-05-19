@@ -5,6 +5,8 @@ namespace frontend\modules\bbs\controllers;
 use common\helpers\ArrayHelper;
 use common\models\bbs\Node;
 use common\models\bbs\Topic;
+use common\models\forms\LoginEmailForm;
+use common\models\forms\SignupEmailForm;
 use common\models\LoginForm;
 use common\models\ModelSearch;
 use frontend\models\PasswordResetRequestForm;
@@ -97,7 +99,7 @@ class DefaultController extends BaseController
             return $this->goHome();
         }
 
-        $model = new LoginForm();
+        $model = new LoginEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
@@ -128,9 +130,9 @@ class DefaultController extends BaseController
      */
     public function actionSignup()
     {
-        $model = new SignupForm();
+        $model = new SignupEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Thank you for registration. Please check your inbox for verification email.'));
             return $this->goHome();
         }
 
@@ -149,7 +151,7 @@ class DefaultController extends BaseController
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
 
                 return $this->goHome();
             } else {
@@ -178,7 +180,7 @@ class DefaultController extends BaseController
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'New password saved.'));
 
             return $this->goHome();
         }
@@ -204,12 +206,12 @@ class DefaultController extends BaseController
         }
         if ($user = $model->verifyEmail()) {
             if (Yii::$app->user->login($user)) {
-                Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Your email has been confirmed!'));
                 return $this->goHome();
             }
         }
 
-        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
+        Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, we are unable to verify your account with provided token.'));
         return $this->goHome();
     }
 
@@ -223,10 +225,10 @@ class DefaultController extends BaseController
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
                 return $this->goHome();
             }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
+            Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, we are unable to resend verification email for the provided email address.'));
         }
 
         return $this->render('resendVerificationEmail', [

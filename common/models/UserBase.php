@@ -251,7 +251,7 @@ class UserBase extends BaseModel implements IdentityInterface
      */
     public static function findByEmailAndStoreId($email, $storeId)
     {
-        return static::findOne(['email' => $email, 'store_id' => $storeId, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email, 'store_id' => $storeId]);
     }
 
     /**

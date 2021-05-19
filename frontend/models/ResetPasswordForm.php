@@ -4,6 +4,7 @@ namespace frontend\models;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
 use common\models\User;
+use Yii;
 
 /**
  * Password reset form
@@ -17,6 +18,12 @@ class ResetPasswordForm extends Model
      */
     private $_user;
 
+    public function attributeLabels()
+    {
+        return [
+            'password' => Yii::t('app', 'Password'),
+        ];
+    }
 
     /**
      * Creates a form model given a token.

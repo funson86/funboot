@@ -27,8 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?= $form->field($model, 'password')->passwordInput() ?>
 
-                    <div class="form-group">
-                        <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                    <div class="form-group flex-row-space">
+                        <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-primary pl-5 pr-5', 'name' => 'signup-button']) ?>
+                        <?= Html::a(Yii::t('app', 'Forgot Password?'), ['/bbs/default/request-password-reset']) ?>
                     </div>
 
                 <?php ActiveForm::end(); ?>

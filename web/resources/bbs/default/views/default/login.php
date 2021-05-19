@@ -22,19 +22,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                        <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
                         <?= $form->field($model, 'password')->passwordInput() ?>
 
                         <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-                        <div style="color:#999;margin:1em 0; display: flex; flex-direction: row; justify-content: space-between">
-                            <?= Html::a('Forgot Password?', ['/bbs/default/request-password-reset']) ?>
-                            <?= Html::a('Resend Verification Email?', ['/bbs/default/resend-verification-email']) ?>
+                        <div class="form-group flex-row-space">
+                            <?= Html::a(Yii::t('app', 'Forgot Password?'), ['/bbs/default/request-password-reset']) ?>
+                            <?= Html::a(Yii::t('app', 'Resend Verification Email?'), ['/bbs/default/resend-verification-email']) ?>
                         </div>
 
-                        <div class="form-group">
-                            <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                        <div class="form-group text-center pt-3">
+                            <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-primary pl-5 pr-5', 'name' => 'login-button']) ?>
                         </div>
 
                     <?php ActiveForm::end(); ?>

@@ -7,10 +7,10 @@ $name = $user->name ?: $user->email;
 
 <div class="card">
     <div class="card-header">
-        <h5 class="card-title mb-0">
+        <h6 class="card-title mb-0">
         <?= \yii\helpers\Html::img($user->getMixedAvatar(24), ['class' => 'rounded-circle', 'alt' => $name, 'width' => 24, 'height' => 24]);?>
         <?= $name ?>
-        </h5>
+        </h6>
     </div>
     <div class="card-body">
         <?= Menu::widget([

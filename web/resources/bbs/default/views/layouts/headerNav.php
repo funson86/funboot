@@ -66,7 +66,7 @@ if (Yii::$app->user->isGuest) {
 
     // 个人中心
     $menuItems[] = [
-        'label' => Yii::$app->user->identity->username,
+        'label' => Yii::$app->user->identity->email ?: Yii::$app->user->identity->username,
         'items' => [
             ['label' => Yii::t('app', 'Profile'), 'url' => ['/bbs/user/profile']],
             ['label' => Yii::t('app', 'Avatar'), 'url' => ['/bbs/user/avatar']],
@@ -77,13 +77,13 @@ if (Yii::$app->user->isGuest) {
 }
 
 // 语言
-$menuItems[] = [
+/*$menuItems[] = [
     'label' => Html::tag('i', '', ['class' => 'bi-globe']),
     'items' => [
         ['label' => '<i class="flag-icon flag-icon-cn mr-2"></i>' . Yii::t('app', 'Chinese'), 'url' => 'javascript:;', 'linkOptions' => ['class' => 'funboot-lang', 'data-lang' => 'cn']],
         ['label' => '<i class="flag-icon flag-icon-gb mr-2"></i>' . Yii::t('app', 'English'), 'url' => 'javascript:;', 'linkOptions' => ['class' => 'funboot-lang', 'data-lang' => 'en']],
     ]
-];
+];*/
 
 echo Nav::widget([
     'encodeLabels' => false,
@@ -92,6 +92,3 @@ echo Nav::widget([
     'activateParents' => true,
 ]);
 NavBar::end();
-
-
-

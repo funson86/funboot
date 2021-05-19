@@ -3,6 +3,7 @@
 
 namespace frontend\models;
 
+use common\helpers\CommonHelper;
 use Yii;
 use common\models\User;
 use yii\base\Model;
@@ -14,6 +15,12 @@ class ResendVerificationEmailForm extends Model
      */
     public $email;
 
+    public function attributeLabels()
+    {
+        return [
+            'email' => Yii::t('app', 'Email'),
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -27,7 +34,7 @@ class ResendVerificationEmailForm extends Model
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_INACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => Yii::t('app', 'There is no user with this email address.')
             ],
         ];
     }
@@ -40,6 +47,7 @@ class ResendVerificationEmailForm extends Model
     public function sendEmail()
     {
         $user = User::findOne([
+            'store_id' => Yii::$app->storeSystem->getId(),
             'email' => $this->email,
             'status' => User::STATUS_INACTIVE
         ]);
@@ -48,15 +56,11 @@ class ResendVerificationEmailForm extends Model
             return false;
         }
 
-        return Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
-            ->send();
+        $content = CommonHelper::render(Yii::getAlias('@common/mail/bbs/emailVerify-html.php'), [
+            'user' => $user,
+        ], $this, Yii::getAlias('@common/mail/layouts/html.php'));
+
+        Yii::$app->mailSystem->send($this->email, Yii::t('app', 'Resend verification email'), $content);
+        return true;
     }
 }

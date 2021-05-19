@@ -428,7 +428,7 @@ CREATE TABLE `fb_store` (
   `expired_at` int(11) NOT NULL DEFAULT '0' COMMENT '到期时间',
   `remark` text CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT '备注',
   `language` int(11) NOT NULL DEFAULT '1' COMMENT '语言',
-  `lang_source` varchar(255) NOT NULL DEFAULT 'zh_CN' COMMENT '翻译源语言',
+  `lang_source` varchar(255) NOT NULL DEFAULT 'zh-CN' COMMENT '翻译源语言',
   `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言',
   `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言',
   `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言',
@@ -855,6 +855,7 @@ INSERT INTO `fb_base_setting_type` VALUES ('5013', '1', '50', 'backend', '主题
 INSERT INTO `fb_base_setting_type` VALUES ('5015', '1', '50', 'backend', '网站通告', 'website_brief', '', 'text', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('5017', '1', '50', 'backend', '版权标识', 'website_copyright', '', 'text', '', '@2020 - 版权所有', '50', '1', '1601003987', '1601003987', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('5021', '1', '50', 'backend', '统计代码', 'website_stat', '加载在底部，支持百度统计cnzz等', 'textarea', '', '', '50', '1', '1601008532', '1601008544', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5031', '1', '50', 'backend', '注册用户需要验证邮箱才能登录', 'user_login_need_verify', '', 'radioList', '0:否,1:是', '0', '50', '1', '1601008532', '1601008544', '1', '1');
 
 INSERT INTO `fb_base_setting_type` VALUES ('8301', '1', '83', 'backend', '电话', 'contact_mobile', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('8303', '1', '83', 'backend', 'Email', 'contact_email', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
