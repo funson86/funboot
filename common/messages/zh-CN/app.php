@@ -493,6 +493,7 @@ return [
     'Sign up' => '注册',
     'Signup' => '注册',
     'Hello' => '您好',
+    'Choose Node' => '选择栏目',
     'Incorrect username or password.' => '帐号或密码不正确',
     'Verification Code' => '验证码',
     'Click to change' => '点击更换',

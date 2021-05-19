@@ -51,17 +51,14 @@ class DefaultController extends BaseController
         } else {
             $params['ModelSearch']['status'] = [Topic::STATUS_ACTIVE, Topic::STATUS_INACTIVE];
         }
-        if ($nodeId = Yii::$app->request->get('node_id')) {
-            $nodeIds = ArrayHelper::getChildrenIds($nodeId, Node::find()->all());
-            $params['ModelSearch']['node_id'] = $nodeIds;
-        }
 
         // 判断节点
         $listChildren = [];
         if ($nodeId = Yii::$app->request->get('id')) {
             $node = Node::find()->where(['id' => $nodeId, 'store_id' => $this->getStoreId()])->one();
             if ($node) {
-                $params['ModelSearch']['node_id'] = $node->id;
+                $nodeIds = ArrayHelper::getChildrenIds($nodeId, Node::find()->asArray()->all());
+                $params['ModelSearch']['node_id'] = $nodeIds;
             }
 
             $nodes = ArrayHelper::mapIdData(Yii::$app->cacheSystemBbs->getStoreNode());

@@ -15,7 +15,8 @@ $changeFormat = (Yii::$app->request->get('format', ActiveModel::FORMAT_HTML) == 
             <div class="card-header">
                 <h2 class="card-title"><?= $this->title ?></h2>
                 <div class="card-tools">
-                   <?= Html::a(ActiveModel::getFormatLabels($changeFormat), ['/bbs/topic/edit', 'node_id' => Yii::$app->request->get('node_id'), 'format' => $changeFormat], ['class' => 'btn btn-sm btn-success']) ?>
+                    <?= Html::a(Yii::t('app', 'Choose Node'), ['/bbs/topic/edit-node'], ['class' => 'btn btn-sm btn-success']) ?>
+                    <?= Html::a(ActiveModel::getFormatLabels($changeFormat), ['/bbs/topic/edit', 'node_id' => Yii::$app->request->get('node_id'), 'format' => $changeFormat], ['class' => 'btn btn-sm btn-info']) ?>
                 </div>
             </div>
             <div class="card-body">
