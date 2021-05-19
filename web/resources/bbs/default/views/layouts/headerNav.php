@@ -10,7 +10,7 @@ $keyword = Yii::$app->request->get('ModelSearch')['name'] ?? '';
 
 NavBar::begin([
 //     'brandLabel' => Html::img('/images/logo.png'),
-    'brandLabel' => $store->settings['website_name'] ?: $store->name,
+    'brandLabel' => $this->context->store->settings['website_name'] ?: $this->context->store->name,
     'brandUrl' => Yii::$app->homeUrl,
     'options' => [
         'class' => 'navbar navbar-expand-lg navbar-light fixed-top',
