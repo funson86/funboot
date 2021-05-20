@@ -12,7 +12,7 @@ $index = 1 + $widget->dataProvider->pagination->page * $widget->dataProvider->pa
 ?>
 
 <div class="media p-0">
-    <?= \yii\helpers\Html::img($model->user->getMixedAvatar(50), ['class' => 'mr-3 rounded-circle', 'alt' => $name, 'width' => 50, 'height' => 50]);?>
+    <?= \yii\helpers\Html::img($model->user->getMixedAvatar(50), ['class' => 'mr-3 rounded-circle', 'width' => 50, 'height' => 50]);?>
     <div class="media-body">
         <div class="mt-0">
             <?= $model->user->email ?>
