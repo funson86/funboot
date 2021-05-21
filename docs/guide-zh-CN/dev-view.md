@@ -111,9 +111,7 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
 在Controller的actionEditAjax或者actionEdit中加入parent_id计算
 ```php
         $this->activeFormValidate($model);
-        if ($model->parent_id == 0) {
-            $model->parent_id = Yii::$app->request->get('parent_id', 0);
-        }
+        $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
 ```
 
 删除需要删除子节点的数据，在Controller中使用如下代码
@@ -212,7 +210,7 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
         $allRoles = ArrayHelper::map(Role::find()->where(['status' => Role::STATUS_ACTIVE])->asArray()->all(), 'id', 'name');
 
                     // 保存用户角色关系
-                    $roles = Yii::$app->request->post('User')['roles'];
+                    $roles = Yii::$app->request->post('User')['roles'] ?? [];
                     if (count($roles) > 0) {
                         foreach ($roles as $roleId) {
                             $userRole = new UserRole();
