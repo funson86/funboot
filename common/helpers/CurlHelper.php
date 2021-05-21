@@ -78,11 +78,11 @@ class CurlHelper
 
         $images = [];
         preg_match_all('/<img[\s\S]*?src\s*=\s*[\"|\'](.*?)[\"|\'][\s\S]*?>/', $content, $images);
-        $images = array_unique($images);
 
         if (!isset($images[0]) || !is_array($images[0]) || count($images[0]) <= 0) {
             return $content;
         }
+        $images[0] = array_unique($images[0]);
 
         set_time_limit(0);
         foreach ($images[0] as $item) {
@@ -95,8 +95,11 @@ class CurlHelper
                 $filePath = Yii::getAlias('@attachment') . $relativePath . $fileName;
                 $fileUrl = Yii::getAlias('@attachmentUrl') . $relativePath . $fileName;
 
-                @file_put_contents($filePath, self::getUrl($match[1], ''));
-                $content = str_replace($match[1], $fileUrl, $content);
+                $result = self::getUrl($match[1], '');
+                if (strlen($result) > 0) {
+                    file_put_contents($filePath, $result);
+                    $content = str_replace($match[1], $fileUrl, $content);
+                }
             }
         }
 
