@@ -2,6 +2,7 @@
 
 namespace frontend\modules\bbs\controllers;
 
+use common\helpers\CurlHelper;
 use common\job\base\CounterJob;
 use common\models\bbs\Comment;
 use common\models\bbs\Meta;
@@ -86,6 +87,7 @@ class TopicController extends BaseController
                 $model->created_at = $model->updated_at = $model->last_comment_updated_at = time();
                 $model->isNewRecord && $model->status = $this->isAdmin() ? $this->modelClass::STATUS_ACTIVE : $this->modelClass::STATUS_INACTIVE;
 
+                $model->content = CurlHelper::conductImage($model->content);
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($model->errors);
                     return $this->redirectError();

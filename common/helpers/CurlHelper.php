@@ -1,6 +1,7 @@
 <?php
 
 namespace common\helpers;
+use Yii;
 
 /**
  * Class CurlHelper
@@ -62,4 +63,43 @@ class CurlHelper
         return $content;
     }
 
+    public static function conductImage($content, $prefix = null)
+    {
+        $store = Yii::$app->storeSystem->get();
+        !$prefix && $prefix = $store->host_name ?? null;
+        if (!$prefix) {
+            return $content;
+        }
+
+        $relativePath = '/images/' . date('Y/m/d') . '/';
+        !file_exists(Yii::getAlias('@attachment') . $relativePath) && FileHelper::createDirectory(Yii::getAlias('@attachment') . $relativePath);
+
+        $content = stripcslashes($content);
+
+        $images = [];
+        preg_match_all('/<img[\s\S]*?src\s*=\s*[\"|\'](.*?)[\"|\'][\s\S]*?>/', $content, $images);
+        $images = array_unique($images);
+
+        if (!isset($images[0]) || !is_array($images[0]) || count($images[0]) <= 0) {
+            return $content;
+        }
+
+        set_time_limit(0);
+        foreach ($images[0] as $item) {
+            $match = [];
+            preg_match('/<img.*?src="(.*?)".*?\/?>/i', $item, $match);
+            // 以http开头且不存在当前域名
+            if (isset($match[1]) && strpos($match[1], 'http') === 0 && strpos($match[1], $prefix) === false) {
+                $ext = '.jpg';
+                $fileName = date('ymd') . '_' . IdHelper::snowFlakeId() . $ext;
+                $filePath = Yii::getAlias('@attachment') . $relativePath . $fileName;
+                $fileUrl = Yii::getAlias('@attachmentUrl') . $relativePath . $fileName;
+
+                @file_put_contents($filePath, self::getUrl($match[1], ''));
+                $content = str_replace($match[1], $fileUrl, $content);
+            }
+        }
+
+        return $content;
+    }
 }
