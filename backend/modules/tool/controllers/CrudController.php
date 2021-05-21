@@ -44,7 +44,7 @@ class CrudController extends BaseController
         'type' => 'select',
     ];
 
-    protected function beforeEdit($id = null, $model = null)
+    protected function beforeEditSave($id = null, $model = null)
     {
         $post = Yii::$app->request->post();
         $model->started_at = strtotime($post['Crud']['startedTime']);

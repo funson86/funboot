@@ -52,32 +52,14 @@ class SettingTypeController extends BaseController
         'type' => 'select',
     ];
 
-    /**
-     * ajax编辑/创建
-     *
-     * @return mixed|string|\yii\web\Response
-     * @throws \yii\base\ExitException
-     */
-    public function actionEditAjax()
+    protected function beforeEdit($id = null, $model = null)
     {
-        $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id);
         $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
+    }
 
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-            if (!$model->save()) {
-                $this->redirectError($model);
-            }
-
-            Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
-            return $this->redirectSuccess();
-        }
-
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-        ]);
+    protected function afterEdit($id = null, $model = null)
+    {
+        Yii::$app->cacheSystem->clearAllSetting(); // 清理缓存
     }
 
     protected function afterDeleteModel($id, $soft = false, $tree = false)

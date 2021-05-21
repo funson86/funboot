@@ -28,6 +28,7 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
+     * 处理通用数据
      * @param $model
      * @return array
      */

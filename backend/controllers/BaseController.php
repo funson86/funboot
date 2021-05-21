@@ -278,6 +278,7 @@ class BaseController extends \common\components\controller\BaseController
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
+                $this->beforeEditSave($id, $model);
                 if ($model->save()) {
                     $this->afterEdit($id, $model);
                     $this->isMultiLang && $this->afterLang($id, $model);
@@ -288,6 +289,7 @@ class BaseController extends \common\components\controller\BaseController
             }
         }
 
+        $this->beforeEditRender($id, $model);
         return $this->render($this->action->id, [
             'model' => $model,
             'lang' => $lang,
@@ -304,11 +306,12 @@ class BaseController extends \common\components\controller\BaseController
     {
         $id = Yii::$app->request->get('id');
         $model = $this->findModel($id);
+        $this->beforeEdit($id, $model);
 
         // ajax 校验
         $this->activeFormValidate($model);
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
-            $this->beforeEdit($id, $model);
+            $this->beforeEditSave($id, $model);
 
             if (!$model->save()) {
                 $this->redirectError($model);
@@ -318,6 +321,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectSuccess();
         }
 
+        $this->beforeEditRender($id, $model);
         return $this->renderAjax($this->action->id, [
             'model' => $model,
         ]);
@@ -328,7 +332,17 @@ class BaseController extends \common\components\controller\BaseController
         return true;
     }
 
+    protected function beforeEditSave($id = null, $model = null)
+    {
+        return true;
+    }
+
     protected function afterEdit($id = null, $model = null)
+    {
+        return true;
+    }
+
+    protected function beforeEditRender($id = null, $model = null)
     {
         return true;
     }

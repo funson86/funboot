@@ -2,6 +2,9 @@
 
 namespace backend\modules\base\controllers;
 
+use common\helpers\ArrayHelper;
+use common\models\bbs\Node;
+use common\models\Store;
 use Yii;
 use common\models\base\Stuff;
 use common\models\ModelSearch;
@@ -44,4 +47,15 @@ class StuffController extends BaseController
         'type' => 'select',
     ];
 
+    /**
+     * @param null $id
+     * @param null|Stuff $model
+     * @return bool|void
+     */
+    protected function beforeEdit($id = null, $model = null)
+    {
+        $models = [];
+        $this->store->route == Store::ROUTE_BBS && $models = Node::find()->where(['status' => Node::STATUS_ACTIVE, 'store_id' => $this->getStoreId()])->asArray()->all();
+        $model->mapCode = ArrayHelper::map($models, 'id', 'name');
+    }
 }
