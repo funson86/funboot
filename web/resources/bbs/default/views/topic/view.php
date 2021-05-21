@@ -18,7 +18,7 @@ $comment->topic_id = $model->id;
 <div class="row">
     <div class="col-md-9">
 
-        <div class="card">
+        <div class="card topic-view">
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">

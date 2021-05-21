@@ -169,3 +169,7 @@ footer {
 .login-page {
     padding: 8em 0;
 }
+
+.topic-view img {
+    max-width: 100%;
+}

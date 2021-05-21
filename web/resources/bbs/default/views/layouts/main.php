@@ -14,7 +14,7 @@ use yii\helpers\Url;
 $store = $this->context->store;
 
 BbsAsset::register($this);
-$this->registerCssFile($this->context->getCss('style.css'), ['depends' => BbsAsset::className()]);
+$this->registerCssFile($this->context->getCss('style.css?v=1'), ['depends' => BbsAsset::className()]);
 $this->registerJsFile($this->context->getJs('main.js'), ['depends' => BbsAsset::className()]);
 ?>
 <?php $this->beginPage() ?>
