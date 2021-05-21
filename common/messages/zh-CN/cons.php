@@ -164,6 +164,12 @@ return [
     'FORMAT_MARKDOWN' => 'Markdown',
     'GRADE_NORMAL' => '普通',
     'GRADE_EXCELLENT' => '精帖',
+    'POSITION_DEFAULT' => '默认',
+    'POSITION_TOP' => '顶部',
+    'POSITION_LEFT' => '左侧',
+    'POSITION_RIGHT' => '右侧',
+    'POSITION_CENTER' => '中间',
+    'POSITION_BOTTOM' => '底部',
 
     /** wechat */
     'ADD_SCENE_SEARCH' => '公众号搜索',

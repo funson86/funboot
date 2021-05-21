@@ -163,6 +163,12 @@ return [
     'FORMAT_MARKDOWN' => 'Markdown',
     'GRADE_NORMAL' => 'Normal',
     'GRADE_EXCELLENT' => 'Excellent',
+    'POSITION_DEFAULT' => 'Default',
+    'POSITION_TOP' => 'Top',
+    'POSITION_LEFT' => 'Left',
+    'POSITION_RIGHT' => 'Right',
+    'POSITION_CENTER' => 'Center',
+    'POSITION_BOTTOM' => 'Bottom',
 
     /** wechat */
     'ADD_SCENE_SEARCH' => 'Search',

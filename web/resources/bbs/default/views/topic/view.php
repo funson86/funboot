@@ -162,6 +162,7 @@ $comment->topic_id = $model->id;
     <div class="col-md-3 pl-0">
         <div class="sidebar-fixed">
             <?= \frontend\widgets\BbsSidebar::widget(['type' => 'topic', 'nodeId' => $model->node_id]) ?>
+            <?= \common\widgets\base\StuffWidget::widget(['style' => 1, 'codeId' => $model->node_id]) ?>
         </div>
     </div><!-- /.col-lg-4 -->
 

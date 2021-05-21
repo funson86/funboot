@@ -6,6 +6,7 @@ use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
 use Yii;
+use yii\helpers\Html;
 
 /**
  * This is the model base class for table "{{%base_stuff}}" to add your code.
@@ -14,8 +15,19 @@ use Yii;
  */
 class StuffBase extends BaseModel
 {
+    public $codes = [];
+    public $mapCode = [];
+
     const TYPE_TEXT = 1;
     const TYPE_IMAGE = 2;
+
+    const POSITION_ALL = 0;
+    const POSITION_DEFAULT = 1;
+    const POSITION_TOP = 10;
+    const POSITION_LEFT = 20;
+    const POSITION_RIGHT = 30;
+    const POSITION_CENTER = 40;
+    const POSITION_BOTTOM = 50;
 
     /**
      * @return array|array[]
@@ -43,6 +55,24 @@ class StuffBase extends BaseModel
         return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
+    public static function getPositionLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::POSITION_DEFAULT => Yii::t('cons', 'POSITION_DEFAULT'),
+            self::POSITION_TOP => Yii::t('cons', 'POSITION_TOP'),
+            self::POSITION_LEFT => Yii::t('cons', 'POSITION_LEFT'),
+            self::POSITION_RIGHT => Yii::t('cons', 'POSITION_RIGHT'),
+            self::POSITION_CENTER => Yii::t('cons', 'POSITION_CENTER'),
+            self::POSITION_BOTTOM => Yii::t('cons', 'POSITION_BOTTOM'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -52,6 +82,8 @@ class StuffBase extends BaseModel
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
+            'code' => Yii::t('app', 'Code'),
+            'codes' => Yii::t('app', 'Code'),
             'brief' => Yii::t('app', 'Brief'),
             'content' => Yii::t('app', 'Content'),
             'url' => Yii::t('app', 'Url'),
@@ -66,4 +98,41 @@ class StuffBase extends BaseModel
         ];
     }
 
+    public static function getById($id, $storeId = null)
+    {
+        !$storeId && $storeId = Yii::$app->storeSystem->getId();
+        return self::find()->where(['id' => $id, 'store_id' => $storeId])->one();
+    }
+
+    /**
+     * @param $codeId
+     * @param null $position
+     * @param null $type
+     * @param int $limit
+     * @param null $storeId
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function getByCodeId($codeId, $position = null, $type = null, $limit = 0, $storeId = null)
+    {
+        !$storeId && $storeId = Yii::$app->storeSystem->getId();
+        $query = static::find()->where(['store_id' => $storeId, 'status' => self::STATUS_ACTIVE])->andWhere('JSON_CONTAINS(`code`, \'"1"\', \'$\')');
+
+        $position && $query->andFilterWhere(['position' => $position]);
+        $type && $query->andFilterWhere(['type' => $type]);
+        $limit > 0 && $query->limit($limit);
+
+        return $query->all();
+    }
+
+    public static function getHtmlByCodeId($codeId, $position = null, $type = null, $limit = 0, $storeId = null)
+    {
+        $models = static::getByCodeId($codeId, $position, $type, $limit, $storeId);
+
+        $str = '';
+        foreach ($models as $model) {
+            $str .= Html::a($model->content, $model->url);
+        }
+
+        return $str;
+    }
 }

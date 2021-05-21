@@ -26,11 +26,11 @@ $form = ActiveForm::begin([
     </div>
     <div class="modal-body">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
         <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'position')->textInput() ?>
-        <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
         <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>

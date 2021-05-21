@@ -98,6 +98,8 @@ return [
     'Auth Role' => '角色',
     'Auth Roles' => '角色',
     'Name' => '名称',
+    'Code' => '编码',
+    'Position' => '位置',
     'Description' => '简介',
     'Permissions' => '权限',
     'Menu Permission' => '菜单权限',
@@ -615,6 +617,8 @@ return [
     'Member' => '会员',
     'Unverified' => '未审核',
     'Pass' => '审核通过',
+    'Create Text' => '创建文本',
+    'Create Image' => '创建图片',
 
 
     /* mall */

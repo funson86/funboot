@@ -21,7 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Stuffs'] ?? null) ?></h2>
                 <div class="card-tools">
-                    <?= Html::createModal() ?>
+                    <?= Html::create(['edit'], Yii::t('app', 'Create Text')) ?>
+                    <?= Html::create(['edit', 'type' => 'image'], Yii::t('app', 'Create Image')) ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
                 </div>
@@ -40,19 +41,20 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        'code:json',
                         'brief',
-                        'content:ntext',
-                        'url:url',
-                        'position',
+                        // 'content:ntext',
+                        // 'url:url',
+                        ['attribute' => 'position', 'value' => function ($model) { return ActiveModel::getPositionLabels($model->position); }, 'filter' => Html::activeDropDownList($searchModel, 'position', ActiveModel::getPOsitionLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => Html::activeDropDownList($searchModel, 'type', ActiveModel::getTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
                         ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::status($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        'created_at:datetime',
+                        // 'created_at:datetime',
                         // 'updated_at:datetime',
                         // 'created_by',
                         // 'updated_by',
 
-                        Html::actionsModal(),
+                        Html::actionsEditDelete(),
                     ]
                 ]); ?>
             </div>

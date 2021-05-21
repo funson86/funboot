@@ -70,6 +70,7 @@ $this->registerMetaTag(["name" => "description", "content" => $store->settings['
     <div class="col-md-3">
         <div class="sidebar-fixed">
             <?= \frontend\widgets\BbsSidebar::widget(['type' => 'node']) ?>
+            <?= \common\widgets\base\StuffWidget::widget(['style' => 1, 'codeId' => Yii::$app->request->get('id', '1')]) ?>
         </div>
     </div><!-- /.col-lg-4 -->
 </div>

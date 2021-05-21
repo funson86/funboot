@@ -293,6 +293,7 @@ INSERT INTO `fb_base_permission` VALUES ('531', '1', '53', '话题管理', 'back
 INSERT INTO `fb_base_permission` VALUES ('533', '1', '53', '评论管理', 'backend', '', '/bbs/comment/index', 'fas fa-comment-alt', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('535', '1', '53', '搜索记录', 'backend', '', '/base/search-log/index', 'fas fa-search', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('536', '1', '53', '标签管理', 'backend', '', '/bbs/tag/index', 'fas fa-tags', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('537', '1', '53', '广告管理', 'backend', '', '/base/stuff/index', 'fab fa-adversal', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('538', '1', '53', '栏目管理', 'backend', '', '/bbs/node/index', 'fas fa-list-ol', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('539', '1', '53', '参数管理', 'backend', '', '/bbs/meta/index', 'fas fa-list', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
 
@@ -320,6 +321,12 @@ INSERT INTO `fb_base_permission` VALUES ('5363', '1', '536', '删除', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('5364', '1', '536', '启禁', 'backend', '', '/bbs/tag/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5365', '1', '536', '导出', 'backend', '', '/bbs/tag/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5366', '1', '536', '导入', 'backend', '', '/bbs/tag/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5371', '1', '537', '查看', 'backend', '', '/base/stuff/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5372', '1', '537', '编辑', 'backend', '', '/base/stuff/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5373', '1', '537', '删除', 'backend', '', '/base/stuff/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5374', '1', '537', '启禁', 'backend', '', '/base/stuff/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5375', '1', '537', '导出', 'backend', '', '/base/stuff/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5376', '1', '537', '导入', 'backend', '', '/base/stuff/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5381', '1', '538', '查看', 'backend', '', '/bbs/comment/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5382', '1', '538', '编辑', 'backend', '', '/bbs/comment/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5383', '1', '538', '删除', 'backend', '', '/bbs/comment/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
@@ -354,6 +361,7 @@ INSERT INTO `fb_base_role_permission` VALUES ('422', '1', '', '50', '531', '1', 
 INSERT INTO `fb_base_role_permission` VALUES ('423', '1', '', '50', '533', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('425', '1', '', '50', '535', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('426', '1', '', '50', '536', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('427', '1', '', '50', '537', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('428', '1', '', '50', '538', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('429', '1', '', '50', '539', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('433', '1', '', '50', '5311', '1', '50', '1', '1602505044', '1606818825', '1', '1');
@@ -380,6 +388,12 @@ INSERT INTO `fb_base_role_permission` VALUES ('465', '1', '', '50', '5363', '1',
 INSERT INTO `fb_base_role_permission` VALUES ('466', '1', '', '50', '5364', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('467', '1', '', '50', '5365', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('468', '1', '', '50', '5366', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('473', '1', '', '50', '5371', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('474', '1', '', '50', '5372', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('475', '1', '', '50', '5373', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('476', '1', '', '50', '5374', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('477', '1', '', '50', '5375', '1', '50', '1', '1602505044', '1606818825', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('478', '1', '', '50', '5376', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('483', '1', '', '50', '5381', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('484', '1', '', '50', '5382', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('485', '1', '', '50', '5383', '1', '50', '1', '1602505044', '1606818825', '1', '1');

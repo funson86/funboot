@@ -3,6 +3,7 @@
 namespace frontend\modules\bbs\controllers;
 
 use common\helpers\ArrayHelper;
+use common\models\base\Stuff;
 use common\models\bbs\Node;
 use common\models\bbs\Topic;
 use common\models\forms\LoginEmailForm;

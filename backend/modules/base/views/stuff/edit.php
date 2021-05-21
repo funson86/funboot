@@ -27,11 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body">
                 <div class="col-sm-12">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'code')->widget(kartik\select2\Select2::classname(), [
+                        'data' => $model->mapCode,
+                        'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
+                    ]) ?>
                     <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
                     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'position')->textInput() ?>
-                    <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
+                    <?= $form->field($model, 'position')->dropDownList(ActiveModel::getPositionLabels()) ?>
                     <?= $form->field($model, 'sort')->textInput() ?>
                     <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>

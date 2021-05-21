@@ -12,6 +12,7 @@ use common\models\Store;
  * @property int $id
  * @property int $store_id 商家
  * @property string $name 名称
+ * @property string|null $code 代码
  * @property string $brief 简介
  * @property string|null $content 值
  * @property string $url Url
@@ -41,7 +42,8 @@ class Stuff extends StuffBase
     {
         return array_merge(parent::rules(), [
             [['store_id', 'position', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'brief'], 'required'],
+            [['name'], 'required'],
+            [['code'], 'safe'],
             [['content'], 'string'],
             [['name', 'brief', 'url'], 'string', 'max' => 255],
         ]);
@@ -57,6 +59,7 @@ class Stuff extends StuffBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
                 'name' => '名称',
+                'code' => '代码',
                 'brief' => '简介',
                 'content' => '值',
                 'url' => 'Url',
@@ -74,6 +77,7 @@ class Stuff extends StuffBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
                 'name' => Yii::t('app', 'Name'),
+                'code' => Yii::t('app', 'Code'),
                 'brief' => Yii::t('app', 'Brief'),
                 'content' => Yii::t('app', 'Content'),
                 'url' => Yii::t('app', 'Url'),
