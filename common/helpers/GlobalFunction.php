@@ -54,8 +54,9 @@ if (!function_exists('fbt')) {
      * @param bool $force
      * @return string
      */
-    function fbt($tableCode, $targetId, $name, $target, $force = false)
+    function fbt($tableCode, $targetId, $name, $target = null, $force = false)
     {
+        !$target && $target = Yii::$app->language;
         return Yii::$app->cacheSystem->getLang($tableCode, $targetId, $name, $target, $force);
     }
 }
