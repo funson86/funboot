@@ -51,3 +51,9 @@ $changeFormat = (Yii::$app->request->get('format', ActiveModel::FORMAT_HTML) == 
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $('body').addClass('pt-0');
+        $('nav').removeClass('fixed-top');
+    });
+</script>
