@@ -3,14 +3,14 @@
 namespace common\components\assets;
 
 /**
- * 页面元素动画
+ * Fontawesome
  * Class AnimateAsset
  * @package common\widgets\echarts
  * @author funson86 <funson86@gmail.com>
  */
-class AnimateAsset extends \yii\web\AssetBundle
+class FontAwesomeAsset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css',
+        'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
     ];
 }

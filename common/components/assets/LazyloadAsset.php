@@ -3,14 +3,14 @@
 namespace common\components\assets;
 
 /**
- * 页面元素动画
+ * 延迟加载
  * Class AnimateAsset
  * @package common\widgets\echarts
  * @author funson86 <funson86@gmail.com>
  */
-class AnimateAsset extends \yii\web\AssetBundle
+class LazyloadAsset extends \yii\web\AssetBundle
 {
-    public $css = [
-        'https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css',
+    public $js = [
+        'https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js',
     ];
 }
