@@ -316,7 +316,7 @@ class DefaultController extends BaseController
     public function getStoreBanner($index = false)
     {
         $bannerName = $this->isMobile ? 'cms_banner_h5' : 'cms_banner';
-        $bannerData =$this->store->settings[$bannerName];
+        $bannerData = $this->store->settings[$bannerName];
         $banners = is_array($bannerData) ? $bannerData : json_decode($bannerData, true);
 
         if (!$banners || empty($banners)) {

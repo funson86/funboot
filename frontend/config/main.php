@@ -78,6 +78,7 @@ return [
                 'node/<id:\d+>' => 'bbs/default/index',
                 'bbs' => 'bbs/default/index',
                 'bbs/tag' => 'bbs/default/tag',
+                't/<id:\d+>' => 'bbs/topic/view',
                 'topic/<id:\d+>' => 'bbs/topic/view',
                 'topic/<action:\w+>/<id:\d+>' => 'bbs/topic/<action>',
                 'topic/<action:\w+>' => 'bbs/topic/<action>',

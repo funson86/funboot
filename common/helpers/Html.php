@@ -225,9 +225,11 @@ class Html extends \yii\helpers\Html
      */
     public static function editModal(array $url = ['edit-ajax'], $name = null, $options = [])
     {
+        !$url && $url = ['edit-ajax'];
+        $size = $options['size'] ?? '';
         return self::edit($url, $name, array_merge($options, [
             'data-toggle' => 'modal',
-            'data-target' => '#ajaxModal',
+            'data-target' => '#ajaxModal' . $size,
         ]));
     }
 
@@ -449,7 +451,7 @@ class Html extends \yii\helpers\Html
                     return Html::editModal(['edit-ajax', 'id' => $model->id]);
                 },
                 'delete' => function ($url, $model, $key) use ($options) {
-                    return Html::delete(['delete', 'id' => $model->id, 'soft' => ($options['soft'] ?? true), 'tree' => ($options['tree'] ?? false)]);
+                    return Html::delete(['delete', 'id' => $model->id, 'soft' => ($options['soft'] ?? false), 'tree' => ($options['tree'] ?? false)]);
                 },
             ],
             'headerOptions' => ['class' => 'action-column'],

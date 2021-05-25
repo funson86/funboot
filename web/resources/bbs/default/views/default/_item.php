@@ -9,7 +9,7 @@ use yii\helpers\Url;
 
 <div class="media text-muted">
     <div class="bd-placeholder-img mr-3">
-        <img class="rounded-circle" src="<?= $model->user->getMixedAvatar() ?>" />
+        <img class="rounded-circle" src="<?= $model->user->getMixedAvatar() ?>" width="50" height="50" />
     </div>
 
     <div class="media-body small lh-125 border-gray">

@@ -214,4 +214,16 @@ class CommonHelper
         }
 
     }
+
+    public static function getResponsiveImage($pc = null, $h5 = null, $multi = false, $default = null)
+    {
+        if (self::isMobile()) {
+            // 先h5，没有显示pc的，最后显示默认的
+            $str = $h5 && strlen($h5) > 0 ? $h5 : ($pc && strlen($pc) > 0 ? $pc : ($default ?? ''));
+            return $multi ? json_decode($str, true) : $str;
+        }
+
+        $str = $pc && strlen($pc) > 0 ? $pc : ($default ?? '');
+        return $multi ? json_decode($str, true) : $str;
+    }
 }
