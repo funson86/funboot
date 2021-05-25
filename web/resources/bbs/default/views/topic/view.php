@@ -31,7 +31,7 @@ $comment->topic_id = $model->id;
                             <?= $model->click ?> 次阅读
                         </div>
                     </div>
-                    <img src="<?= $model->user->getMixedAvatar() ?>" class="ml-3">
+                    <img class="rounded-circle" src="<?= $model->user->getMixedAvatar() ?>" class="ml-3" width="50" height="50">
                 </div>
             </div>
             <div class="card-body">

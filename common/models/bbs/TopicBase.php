@@ -25,6 +25,8 @@ class TopicBase extends BaseModel
     const GRADE_NORMAL = 0;
     const GRADE_EXCELLENT = 1;
 
+    const SOURCE_WEIXIN = 'SourceWeixin';
+
     /**
      * @return array|array[]
      */
@@ -75,6 +77,20 @@ class TopicBase extends BaseModel
         $data = [
             self::FORMAT_HTML => Yii::t('cons', 'FORMAT_HTML'),
             self::FORMAT_MARKDOWN => Yii::t('cons', 'FORMAT_MARKDOWN'),
+        ];
+
+        $all && $data += [
+        ];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    public static function getSourceLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::SOURCE_WEIXIN => Yii::t('cons', 'SOURCE_WEIXIN'),
         ];
 
         $all && $data += [

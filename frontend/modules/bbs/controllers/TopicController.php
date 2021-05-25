@@ -2,6 +2,7 @@
 
 namespace frontend\modules\bbs\controllers;
 
+use common\components\bbs\SourceFactory;
 use common\helpers\CurlHelper;
 use common\job\base\CounterJob;
 use common\models\bbs\Comment;
@@ -84,6 +85,9 @@ class TopicController extends BaseController
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $post = Yii::$app->request->post();
+                $model->user_id = $model->last_comment_user_id = Yii::$app->user->id;
+                $model->username = $model->last_comment_username = Yii::$app->user->identity->name;
+                $model->user_avatar = Yii::$app->user->identity->avatar;
                 $model->created_at = $model->updated_at = $model->last_comment_updated_at = time();
                 $model->isNewRecord && $model->status = $this->isAdmin() ? $this->modelClass::STATUS_ACTIVE : $this->modelClass::STATUS_INACTIVE;
 
@@ -223,5 +227,36 @@ class TopicController extends BaseController
         }
 
         return $this->redirectSuccess();
+    }
+
+    public function actionGrab()
+    {
+        $model = $this->findModel(null);
+
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                $source = SourceFactory::create($model->name);
+                list($name, $content) = $source->grab($model->redirect_url);
+                if (!$name) {
+                    return $this->redirectError();
+                }
+                $model->name = $name;
+                $model->content = $content;
+
+                $model->user_id = $model->last_comment_user_id = Yii::$app->user->id;
+                $model->username = $model->last_comment_username = Yii::$app->user->identity->name;
+                $model->user_avatar = Yii::$app->user->identity->avatar;
+                $model->created_at = $model->updated_at = $model->last_comment_updated_at = time();
+                if (!$model->save()) {
+                    Yii::$app->logSystem->db($model->errors);
+                    return $this->redirectError();
+                }
+                $this->flashSuccess(Yii::t('app', 'Operate Successfully') . Yii::$app->urlManager->createAbsoluteUrl(['/bbs/topic/view', 'id' => $model->id]));
+            }
+        }
+
+        return $this->render($this->action->id, [
+            'model' => $model,
+        ]);
     }
 }
