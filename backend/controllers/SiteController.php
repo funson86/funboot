@@ -295,16 +295,6 @@ class SiteController extends BaseController
         return Yii::$app->authSystem->isSuperAdmin();
     }
 
-    /**
-     * @return array|mixed
-     */
-    public function actionSetLanguage()
-    {
-        $lang = Yii::$app->request->get('lang', Yii::$app->request->post('lang', 'en'));
-        Yii::$app->cacheSystem->setLanguage($lang, Yii::$app->user->id ?? 0, Yii::$app->session->id);
-        return $this->success();
-    }
-
     public function actionQrcode()
     {
         $width = intval(Yii::$app->request->get('width', 300));

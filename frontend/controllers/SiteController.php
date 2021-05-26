@@ -284,14 +284,4 @@ class SiteController extends BaseController
             'resultMsg' => $resultMsg,
         ]);
     }
-
-    /**
-     * @return array|mixed
-     */
-    public function actionSetLanguage()
-    {
-        $lang = Yii::$app->request->get('lang', Yii::$app->request->post('lang', 'en'));
-        Yii::$app->cacheSystem->setLanguage($lang, Yii::$app->user->id ?? 0, Yii::$app->session->id);
-        return $this->success();
-    }
 }
