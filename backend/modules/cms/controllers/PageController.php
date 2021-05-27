@@ -16,6 +16,12 @@ use backend\controllers\BaseController;
 class PageController extends BaseController
 {
     /**
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
+    /**
       * @var Page
       */
     public $modelClass = Page::class;

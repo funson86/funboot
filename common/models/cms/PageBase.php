@@ -15,6 +15,14 @@ use Yii;
  */
 class PageBase extends BaseModel
 {
+    static $tableCode = 5003;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'textarea',
+        'content' => 'Ueditor',
+    ];
+
     /**
      * @return array|array[]
      */
