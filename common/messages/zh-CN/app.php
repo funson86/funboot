@@ -619,6 +619,8 @@ return [
     'Pass' => '审核通过',
     'Create Text' => '创建文本',
     'Create Image' => '创建图片',
+    'Like' => '点赞',
+    'Thanks' => '感谢',
 
 
     /* mall */

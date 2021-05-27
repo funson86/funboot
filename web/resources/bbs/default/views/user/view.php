@@ -32,11 +32,11 @@ $this->title = Html::encode($user->username);
                 <div class="row">
                     <div class="col-sm-6 text-center">
                         <h3><?= $model->profile->like ?? 0 ?></h3>
-                        <div><?= Yii::t('app', 'Feed Like') ?></div>
+                        <div><?= Yii::t('app', 'Like') ?></div>
                     </div>
                     <div class="col-sm-6 text-center">
                         <h3><?= $model->profile->thanks ?? 0 ?></h3>
-                        <h6><?= Yii::t('app', 'Heart') ?></h6>
+                        <h6><?= Yii::t('app', 'Thanks') ?></h6>
                     </div>
                 </div>
 
