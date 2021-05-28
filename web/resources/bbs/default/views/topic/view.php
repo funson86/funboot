@@ -41,6 +41,8 @@ $comment->topic_id = $model->id;
 
                 <?php if ($model->format == ActiveModel::FORMAT_MARKDOWN) { ?>
                 <?= HtmlPurifier::process(Markdown::process($model->content, 'gfm')) ?>
+                <?php } elseif ($model->format == ActiveModel::FORMAT_TEXTAREA) { ?>
+                <?= nl2br($model->content) ?>
                 <?php } else { ?>
                 <?= $model->content ?>
                 <?php } ?>

@@ -40,6 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                         <?php if ($model->format == ActiveModel::FORMAT_MARKDOWN) { ?>
                         <?= $form->field($model, 'content')->widget(\common\widgets\markdown\Markdown::class, []) ?>
+                        <?php } elseif ($model->format == ActiveModel::FORMAT_TEXTAREA) { ?>
+                        <?= $form->field($model, 'content')->textarea(['rows' => 16]) ?>
                         <?php } else { ?>
                         <?= $form->field($model, 'content')->widget(\common\components\ueditor\Ueditor::class, []) ?>
                         <?php } ?>

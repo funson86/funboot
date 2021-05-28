@@ -162,6 +162,7 @@ return [
     // bbs
     'FORMAT_HTML' => 'Html',
     'FORMAT_MARKDOWN' => 'Markdown',
+    'FORMAT_TEXTAREA' => 'Textarea',
     'GRADE_NORMAL' => '普通',
     'GRADE_EXCELLENT' => '精帖',
     'POSITION_DEFAULT' => '默认',

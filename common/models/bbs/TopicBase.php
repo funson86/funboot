@@ -21,6 +21,7 @@ class TopicBase extends BaseModel
 {
     const FORMAT_HTML = 1;
     const FORMAT_MARKDOWN = 2;
+    const FORMAT_TEXTAREA = 4;
 
     const GRADE_NORMAL = 0;
     const GRADE_EXCELLENT = 1;
@@ -77,6 +78,7 @@ class TopicBase extends BaseModel
         $data = [
             self::FORMAT_HTML => Yii::t('cons', 'FORMAT_HTML'),
             self::FORMAT_MARKDOWN => Yii::t('cons', 'FORMAT_MARKDOWN'),
+            self::FORMAT_TEXTAREA => Yii::t('cons', 'FORMAT_TEXTAREA'),
         ];
 
         $all && $data += [

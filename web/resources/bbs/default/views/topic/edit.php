@@ -35,7 +35,9 @@ $changeFormat = (Yii::$app->request->get('format', ActiveModel::FORMAT_HTML) == 
                         </div>
                     <?php } ?>
                     <?php if ($model->format == ActiveModel::FORMAT_MARKDOWN || Yii::$app->request->get('format', ActiveModel::FORMAT_HTML) == ActiveModel::FORMAT_MARKDOWN) { ?>
-                        <?= $form->field($model, 'content')->widget(\common\widgets\markdown\Markdown::class, []) ?>
+                    <?= $form->field($model, 'content')->widget(\common\widgets\markdown\Markdown::class, []) ?>
+                    <?php } elseif ($model->format == ActiveModel::FORMAT_TEXTAREA || Yii::$app->request->get('format', ActiveModel::FORMAT_HTML) == ActiveModel::FORMAT_TEXTAREA) { ?>
+                    <?= $form->field($model, 'content')->textarea(['rows' => 16]) ?>
                     <?php } else { ?>
                     <?= $form->field($model, 'content', ['options' => ['style' => 'display: block'], 'labelOptions' => ['class' => 'control-label control-label-full']])->widget(\common\components\ueditor\Ueditor::class, ['style' => 2]) ?>
                     <?php } ?>

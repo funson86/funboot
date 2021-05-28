@@ -161,6 +161,7 @@ return [
     // bbs
     'FORMAT_HTML' => 'Html',
     'FORMAT_MARKDOWN' => 'Markdown',
+    'FORMAT_TEXTAREA' => 'Textarea',
     'GRADE_NORMAL' => 'Normal',
     'GRADE_EXCELLENT' => 'Excellent',
     'POSITION_DEFAULT' => 'Default',

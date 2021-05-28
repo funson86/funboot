@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-tools">
                     <?= Html::create() ?>
                     <?= Html::create(['edit', 'format' => ActiveModel::FORMAT_MARKDOWN], Yii::t('app', 'Create ') . Yii::t('app', 'Markdown')) ?>
+                    <?= Html::create(['edit', 'format' => ActiveModel::FORMAT_TEXTAREA], Yii::t('app', 'Create ') . Yii::t('app', 'Textarea')) ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
                 </div>

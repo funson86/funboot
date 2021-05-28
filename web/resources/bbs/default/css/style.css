@@ -173,3 +173,8 @@ footer {
 .topic-view img {
     max-width: 100%;
 }
+
+iframe {
+    width: 100%;
+    min-height: 400px;
+}
