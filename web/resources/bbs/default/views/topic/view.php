@@ -27,7 +27,11 @@ $comment->topic_id = $model->id;
                             <a class="topic-node" href="<?= Url::to(['/bbs/default/index', 'id' => $model->node_id]) ?>"><?= Html::tag('span', $model->node->name, ['class' => 'btn-sm btn-info']) ?></a> •
                             <?= $model->tag_id > 0 ? Html::a($model->tag->name, ['/bbs/default/index', 'ModelSearch[tag_id]' => $model->tag_id], ['class' => 'btn-sm btn-info']) : '' ?> •
                             <a class="remove-padding-left" href="<?= Url::to(['/bbs/topic/view', 'id' => $model->id]) ?>"><span class="bi-hand-thumbs-up"> <?= $model->like ?> </span></a> •
-                            <span>最后由<a href="<?= Url::to(['/bbs/user/view', 'id' => $model->user_id]) ?>"><strong> <?= $model->last_comment_username ?> </strong></a>于 <?= Yii::$app->formatter->asDate($model->last_comment_updated_at) ?> 回复</span> •
+                            <?php if ($model->comment > 0) { ?>
+                            <span>最后由 <a href="<?= Url::to(['/bbs/user/view', 'id' => $model->last_comment_user_id]) ?>"><strong> <?= $model->last_comment_username ?> </strong></a>于 <?= Yii::$app->formatter->asDate($model->last_comment_updated_at) ?> 回复 •
+                            <?php } else { ?>
+                            <span>由 <a href="<?= Url::to(['/bbs/user/view', 'id' => $model->user_id]) ?>"><strong> <?= $model->username ?> </strong></a>于 <?= Yii::$app->formatter->asDate($model->created_at) ?> 发布 •
+                            <?php } ?>
                             <?= $model->click ?> 次阅读
                         </div>
                     </div>

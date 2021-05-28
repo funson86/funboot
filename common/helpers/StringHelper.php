@@ -171,4 +171,20 @@ class StringHelper extends BaseStringHelper
     {
         return str_replace(array("\r\n", "\r", "\n"), $target, $str);
     }
+
+    /**
+     * 加密邮箱
+     * @param $str
+     * @param string $target
+     * @return mixed
+     */
+    public static function secretEmail($str, $secretChar = '*')
+    {
+        $arr = explode('@', $str);
+        if (!is_array($arr)) {
+            return $str;
+        }
+
+        return substr($arr[0], 0, 3) . $secretChar . '@' . $secretChar. substr($arr[1], -8);
+    }
 }

@@ -4,6 +4,7 @@ namespace frontend\modules\bbs\controllers;
 
 use common\components\bbs\SourceFactory;
 use common\helpers\CurlHelper;
+use common\helpers\StringHelper;
 use common\job\base\CounterJob;
 use common\models\bbs\Comment;
 use common\models\bbs\Meta;
@@ -86,7 +87,7 @@ class TopicController extends BaseController
             if ($model->load(Yii::$app->request->post())) {
                 $post = Yii::$app->request->post();
                 $model->user_id = $model->last_comment_user_id = Yii::$app->user->id;
-                $model->username = $model->last_comment_username = Yii::$app->user->identity->name;
+                $model->username = $model->last_comment_username = Yii::$app->user->identity->name ?: StringHelper::secretEmail(Yii::$app->user->identity->email);
                 $model->user_avatar = Yii::$app->user->identity->avatar;
                 $model->created_at = $model->updated_at = $model->last_comment_updated_at = time();
                 $model->isNewRecord && $model->status = $this->isAdmin() ? $this->modelClass::STATUS_ACTIVE : $this->modelClass::STATUS_INACTIVE;
@@ -244,7 +245,7 @@ class TopicController extends BaseController
                 $model->content = $content;
 
                 $model->user_id = $model->last_comment_user_id = Yii::$app->user->id;
-                $model->username = $model->last_comment_username = Yii::$app->user->identity->name;
+                $model->username = $model->last_comment_username = Yii::$app->user->identity->name ?: StringHelper::secretEmail(Yii::$app->user->identity->email);
                 $model->user_avatar = Yii::$app->user->identity->avatar;
                 $model->created_at = $model->updated_at = $model->last_comment_updated_at = time();
                 if (!$model->save()) {

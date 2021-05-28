@@ -5,7 +5,7 @@ use yii\widgets\ListView;
 use common\models\User;
 use yii\helpers\Url;
 
-$this->title = Html::encode($user->username);
+$this->title = Html::encode($model->username);
 ?>
 <section class="container user-default-index">
 
@@ -22,7 +22,7 @@ $this->title = Html::encode($user->username);
                     <div class="media-body ml-3">
                         <h6 class="mt5"><?= Html::tag('strong', Html::encode($model->username)) ?></h6>
                         <div class="pull-left">
-                            <span class="badge badge-success"><?= $this->context->isAdmin() ?  Yii::t('app', 'Admin') : Yii::t('app', 'Member') ?></span>
+                            <span class="badge badge-success"><?= $model->isBbsAdmin() ?  Yii::t('app', 'Admin') : Yii::t('app', 'Member') ?></span>
                         </div>
                     </div>
                 </div>

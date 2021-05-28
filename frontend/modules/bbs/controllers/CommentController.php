@@ -2,6 +2,7 @@
 
 namespace frontend\modules\bbs\controllers;
 
+use common\helpers\StringHelper;
 use common\models\bbs\Comment;
 use common\models\bbs\Node;
 use common\models\bbs\Topic;
@@ -57,7 +58,7 @@ class CommentController extends BaseController
 
             $topic = $model->topic;
             $topic->last_comment_updated_at = time();
-            $topic->last_comment_username = Yii::$app->user->identity->username;
+            $topic->last_comment_username = Yii::$app->user->identity->name ?: StringHelper::secretEmail(Yii::$app->user->identity->email);
             $topic->comment += 1;
             $topic->save();
 

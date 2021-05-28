@@ -408,4 +408,16 @@ class UserBase extends BaseModel implements IdentityInterface
         }
         return (new Identicon())->getImageDataUri($this->email, $size);
     }
+
+    public function isBbsAdmin()
+    {
+        $userRoles = $this->getUserRoles()->all();
+        foreach ($userRoles as $role) {
+            if (in_array($role->role_id, Yii::$app->params['bbs']['adminRoleIds'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

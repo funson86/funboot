@@ -20,6 +20,20 @@ use yii\helpers\Markdown;
             echo Html::tag('div', nl2br($model->content), ['class' => 'markdown-reply']);
         }
         break;
+    case 'topic':
+        // 回复
+        if ($model) {
+            echo Html::a(Html::encode($model->name), ["/bbs/topic/view", 'id' => $model->id], ['class' => 'list-group-item-heading']);
+            echo Html::tag('span', Yii::$app->formatter->asDate($model->created_at), ['class' => 'ml-2 fade-info']);
+        }
+        echo Html::beginTag('p', ['class' => 'mb-0']);
+
+        echo Html::a($model->node->name, ["/bbs/node/view", 'node' => $model->node->id]) . ' • ';
+        echo Html::beginTag('span');
+        echo "{$model->like} 个赞 • {$model->comment} 条回复";
+        echo Html::endTag('span');
+        echo Html::endTag('p');
+        break;
     case 'favorite':
     case 'like':
         // 收藏
@@ -27,11 +41,9 @@ use yii\helpers\Markdown;
 
         echo Html::a(Html::encode($model->topic->name), ["/bbs/topic/view", 'id' => $model->topic->id], ['class' => 'list-group-item-heading']);
         echo Html::tag('span', Yii::$app->formatter->asRelativeTime($model->topic->created_at), ['class' => 'ml-5 fade-info']);
-        echo Html::beginTag('p', ['class' => 'list-group-item-text title-info']);
+        echo Html::beginTag('p', ['class' => 'mb-0']);
 
-        echo Html::a($model->topic->node->name,
-            ["/bbs/node/view", 'node' => $model->topic->node->id]);
-        echo ' • ';
+        echo Html::a($model->topic->node->name, ["/bbs/node/view", 'node' => $model->topic->node->id]) . ' • ';
         echo Html::beginTag('span');
         echo "{$model->topic->like} 个赞 • {$model->topic->comment} 条回复";
         echo Html::endTag('span');
