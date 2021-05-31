@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 
 $store = $this->context->store;
 
-$this->title = $store->settings['website_seo_title'] . ' - ' . $store->settings['website_name'] ?: $store->name;
+$this->title = $store->settings['website_seo_title'];
 $this->registerMetaTag(["name" => "keywords", "content" => $store->settings['website_seo_title']]);
 $this->registerMetaTag(["name" => "description", "content" => $store->settings['website_seo_description']]);
 
