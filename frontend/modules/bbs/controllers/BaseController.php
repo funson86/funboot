@@ -40,7 +40,7 @@ class BaseController extends \frontend\controllers\BaseController
         $this->theme = $store->settings['bbs_theme'] ?? 'default';
         $this->module->setViewPath('@webroot/resources/bbs/' . $this->theme . '/views');
         $this->layout = 'main';
-        $this->prefixStatic = '/resources/bbs/' . $this->theme;
+        $this->prefixStatic = Yii::getAlias('@web/resources/' . $store->route . '/' . $this->theme);
         $this->isMobile = CommonHelper::isMobile();
 
         return true;

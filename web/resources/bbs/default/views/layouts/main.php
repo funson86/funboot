@@ -29,7 +29,6 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => BbsAsset::
     <meta name="description" content="<?= Html::encode($store->settings['website_seo_description'] ?: $store->settings['website_name']) ?>"/>
     <link rel="icon" href="<?= $this->context->getFavicon() ?>" type="image/x-icon" />
     <?php $this->head() ?>
-    <link href="<?= Yii::getAlias('@web/resources/' . $store->route . '/' . $this->context->theme . '/css/style.css') ?>" rel="stylesheet">
 </head>
 <body class="bg-light">
 <?php $this->beginBody() ?>
@@ -47,7 +46,6 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => BbsAsset::
     </footer>
 
     <?= strlen($store->settings['website_stat']) > 10 ? $store->settings['website_stat'] : '' ?>
-    <script src="<?= Yii::getAlias('@web/resources/' . $store->route . '/' . $this->context->theme . '/js/main.js') ?>"></script>
 <?php $this->endBody() ?>
 </body>
 </html>
