@@ -4,7 +4,7 @@ use common\helpers\Html;
 use common\models\base\Setting;
 use yii\helpers\HtmlPurifier;
 
-$value = $row['setting']['value'] ?? '';
+$value = $row['setting']['value'] ?? null;
 ?>
 
 <div class="form-group">
