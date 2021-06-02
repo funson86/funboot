@@ -1,0 +1,22 @@
+<?php
+return [
+    'Home' => 'жилище',
+    'Solution' => 'решение',
+    'About' => 'О',
+    'About us' => 'о нас',
+    'About Us' => 'о нас',
+    'Contact' => 'контакт',
+    'Contact us' => 'связаться с нами',
+    'Contact Us' => 'связаться с нами',
+    'Stories' => 'рассказ',
+    'Mission' => 'задача',
+    'Vision' => 'видение',
+    'Scan via WeChat' => 'микроразвертка',
+    'Email' => 'электронная почта',
+    'Address' => 'адрес',
+    'Call Us' => 'Позвони нам.',
+    'WeChat' => 'микрописьмо',
+    'FIND OUT MORE' => 'узнать больше',
+    'Find Out More' => 'узнать больше',
+    'Find out more' => 'узнать больше',
+];

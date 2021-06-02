@@ -1,0 +1,22 @@
+<?php
+return [
+    'Home' => 'Ev',
+    'Solution' => 'Çözüm',
+    'About' => 'Hakkında',
+    'About us' => 'Bizim hakkımızda.',
+    'About Us' => 'Bizim hakkımızda.',
+    'Contact' => 'Kontakt',
+    'Contact us' => 'Bizimle temas edin.',
+    'Contact Us' => 'Bizimle temas edin',
+    'Stories' => 'Hikayeler',
+    'Mission' => 'Görev',
+    'Vision' => 'Görüntü',
+    'Scan via WeChat' => 'WeChat aracılığıyla Tara',
+    'Email' => 'E-posta',
+    'Address' => 'Adres',
+    'Call Us' => 'Bizi ara.',
+    'WeChat' => 'WeChat',
+    'FIND OUT MORE' => 'Daha fazla bulun.',
+    'Find Out More' => 'Daha fazlasını bul',
+    'Find out more' => 'Daha fazlasını öğren',
+];

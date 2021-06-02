@@ -125,4 +125,42 @@ class I18nTranslateController extends BaseController
             }
         }
     }
+
+    /**
+     * 专门为cms，需要自行翻译中英文，其他语言翻译以英文为源语言
+     * php yii i18n-translate/cms
+     */
+    public function actionCms()
+    {
+        $languageCodes = Lang::getLanguageCode();
+
+        foreach ($languageCodes as $id => $code) {
+            if (in_array($code, ['en', 'zh-CN'])) {
+                continue;
+            }
+
+            $targetFile = dirname(dirname(__DIR__)) . "/common/messages/$code/cms.php";
+            if (file_exists($targetFile)) {
+                $oldData = require $targetFile;
+            }
+            $str = "<?php\nreturn [\n";
+            $data = require dirname(dirname(__DIR__)) . "/common/messages/zh-CN/cms.php";
+            foreach ($data as $source => $target) {
+                if (isset($oldData[$source]) && strlen($oldData[$source]) > 0) {
+                    $trans = $oldData[$source];
+                } else {
+                    if ($code != 'zh-HK') {
+                        $trans = BaiduTranslate::translate($source, Lang::getLanguageBaiduCode($id), 'en');
+                    } else {
+                        $trans = BaiduTranslate::translate($target, Lang::getLanguageBaiduCode($id), 'zh');
+                    }
+                }
+                echo "    '" . $source . "' => '" . str_replace("'", '\\\'', $trans) . "',\n";
+                $str .= "    '" . $source . "' => '" . str_replace("'", '\\\'', $trans) . "',\n";
+            }
+            $str .= "];\n";
+            file_put_contents($targetFile, $str);
+
+        }
+    }
 }

@@ -1,0 +1,22 @@
+<?php
+return [
+    'Home' => 'La maison',
+    'Solution' => 'Solutions',
+    'About' => 'À propos de',
+    'About us' => 'À propos de nous',
+    'About Us' => 'À propos de nous',
+    'Contact' => 'Contact (s)',
+    'Contact us' => 'Contactez - nous',
+    'Contact Us' => 'Contactez - nous',
+    'Stories' => 'L\'histoire',
+    'Mission' => 'Mission',
+    'Vision' => 'Vision',
+    'Scan via WeChat' => 'Wechat scan',
+    'Email' => 'E - mail',
+    'Address' => 'Adresse',
+    'Call Us' => 'Appelle - nous.',
+    'WeChat' => 'Wechat',
+    'FIND OUT MORE' => 'En savoir plus',
+    'Find Out More' => 'En savoir plus',
+    'Find out more' => 'En savoir plus',
+];

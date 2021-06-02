@@ -1,0 +1,22 @@
+<?php
+return [
+    'Home' => 'ホーム',
+    'Solution' => '解決策',
+    'About' => 'アバウト',
+    'About us' => 'アバウトアス',
+    'About Us' => 'アバウトアス',
+    'Contact' => '連絡先',
+    'Contact us' => 'お問い合わせ',
+    'Contact Us' => 'お問い合わせ',
+    'Stories' => 'ストーリー',
+    'Mission' => 'ミッション',
+    'Vision' => 'ビジョン',
+    'Scan via WeChat' => '経由でスキャン',
+    'Email' => '電子メール',
+    'Address' => 'アドレス',
+    'Call Us' => 'コールアス',
+    'WeChat' => 'チャット',
+    'FIND OUT MORE' => 'もっと見る',
+    'Find Out More' => 'もっと見る',
+    'Find out more' => 'もっと見る',
+];

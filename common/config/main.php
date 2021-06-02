@@ -110,6 +110,7 @@ return [
                         'permission' => 'permission.php', // 菜单，默认中文，其他语言目录需要有
                         'setting' => 'setting.php', // 设置，默认中文，其他语言目录需要有
                         'system' => 'system.php', // 系统信息，默认中文，其他语言目录需要有
+                        'cms' => 'cms.php', // cms主题内容翻译文件
                         'frontend' => 'frontend.php', // frontend自定义配置
                         'backend' => 'backend.php', // backend自定义配置
                         'api' => 'api.php', // api自定义配置

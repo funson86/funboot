@@ -102,7 +102,7 @@ $store = $this->context->store;
                         <div class="device">
                             <div class="screen">
                                 <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                <img src="/resources/pay/img/demo-screen-0.jpg" class="img-fluid" alt="">
+                                <img src="/resources/pay/images/demo-screen-0.jpg" class="img-fluid" alt="">
                             </div>
                             <div class="button">
                                 <!-- You can hook the "home button" to some JavaScript events or just remove it -->
@@ -129,7 +129,7 @@ $store = $this->context->store;
                         <div class="device">
                             <div class="screen">
                                 <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                <img src="/resources/pay/img/demo-screen-1.jpg" class="img-fluid" alt="">
+                                <img src="/resources/pay/images/demo-screen-1.jpg" class="img-fluid" alt="">
                             </div>
                             <div class="button">
                                 <!-- You can hook the "home button" to some JavaScript events or just remove it -->
@@ -186,8 +186,8 @@ $store = $this->context->store;
                 <h2 class="section-heading">如何开发使用FunPay</h2>
                 <p>FunPay是开源免费的个人收款支付系统。系统源代码在github和gitee上均做了开源，有详细的教程和源码供参考，详情请点击下方链接。</p>
                 <div class="badges">
-                    <a class="badge-link" href="https://github.com/funson86/funpay/"><img src="/resources/pay/img/github.png" alt=""></a>
-                    <a class="badge-link" href="https://gitee.com/funson86/funpay/"><img src="/resources/pay/img/gitee.png" alt=""></a>
+                    <a class="badge-link" href="https://github.com/funson86/funpay/"><img src="/resources/pay/images/github.png" alt=""></a>
+                    <a class="badge-link" href="https://gitee.com/funson86/funpay/"><img src="/resources/pay/images/gitee.png" alt=""></a>
                 </div>
             </div>
         </div>
