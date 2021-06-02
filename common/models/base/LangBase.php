@@ -160,17 +160,8 @@ class LangBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        if (!is_null($id)) {
-            $arr = [];
-            foreach ($data as $k => $v) {
-                if (($id & $k) == $k) {
-                    $arr[] = $data[$k];
-                }
-            }
-            return $isArray ? $arr : $arr[0];
-        }
-
         return !is_null($id) ? ($data[$id] ?? $id) : $data;
+
     }
 
     /**
