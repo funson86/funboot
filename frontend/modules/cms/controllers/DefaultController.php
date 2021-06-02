@@ -182,10 +182,10 @@ class DefaultController extends BaseController
             'store' => $this->store,
             'banners' => $this->getStoreBanner(true),
             'about' => $about,
-            'newsModel' => $newsModel ? $newsModel : [],
-            'newsList' => is_array($newsList) ? $newsList : [],
-            'productModel' => isset($productModel) ? $productModel : [],
-            'productList' => is_array($productList) ? $productList : [],
+            'newsModel' => $newsModel ?? [],
+            'newsList' => $newsList ?? [],
+            'productModel' => $productModel ?? [],
+            'productList' => $productList ?? [],
         ]);
 
     }
