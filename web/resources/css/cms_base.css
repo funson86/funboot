@@ -1,7 +1,3 @@
-img {
-    width: auto;
-}
-
 @media (max-width: 767px) {
     #banner img {
         width: 100%;
@@ -25,4 +21,41 @@ li {
 
 a:hover {
     text-decoration: none;
+}
+
+.bg-black {
+    background: #000000;
+}
+
+.btn-scroll-top {
+    border-color: #666;
+    background-color: #666;
+    color: #ffffff;
+    position: fixed;
+    display: none;
+    right: 10px;
+    bottom: 20px;
+    z-index: 1601;
+    line-height: 1em;
+    padding: 10px;
+    border-radius: 50%;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.page-section {
+    padding: 6em 0;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.img-square {
+    border-radius: 5px;
+}
+
+.img-rounded {
+    border-radius: 50%;
 }
