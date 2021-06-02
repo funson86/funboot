@@ -72,7 +72,7 @@ class DefaultController extends BaseController
         $this->theme = $store->settings['cms_theme'] ?? 'default';
         $this->module->setViewPath('@webroot/resources/cms/' . $this->theme . '/views');
         $this->layout = 'main';
-        $this->prefixStatic = '/resources/cms/' . $this->theme;
+        $this->prefixStatic = Yii::getAlias('@web/resources/' . $store->route . '/' . $this->theme);
         $this->isMobile = CommonHelper::isMobile();
 
         //menu
@@ -108,11 +108,12 @@ class DefaultController extends BaseController
         }
         $rootCatalogId = $catalogId ? ArrayHelper::getRootId($catalogId, $this->allCatalog) : 0;
 
-        $home = ['url' => Yii::$app->getUrlManager()->createUrl(['/']), 'name' => Yii::t('app', 'Home'), 'active' => ($this->action->id == 'index')];
+        $home = ['url' => Yii::$app->getUrlManager()->createUrl(['/']), 'name' => Yii::t('app', 'Home'), 'label' => Yii::t('app', 'Home'), 'active' => ($this->action->id == 'index')];
         $this->mainMenu[0] = $this->mainMenu2[0] = $home;
 
         foreach ($this->allShowCatalog as $catalog) {
-            $item = ['id' => $catalog['id'], 'name' => $catalog['name'], 'active'=> ($catalog['id'] == $rootCatalogId)];
+            $name = fbt(Catalog::getTableCode(), $catalog['id'], 'name') ?: $catalog['name'];
+            $item = ['id' => $catalog['id'], 'name' => $name, 'label' => $name, 'active'=> ($catalog['id'] == $rootCatalogId)];
             if ($catalog['type'] == 'link') {// redirect to other site
                 $item['url'] = $catalog['redirect_url'];
             } else {
@@ -125,7 +126,8 @@ class DefaultController extends BaseController
         // sub menu 2
         $allCatalog2 = ArrayHelper::getTreeIdLabel(0, $this->allShowCatalog, '');
         foreach ($allCatalog2 as $catalog) {
-            $item = ['id' => $catalog['id'], 'name' => $catalog['name'], 'active' => ($catalog['id'] == $rootCatalogId)];
+            $name = fbt(Catalog::getTableCode(), $catalog['id'], 'name') ?: $catalog['name'];
+            $item = ['id' => $catalog['id'], 'name' => $name, 'label' => $name, 'active' => ($catalog['id'] == $rootCatalogId)];
             if ($catalog['type'] == 'link') {// redirect to other site
                 $item['url'] = $catalog['link'];
             } else {
@@ -320,8 +322,7 @@ class DefaultController extends BaseController
         $banners = is_array($bannerData) ? $bannerData : json_decode($bannerData, true);
 
         if (!$banners || empty($banners)) {
-            $h5 = CommonHelper::isMobile() ? 'h5-' : '';
-            $banners = [$this->prefixStatic . '/img/banner-' . $h5 . '01.jpg', $this->prefixStatic . '/img/banner-' . $h5 . '02.jpg', ];
+            $banners = [$this->getImageResponsive('banner-h5-01'), $this->getImageResponsive('banner-h5-02'), ];
         }
 
         if ($index) {
