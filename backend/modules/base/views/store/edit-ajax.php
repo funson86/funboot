@@ -46,7 +46,12 @@ $form = ActiveForm::begin([
         <?= $form->field($user, 'username')->textInput(['maxlength' => true]) ?>
         <?= $form->field($user, 'email')->textInput(['maxlength' => true]) ?>
         <?= $form->field($user, 'password')->passwordInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'languages')->checkboxList(ActiveModel::getLanguageLabels()) ?>
+        <?= $form->field($model, 'langBackends')->checkboxList(ActiveModel::getLanguageLabels()) ?>
+        <?= $form->field($model, 'lang_backend_default')->dropDownList(ActiveModel::getLanguageCodeLabels(), ['prompt' => Yii::t('app', 'Please Select')]) ?>
+        <?= $form->field($model, 'langFrontends')->checkboxList(ActiveModel::getLanguageLabels()) ?>
+        <?= $form->field($model, 'lang_frontend_default')->dropDownList(ActiveModel::getLanguageCodeLabels(), ['prompt' => Yii::t('app', 'Please Select')]) ?>
+        <?= $form->field($model, 'langApis')->checkboxList(ActiveModel::getLanguageLabels()) ?>
+        <?= $form->field($model, 'lang_api_default')->dropDownList(ActiveModel::getLanguageCodeLabels(), ['prompt' => Yii::t('app', 'Please Select')]) ?>
         <?= $form->field($model, 'types')->checkboxList(ActiveModel::getTypeLabels()) ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels(null, true)) ?>
     </div>

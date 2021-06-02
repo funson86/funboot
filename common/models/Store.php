@@ -12,13 +12,20 @@ use common\models\User;
  * @property int $parent_id 父节点
  * @property int $user_id 管理员
  * @property string $name 名称
- * @property string $description 简介
+ * @property string $brief 简介
  * @property string $host_name 域名
  * @property string $qrcode 二维码
  * @property string $route 子系统
  * @property int $expired_at 到期时间
  * @property string|null $remark 备注
  * @property int $language 语言
+ * @property string $lang_source 翻译源语言
+ * @property int $lang_frontend 前端支持语言
+ * @property string $lang_frontend_default 前端默认语言
+ * @property int $lang_backend 后端支持语言
+ * @property string $lang_backend_default 后端默认语言
+ * @property int $lang_api API支持语言
+ * @property string $lang_api_default API默认语言
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -43,10 +50,10 @@ class Store extends StoreBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['parent_id', 'user_id', 'expired_at', 'language', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['parent_id', 'user_id', 'expired_at', 'language', 'lang_frontend', 'lang_backend', 'lang_api', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['remark'], 'string'],
-            [['name', 'brief', 'host_name', 'qrcode', 'route'], 'string', 'max' => 255],
+            [['name', 'brief', 'host_name', 'qrcode', 'route', 'lang_source', 'lang_frontend_default', 'lang_backend_default', 'lang_api_default'], 'string', 'max' => 255],
         ]);
     }
 
@@ -68,6 +75,13 @@ class Store extends StoreBase
                 'expired_at' => '到期时间',
                 'remark' => '备注',
                 'language' => '语言',
+                'lang_source' => '翻译源语言',
+                'lang_frontend' => '前端支持语言',
+                'lang_frontend_default' => '前端默认语言',
+                'lang_backend' => '后端支持语言',
+                'lang_backend_default' => '后端默认语言',
+                'lang_api' => 'API支持语言',
+                'lang_api_default' => 'API默认语言',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -89,6 +103,13 @@ class Store extends StoreBase
                 'expired_at' => Yii::t('app', 'Expired At'),
                 'remark' => Yii::t('app', 'Remark'),
                 'language' => Yii::t('app', 'Language'),
+                'lang_source' => Yii::t('app', 'Lang Source'),
+                'lang_frontend' => Yii::t('app', 'Lang Frontend'),
+                'lang_frontend_default' => Yii::t('app', 'Lang Frontend Default'),
+                'lang_backend' => Yii::t('app', 'Lang Backend'),
+                'lang_backend_default' => Yii::t('app', 'Lang Backend Default'),
+                'lang_api' => Yii::t('app', 'Lang Api'),
+                'lang_api_default' => Yii::t('app', 'Lang Api Default'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

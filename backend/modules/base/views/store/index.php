@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Stores'] ?? null) ?></h2>
                 <div class="card-tools">
-                    <?= Html::createModal() ?>
+                    <?= Html::createModal(['edit-ajax'], null, ['size' => 'Large']) ?>
                     <?= Html::buttonModal(['edit-config'], Yii::t('app', 'Refresh Config File'), ['class' => 'btn btn-sm btn-warning'], false) ?>
                     <?= Html::buttonModal(['edit-qrcode'], Yii::t('app', 'Refresh Qrcode'), ['class' => 'btn btn-sm btn-info'], false) ?>
                     <?= Html::export() ?>
@@ -51,7 +51,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['attribute' => 'route', 'value' => function ($model) { return ActiveModel::getRouteLabels($model->route); }, 'filter' => Html::activeDropDownList($searchModel, 'route', ActiveModel::getRouteLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'expired_at:datetime',
                         // 'remark:ntext',
-                        ['attribute' => 'language', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getLanguageLabels($model->language); }, 'filter' => false,],
+                        ['attribute' => 'lang_frontend', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getLanguageLabels($model->lang_frontend); }, 'filter' => false,],
+                        ['attribute' => 'lang_frontend_default', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getLanguageCodeLabels($model->lang_frontend_default); }, 'filter' => false,],
                         ['attribute' => 'type', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => false,],
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
                         ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::status($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
@@ -69,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return Html::buttonModal(['login', 'id' => $model->id], Yii::t('app', 'Login'), ['class' => 'btn btn-sm btn-success'], false, true);
                                 },
                                 'edit' => function ($url, $model, $key) {
-                                    return Html::editModal(['edit-ajax', 'id' => $model->id]);
+                                    return Html::editModal(['edit-ajax', 'id' => $model->id], null, ['size' => 'Large']);
                                 },
                                 'delete' => function ($url, $model, $key) {
                                     return Html::delete(['delete', 'id' => $model->id]);

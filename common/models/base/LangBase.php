@@ -133,6 +133,50 @@ class LangBase extends BaseModel
      * @param null $id
      * @param bool $all
      * @param bool $flip
+     * @param bool $isArray
+     * @return array|mixed|null
+     */
+    public static function getLanguageCodeLabels($id = null, $all = false, $flip = false, $isArray = false)
+    {
+        $data = [
+            'en' => Yii::t('cons', 'LANGUAGE_EN'),
+            'zh-CN' => Yii::t('cons', 'LANGUAGE_ZH_CN'),
+            'zh-HK' => Yii::t('cons', 'LANGUAGE_ZH_HK'),
+            'fr' => Yii::t('cons', 'LANGUAGE_FR'),
+            'de' => Yii::t('cons', 'LANGUAGE_DE'),
+            'ru' => Yii::t('cons', 'LANGUAGE_RU'),
+            'it' => Yii::t('cons', 'LANGUAGE_IT'),
+            'es' => Yii::t('cons', 'LANGUAGE_ES'),
+            'pt' => Yii::t('cons', 'LANGUAGE_PT'),
+            'tr' => Yii::t('cons', 'LANGUAGE_TR'),
+            'ar' => Yii::t('cons', 'LANGUAGE_AR'),
+            'jp' => Yii::t('cons', 'LANGUAGE_JP'),
+            'ko' => Yii::t('cons', 'LANGUAGE_KO'),
+            'nl' => Yii::t('cons', 'LANGUAGE_NL'),
+            'sv' => Yii::t('cons', 'LANGUAGE_SV'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        if (!is_null($id)) {
+            $arr = [];
+            foreach ($data as $k => $v) {
+                if (($id & $k) == $k) {
+                    $arr[] = $data[$k];
+                }
+            }
+            return $isArray ? $arr : $arr[0];
+        }
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    /**
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
      * @return array|mixed|null
      */
     public static function getLanguageBaiduCode($id = null, $all = false, $flip = false)

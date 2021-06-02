@@ -61,6 +61,9 @@ class StoreBase extends BaseModel
     public $expiredTime;
     public $types;
     public $languages;
+    public $langBackends;
+    public $langFrontends;
+    public $langApis;
 
     /**
      * @var array 配置
@@ -155,6 +158,18 @@ class StoreBase extends BaseModel
      * @param null $id
      * @param bool $all
      * @param bool $flip
+     * @param bool $isArray
+     * @return array|mixed|null
+     */
+    public static function getLanguageCodeLabels($id = null, $all = false, $flip = false, $isArray = false)
+    {
+        return Lang::getLanguageCodeLabels($id, $all, $flip, $isArray);
+    }
+
+    /**
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
      * @return array|mixed|null
      */
     public static function getLanguageBaiduCode($id = null, $all = false, $flip = false)
@@ -187,11 +202,19 @@ class StoreBase extends BaseModel
             'host_name' => Yii::t('app', 'Host Name'),
             'router' => Yii::t('app', 'Router'),
             'qrcode' => Yii::t('app', 'Qrcode'),
+            'route' => Yii::t('app', 'Route'),
             'expired_at' => Yii::t('app', 'Expired At'),
             'expiredTime' => Yii::t('app', 'Expired At'),
             'remark' => Yii::t('app', 'Remark'),
             'language' => Yii::t('app', 'Language'),
             'languages' => Yii::t('app', 'Language'),
+            'lang_source' => Yii::t('app', 'Lang Source'),
+            'lang_frontend' => Yii::t('app', 'Lang Frontend'),
+            'lang_frontend_default' => Yii::t('app', 'Lang Frontend Default'),
+            'lang_backend' => Yii::t('app', 'Lang Backend'),
+            'lang_backend_default' => Yii::t('app', 'Lang Backend Default'),
+            'lang_api' => Yii::t('app', 'Lang Api'),
+            'lang_api_default' => Yii::t('app', 'Lang Api Default'),
             'type' => Yii::t('app', 'Type'),
             'types' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),

@@ -72,6 +72,9 @@ class StoreController extends BaseController
             $post = Yii::$app->request->post();
             $model->user_id = Yii::$app->params['defaultUserId'];
             $model->language = ArrayHelper::arrayToInt($post['Store']['languages'] ?? []);
+            $model->lang_backend = ArrayHelper::arrayToInt($post['Store']['langBackends'] ?? []);
+            $model->lang_frontend = ArrayHelper::arrayToInt($post['Store']['langFrontends'] ?? []);
+            $model->lang_api = ArrayHelper::arrayToInt($post['Store']['langApis'] ?? []);
             $model->type = ArrayHelper::arrayToInt($post['Store']['types'] ?? []);
             $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
 
@@ -111,6 +114,9 @@ class StoreController extends BaseController
 
         $model->expiredTime = date('Y-m-d', ($model->expired_at > 0 ? $model->expired_at : time() + 365 * 86400));
         $model->languages = ArrayHelper::intToArray($model->language, $this->modelClass::getLanguageLabels());
+        $model->langBackends = ArrayHelper::intToArray($model->lang_backend, $this->modelClass::getLanguageLabels());
+        $model->langFrontends = ArrayHelper::intToArray($model->lang_frontend, $this->modelClass::getLanguageLabels());
+        $model->langApis = ArrayHelper::intToArray($model->lang_api, $this->modelClass::getLanguageLabels());
         $model->types = ArrayHelper::intToArray($model->type, $this->modelClass::getTypeLabels());
         return $this->renderAjax($this->action->id, [
             'model' => $model,
