@@ -58,10 +58,10 @@ class CommonHelper
             $lang = CommonHelper::parseBrowserLanguage();
         }
 
-        $langInt = Lang::getLanguageCode($lang, true, true);
+        /*$langInt = Lang::getLanguageCode($lang, true, true);
         if (($langInt & $store->language) != $langInt) {
             $lang = Yii::$app->params['defaultBackendLanguage'];
-        }
+        }*/
 
         return $lang;
     }

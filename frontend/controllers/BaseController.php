@@ -21,8 +21,8 @@ class BaseController extends \common\components\controller\BaseController
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            // 前台强制为指定语言
-            strlen($this->store->lang_frontend_default) > 0 && Yii::$app->language = $this->store->lang_frontend_default;
+            // 如果未设置，前台强制为指定语言
+            strlen($this->store->lang_frontend_default) > 0 && !Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id) && Yii::$app->language = $this->store->lang_frontend_default;
             return true;
         }
         return false;
