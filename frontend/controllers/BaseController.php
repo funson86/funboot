@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\helpers\CommonHelper;
 use common\helpers\IdHelper;
 use yii\base\Model;
 use common\models\Store;
@@ -46,7 +47,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function getFavicon()
     {
-        return $this->store->settings['website_favicon'] ?: $this->prefixStatic . '/img/favicon.ico';
+        return $this->store->settings['website_favicon'] ?: $this->prefixStatic . '/images/favicon.ico';
     }
 
     /**
@@ -54,22 +55,44 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function getLogo()
     {
-        return $this->store->settings['website_logo'] ?: $this->prefixStatic . '/img/logo.png';
+        return $this->store->settings['website_logo'] ?: $this->prefixStatic . '/images/logo.png';
     }
 
-    public function getCss($name)
+    public function getCss($name, $ext = '.css')
     {
+        if (strpos($name, '.') === false) {
+            $name .= $ext;
+        }
+
         return $this->prefixStatic . '/css/' . $name;
     }
 
-    public function getJs($name)
+    public function getJs($name, $ext = '.js')
     {
+        if (strpos($name, '.') === false) {
+            $name .= $ext;
+        }
+
         return $this->prefixStatic . '/js/' . $name;
     }
 
-    public function getImage($name)
+    public function getImage($name, $ext = '.jpg')
     {
-        return $this->prefixStatic . '/img/' . $name;
+        if (strpos($name, '.') === false) {
+            $name .= $ext;
+        }
+
+        return $this->prefixStatic . '/images/' . $name;
+    }
+
+    public function getImageResponsive($name, $pc = null, $ext = '.jpg')
+    {
+        $name = CommonHelper::isMobile() ? $name : ($pc ?? str_replace('-h5', '', $name));
+        if (strpos($name, '.') === false) {
+            $name .= $ext;
+        }
+
+        return $this->prefixStatic . '/images/' . $name;
     }
 
 }
