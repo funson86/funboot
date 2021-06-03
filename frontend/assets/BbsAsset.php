@@ -25,6 +25,7 @@ class BbsAsset extends AssetBundle
         'common\widgets\adminlte\BootstrapIconsAsset',
         'common\widgets\adminlte\FlagIconAsset',
         'common\widgets\funboot\assets\FunbootBootstrapFixAsset',
+        'common\components\assets\CookieBarAsset',
 //        'yii\bootstrap\BootstrapAsset',
     ];
 }

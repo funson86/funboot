@@ -47,6 +47,17 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => BbsAsset::
 
     <?= strlen($store->settings['website_stat']) > 10 ? $store->settings['website_stat'] : '' ?>
 <?php $this->endBody() ?>
+
+<script>
+    $(document).ready(function () {
+        jQuery.cookieBar({
+            message:'We use cookies to give you the best experience on our website. By continuing, you agree to our use of cookies.',
+            fixed: true,
+            policyButton: false,
+            expireDays: 60,
+        });
+    });
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>
