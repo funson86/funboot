@@ -8,10 +8,14 @@ namespace common\components\assets;
  * @package common\widgets\echarts
  * @author funson86 <funson86@gmail.com>
  */
-class LazyloadAsset extends \yii\web\AssetBundle
+class CookieBarAsset extends \yii\web\AssetBundle
 {
+    public $css = [
+        '/resources/css/jquery.cookiebar.css',
+    ];
+
     public $js = [
-        'https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js',
+        '/resources/js/jquery.cookiebar.js',
     ];
 
     public $depends = [

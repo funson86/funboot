@@ -22,6 +22,7 @@ class CmsAllAsset extends AssetBundle
     public $depends = [
         'common\components\assets\JqueryAsset',
         'common\components\assets\Bootstrap4Asset',
+        'common\components\assets\CookieBarAsset',
         'common\components\assets\LazyloadAsset',
         'common\components\assets\FlagIconCssAsset',
         'common\components\assets\FuncyboxAsset',
