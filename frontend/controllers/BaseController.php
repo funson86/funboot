@@ -95,4 +95,20 @@ class BaseController extends \common\components\controller\BaseController
         return $this->prefixStatic . '/images/' . $name;
     }
 
+    public function getImageResponsiveByLang($name, $langCode = null, $pc = null, $ext = '.jpg')
+    {
+        $name = CommonHelper::isMobile() ? $name : ($pc ?? str_replace('-h5', '', $name));
+        if (strpos($name, '.') === false) {
+            $langCode && $name .= '-' . $langCode;
+            $name .= $ext;
+        }
+
+        if (file_exists(Yii::getAlias('@webroot' . $this->prefixStatic . '/images/' . $name))) {
+            return $this->prefixStatic . '/images/' . $name;
+        }
+
+        $langCode && $name = str_replace('-' . $langCode, '', $name);
+        return $this->prefixStatic . '/images/' . $name;
+    }
+
 }
