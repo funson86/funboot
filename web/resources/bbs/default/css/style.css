@@ -178,3 +178,11 @@ iframe {
     width: 100%;
     min-height: 400px;
 }
+
+.top-ads span {
+    margin-right: 0.3em;
+    background: #DDD;
+    padding: 0 .3em;
+    border-radius: .3em;
+}
+

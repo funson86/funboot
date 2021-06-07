@@ -3,6 +3,7 @@ use common\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
+use common\models\base\Stuff;
 
 /* @var $this yii\web\View */
 
@@ -34,6 +35,9 @@ $this->registerMetaTag(["name" => "description", "content" => $store->settings['
             <?php } ?>
             <div class="card-body bg-light border-bottom card-sort">
                 <p class="card-text text-right">
+                    <span class="float-left top-ads">
+                        <?= \common\widgets\base\StuffWidget::widget(['style' => 3, 'codeId' => Yii::$app->request->get('id', '1'), 'position' => Stuff::POSITION_TOP, 'type' => Stuff::TYPE_TEXT, 'limit' => 2]) ?>
+                    </span>
                     <?= Yii::t('app', 'Sort') ?>:
                     <?= Html::a(Yii::t('app', 'Newest'), Url::current(['sort' => 'id'])) ?> /
                     <?= Html::a(Yii::t('app', 'Best'), Url::current(['sort' => 'like'])) ?> /
@@ -70,7 +74,7 @@ $this->registerMetaTag(["name" => "description", "content" => $store->settings['
     <div class="col-md-3">
         <div class="sidebar-fixed">
             <?= \frontend\widgets\BbsSidebar::widget(['type' => 'node']) ?>
-            <?= \common\widgets\base\StuffWidget::widget(['style' => 1, 'codeId' => Yii::$app->request->get('id', '1')]) ?>
+            <?= \common\widgets\base\StuffWidget::widget(['style' => 2, 'codeId' => Yii::$app->request->get('id', '1'), 'position' => Stuff::POSITION_RIGHT, 'type' => Stuff::TYPE_IMAGE]) ?>
         </div>
     </div><!-- /.col-lg-4 -->
 </div>

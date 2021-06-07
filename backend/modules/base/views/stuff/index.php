@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Stuffs'] ?? null) ?></h2>
                 <div class="card-tools">
                     <?= Html::create(['edit'], Yii::t('app', 'Create Text')) ?>
-                    <?= Html::create(['edit', 'type' => 'image'], Yii::t('app', 'Create Image')) ?>
+                    <?= Html::create(['edit', 'type' => ActiveModel::TYPE_IMAGE], Yii::t('app', 'Create Image')) ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
                 </div>

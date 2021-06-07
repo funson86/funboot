@@ -32,7 +32,22 @@ $this->params['breadcrumbs'][] = $this->title;
                         'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
                     ]) ?>
                     <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+                    <?php if (Yii::$app->request->get('type', ActiveModel::TYPE_TEXT) == ActiveModel::TYPE_TEXT) { ?>
+                    <?= $form->field($model, 'content')->textInput(['maxlength' => true]) ?>
+                    <?php } else { ?>
+                    <?= $form->field($model, 'content')->widget(\common\components\uploader\FileWidget::class, [
+                        'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
+                        'theme' => 'default',
+                        'themeConfig' => [],
+                        'config' => [
+                            // 可设置自己的上传地址, 不设置则默认地址
+                            // 'server' => '',
+                            'pick' => [
+                                'multiple' => false,
+                            ],
+                        ]
+                    ]); ?>
+                    <?php } ?>
                     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'position')->dropDownList(ActiveModel::getPositionLabels()) ?>
                     <?= $form->field($model, 'sort')->textInput() ?>

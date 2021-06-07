@@ -112,14 +112,16 @@ class StuffBase extends BaseModel
      * @param null $storeId
      * @return array|\yii\db\ActiveRecord[]
      */
-    public static function getByCodeId($codeId, $position = null, $type = null, $limit = 0, $storeId = null)
+    public static function getByCodeId($codeId = null, $position = null, $type = null, $limit = 0, $storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        $query = static::find()->where(['store_id' => $storeId, 'status' => self::STATUS_ACTIVE])->andWhere('JSON_CONTAINS(`code`, \'"1"\', \'$\')');
+        $query = static::find()->where(['store_id' => $storeId, 'status' => self::STATUS_ACTIVE]);
 
+        $codeId && $query->andWhere('JSON_CONTAINS(`code`, \'"' . $codeId . '"\', \'$\')');
         $position && $query->andFilterWhere(['position' => $position]);
         $type && $query->andFilterWhere(['type' => $type]);
         $limit > 0 && $query->limit($limit);
+        $query->orderBy(['position' => SORT_ASC, 'type' => SORT_ASC]);
 
         return $query->all();
     }
