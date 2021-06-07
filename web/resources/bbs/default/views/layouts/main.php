@@ -50,12 +50,16 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => BbsAsset::
 
 <script>
     $(document).ready(function () {
-        jQuery.cookieBar({
-            message:'We use cookies to give you the best experience on our website. By continuing, you agree to our use of cookies.',
-            fixed: true,
-            policyButton: false,
-            expireDays: 60,
-        });
+        ua = navigator.userAgent.toLowerCase();
+        var regexp=/\.(bot.htm|spider.htm)(\.[a-z0-9\-]+){1,2}\//ig;
+        if(!regexp.test(ua)) {
+            jQuery.cookieBar({
+                message:'We use cookies to give you the best experience on our website. By continuing, you agree to our use of cookies.',
+                fixed: true,
+                policyButton: false,
+                expireDays: 60,
+            });
+        }
     });
 </script>
 </body>
