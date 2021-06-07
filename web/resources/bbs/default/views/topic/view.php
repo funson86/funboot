@@ -22,7 +22,7 @@ $comment->topic_id = $model->id;
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h3 class="mt-0 mb-1"><?= $model->grade > 0 ? Html::tag('span', '精', ['class' => 'badge badge-pill badge-info']) : '' ?> <?= $model->name ?><?= $model->status == ActiveModel::STATUS_INACTIVE ? ' ' . Html::a(Yii::t('app', 'Pass'), ['/bbs/topic/pass', 'id' => $model->id], ['class' => 'btn btn-sm btn-success']) : '' ?></h3>
+                        <h3 class="mt-0 mb-1"><?= $model->grade  == ActiveModel::GRADE_EXCELLENT ? Html::tag('span', '精', ['class' => 'badge badge-pill badge-info']) : '' ?> <?= $model->name ?><?= $model->status == ActiveModel::STATUS_INACTIVE ? ' ' . Html::a(Yii::t('app', 'Pass'), ['/bbs/topic/pass', 'id' => $model->id], ['class' => 'btn btn-sm btn-success']) : '' ?></h3>
                         <div class="topic-info">
                             <a class="topic-node" href="<?= Url::to(['/bbs/default/index', 'id' => $model->node_id]) ?>"><?= Html::tag('span', $model->node->name, ['class' => 'btn-sm btn-info']) ?></a> •
                             <?= $model->tag_id > 0 ? Html::a($model->tag->name, ['/bbs/default/index', 'ModelSearch[tag_id]' => $model->tag_id], ['class' => 'btn-sm btn-info']) : '' ?> •
