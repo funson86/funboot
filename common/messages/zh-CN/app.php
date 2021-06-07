@@ -621,6 +621,7 @@ return [
     'Create Image' => '创建图片',
     'Like' => '点赞',
     'Thanks' => '感谢',
+    'Excellent' => '精华',
 
 
     /* mall */
