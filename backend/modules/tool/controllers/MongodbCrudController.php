@@ -17,7 +17,7 @@ class MongodbCrudController extends BaseController
 {
     protected $style = 3;
 
-    protected $highConcurrency = 1;
+    protected $highConcurrency = true;
 
     /**
       * @var MongodbCrud
