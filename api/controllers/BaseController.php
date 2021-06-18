@@ -41,12 +41,6 @@ class BaseController extends ActiveController
     protected $pageSize = 10;
 
     /**
-     * 是否高并发
-     * @var bool
-     */
-    protected $highConcurrency = false;
-
-    /**
      * 序列化数据
      * @var string[]
      */

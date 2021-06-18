@@ -54,6 +54,7 @@ phpunit.phar
 /api/web/.htaccess
 
 /web/attachment
+/web/resources/images/avatar
 /web/.user.ini
 /web/404.html
 /web/.htaccess
