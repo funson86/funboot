@@ -22,9 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                        <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+                        <?= $form->field($model, 'email', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['autofocus' => true, 'placeholder' => Yii::t('app', ' ')]) ?>
 
-                        <?= $form->field($model, 'password')->passwordInput() ?>
+                        <?= $form->field($model, 'password', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->passwordInput(['placeholder' => Yii::t('app', ' ')]) ?>
 
                         <?= $form->field($model, 'rememberMe')->checkbox() ?>
 

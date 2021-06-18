@@ -23,9 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-                    <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+                    <?= $form->field($model, 'email', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['autofocus' => true, 'placeholder' => Yii::t('app', ' ')]) ?>
 
-                    <?= $form->field($model, 'password')->passwordInput() ?>
+                    <?= $form->field($model, 'password', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->passwordInput(['placeholder' => Yii::t('app', ' ')]) ?>
 
                     <div class="form-group flex-row-space">
                         <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-primary pl-5 pr-5', 'name' => 'signup-button']) ?>

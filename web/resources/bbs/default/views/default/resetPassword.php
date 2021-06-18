@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
 
-                    <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
+                    <?= $form->field($model, 'password', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->passwordInput(['autofocus' => true, 'placeholder' => Yii::t('app', ' ')]) ?>
 
                     <div class="form-group text-center">
                         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary pl-5 pr-5']) ?>
