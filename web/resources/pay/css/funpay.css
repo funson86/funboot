@@ -153,8 +153,8 @@ header.masthead {
   padding-top: 150px;
   padding-bottom: 100px;
   color: white;
-  background: url("../img/bg-pattern.png"), #7b4397;
-  background: url("../img/bg-pattern.png"), linear-gradient(to left, #57aef6, #045790);
+  background: url("../images/bg-pattern.png"), #7b4397;
+  background: url("../images/bg-pattern.png"), linear-gradient(to left, #57aef6, #045790);
 }
 
 header.masthead .header-content {
@@ -284,7 +284,7 @@ section.features .feature-item i {
 section.cta {
   position: relative;
   padding: 250px 0;
-  background-image: url("../img/bg-cta.jpg");
+  background-image: url("../images/bg-cta.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -443,7 +443,7 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
   width: 100%; height: 100%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-image: url("../img/macbook.png");
+  background-image: url("../images/macbook.png");
 }
 
 .device-mockup > .device > .screen {
@@ -478,11 +478,11 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 
 .device-mockup.iphone6_plus.white > .device,
 .device-mockup.iphone6_plus.portrait.white > .device {
-  background-image: url("../img/iphone_6_plus_white_port.png");
+  background-image: url("../images/iphone_6_plus_white_port.png");
 }
 
 .device-mockup.iphone6_plus.landscape.white > .device {
-  background-image: url("../img/iphone_6_plus_white_land.png");
+  background-image: url("../images/iphone_6_plus_white_land.png");
 }
 
 .device-mockup.iphone6_plus > .device > .screen,
