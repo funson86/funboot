@@ -288,8 +288,32 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
     }
 ```
 
+### 表单支持浮动标签
 
-### 精简代码
+需要修改template让label在input后面，并添加 form-label-group 样式， place
+
+```
+<?= $form->field($model, 'email', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['autofocus' => true, 'placeholder' => Yii::t('app', ' ')]) ?>
+```
+
+css需要添加 .form-label-group
+
+```
+    .form-label-group {
+        position: relative;
+    }
+
+    .form-label-group input,
+    .form-label-group label {
+        height: 3.125rem;
+        padding: .75rem;
+    }
+
+...
+```
+
+
+### 精简代码 导航
 ```
         <div class="card card-primary card-outline card-outline-tabs">
             <div class="card-header p-0 border-bottom-0">
