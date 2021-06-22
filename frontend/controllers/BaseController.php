@@ -16,16 +16,39 @@ use yii\helpers\Json;
  */
 class BaseController extends \common\components\controller\BaseController
 {
+    // 判断是否为手机版
+    public $isMobile;
+
+    //模板
+    public $theme = 'default';
+
+    // 资源文件前缀
     public $prefixStatic;
 
     public function beforeAction($action)
     {
-        if (parent::beforeAction($action)) {
-            // 如果未设置，前台强制为指定语言
-            strlen($this->store->lang_frontend_default) > 0 && !Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id) && Yii::$app->language = $this->store->lang_frontend_default;
-            return true;
+        if (!parent::beforeAction($action)) {
+            return false;
         }
-        return false;
+
+        $store = $this->store;
+
+        // 如果未设置，前台强制为指定语言
+        strlen($store->lang_frontend_default) > 0 && !Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id) && Yii::$app->language = $store->lang_frontend_default;
+
+        if (Yii::$app->defaultRoute != 'site') {
+
+            // 设置bbs登录地址
+            Yii::$app->user->loginUrl = ['/' . $store->route. '/default/login'];
+
+            $this->theme = $store->settings[$store->route . '_theme'] ?? $store->settings['website_theme'] ?: 'default';
+            $this->module->setViewPath('@webroot/resources/' . $store->route . '/' . $this->theme . '/views');
+            $this->layout = 'main';
+            $this->prefixStatic = Yii::getAlias('@web/resources/' . $store->route . '/' . $this->theme);
+            $this->isMobile = CommonHelper::isMobile();
+        }
+
+        return true;
     }
 
     /**

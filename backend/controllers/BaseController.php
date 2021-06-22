@@ -175,9 +175,12 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionIndex()
     {
+        $storeId = $this->isAdmin() ? null : $this->getStoreId();
+
         if ($this->style == 2) {
             $query = $this->modelClass::find()
                 ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
+                ->andFilterWhere(['store_id' => $storeId])
                 ->orderBy(['id' => SORT_ASC]);
 
             $dataProvider = new ActiveDataProvider([
@@ -189,7 +192,6 @@ class BaseController extends \common\components\controller\BaseController
                 'dataProvider' => $dataProvider,
             ]);
         } elseif ($this->style == 3) {
-            $storeId = $this->isAdmin() ? null : $this->getStoreId();
             $data = $this->modelClass::find()
                 ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
                 ->andFilterWhere(['store_id' => $storeId]);

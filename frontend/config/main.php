@@ -11,8 +11,6 @@ return [
     'basePath' => dirname(__DIR__),
     'language' => 'en',
     'bootstrap' => ['log'],
-    //'defaultRoute' => 'pay', // 默认路由 cms mall 
-    //'defaultRoute' => 'cms', // 默认路由 cms mall
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'pay' => [
@@ -58,7 +56,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<store_id:\d+>' => 'site/index', // 根据项目情况进行匹配
+                '<store_id:\d+>' => 'mall/default/index', // 根据项目情况进行匹配，一个系统只能匹配一种
+                '<store_code:\w+>' => 'mall/default/index', // 根据项目情况进行匹配，一个系统只能匹配一种
 
                 // pay url 优化
                 'pay/<action:\w+>' => 'pay/default/<action>',

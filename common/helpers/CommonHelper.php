@@ -21,6 +21,17 @@ class CommonHelper
 
         return $mapIdStore[$id] ?? null;
     }
+    /**
+     * 根据code得到对应的store
+     * @return Store|mixed|null
+     */
+    public static function getStoreByCode($code)
+    {
+        $allStore = Yii::$app->cacheSystem->getAllStore();
+        $mapIdStore = ArrayHelper::mapIdData($allStore, 'code');
+
+        return $mapIdStore[$code] ?? null;
+    }
 
     /**
      * 根据host_name得到对应的store，store支持|分隔多个域名
@@ -33,14 +44,12 @@ class CommonHelper
 
         // host id map
         $mapHostNameId = [];
+        $hostNames = [];
         foreach ($allStore as $store) {
-            if (strpos($store->host_name, '|') !== false) {
-                $arr = explode('|', $store->host_name);
-                foreach ($arr as $item) {
-                    $mapHostNameId[$item] = $store->id;
-                }
-            } else {
-                $mapHostNameId[$store->host_name] = $store->id;
+            $arr = explode('|', $store->host_name);
+            foreach ($arr as $item) {
+                !in_array($item, $hostNames) && $mapHostNameId[$item] = $store->id;
+                array_push($hostNames, $item);
             }
         }
 

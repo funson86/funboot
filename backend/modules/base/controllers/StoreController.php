@@ -198,14 +198,12 @@ class StoreController extends BaseController
     {
         $str = "<?php\nreturn [\n";
         $models = Store::find()->all();
+        $hostNames = [];
         foreach ($models as $model) {
-            if (strpos($model->host_name, '|') !== false) {
-                $arr = explode('|', $model->host_name);
-                foreach ($arr as $item) {
-                    $str .= "    '" . $item . "' => '" . $model->route . "',\n";
-                }
-            } else {
-                $str .= "    '" . $model->host_name . "' => '" . $model->route . "',\n";
+            $arr = explode('|', $model->host_name);
+            foreach ($arr as $item) {
+                !in_array($item, $hostNames) && $str .= "    '" . $item . "' => '" . $model->route . "',\n";
+                array_push($hostNames, $item);
             }
         }
         $str .= "];\n";
