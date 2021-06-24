@@ -21,6 +21,7 @@ CREATE TABLE `fb_cms_catalog` (
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父节点',
   `name` varchar(255) NOT NULL COMMENT '标题',
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '代码',
   `is_nav` int(11) NOT NULL DEFAULT '1' COMMENT '导航栏显示',
   `banner` json DEFAULT NULL COMMENT '封面图',
   `banner_h5` json DEFAULT NULL COMMENT '手机封面图',
@@ -54,9 +55,10 @@ CREATE TABLE `fb_cms_page` (
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `catalog_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '栏目',
   `name` varchar(255) NOT NULL COMMENT '标题',
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '代码',
   `banner` json DEFAULT NULL COMMENT '封面图',
   `banner_h5` json DEFAULT NULL COMMENT '手机封面图',
-  `thumb` json DEFAULT NULL COMMENT '缩略图',
+  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
   `images` json DEFAULT NULL COMMENT '图片集',
   `seo_title` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索优化标题',
   `seo_keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索关键词',
@@ -90,6 +92,9 @@ CREATE TABLE `fb_cms_page` (
   CONSTRAINT `cms_page_fk1` FOREIGN KEY (`catalog_id`) REFERENCES `fb_cms_catalog` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `cms_page_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='页面';
+
+-- ALTER TABLE `fb_cms_catalog` ADD COLUMN `code` varchar(255) NOT NULL DEFAULT '' COMMENT '代码' AFTER `name`;  
+-- ALTER TABLE `fb_cms_page` ADD COLUMN `code` varchar(255) NOT NULL DEFAULT '' COMMENT '代码' AFTER `name`;  
 
         ";
 
