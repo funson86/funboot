@@ -6,6 +6,7 @@ use common\helpers\ArrayHelper;
 use common\helpers\AuthHelper;
 use common\models\base\Permission;
 use common\models\base\RolePermission;
+use common\models\base\SettingType;
 use common\models\base\UserRole;
 use common\models\User;
 use common\services\base\UserPermission;
@@ -142,6 +143,11 @@ class AuthSystem extends \yii\base\Component
         }
 
         return false;
+    }
+
+    public function getRoleCode()
+    {
+        return $this->isSuperAdmin() ? SettingType::SUPPORT_ROLE_SUPER_ADMIN : ($this->isAdmin() ? SettingType::SUPPORT_ROLE_ADMIN : ($this->isBackend() ? SettingType::SUPPORT_ROLE_STORE : SettingType::SUPPORT_ROLE_FRONTEND));
     }
 
     /**

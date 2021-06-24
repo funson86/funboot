@@ -6,7 +6,9 @@ use common\helpers\ArrayHelper;
 use common\helpers\AuthHelper;
 use common\models\base\Permission;
 use common\models\base\RolePermission;
+use common\models\base\SettingType;
 use common\models\base\UserRole;
+use common\models\Store;
 use common\models\User;
 use common\services\base\UserPermission;
 use Yii;
@@ -48,6 +50,20 @@ class StoreSystem extends \yii\base\Component
     public function getUserId()
     {
         return $this->store->user_id ?? Yii::$app->params['defaultUserId'];
+    }
+
+    public function getRouteCode()
+    {
+        $data = [
+            Store::ROUTE_SITE => SettingType::SUPPORT_SYSTEM_SITE,
+            Store::ROUTE_PAY => SettingType::SUPPORT_SYSTEM_PAY,
+            Store::ROUTE_CMS => SettingType::SUPPORT_SYSTEM_CMS,
+            Store::ROUTE_BBS => SettingType::SUPPORT_SYSTEM_BBS,
+            Store::ROUTE_MALL => SettingType::SUPPORT_SYSTEM_MALL,
+            Store::ROUTE_WECHAT => SettingType::SUPPORT_SYSTEM_WECHAT,
+        ];
+
+        return $data[$this->store->route] ?? SettingType::SUPPORT_SYSTEM_SITE;
     }
 
 }

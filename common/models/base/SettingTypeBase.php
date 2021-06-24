@@ -29,6 +29,19 @@ class SettingTypeBase extends BaseModel
     const TYPE_CROPPER = 'cropper';
     const TYPE_LAT_LNG_SELECTION = 'latLngSelection';
 
+    const SUPPORT_ROLE_SUPER_ADMIN = 1;
+    const SUPPORT_ROLE_ADMIN = 2;
+    const SUPPORT_ROLE_STORE = 4;
+    const SUPPORT_ROLE_FRONTEND = 8;
+
+    const SUPPORT_SYSTEM_SITE = 1;
+    const SUPPORT_SYSTEM_PAY = 2;
+    const SUPPORT_SYSTEM_CMS = 4;
+    const SUPPORT_SYSTEM_BBS = 8;
+    const SUPPORT_SYSTEM_MALL = 16;
+    const SUPPORT_SYSTEM_WECHAT = 32;
+    const SUPPORT_SYSTEM_MINI = 64;
+
     /**
      * @return array|array[]
      */
@@ -74,6 +87,54 @@ class SettingTypeBase extends BaseModel
         return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
+    /**
+     * return label or labels array
+     *
+     * @param null $id
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getSupportRoleLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::SUPPORT_ROLE_SUPER_ADMIN => Yii::t('cons', 'SUPPORT_ROLE_SUPER_ADMIN'),
+            self::SUPPORT_ROLE_ADMIN => Yii::t('cons', 'SUPPORT_ROLE_ADMIN'),
+            self::SUPPORT_ROLE_STORE => Yii::t('cons', 'SUPPORT_ROLE_STORE'),
+            self::SUPPORT_ROLE_FRONTEND => Yii::t('cons', 'SUPPORT_ROLE_FRONTEND'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    /**
+     * return label or labels array
+     *
+     * @param null $id
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getSupportSystemLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::SUPPORT_SYSTEM_SITE => Yii::t('cons', 'ROUTE_SITE'),
+            self::SUPPORT_SYSTEM_PAY => Yii::t('cons', 'ROUTE_PAY'),
+            self::SUPPORT_SYSTEM_CMS => Yii::t('cons', 'ROUTE_CMS'),
+            self::SUPPORT_SYSTEM_BBS => Yii::t('cons', 'ROUTE_BBS'),
+            self::SUPPORT_SYSTEM_MALL => Yii::t('cons', 'ROUTE_MALL'),
+            self::SUPPORT_SYSTEM_WECHAT => Yii::t('cons', 'ROUTE_WECHAT'),
+            self::SUPPORT_SYSTEM_MINI => Yii::t('cons', 'ROUTE_MINI'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
 
     /**
      * {@inheritdoc}

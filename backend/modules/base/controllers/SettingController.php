@@ -62,6 +62,8 @@ class SettingController extends BaseController
     public function actionEditAll()
     {
         $settingTypes = SettingType::find()->where(['status' => SettingType::STATUS_ACTIVE])
+            ->andWhere('support_role & ' . Yii::$app->authSystem->getRoleCode() . ' = ' . Yii::$app->authSystem->getRoleCode())
+            ->andWhere(['or', ['support_system' => SettingType::SUPPORT_SYSTEM_SITE], ['support_system' => Yii::$app->storeSystem->getRouteCode()]])
             ->with(['setting' => function ($query) {
                 $query->andWhere(['store_id' => $this->getStoreId()]);
             }])
