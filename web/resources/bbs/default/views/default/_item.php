@@ -13,7 +13,7 @@ use yii\helpers\Url;
     </div>
 
     <div class="media-body small lh-125 border-gray">
-        <div class="media-heading topic-title"><?= $model->grade == ActiveModel::GRADE_EXCELLENT ? Html::tag('span', '精', ['class' => 'badge badge-pill badge-info']) : '' ?><?= Html::a($model->name, ['/bbs/topic/view', 'id' => $model->id]) ?><?= $model->status == ActiveModel::STATUS_INACTIVE ? ' ' . Html::tag('span', Yii::t('app', 'Unverified'), ['class' => 'btn-warning pl-1 pr-1']) . ' ' . Html::a(Yii::t('app', 'Pass'), ['/bbs/topic/pass', 'id' => $model->id], ['class' => 'btn btn-sm btn-success']) : '' ?> </div>
+        <div class="media-heading topic-title"><?= $model->grade == ActiveModel::GRADE_EXCELLENT ? Html::tag('span', '精', ['class' => 'badge badge-pill badge-info']) : '' ?><?= Html::a($model->name, ['/bbs/topic/view', 'id' => $model->id]) ?><?= $model->status == ActiveModel::STATUS_INACTIVE ? ' ' . Html::tag('span', Yii::t('app', 'Unverified'), ['class' => 'btn-warning pl-1 pr-1']) . ' ' . Html::a(Yii::t('app', 'Pass'), ['/bbs/topic/pass', 'id' => $model->id], ['class' => 'btn btn-sm btn-success']) . ' ' . Html::a(Yii::t('app', 'Delete'), ['/bbs/topic/delete', 'id' => $model->id], ['class' => 'btn btn-sm btn-success']) : '' ?> </div>
         <div class="topic-info">
             <a class="remove-padding-left" href="<?= Url::to(['/bbs/topic/view', 'id' => $model->id]) ?>"><span class="bi-hand-thumbs-up"> <?= $model->like ?> </span></a> •
             <a class="topic-node" href="<?= Url::to(['/bbs/default/index', 'id' => $model->node_id]) ?>"><?= $model->node->name ?></a> •
