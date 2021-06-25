@@ -32,6 +32,8 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
         <?= $form->field($model, 'value_range')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'value_default')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'supportRoles')->checkboxList(ActiveModel::getSupportRoleLabels()) ?>
+        <?= $form->field($model, 'support_system')->dropDownList(ActiveModel::getSupportSystemLabels()) ?>
         <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>

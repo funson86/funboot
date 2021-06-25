@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         'id',
                         'host_name',
+                        'code',
                         ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username; }, 'filter' => true],
                         'name',
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],

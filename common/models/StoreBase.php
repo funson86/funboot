@@ -53,10 +53,11 @@ class StoreBase extends BaseModel
     const SUPPORT_PAYMENT_BOTH = 3;
 
     const ROUTE_SITE = 'site';
-    const ROUTE_MALL = 'mall';
-    const ROUTE_CMS = 'cms';
     const ROUTE_PAY = 'pay';
+    const ROUTE_CMS = 'cms';
     const ROUTE_BBS = 'bbs';
+    const ROUTE_MALL = 'mall';
+    const ROUTE_WECHAT = 'wechat';
 
     public $expiredTime;
     public $types;
@@ -118,10 +119,11 @@ class StoreBase extends BaseModel
     {
         $data = [
             self::ROUTE_SITE => Yii::t('cons', 'ROUTE_SITE'),
-            self::ROUTE_MALL => Yii::t('cons', 'ROUTE_MALL'),
-            self::ROUTE_CMS => Yii::t('cons', 'ROUTE_CMS'),
             self::ROUTE_PAY => Yii::t('cons', 'ROUTE_PAY'),
+            self::ROUTE_CMS => Yii::t('cons', 'ROUTE_CMS'),
             self::ROUTE_BBS => Yii::t('cons', 'ROUTE_BBS'),
+            self::ROUTE_MALL => Yii::t('cons', 'ROUTE_MALL'),
+            self::ROUTE_WECHAT => Yii::t('cons', 'ROUTE_WECHAT'),
         ];
 
         $all && $data += [];

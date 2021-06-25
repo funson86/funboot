@@ -143,7 +143,8 @@ class StoreController extends BaseController
         if ($user) {
             $user->token = substr(IdHelper::snowFlakeId(), 0, 8);
             if ($user->save()) {
-                return $this->redirect(Yii::$app->params['httpProtocol'] . $model->host_name . '/backend/site/login-backend?token=' . $user->token);
+                $hostNames = explode('|', $model->host_name);
+                return $this->redirect(Yii::$app->params['httpProtocol'] . ($hostNames[0] ?? $model->host_name) . '/backend/site/login-backend?token=' . $user->token);
             }
         }
 

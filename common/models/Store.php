@@ -14,6 +14,7 @@ use common\models\User;
  * @property string $name 名称
  * @property string $brief 简介
  * @property string $host_name 域名
+ * @property string $code 代码
  * @property string $qrcode 二维码
  * @property string $route 子系统
  * @property int $expired_at 到期时间
@@ -53,7 +54,7 @@ class Store extends StoreBase
             [['parent_id', 'user_id', 'expired_at', 'language', 'lang_frontend', 'lang_backend', 'lang_api', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['remark'], 'string'],
-            [['name', 'brief', 'host_name', 'qrcode', 'route', 'lang_source', 'lang_frontend_default', 'lang_backend_default', 'lang_api_default'], 'string', 'max' => 255],
+            [['name', 'brief', 'host_name', 'code', 'qrcode', 'route', 'lang_source', 'lang_frontend_default', 'lang_backend_default', 'lang_api_default'], 'string', 'max' => 255],
         ]);
     }
 
@@ -70,6 +71,7 @@ class Store extends StoreBase
                 'name' => '名称',
                 'brief' => '简介',
                 'host_name' => '域名',
+                'code' => '代码',
                 'qrcode' => '二维码',
                 'route' => '子系统',
                 'expired_at' => '到期时间',
@@ -98,6 +100,7 @@ class Store extends StoreBase
                 'name' => Yii::t('app', 'Name'),
                 'brief' => Yii::t('app', 'Brief'),
                 'host_name' => Yii::t('app', 'Host Name'),
+                'code' => Yii::t('app', 'Code'),
                 'qrcode' => Yii::t('app', 'Qrcode'),
                 'route' => Yii::t('app', 'Route'),
                 'expired_at' => Yii::t('app', 'Expired At'),

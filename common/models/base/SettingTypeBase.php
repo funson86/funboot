@@ -13,6 +13,8 @@ use Yii;
  */
 class SettingTypeBase extends BaseModel
 {
+    public $supportRoles = [];
+
     const TYPE_TEXT = 'text';
     const TYPE_TEXTAREA = 'textarea';
     const TYPE_DATE = 'date';
@@ -152,6 +154,9 @@ class SettingTypeBase extends BaseModel
             'type' => Yii::t('app', 'Type'),
             'value_range' => Yii::t('app', 'Value Range'),
             'value_default' => Yii::t('app', 'Value Default'),
+            'support_role' => Yii::t('app', 'Support Role'),
+            'supportRoles' => Yii::t('app', 'Support Role'),
+            'support_system' => Yii::t('app', 'Support System'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),

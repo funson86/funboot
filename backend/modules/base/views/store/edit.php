@@ -29,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-12">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'host_name')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'host_name')->textInput(['maxlength' => true])->hiddenInput(Yii::t('app', '| split multiple site')) ?>
+                    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'expired_at')->widget(kartik\date\DatePicker::class, [
                         'language' => 'zh-CN',
                         'layout'=>'{picker}{input}',
