@@ -8,7 +8,7 @@ namespace common\components\assets;
  * @package common\widgets\echarts
  * @author funson86 <funson86@gmail.com>
  */
-class FuncyboxAsset extends \yii\web\AssetBundle
+class FuncyBoxAsset extends \yii\web\AssetBundle
 {
     public $css = [
         'https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css',
