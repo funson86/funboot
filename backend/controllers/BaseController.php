@@ -514,13 +514,14 @@ class BaseController extends \common\components\controller\BaseController
     protected function beforeLang($id, $model)
     {
         $mapLangContent = [];
-        $langItems = Lang::find()
-            ->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode()])
-            ->andFilterWhere(['target_id' => $id])
-            ->orderBy(['name' => SORT_ASC])
-            ->all();
-        foreach ($langItems as $langItem) {
-            $mapLangContent[$langItem->name . '|' . $langItem->target] = $langItem->content;
+        if ($id) {
+            $langItems = Lang::find()
+                ->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode(), 'target_id' => $id])
+                ->orderBy(['name' => SORT_ASC])
+                ->all();
+            foreach ($langItems as $langItem) {
+                $mapLangContent[$langItem->name . '|' . $langItem->target] = $langItem->content;
+            }
         }
 
         $lang = [];
