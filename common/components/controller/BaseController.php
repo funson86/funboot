@@ -48,10 +48,6 @@ class BaseController extends Controller
 
     public function beforeAction($action)
     {
-        if (!parent::beforeAction($action)) {
-            return false;
-        }
-
         // 优先级从先到后：指定store_code, store_id，用户store_id，host_name，其中指定store_id放到session中，后续其他url无需再指定store_id也能匹配
         if (Yii::$app->request->get('store_code')) {
             $model = CommonHelper::getStoreByCode(Yii::$app->request->get('store_code'));
@@ -82,6 +78,15 @@ class BaseController extends Controller
         // 设置语言
         Yii::$app->language = CommonHelper::getLanguage($model);
 
+        // frontend 需要设置在AccessControl前设置loginUrl，所以要在parent::beforeAction之前
+        if (Yii::$app->defaultRoute != 'site') {
+            // 设置bbs登录地址
+            Yii::$app->user->loginUrl = ['/' . $this->store->route. '/default/login'];
+        }
+
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
         return true;
     }
 

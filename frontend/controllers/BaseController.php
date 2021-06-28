@@ -37,10 +37,6 @@ class BaseController extends \common\components\controller\BaseController
         strlen($store->lang_frontend_default) > 0 && !Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id) && Yii::$app->language = $store->lang_frontend_default;
 
         if (Yii::$app->defaultRoute != 'site') {
-
-            // 设置bbs登录地址
-            Yii::$app->user->loginUrl = ['/' . $store->route. '/default/login'];
-
             $this->theme = $store->settings[$store->route . '_theme'] ?? $store->settings['website_theme'] ?: 'default';
             $this->module->setViewPath('@webroot/resources/' . $store->route . '/' . $this->theme . '/views');
             $this->layout = 'main';
