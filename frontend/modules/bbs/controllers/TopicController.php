@@ -52,7 +52,7 @@ class TopicController extends BaseController
     public function actionView($id)
     {
         $model = Topic::find()->where(['store_id' => $this->getStoreId(), 'id' => $id])->one();
-        if (!$model || (!$this->isManager() && $model->status == Topic::STATUS_ACTIVE)) {
+        if (!$model || (!$this->isManager() && $model->status != Topic::STATUS_ACTIVE)) {
             return $this->goBack();
         }
 
