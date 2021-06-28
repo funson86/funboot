@@ -28,6 +28,12 @@ class SettingController extends BaseController
     public $modelClass = Setting::class;
 
     /**
+     * 是否启用高并发
+     * @var bool
+     */
+    protected $highConcurrency = true;
+
+    /**
       * 模糊查询字段
       * @var string[]
       */
