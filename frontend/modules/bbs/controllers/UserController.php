@@ -49,7 +49,7 @@ class UserController extends BaseController
     public function actionView($id)
     {
         $model = $this->findModel($id, true);
-        if (!$model) {
+        if (!$model || $model->status != $this->modelClass::STATUS_ACTIVE) {
             return $this->goBack();
         }
 
@@ -137,5 +137,26 @@ class UserController extends BaseController
         return $this->render($this->action->id, [
             'model' => $model,
         ]);
+    }
+
+    public function actionBlackList()
+    {
+        $id = Yii::$app->request->get('id');
+        if (!$this->isManager() || !$id) {
+            return $this->goBack();
+        }
+
+        $model = $this->findModel($id, true);
+        if (!$model) {
+            return $this->goBack();
+        }
+
+        $model->status = $this->modelClass::STATUS_INACTIVE;
+        if (!$model->save()) {
+            Yii::$app->logSystem->db($model->errors);
+            return $this->redirectError();
+        }
+
+        return $this->redirectSuccess();
     }
 }

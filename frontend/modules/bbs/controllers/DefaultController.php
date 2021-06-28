@@ -47,7 +47,7 @@ class DefaultController extends BaseController
         // 管理员级别才能查看所有数据，其他只能查看本store数据
         $params = Yii::$app->request->queryParams;
         $params['ModelSearch']['store_id'] = $this->getStoreId();
-        if (!$this->isAdmin()) {
+        if (!$this->isManager()) {
             $params['ModelSearch']['status'] = Topic::STATUS_ACTIVE;
         } else {
             $params['ModelSearch']['status'] = [Topic::STATUS_ACTIVE, Topic::STATUS_INACTIVE];

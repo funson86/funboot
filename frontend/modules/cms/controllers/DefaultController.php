@@ -76,9 +76,10 @@ class DefaultController extends BaseController
         $this->isMobile = CommonHelper::isMobile();
 
         //menu
-        $this->allCatalog = Catalog::find()->where([
-            'store_id' => $store->id,
-        ])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
+        $this->allCatalog = Catalog::find()
+            ->where(['store_id' => $store->id,])
+            ->andWhere('code <> "default"')
+            ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
 
         foreach ($this->allCatalog as $item) {
             $this->mapAllCatalog[$item['id']] = $item;

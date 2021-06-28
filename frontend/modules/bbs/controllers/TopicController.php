@@ -52,7 +52,7 @@ class TopicController extends BaseController
     public function actionView($id)
     {
         $model = Topic::find()->where(['store_id' => $this->getStoreId(), 'id' => $id])->one();
-        if (!$model || (!$this->isAdmin() && $model->status == Topic::STATUS_ACTIVE)) {
+        if (!$model || (!$this->isManager() && $model->status == Topic::STATUS_ACTIVE)) {
             return $this->goBack();
         }
 
@@ -90,7 +90,7 @@ class TopicController extends BaseController
                 $model->username = $model->last_comment_username = Yii::$app->user->identity->name ?: StringHelper::secretEmail(Yii::$app->user->identity->email);
                 $model->user_avatar = Yii::$app->user->identity->avatar;
                 $model->created_at = $model->updated_at = $model->last_comment_updated_at = time();
-                $model->isNewRecord && $model->status = $this->isAdmin() ? $this->modelClass::STATUS_ACTIVE : $this->modelClass::STATUS_INACTIVE;
+                $model->isNewRecord && $model->status = $this->isManager() ? $this->modelClass::STATUS_ACTIVE : $this->modelClass::STATUS_INACTIVE;
 
                 $model->content = CurlHelper::conductImage($model->content);
                 if (!$model->save()) {
@@ -173,7 +173,7 @@ class TopicController extends BaseController
             return $this->goBack();
         }
 
-        if (!($this->isAdmin() || $model->isOwer())) {
+        if (!($this->isManager() || $model->isOwer())) {
             return $this->goBack();
         }
 
@@ -187,7 +187,7 @@ class TopicController extends BaseController
 
     public function actionExcellent($id)
     {
-        if (!$this->isAdmin() || !$model = $this->findModel($id, true)) {
+        if (!$this->isManager() || !$model = $this->findModel($id, true)) {
             return $this->goBack();
         }
 
@@ -202,7 +202,7 @@ class TopicController extends BaseController
 
     public function actionTop($id)
     {
-        if (!$this->isAdmin() || !$model = $this->findModel($id, true)) {
+        if (!$this->isManager() || !$model = $this->findModel($id, true)) {
             return $this->goBack();
         }
 
@@ -217,7 +217,7 @@ class TopicController extends BaseController
 
     public function actionPass($id)
     {
-        if (!$this->isAdmin() || !$model = $this->findModel($id, true)) {
+        if (!$this->isManager() || !$model = $this->findModel($id, true)) {
             return $this->goBack();
         }
 

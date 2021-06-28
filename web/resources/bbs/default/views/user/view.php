@@ -22,7 +22,8 @@ $this->title = Html::encode($model->username);
                     <div class="media-body ml-3">
                         <h6 class="mt5"><?= Html::tag('strong', Html::encode($model->username)) ?></h6>
                         <div class="pull-left">
-                            <span class="badge badge-success"><?= $model->isBbsAdmin() ?  Yii::t('app', 'Admin') : Yii::t('app', 'Member') ?></span>
+                            <span class="badge badge-success"><?= $model->isBbsManager() ?  Yii::t('app', 'Manager') : Yii::t('app', 'Member') ?></span>
+                            <?= $this->context->isManager() ? Html::a(Yii::t('app', 'Black List'), ['/bbs/user/black-list', 'id' => $model->id], ['class' => 'btn btn-sm btn-danger']) : '' ?>
                         </div>
                     </div>
                 </div>

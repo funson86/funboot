@@ -15,8 +15,12 @@ $changeFormat = (Yii::$app->request->get('format', ActiveModel::FORMAT_HTML) == 
             <div class="card-header">
                 <h2 class="card-title"><?= $this->title ?></h2>
                 <div class="card-tools">
-                    <?= Html::a(Yii::t('app', 'Choose Node'), ['/bbs/topic/edit-node'], ['class' => 'btn btn-sm btn-success']) ?>
-                    <?= Html::a(ActiveModel::getFormatLabels($changeFormat), ['/bbs/topic/edit', 'node_id' => Yii::$app->request->get('node_id'), 'format' => $changeFormat], ['class' => 'btn btn-sm btn-info']) ?>
+                    <?= Html::a(Yii::t('app', 'Choose Node'), ['/bbs/topic/edit-node'], ['class' => 'btn btn-sm btn-success mr-2']) ?>
+                    <?php
+                        foreach (ActiveModel::getFormatLabels() as $code => $label) {
+                            echo Html::a($label, ['/bbs/topic/edit', 'id' => Yii::$app->request->get('id'), 'node_id' => Yii::$app->request->get('node_id'), 'format' => $code], ['class' => 'btn btn-sm btn-info mr-2']);
+                        }
+                    ?>
                 </div>
             </div>
             <div class="card-body">
@@ -26,6 +30,9 @@ $changeFormat = (Yii::$app->request->get('format', ActiveModel::FORMAT_HTML) == 
                     ],
                 ]); ?>
                 <div class="col-sm-12">
+                    <?php if (Yii::$app->request->get('id')) { ?>
+                        <?= $form->field($model, 'node_id')->dropDownList(Node::getTreeIdLabel(0, false)) ?>
+                    <?php } ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'tag_id')->dropdownList(\common\models\bbs\Tag::getIdLabel(true))->label(Yii::t('app', 'Cities')) ?>
                     <?php foreach ($metas as $meta) { ?>
@@ -41,6 +48,7 @@ $changeFormat = (Yii::$app->request->get('format', ActiveModel::FORMAT_HTML) == 
                     <?php } else { ?>
                     <?= $form->field($model, 'content', ['options' => ['style' => 'display: block'], 'labelOptions' => ['class' => 'control-label control-label-full']])->widget(\common\components\ueditor\Ueditor::class, ['style' => 2]) ?>
                     <?php } ?>
+                    <?= $this->context->isManager() ? $form->field($model, 'status', ['options' => ['style' => 'display: block'], 'labelOptions' => ['class' => 'control-label control-label-full']])->radioList(ActiveModel::getStatusLabels()) : '' ?>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12 p-0 text-center">

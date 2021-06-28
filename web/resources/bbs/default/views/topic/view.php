@@ -117,7 +117,7 @@ $comment->topic_id = $model->id;
                 }
                 echo $follow, $favorite;
 
-                if ($this->context->isAdmin()) {
+                if ($this->context->isManager()) {
                     echo Html::a(
                         Html::tag('i', '', ['class' => 'bi-trophy']) . ' ' . ($model->grade == ActiveModel::GRADE_EXCELLENT ? '取消' : '') . '加精',
                         ['/bbs/topic/excellent', 'id' => $model->id, 'cancel' => $model->grade == ActiveModel::GRADE_EXCELLENT ? 1 : 0],
@@ -130,7 +130,7 @@ $comment->topic_id = $model->id;
                     );
                 }
 
-                if ($model->isOwner() || $this->context->isAdmin()) {
+                if ($model->isOwner() || $this->context->isManager()) {
                     echo '<span class="float-right">';
                     if ($model->status != ActiveModel::STATUS_ACTIVE) {
                         echo Html::a(

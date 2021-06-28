@@ -92,7 +92,7 @@ class CommentController extends BaseController
     public function actionDelete($id)
     {
         $model = Comment::findOne($id);
-        if (!$model || $model->store_id != $this->getStoreId() || !($model->isOwner() || $this->isAdmin())) {
+        if (!$model || $model->store_id != $this->getStoreId() || !($model->isOwner() || $this->isManager())) {
             return $this->goBack();
         }
 
