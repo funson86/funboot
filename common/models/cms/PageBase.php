@@ -23,6 +23,10 @@ class PageBase extends BaseModel
         'content' => 'Ueditor',
     ];
 
+    const FORMAT_HTML = 1;
+    const FORMAT_MARKDOWN = 2;
+    const FORMAT_TEXTAREA = 4;
+
     /**
      * @return array|array[]
      */
@@ -37,6 +41,22 @@ class PageBase extends BaseModel
 
     /** add function getXxxLabels here, detail in BaseModel **/
 
+    public static function getFormatLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::FORMAT_HTML => Yii::t('cons', 'FORMAT_HTML'),
+            self::FORMAT_MARKDOWN => Yii::t('cons', 'FORMAT_MARKDOWN'),
+            self::FORMAT_TEXTAREA => Yii::t('cons', 'FORMAT_TEXTAREA'),
+        ];
+
+        $all && $data += [
+        ];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -47,6 +67,7 @@ class PageBase extends BaseModel
             'store_id' => Yii::t('app', 'Store ID'),
             'catalog_id' => Yii::t('app', 'Catalog ID'),
             'name' => Yii::t('app', 'Name'),
+            'code' => Yii::t('app', 'Code'),
             'banner' => Yii::t('app', 'Banner'),
             'banner_h5' => Yii::t('app', 'Banner H5'),
             'thumb' => Yii::t('app', 'Thumb'),
@@ -58,6 +79,8 @@ class PageBase extends BaseModel
             'content' => Yii::t('app', 'Content'),
             'price' => Yii::t('app', 'Price'),
             'redirect_url' => Yii::t('app', 'Redirect Url'),
+            'kind' => Yii::t('app', 'Kind'),
+            'format' => Yii::t('app', 'Format'),
             'template' => Yii::t('app', 'Template'),
             'click' => Yii::t('app', 'Click'),
             'para1' => Yii::t('app', 'Para1'),

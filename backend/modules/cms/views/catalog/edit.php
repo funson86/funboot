@@ -46,8 +46,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="tab-pane fade active show" id="tab-content-1">
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'is_nav')->radioList(YesNo::getLabels()) ?>
-                        <?= $form->field($model, 'redirect_url')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
+                        <?= $form->field($model, 'redirect_url')->textInput(['maxlength' => true])->hint(Yii::t('app', 'Valid while type is {type}', ['type' => Yii::t('cons', 'TYPE_LINK')])) ?>
+                        <?= $form->field($model, 'kind')->dropDownList(ActiveModel::getKindLabels()) ?>
                         <?= $form->field($model, 'template')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'template_page')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'sort')->textInput() ?>
@@ -81,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ]
                         ]); ?>
-                        <?= $form->field($model, 'content', ['labelOptions' => ['class' => 'control-label control-label-full']])->widget(\common\components\ueditor\Ueditor::class, []) ?>
+                        <?= $form->field($model, 'content', ['options' => ['style' => 'display: block'], 'labelOptions' => ['class' => 'control-label control-label-full']])->widget(\common\components\ueditor\Ueditor::class, []) ?>
                     </div>
 
                     <?php if ($this->context->isMultiLang) { ?>

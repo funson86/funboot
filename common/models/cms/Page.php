@@ -13,17 +13,20 @@ use common\models\Store;
  * @property int $store_id 商家
  * @property int $catalog_id 栏目
  * @property string $name 标题
+ * @property string $code 代码
  * @property string|null $banner 封面图
  * @property string|null $banner_h5 手机封面图
- * @property string|null $thumb 缩略图
+ * @property string $thumb 缩略图
  * @property string|null $images 图片集
  * @property string $seo_title 搜索优化标题
- * @property string $seo_keywords 搜索关键词
- * @property string|null $seo_description 搜索描述
- * @property string|null $brief 简介
+ * @property string $seo_keywords 关键词
+ * @property string|null $seo_description 描述
+ * @property string|null $brief 简述
  * @property string|null $content 内容
  * @property float $price 价格
  * @property string $redirect_url 跳转链接
+ * @property int $kind 种类
+ * @property int $format 格式
  * @property string $template 模板
  * @property int $click 浏览量
  * @property string $para1 页面参数1
@@ -60,12 +63,12 @@ class Page extends PageBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'catalog_id', 'click', 'para7', 'para8', 'para9', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'catalog_id', 'kind', 'format', 'click', 'para7', 'para8', 'para9', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['banner', 'banner_h5', 'thumb', 'images'], 'safe'],
+            [['banner', 'banner_h5', 'images'], 'safe'],
             [['seo_description', 'brief', 'content'], 'string'],
             [['price', 'para10'], 'number'],
-            [['name', 'seo_title', 'seo_keywords', 'redirect_url', 'template', 'para1', 'para2', 'para3', 'para4', 'para5', 'para6', 'type'], 'string', 'max' => 255],
+            [['name', 'code', 'thumb', 'seo_title', 'seo_keywords', 'redirect_url', 'template', 'para1', 'para2', 'para3', 'para4', 'para5', 'para6', 'type'], 'string', 'max' => 255],
         ]);
     }
 
@@ -80,17 +83,20 @@ class Page extends PageBase
                 'store_id' => '商家',
                 'catalog_id' => '栏目',
                 'name' => '标题',
+                'code' => '代码',
                 'banner' => '封面图',
                 'banner_h5' => '手机封面图',
                 'thumb' => '缩略图',
                 'images' => '图片集',
                 'seo_title' => '搜索优化标题',
-                'seo_keywords' => '搜索关键词',
-                'seo_description' => '搜索描述',
-                'brief' => '简介',
+                'seo_keywords' => '关键词',
+                'seo_description' => '描述',
+                'brief' => '简述',
                 'content' => '内容',
                 'price' => '价格',
                 'redirect_url' => '跳转链接',
+                'kind' => '种类',
+                'format' => '格式',
                 'template' => '模板',
                 'click' => '浏览量',
                 'para1' => '页面参数1',
@@ -117,6 +123,7 @@ class Page extends PageBase
                 'store_id' => Yii::t('app', 'Store ID'),
                 'catalog_id' => Yii::t('app', 'Catalog ID'),
                 'name' => Yii::t('app', 'Name'),
+                'code' => Yii::t('app', 'Code'),
                 'banner' => Yii::t('app', 'Banner'),
                 'banner_h5' => Yii::t('app', 'Banner H5'),
                 'thumb' => Yii::t('app', 'Thumb'),
@@ -128,6 +135,8 @@ class Page extends PageBase
                 'content' => Yii::t('app', 'Content'),
                 'price' => Yii::t('app', 'Price'),
                 'redirect_url' => Yii::t('app', 'Redirect Url'),
+                'kind' => Yii::t('app', 'Kind'),
+                'format' => Yii::t('app', 'Format'),
                 'template' => Yii::t('app', 'Template'),
                 'click' => Yii::t('app', 'Click'),
                 'para1' => Yii::t('app', 'Para1'),

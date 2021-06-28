@@ -24,6 +24,10 @@ class CatalogBase extends BaseModel
         'content' => 'Ueditor',
     ];
 
+    const KIND_NEWS = 1;
+    const KIND_PRODUCT = 2;
+    const KIND_GALLERY = 4;
+
     const TYPE_LIST = 'list';
     const TYPE_MENU = 'menu';
     const TYPE_LINK = 'link';
@@ -37,6 +41,28 @@ class CatalogBase extends BaseModel
             [['id'], 'safe'],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
+    }
+
+    /**
+     * return label or labels array
+     *
+     * @param null $id
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getKindLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::KIND_NEWS => Yii::t('cons', 'KIND_NEWS'),
+            self::KIND_PRODUCT => Yii::t('cons', 'KIND_PRODUCT'),
+            self::KIND_GALLERY => Yii::t('cons', 'KIND_GALLERY'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -71,15 +97,18 @@ class CatalogBase extends BaseModel
             'store_id' => Yii::t('app', 'Store ID'),
             'parent_id' => Yii::t('app', 'Parent ID'),
             'name' => Yii::t('app', 'Name'),
+            'code' => Yii::t('app', 'Code'),
             'is_nav' => Yii::t('app', 'Is Nav'),
             'banner' => Yii::t('app', 'Banner'),
             'banner_h5' => Yii::t('app', 'Banner H5'),
             'seo_title' => Yii::t('app', 'Seo Title'),
             'seo_keywords' => Yii::t('app', 'Seo Keywords'),
             'seo_description' => Yii::t('app', 'Seo Description'),
+            'brief' => Yii::t('app', 'Brief'),
             'content' => Yii::t('app', 'Content'),
             'redirect_url' => Yii::t('app', 'Redirect Url'),
             'page_size' => Yii::t('app', 'Page Size'),
+            'kind' => Yii::t('app', 'Kind'),
             'template' => Yii::t('app', 'Template'),
             'template_page' => Yii::t('app', 'Template Page'),
             'type' => Yii::t('app', 'Type'),

@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\cms\Page as ActiveModel;
 use common\models\base\Lang;
+use common\helpers\Url;
+use common\models\cms\Catalog;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\cms\Page */
@@ -13,11 +15,13 @@ use common\models\base\Lang;
 $this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Page');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$format = Yii::$app->request->get('format');
 ?>
 
 <?php $form = ActiveForm::begin([
     'fieldConfig' => [
-        'template' => "<div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
+        // 'template' => "<div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
         'options' => ['class' => 'form-group row'],
     ],
 ]); ?>
@@ -42,18 +46,44 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body">
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="tab-content-1">
-                        <?= $form->field($model, 'catalog_id')->dropDownList(\common\models\cms\Catalog::getTreeIdLabel(0, false)) ?>
+                        <div class="row">
+                            <?= !Yii::$app->request->get('id') ? Html::a(Yii::t('app', 'Choose Catalog'), ['edit-catalog'], ['class' => 'btn btn-sm btn-success mr-2']) : '' ?>
+                            <?php
+                                foreach (ActiveModel::getFormatLabels() as $code => $label) {
+                                    echo Html::a($label, ['edit', 'id' => Yii::$app->request->get('id'), 'catalog_id' => Yii::$app->request->get('catalog_id'), 'format' => $code], ['class' => 'btn btn-sm btn-info mr-2']);
+                                }
+                            ?>
+                        </div>
+                        <?php if (Yii::$app->request->get('id')) { ?>
+                        <?= $form->field($model, 'catalog_id')->dropDownList(Catalog::getTreeIdLabel(0, false)) ?>
+                        <?php } ?>
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'brief')->textarea() ?>
-                        <?= $form->field($model, 'content')->widget(\common\components\ueditor\Ueditor::class, []) ?>
+
+                        <?php if ($format == ActiveModel::FORMAT_TEXTAREA || (!$format && $model->catalog->code == 'default') || $model->format == ActiveModel::FORMAT_TEXTAREA) { ?>
+                        <?= $form->field($model, 'content')->textarea(['rows' => 12]) ?>
+                        <?php } elseif ($format == ActiveModel::FORMAT_MARKDOWN || $model->format == ActiveModel::FORMAT_MARKDOWN) { ?>
+                        <?= $form->field($model, 'content')->widget(\common\widgets\markdown\Markdown::class, []) ?>
+                        <?php } else { ?>
+                        <?= $form->field($model, 'content', ['options' => ['style' => 'display: block'], 'labelOptions' => ['class' => 'control-label control-label-full']])->widget(\common\components\ueditor\Ueditor::class, []) ?>
+                        <?php } ?>
+
+                        <?php if ($model->catalog->code != 'default') { ?>
                         <?= $form->field($model, 'redirect_url')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'template')->textInput(['maxlength' => true]) ?>
                         <!--<?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>-->
+                        <?php if ($model->catalog->kind == Catalog::KIND_PRODUCT) { ?>
+                        <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+                        <?php } ?>
+                        <?php if ($model->catalog->kind == Catalog::KIND_NEWS) { ?>
                         <?= $form->field($model, 'click')->textInput() ?>
+                        <?php } ?>
                         <?= $form->field($model, 'sort')->textInput() ?>
                         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
+                        <?php } ?>
                     </div>
                     <div class="tab-pane fade" id="tab-content-2">
+                        <?php if ($model->catalog->code != 'default') { ?>
                         <?= $form->field($model, 'seo_title')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'seo_description')->textarea() ?>
@@ -81,6 +111,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ]
                         ]); ?>
+                        <?php } ?>
+                        <?= $form->field($model, 'thumb')->widget(\common\components\uploader\FileWidget::class, [
+                            'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
+                            'theme' => 'default',
+                            'themeConfig' => [],
+                            'config' => [
+                                // 可设置自己的上传地址, 不设置则默认地址
+                                // 'server' => '',
+                                'pick' => [
+                                    'multiple' => false,
+                                ],
+                            ]
+                        ]); ?>
+                        <?php if ($model->catalog->code != 'default') { ?>
                         <?= $form->field($model, 'images')->widget(\common\components\uploader\FileWidget::class, [
                             'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
                             'theme' => 'default',
@@ -93,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ]
                         ]); ?>
-                        <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+                        <?php } ?>
                         <?= $form->field($model, 'para1')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'para2')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'para3')->textInput(['maxlength' => true]) ?>

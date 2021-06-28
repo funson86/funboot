@@ -56,4 +56,27 @@ class PageController extends BaseController
         'type' => 'select',
     ];
 
+    protected function beforeEdit($id = null, $model = null)
+    {
+        !$model->catalog_id && $model->catalog_id = Yii::$app->request->get('catalog_id', 0);
+    }
+
+    public function actionEditCatalog()
+    {
+        $id = Yii::$app->request->get('id', null);
+
+        $model = $this->findModel($id);
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->catalog_id > 0) {
+                    return $this->redirect(['edit', 'catalog_id' => $model->catalog_id]);
+                }
+            }
+        }
+
+        return $this->render($this->action->id, [
+            'model' => $model,
+        ]);
+
+    }
 }

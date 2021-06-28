@@ -15,7 +15,7 @@ use common\models\Store;
  * @property string $name 名称
  * @property string $brief 简介
  * @property int $is_nav 导航栏显示
- * @property string $banner 封面图
+ * @property string $banner 横幅图
  * @property string $seo_title 搜索优化标题
  * @property string $seo_keywords 搜索关键词
  * @property string|null $seo_description 搜索描述
@@ -64,7 +64,7 @@ class Category extends CategoryBase
                 'name' => '名称',
                 'brief' => '简介',
                 'is_nav' => '导航栏显示',
-                'banner' => '封面图',
+                'banner' => '横幅图',
                 'seo_title' => '搜索优化标题',
                 'seo_keywords' => '搜索关键词',
                 'seo_description' => '搜索描述',
