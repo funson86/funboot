@@ -62,7 +62,7 @@ class PageBase extends BaseModel
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(), [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'catalog_id' => Yii::t('app', 'Catalog ID'),
@@ -83,16 +83,16 @@ class PageBase extends BaseModel
             'format' => Yii::t('app', 'Format'),
             'template' => Yii::t('app', 'Template'),
             'click' => Yii::t('app', 'Click'),
-            'para1' => Yii::t('app', 'Para1'),
-            'para2' => Yii::t('app', 'Para2'),
-            'para3' => Yii::t('app', 'Para3'),
-            'para4' => Yii::t('app', 'Para4'),
-            'para5' => Yii::t('app', 'Para5'),
-            'para6' => Yii::t('app', 'Para6'),
-            'para7' => Yii::t('app', 'Para7'),
-            'para8' => Yii::t('app', 'Para8'),
-            'para9' => Yii::t('app', 'Para9'),
-            'para10' => Yii::t('app', 'Para10'),
+            'param1' => Yii::t('app', 'Param1'),
+            'param2' => Yii::t('app', 'Param2'),
+            'param3' => Yii::t('app', 'Param3'),
+            'param4' => Yii::t('app', 'Param4'),
+            'param5' => Yii::t('app', 'Param5'),
+            'param6' => Yii::t('app', 'Param6'),
+            'param7' => Yii::t('app', 'Param7'),
+            'param8' => Yii::t('app', 'Param8'),
+            'param9' => Yii::t('app', 'Param9'),
+            'param10' => Yii::t('app', 'Param10'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
@@ -100,7 +100,7 @@ class PageBase extends BaseModel
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
-        ];
+        ]);
     }
 
     /**

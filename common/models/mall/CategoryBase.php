@@ -32,7 +32,7 @@ class CategoryBase extends BaseModel
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(), [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'parent_id' => Yii::t('app', 'Parent ID'),
@@ -51,7 +51,7 @@ class CategoryBase extends BaseModel
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
-        ];
+        ]);
     }
 
     /**

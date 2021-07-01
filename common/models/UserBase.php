@@ -87,7 +87,7 @@ class UserBase extends BaseModel implements IdentityInterface
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(), [
             'roles' => Yii::t('app', 'Role'),
             'password' => Yii::t('app', 'Password'),
             'id' => Yii::t('app', 'ID'),
@@ -129,7 +129,7 @@ class UserBase extends BaseModel implements IdentityInterface
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
-        ];
+        ]);
     }
 
     /**

@@ -55,7 +55,7 @@ class RawBase extends BaseModel
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(), [
             'id' => 'ID',
             'store_id' => 'Store ID',
             'node_id' => 'Node ID',
@@ -71,7 +71,7 @@ class RawBase extends BaseModel
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
-        ];
+        ]);
     }
 
 }

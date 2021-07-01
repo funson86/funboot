@@ -29,16 +29,16 @@ use common\models\Store;
  * @property int $format 格式
  * @property string $template 模板
  * @property int $click 浏览量
- * @property string $para1 页面参数1
- * @property string $para2 页面参数2
- * @property string $para3 页面参数3
- * @property string $para4 页面参数4
- * @property string $para5 页面参数5
- * @property string $para6 页面参数6
- * @property int $para7 页面参数7
- * @property int $para8 页面参数8
- * @property int $para9 页面参数9
- * @property float $para10 页面参数10
+ * @property string $param1 页面参数1
+ * @property string $param2 页面参数2
+ * @property string $param3 页面参数3
+ * @property string $param4 页面参数4
+ * @property string $param5 页面参数5
+ * @property string $param6 页面参数6
+ * @property int $param7 页面参数7
+ * @property int $param8 页面参数8
+ * @property int $param9 页面参数9
+ * @property float $param10 页面参数10
  * @property string $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -63,12 +63,12 @@ class Page extends PageBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'catalog_id', 'kind', 'format', 'click', 'para7', 'para8', 'para9', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'catalog_id', 'kind', 'format', 'click', 'param7', 'param8', 'param9', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['banner', 'banner_h5', 'images'], 'safe'],
             [['seo_description', 'brief', 'content'], 'string'],
-            [['price', 'para10'], 'number'],
-            [['name', 'code', 'thumb', 'seo_title', 'seo_keywords', 'redirect_url', 'template', 'para1', 'para2', 'para3', 'para4', 'para5', 'para6', 'type'], 'string', 'max' => 255],
+            [['price', 'param10'], 'number'],
+            [['name', 'code', 'thumb', 'seo_title', 'seo_keywords', 'redirect_url', 'template', 'param1', 'param2', 'param3', 'param4', 'param5', 'param6', 'type'], 'string', 'max' => 255],
         ]);
     }
 
@@ -99,16 +99,16 @@ class Page extends PageBase
                 'format' => '格式',
                 'template' => '模板',
                 'click' => '浏览量',
-                'para1' => '页面参数1',
-                'para2' => '页面参数2',
-                'para3' => '页面参数3',
-                'para4' => '页面参数4',
-                'para5' => '页面参数5',
-                'para6' => '页面参数6',
-                'para7' => '页面参数7',
-                'para8' => '页面参数8',
-                'para9' => '页面参数9',
-                'para10' => '页面参数10',
+                'param1' => '页面参数1',
+                'param2' => '页面参数2',
+                'param3' => '页面参数3',
+                'param4' => '页面参数4',
+                'param5' => '页面参数5',
+                'param6' => '页面参数6',
+                'param7' => '页面参数7',
+                'param8' => '页面参数8',
+                'param9' => '页面参数9',
+                'param10' => '页面参数10',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -139,16 +139,16 @@ class Page extends PageBase
                 'format' => Yii::t('app', 'Format'),
                 'template' => Yii::t('app', 'Template'),
                 'click' => Yii::t('app', 'Click'),
-                'para1' => Yii::t('app', 'Para1'),
-                'para2' => Yii::t('app', 'Para2'),
-                'para3' => Yii::t('app', 'Para3'),
-                'para4' => Yii::t('app', 'Para4'),
-                'para5' => Yii::t('app', 'Para5'),
-                'para6' => Yii::t('app', 'Para6'),
-                'para7' => Yii::t('app', 'Para7'),
-                'para8' => Yii::t('app', 'Para8'),
-                'para9' => Yii::t('app', 'Para9'),
-                'para10' => Yii::t('app', 'Para10'),
+                'param1' => Yii::t('app', 'Param1'),
+                'param2' => Yii::t('app', 'Param2'),
+                'param3' => Yii::t('app', 'Param3'),
+                'param4' => Yii::t('app', 'Param4'),
+                'param5' => Yii::t('app', 'Param5'),
+                'param6' => Yii::t('app', 'Param6'),
+                'param7' => Yii::t('app', 'Param7'),
+                'param8' => Yii::t('app', 'Param8'),
+                'param9' => Yii::t('app', 'Param9'),
+                'param10' => Yii::t('app', 'Param10'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

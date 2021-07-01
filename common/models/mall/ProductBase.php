@@ -63,7 +63,7 @@ class ProductBase extends BaseModel
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(), [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'category_id' => Yii::t('app', 'Category ID'),
@@ -102,7 +102,7 @@ class ProductBase extends BaseModel
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
             'isAttribute' => Yii::t('app', 'Is Multiple Attribute'),
-        ];
+        ]);
     }
 
     /**

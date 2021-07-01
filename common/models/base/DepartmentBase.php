@@ -39,7 +39,7 @@ class DepartmentBase extends BaseModel
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(), [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'parent_id' => Yii::t('app', 'Parent ID'),
@@ -58,7 +58,7 @@ class DepartmentBase extends BaseModel
             'updated_by' => Yii::t('app', 'Updated By'),
             'heads' => Yii::t('app', '负责人'),
             'viceHeads' => Yii::t('app', '副负责人'),
-        ];
+        ]);
     }
 
 }
