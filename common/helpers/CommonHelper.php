@@ -62,17 +62,30 @@ class CommonHelper
 
     public static function getLanguage($store)
     {
-        $lang = Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id);
-        if (!$lang) {
-            $lang = CommonHelper::parseBrowserLanguage();
+        // url指定lang字段
+        $lang = Yii::$app->request->get('lang');
+        if ($lang && self::checkLang($lang)) {
+            return $lang;
         }
 
-        /*$langInt = Lang::getLanguageCode($lang, true, true);
-        if (($langInt & $store->language) != $langInt) {
-            $lang = Yii::$app->params['defaultBackendLanguage'];
-        }*/
+        // 用户选择了语言
+        $lang = Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id);
+        if ($lang && self::checkLang($lang)) {
+            return $lang;
+        }
 
-        return $lang;
+        // store指定了语言
+        $field = 'lang_' . str_replace('app-', '', Yii::$app->id) . '_default';
+        if (isset($store->$field) && self::checkLang($store->$field)) {
+            return $lang;
+        }
+
+        return CommonHelper::parseBrowserLanguage();
+    }
+
+    public static function checkLang($lang)
+    {
+        return in_array($lang, Lang::getLanguageCode());
     }
     
     /**

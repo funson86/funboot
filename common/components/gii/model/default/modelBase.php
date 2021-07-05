@@ -49,11 +49,11 @@ class <?= $className ?>Base extends BaseModel
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(parent::attributeLabels(), [
 <?php foreach ($labels as $name => $label): ?>
             <?= "'$name' => " . $generator->generateString($label) . ",\n" ?>
 <?php endforeach; ?>
-        ];
+        ]);
     }
 
 }

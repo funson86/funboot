@@ -55,7 +55,7 @@ class BaseController extends Controller
         } elseif (Yii::$app->request->get('store_id')) {
             $model = CommonHelper::getStoreById(intval(Yii::$app->request->get('store_id')));
             Yii::$app->session->set('currentStore', $model);
-        } elseif (!is_null(Yii::$app->session->get('currentStore'))) {
+        } elseif (!is_null(Yii::$app->session->get('currentStore')) && Yii::$app->request->getUrl() != '/') {
             $model = Yii::$app->session->get('currentStore');
         } elseif (!Yii::$app->user->isGuest) {
             $model = CommonHelper::getStoreById(Yii::$app->user->identity->store_id);
@@ -64,10 +64,11 @@ class BaseController extends Controller
         if (!isset($model) || !$model) {
             $model = CommonHelper::getStoreByHostName();
             if (!$model) {
-                return  false;
+                return false;
             }
         }
         $this->store = $model;
+        Yii::$app->session->set('currentStore', $model);
 
         // 先赋值再去计算，然后再次对$model赋值
         $model->settings = Yii::$app->settingSystem->getSettings($model->id);
@@ -209,14 +210,15 @@ class BaseController extends Controller
      * 获取多语言
      * @param $tableCode
      * @param $targetId
-     * @param $name
+     * @param $field
+     * @param $default
      * @param $target
      * @param bool $force
      * @return bool
      */
-    public function getLang($tableCode, $targetId, $name, $target, $force = false)
+    public function getLang($tableCode, $targetId, $field, $default = null, $target = null, $force = false)
     {
-        return Yii::$app->cacheSystem->getLang($tableCode, $targetId, $name, $target, $force);
+        return Yii::$app->cacheSystem->getLang($tableCode, $targetId, $field, $default, $target, $force);
     }
 
     /**
@@ -410,7 +412,6 @@ class BaseController extends Controller
         return $errors ? $errors : Yii::t('app', 'Uncaught Error');
     }
 
-
     /**
      * @return array|mixed
      */
@@ -419,5 +420,18 @@ class BaseController extends Controller
         $lang = Yii::$app->request->get('lang', Yii::$app->request->post('lang', 'en'));
         Yii::$app->cacheSystem->setLanguage($lang, Yii::$app->user->id ?? 0, Yii::$app->session->id);
         return $this->success();
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function actionStuffRedirect()
+    {
+        $url = Yii::$app->request->get('url', null);
+        if (!$url) {
+            return $this->goBack();
+        }
+
+        return $this->redirect($url);
     }
 }

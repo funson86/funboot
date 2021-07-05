@@ -10,6 +10,7 @@ use common\helpers\OfficeHelper;
 use common\helpers\ResultHelper;
 use common\models\base\Lang;
 use common\models\base\Permission;
+use common\models\BaseModel;
 use common\models\ModelSearch;
 use common\services\base\UserPermission;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
@@ -543,11 +544,14 @@ class BaseController extends \common\components\controller\BaseController
     /**
      * 多语言
      * @param $id
-     * @param $model
-     * @return array
+     * @param BaseModel $model
+     * @return bool
      */
     protected function afterLang($id, $model)
     {
+        if (!$model->translating) {
+            return true;
+        }
         $post = Yii::$app->request->post();
         if (isset($post['Lang'])) {
             foreach ($post['Lang'] as $field => $item) {
@@ -566,12 +570,17 @@ class BaseController extends \common\components\controller\BaseController
                         $lang->target = $target;
                         $lang->target_id = $model->id;
                     }
-                    $lang->content = empty($content) ? ($this->isAutoTranslation ? $this->autoTranslate($lang->source, $lang->target, $model->$field) : '') : $content;
-                    $lang->save();
-                    Yii::$app->cacheSystem->refreshLang($this->modelClass::getTableCode(), $model->id);
+                    // 有填写内容，则按照内容  否则开启自动翻译且原值不为空的情况下去请求百度翻译
+                    $lang->content = $content ?: ($this->isAutoTranslation && $model->$field ? $this->autoTranslate($lang->source, $lang->target, $model->$field) : '');
+                    if (!$lang->save()) {
+                        Yii::$app->logSystem->db($lang->errors);
+                    }
                 }
             }
+            Yii::$app->cacheSystem->refreshLang($this->modelClass::getTableCode(), $model->id);
         }
+
+        return true;
     }
 
     protected function autoTranslate($source, $target, $str)

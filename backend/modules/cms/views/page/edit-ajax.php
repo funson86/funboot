@@ -72,16 +72,16 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'redirect_url')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'template')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'click')->textInput() ?>
-        <?= $form->field($model, 'para1')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'para2')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'para3')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'para4')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'para5')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'para6')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'para7')->textInput() ?>
-        <?= $form->field($model, 'para8')->textInput() ?>
-        <?= $form->field($model, 'para9')->textInput() ?>
-        <?= $form->field($model, 'para10')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'param1')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'param2')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'param3')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'param4')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'param5')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'param6')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'param7')->textInput() ?>
+        <?= $form->field($model, 'param8')->textInput() ?>
+        <?= $form->field($model, 'param9')->textInput() ?>
+        <?= $form->field($model, 'param10')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
         <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>

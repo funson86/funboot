@@ -87,6 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?php if ($this->context->isMultiLang) { ?>
                     <div class="tab-pane fade" id="tab-content-lang">
+                        <?= $form->field($model, 'translating')->radioList(YesNo::getLabels())->hint(Yii::t('app', 'Auto translating while selecting yes and field is empty'), ['class' => 'ml-3']) ?>
                         <div class="row">
                             <div class="col-2 col-sm-2">
                                 <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">

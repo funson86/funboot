@@ -37,9 +37,9 @@ $format = Yii::$app->request->get('format');
                         <a class="nav-link" id="tab-2" data-toggle="pill" href="#tab-content-2"><?= Yii::t('app', 'Advanced') ?></a>
                     </li>
                     <?php if ($this->context->isMultiLang) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" id="tab-3" data-toggle="pill" href="#tab-content-lang"><?= Yii::t('app', 'Multi Language') ?></a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-3" data-toggle="pill" href="#tab-content-lang"><?= Yii::t('app', 'Multi Language') ?></a>
+                    </li>
                     <?php } ?>
                 </ul>
             </div>
@@ -54,10 +54,17 @@ $format = Yii::$app->request->get('format');
                                 }
                             ?>
                         </div>
-                        <?php if (Yii::$app->request->get('id')) { ?>
+
+                        <?php if (Yii::$app->request->get('id') && $model->catalog->code != 'default') { ?>
                         <?= $form->field($model, 'catalog_id')->dropDownList(Catalog::getTreeIdLabel(0, false)) ?>
                         <?php } ?>
+
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+                        <?php if ($model->catalog->code == 'default') { ?>
+                        <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+                        <?php } ?>
+
                         <?= $form->field($model, 'brief')->textarea() ?>
 
                         <?php if ($format == ActiveModel::FORMAT_TEXTAREA || (!$format && $model->catalog->code == 'default') || $model->format == ActiveModel::FORMAT_TEXTAREA) { ?>
@@ -138,20 +145,21 @@ $format = Yii::$app->request->get('format');
                             ]
                         ]); ?>
                         <?php } ?>
-                        <?= $form->field($model, 'para1')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'para2')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'para3')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'para4')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'para5')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'para6')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'para7')->textInput() ?>
-                        <?= $form->field($model, 'para8')->textInput() ?>
-                        <?= $form->field($model, 'para9')->textInput() ?>
-                        <?= $form->field($model, 'para10')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'param1')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'param2')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'param3')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'param4')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'param5')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'param6')->textInput(['maxlength' => true]) ?>
+                        <?= $form->field($model, 'param7')->textInput() ?>
+                        <?= $form->field($model, 'param8')->textInput() ?>
+                        <?= $form->field($model, 'param9')->textInput() ?>
+                        <?= $form->field($model, 'param10')->textInput(['maxlength' => true]) ?>
                     </div>
 
                     <?php if ($this->context->isMultiLang) { ?>
                     <div class="tab-pane fade" id="tab-content-lang">
+                        <?= $form->field($model, 'translating')->radioList(YesNo::getLabels())->hint(Yii::t('app', 'Auto translating while selecting yes and field is empty'), ['class' => 'ml-3']) ?>
                         <div class="row">
                             <div class="col-2 col-sm-2">
                                 <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
@@ -168,7 +176,7 @@ $format = Yii::$app->request->get('format');
                                                 <div class="form-group row field-catalog-redirect_url has-success">
                                                     <label class="control-label control-label-full"><?= Lang::getLanguageLabels(intval(Lang::getLanguageCode($language, false, true))) ?></label>
                                                     <?php
-                                                    if (ActiveModel::getLangFieldType($field) == 'textarea') {
+                                                    if (ActiveModel::getLangFieldType($field) == 'textarea' || $model->catalog->code == 'default') {
                                                         echo Html::textarea("Lang[$field][$language]", $v, ['class' => 'form-control', 'rows' => 6]);
                                                     } elseif (ActiveModel::getLangFieldType($field) == 'Ueditor') {
                                                         echo \common\components\ueditor\Ueditor::widget([
