@@ -4,8 +4,10 @@ namespace common\components\assets;
 
 /**
  * 配合animate滑动动画
- * Class AnimateAsset
- * @package common\widgets\echarts
+ * https://github.com/woocommerce/FlexSlider
+ * https://woocommerce.com/flexslider/
+ * Class FlexSliderAsset
+ * @package common\components\assets
  * @author funson86 <funson86@gmail.com>
  */
 class FlexSliderAsset extends \yii\web\AssetBundle

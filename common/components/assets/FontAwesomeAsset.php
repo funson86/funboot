@@ -4,8 +4,8 @@ namespace common\components\assets;
 
 /**
  * Fontawesome
- * Class AnimateAsset
- * @package common\widgets\echarts
+ * Class FontAwesomeAsset
+ * @package common\components\assets
  * @author funson86 <funson86@gmail.com>
  */
 class FontAwesomeAsset extends \yii\web\AssetBundle

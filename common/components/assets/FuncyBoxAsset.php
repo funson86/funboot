@@ -4,8 +4,8 @@ namespace common\components\assets;
 
 /**
  * <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
- * Class FuncyboxAsset
- * @package common\widgets\echarts
+ * Class FuncyBoxAsset
+ * @package common\components\assets
  * @author funson86 <funson86@gmail.com>
  */
 class FuncyBoxAsset extends \yii\web\AssetBundle

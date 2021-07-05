@@ -5,7 +5,7 @@ namespace common\components\assets;
 /**
  * Head
  * Class JqueryAsset
- * @package common\widgets\echarts
+ * @package common\components\assets
  * @author funson86 <funson86@gmail.com>
  */
 class JqueryAsset extends \yii\web\AssetBundle

@@ -4,8 +4,8 @@ namespace common\components\assets;
 
 /**
  * 延迟加载
- * Class AnimateAsset
- * @package common\widgets\echarts
+ * Class CookieBarAsset
+ * @package common\components\assets
  * @author funson86 <funson86@gmail.com>
  */
 class CookieBarAsset extends \yii\web\AssetBundle

@@ -3,9 +3,9 @@
 namespace common\components\assets;
 
 /**
- * 优化单选和可选框样式
+ * IcheckAsset
  * Class AnimateAsset
- * @package common\widgets\echarts
+ * @package common\components\assets
  * @author funson86 <funson86@gmail.com>
  */
 class IcheckAsset extends \yii\web\AssetBundle

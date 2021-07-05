@@ -4,8 +4,8 @@ namespace common\components\assets;
 
 /**
  * Fontawesome
- * Class AnimateAsset
- * @package common\widgets\echarts
+ * Class FlagIconCssAsset
+ * @package common\components\assets
  * @author funson86 <funson86@gmail.com>
  */
 class FlagIconCssAsset extends \yii\web\AssetBundle
