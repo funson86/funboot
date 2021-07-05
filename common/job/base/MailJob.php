@@ -11,10 +11,10 @@ use Yii;
 class MailJob extends BaseJob
 {
     public $to;
-    public $from;
     public $subject;
     public $content;
     public $cc = [];
+    public $from;
 
     public function execute($queue)
     {
@@ -22,6 +22,6 @@ class MailJob extends BaseJob
             return false;
         }
 
-        Yii::$app->mailSystem->send($this->to, $this->from, $this->subject, $this->content, $this->cc);
+        Yii::$app->mailSystem->send($this->to, $this->subject, $this->content, $this->cc, $this->from);
     }
 }
