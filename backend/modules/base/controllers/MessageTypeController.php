@@ -63,11 +63,11 @@ class MessageTypeController extends BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
-            $sendUsers = Yii::$app->request->post('Message')['sendUsers'] ?? null;
+            $sendUsers = Yii::$app->request->post($model->formName())['sendUsers'] ?? null;
             if ($sendUsers && count($sendUsers) > 0) {
                 $model->send_user = implode('|', $sendUsers);
             }
-            $model->send_type = ArrayHelper::arrayToInt(Yii::$app->request->post('Message')['sendTypes'] ?? []);
+            $model->send_type = ArrayHelper::arrayToInt(Yii::$app->request->post($model->formName())['sendTypes'] ?? []);
 
             if (!$model->save()) {
                 $this->redirectError($model);

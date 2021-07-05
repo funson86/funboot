@@ -84,7 +84,7 @@ class UserController extends BaseController
 
                 if ($model->save()) {
                     // 保存用户角色关系
-                    $roles = Yii::$app->request->post('User')['roles'];
+                    $roles = Yii::$app->request->post($model->formName())['roles'] ?? [];
                     if (is_array($roles) && count($roles) > 0) {
                         foreach ($roles as $roleId) {
                             $userRole = new UserRole();

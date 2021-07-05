@@ -92,12 +92,12 @@ class DepartmentController extends BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
-            $heads = Yii::$app->request->post('Department')['heads'];
+            $heads = Yii::$app->request->post($model->formName())['heads'] ?? [];
             if (is_array($heads) && count($heads) > 0) {
                 $model->head = implode('|', $heads);
             }
 
-            $viceHeads = Yii::$app->request->post('Department')['viceHeads'];
+            $viceHeads = Yii::$app->request->post($model->formName())['viceHeads'] ?? [];
             if (is_array($heads) && count($viceHeads) > 0) {
                 $model->vice_head = implode('|', $viceHeads);
             }
