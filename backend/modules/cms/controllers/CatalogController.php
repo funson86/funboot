@@ -63,6 +63,15 @@ class CatalogController extends BaseController
     protected function beforeEdit($id = null, $model = null)
     {
         $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
+        if (!$id) {
+            $parent = $this->modelClass::findOne($model->parent_id);
+            if ($parent) {
+                $model->type = $parent->type;
+                $model->kind = $parent->kind;
+                $model->template = $parent->template;
+                $model->template_page = $parent->template_page;
+            }
+        }
     }
 
     protected function beforeDeleteModel($id, $soft = false, $tree = false)

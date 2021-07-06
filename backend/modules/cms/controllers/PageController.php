@@ -2,6 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
+use common\models\cms\Catalog;
 use Yii;
 use common\models\cms\Page;
 use common\models\ModelSearch;
@@ -45,7 +46,7 @@ class PageController extends BaseController
      */
     protected $editAjaxFields = ['name', 'sort'];
 
-    /**
+    /**手机封面图
      * 导入导出字段
      *
      * @var int
@@ -59,6 +60,12 @@ class PageController extends BaseController
     protected function beforeEdit($id = null, $model = null)
     {
         !$model->catalog_id && $model->catalog_id = Yii::$app->request->get('catalog_id', 0);
+        if (!$id && $model->catalog_id > 0) {
+            $catalog = Catalog::findOne($model->catalog_id);
+            if ($catalog) {
+                $model->template = $catalog->template_page;
+            }
+        }
     }
 
     public function actionEditCatalog()

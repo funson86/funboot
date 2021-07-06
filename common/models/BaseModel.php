@@ -28,6 +28,7 @@ class BaseModel extends ActiveRecord
     static $mapLangFieldType = [
         'name' => 'text',
     ];
+    public $translating = 0;
 
     const SORT_DEFAULT = 50;
     const SORT_TOP = 10;
@@ -78,6 +79,13 @@ class BaseModel extends ActiveRecord
                 'value' => Yii::$app->storeSystem->getId(),
             ],*/
         ]);
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'translating' => Yii::t('app', 'Translating'),
+        ];
     }
 
     /**

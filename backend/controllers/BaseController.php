@@ -281,6 +281,7 @@ class BaseController extends \common\components\controller\BaseController
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
+                $model->translating = Yii::$app->request->post($model->formName())['translating'] ?? 0;
                 $this->beforeEditSave($id, $model);
                 if ($model->save()) {
                     $this->afterEdit($id, $model);
@@ -314,6 +315,7 @@ class BaseController extends \common\components\controller\BaseController
         // ajax 校验
         $this->activeFormValidate($model);
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            $model->translating = Yii::$app->request->post($model->formName())['translating'] ?? 0;
             $this->beforeEditSave($id, $model);
 
             if (!$model->save()) {
@@ -549,9 +551,6 @@ class BaseController extends \common\components\controller\BaseController
      */
     protected function afterLang($id, $model)
     {
-        if (!$model->translating) {
-            return true;
-        }
         $post = Yii::$app->request->post();
         if (isset($post['Lang'])) {
             foreach ($post['Lang'] as $field => $item) {
@@ -571,7 +570,7 @@ class BaseController extends \common\components\controller\BaseController
                         $lang->target_id = $model->id;
                     }
                     // 有填写内容，则按照内容  否则开启自动翻译且原值不为空的情况下去请求百度翻译
-                    $lang->content = $content ?: ($this->isAutoTranslation && $model->$field ? $this->autoTranslate($lang->source, $lang->target, $model->$field) : '');
+                    $lang->content = $content ?: ($this->isAutoTranslation && $model->translating && $model->$field ? $this->autoTranslate($lang->source, $lang->target, $model->$field) : '');
                     if (!$lang->save()) {
                         Yii::$app->logSystem->db($lang->errors);
                     }
