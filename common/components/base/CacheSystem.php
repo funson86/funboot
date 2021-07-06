@@ -242,13 +242,14 @@ class CacheSystem extends \yii\base\Component
         return Yii::$app->cache->delete('allLang');
     }*/
 
-    public function getLang($tableCode, $targetId, $name, $target, $force = false)
+    public function getLang($tableCode, $targetId, $field, $default = '', $target = null, $force = false)
     {
         if ($force) {
             $this->refreshLang($tableCode, $targetId);
         }
 
-        return Yii::$app->cache->get('lang:' . $tableCode . ':' . $targetId . ':' . $name . ':' . $target);
+        !$target && $target = Yii::$app->language;
+        return Yii::$app->cache->get('lang:' . $tableCode . ':' . $targetId . ':' . $field . ':' . $target) ?: $default;
     }
 
     public function refreshLang($tableCode, $targetId)

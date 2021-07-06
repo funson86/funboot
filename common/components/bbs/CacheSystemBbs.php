@@ -74,7 +74,6 @@ class CacheSystemBbs extends CacheSystem
      */
     public function clearStoreNode($storeId)
     {
-        $this->clearAllStore();
         return Yii::$app->cache->delete('bbsStoreNode:' . $storeId);
     }
 
