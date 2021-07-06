@@ -7,6 +7,7 @@ use common\models\base\DictData;
 use common\models\base\Lang;
 use common\models\base\Permission;
 use common\models\base\SettingType;
+use common\models\cms\Catalog;
 use common\models\Store;
 use common\models\User;
 use common\services\base\UserPermission;
@@ -151,8 +152,9 @@ class CacheSystem extends \yii\base\Component
      * @param $storeId
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
-    public function getStoreSetting($storeId)
+    public function getStoreSetting($storeId = null)
     {
+        !$storeId && $storeId = Yii::$app->storeSystem->getId();
         $data = Yii::$app->cache->get('allSetting');
         if (!isset($data[$storeId])) {
             $settingTypes = SettingType::find()->where(['status' => SettingType::STATUS_ACTIVE])
@@ -260,6 +262,15 @@ class CacheSystem extends \yii\base\Component
         }
 
         return true;
+    }
+
+    public function refreshStoreLang($storeId = null)
+    {
+        !$storeId && $storeId = Yii::$app->storeSystem->getId();
+        $data = Lang::find()->where(['store' => $storeId])->all();
+        foreach ($data as $item) {
+            Yii::$app->cache->set('lang:' . $item->table_code . ':' . $item->target_id . ':' . $item->name . ':' . $item->target, $item->content);
+        }
     }
 
 }

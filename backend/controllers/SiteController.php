@@ -236,7 +236,8 @@ class SiteController extends BaseController
             Yii::$app->cacheSystem->clearAllDict();
         } else {
             Yii::$app->cacheSystem->clearUserPermissionIds(Yii::$app->user->id);
-            Yii::$app->cacheSystem->clearStoreSetting($this->getStoreId());
+            Yii::$app->cacheSystem->clearStoreSetting();
+            Yii::$app->cacheSystem->refreshStoreLang();
         }
 
         Yii::$app->cache->flush();
