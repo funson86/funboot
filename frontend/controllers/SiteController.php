@@ -284,4 +284,15 @@ class SiteController extends BaseController
             'resultMsg' => $resultMsg,
         ]);
     }
+
+    /**
+     * 百度地图iframe
+     * http://www.funboot.com/site/baidu-map?lng=114.15&lat=22.62&width=99%&height=400px&title=Funboot系统&remark=加油
+     */
+    public function actionBaiduMap()
+    {
+        return $this->renderPartial($this->action->id, [
+            'request' => Yii::$app->request,
+        ]);
+    }
 }
