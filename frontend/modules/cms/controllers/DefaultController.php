@@ -8,6 +8,7 @@ use common\helpers\CommonHelper;
 use common\models\cms\Catalog;
 use common\models\cms\Page;
 use common\models\Store;
+use frontend\helpers\Url;
 use Yii;
 use frontend\controllers\BaseController;
 use yii\data\Pagination;
@@ -82,6 +83,7 @@ class DefaultController extends BaseController
             ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
 
         foreach ($this->allCatalog as $item) {
+            $item->name = fbt(Catalog::getTableCode(), $item->id, 'name', $item->name);
             $this->mapAllCatalog[$item['id']] = $item;
             if ($item->status == Catalog::STATUS_ACTIVE && $item->is_nav == YesNo::YES) {
                 $this->allShowCatalog[] = $item->attributes;
@@ -95,12 +97,16 @@ class DefaultController extends BaseController
         if (in_array($this->action->id, ['list', 'menu'])) {
             $catalogId = Yii::$app->request->get('id');
             $catalogId && $this->model = Catalog::findOne($catalogId);
+            $this->model->name = fbt(Catalog::getTableCode(), $this->model->id, 'name', $this->model->name);
+            $this->model->brief = fbt(Catalog::getTableCode(), $this->model->id, 'brief', $this->model->brief);
+            $this->model->content = fbt(Catalog::getTableCode(), $this->model->id, 'content', $this->model->content);
 
             $this->banner = $this->getCatalogBanner($catalogId);
         } elseif ($this->action->id == 'page') {
             $id = Yii::$app->request->get('id');
             $id && $this->model = Page::findOne($id);
             $this->model && $catalogId = $this->model->catalog_id;
+            $this->model = $this->buildLang($this->model, Page::getTableCode());
 
             $bannerName = $this->isMobile ? 'banner_h5' : 'banner';
             $this->banner = !empty($this->model->$bannerName) ? $this->model->$bannerName : $this->getCatalogBanner($catalogId);
@@ -109,16 +115,16 @@ class DefaultController extends BaseController
         }
         $rootCatalogId = $catalogId ? ArrayHelper::getRootId($catalogId, $this->allCatalog) : 0;
 
-        $home = ['url' => Yii::$app->getUrlManager()->createUrl(['/']), 'name' => Yii::t('app', 'Home'), 'label' => Yii::t('app', 'Home'), 'active' => ($this->action->id == 'index')];
+        $home = ['url' => Url::to(['/']), 'name' => Yii::t('app', 'Home'), 'label' => Yii::t('app', 'Home'), 'active' => ($this->action->id == 'index')];
         $this->mainMenu[0] = $this->mainMenu2[0] = $home;
 
         foreach ($this->allShowCatalog as $catalog) {
-            $name = fbt(Catalog::getTableCode(), $catalog['id'], 'name') ?: $catalog['name'];
+            $name = fbt(Catalog::getTableCode(), $catalog['id'], 'name', $catalog['name']);
             $item = ['id' => $catalog['id'], 'name' => $name, 'label' => $name, 'active'=> ($catalog['id'] == $rootCatalogId)];
             if ($catalog['type'] == 'link') {// redirect to other site
                 $item['url'] = $catalog['redirect_url'];
             } else {
-                $item['url'] = Yii::$app->getUrlManager()->createUrl(['cms/default/' . $catalog['type'] . '/', 'id' => $catalog['id']]);
+                $item['url'] = Url::to(['/cms/default/' . $catalog['type'] . '/', 'id' => $catalog['id']]);
             }
 
             !empty($item) && array_push($this->mainMenu, $item);
@@ -127,12 +133,12 @@ class DefaultController extends BaseController
         // sub menu 2
         $allCatalog2 = ArrayHelper::getTreeIdLabel(0, $this->allShowCatalog, '');
         foreach ($allCatalog2 as $catalog) {
-            $name = fbt(Catalog::getTableCode(), $catalog['id'], 'name') ?: $catalog['name'];
+            $name = fbt(Catalog::getTableCode(), $catalog['id'], 'name', $catalog['name']);
             $item = ['id' => $catalog['id'], 'name' => $name, 'label' => $name, 'active' => ($catalog['id'] == $rootCatalogId)];
             if ($catalog['type'] == 'link') {// redirect to other site
                 $item['url'] = $catalog['link'];
             } else {
-                $item['url'] = Yii::$app->getUrlManager()->createUrl(['cms/default/' . $catalog['type'] . '/', 'id' => $catalog['id']]);
+                $item['url'] = Url::to(['/cms/default/' . $catalog['type'] . '/', 'id' => $catalog['id']]);
             }
 
             if ($catalog['parent_id'] == 0) {
@@ -166,27 +172,9 @@ class DefaultController extends BaseController
             return $this->render($store->status);
         }
 
-        // 公司简介
-        $about = Catalog::find()->where(['store_id' => $this->store->id, 'type' => Catalog::TYPE_MENU])->orderBy(['id' => SORT_ASC])->one();
-
-        $two = Catalog::find()->where(['store_id' => $this->store->id, 'type' => Catalog::TYPE_LIST, 'parent_id' => 0])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->limit(2)->asArray()->all();
-        if (isset($two[0]['id'])) {
-            $newsModel = $two[0];
-            $newsList = Page::find()->where(['store_id' => $this->store->id, 'catalog_id' => $two[0]['id']])->orderBy(['sort' => SORT_ASC, 'id' => SORT_DESC])->limit(20)->all();
-        }
-        if (isset($two[1]['id'])) {
-            $productModel = $two[1];
-            $productList = Page::find()->where(['store_id' => $this->store->id, 'catalog_id' => $two[1]['id']])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->limit(20)->all();
-        }
-
         return $this->render($store->settings['cms_template'] ?: $this->action->id, [
             'store' => $this->store,
             'banners' => $this->getStoreBanner(true),
-            'about' => $about,
-            'newsModel' => $newsModel ?? [],
-            'newsList' => $newsList ?? [],
-            'productModel' => $productModel ?? [],
-            'productList' => $productList ?? [],
         ]);
 
     }
@@ -210,22 +198,15 @@ class DefaultController extends BaseController
         ]);
 
         $models = $query->orderBy(['created_at' => SORT_DESC])->offset($pagination->offset)->limit($pagination->limit)->all();
-
-        // 将大分类下的所有子分类中click高的排序
-        $rootId = ArrayHelper::getRootId($id, $this->allCatalog);
-        $ids = ArrayHelper::getChildrenIds($rootId, $this->allCatalog);
-        $relates = Page::find()
-            ->where(['status' => Page::STATUS_ACTIVE, 'catalog_id' => $ids,])
-            ->orderBy(['click' => SORT_DESC, 'id' => SORT_ASC])
-            ->limit(5)
-            ->all();
+        foreach ($models as &$model) {
+            $model = $this->buildLang($model, Page::getTableCode());
+        }
 
         return $this->render($this->model->template ?: $this->action->id, [
             'model' => $this->model,
             'models' => $models,
             'pagination' => $pagination,
             'store' => $this->store,
-            'relates' => $relates,
         ]);
     }
 
@@ -356,5 +337,64 @@ class DefaultController extends BaseController
 
         !$banner && $banner = $this->getStoreBanner();
         return $banner;
+    }
+
+    public function getBlock($code)
+    {
+        if (!$code) {
+            return '';
+        }
+
+        return Yii::$app->cacheSystemCms->getStorePageByCode($code);
+    }
+
+    public function getBlockValue($code = 'contact_us', $field = 'name', $lang = null)
+    {
+        if (!$code) {
+            return '';
+        }
+
+        $model = Yii::$app->cacheSystemCms->getStorePageByCode($code);
+        if (!$model) {
+            return '';
+        }
+
+        !$lang && $lang = Yii::$app->language;
+        if (in_array($field, array_keys(Page::$mapLangFieldType))) {
+            return Yii::$app->cacheSystem->getLang(Page::getTableCode(), $model->id, $field, $model->$field, $lang);
+        }
+        return $model->$field ?? '';
+    }
+
+    public function getBlockValueIndex($index = 0, $code = 'contact_us', $field = 'name', $lang = null, $split = '|')
+    {
+        $value = $this->getBlockValue($code, $field, $lang);
+        $arr = explode($split, $value);
+        return $arr[$index] ?? $arr[0];
+    }
+
+    public function getBlockFieldIndex($index = 0, $code = 'contact_us', $field = 'name', $split = '|')
+    {
+        $model = Yii::$app->cacheSystemCms->getStorePageByCode($code);
+        if (!$model) {
+            return '';
+        }
+
+        $value = $model->$field ?: '';
+        $arr = explode($split, $value);
+        return $arr[$index] ?? $arr[0];
+    }
+
+    protected function buildLang($model, $tableCode)
+    {
+        if (!$model) {
+            return $model;
+        }
+
+        $model->name = fbt($tableCode, $model->id, 'name', $model->name);
+        $model->brief = fbt($tableCode, $model->id, 'brief', $model->brief);
+        $model->content = fbt($tableCode, $model->id, 'content', $model->content);
+
+        return $model;
     }
 }
