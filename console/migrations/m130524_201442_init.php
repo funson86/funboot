@@ -371,6 +371,8 @@ CREATE TABLE `fb_base_setting_type` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
   `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '代码',
   `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
+  `support_role` int(11) NOT NULL DEFAULT '7' COMMENT '支持角色',
+  `support_system` int(11) NOT NULL DEFAULT '1' COMMENT '支持系统',
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'text' COMMENT '类型',
   `value_range` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '可选值',
   `value_default` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '默认值',
@@ -385,6 +387,9 @@ CREATE TABLE `fb_base_setting_type` (
   KEY `base_setting_type_k0` (`store_id`),
   CONSTRAINT `base_setting_type_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=9002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='配置类型';
+
+-- ALTER TABLE `fb_base_setting_type` ADD COLUMN `support_role` int(11) NOT NULL DEFAULT '7' COMMENT '支持角色' AFTER `brief`;  
+-- ALTER TABLE `fb_base_setting_type` ADD COLUMN `support_system` int(11) NOT NULL DEFAULT '1' COMMENT '支持系统' AFTER `support_role`;  
 
 -- ----------------------------
 -- Table structure for fb_base_user_role
@@ -423,6 +428,7 @@ CREATE TABLE `fb_store` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
   `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `host_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '域名',
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '代码',
   `qrcode` varchar(255) NOT NULL DEFAULT '' COMMENT '二维码',
   `route` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'site' COMMENT '子系统',
   `expired_at` int(11) NOT NULL DEFAULT '0' COMMENT '到期时间',
@@ -447,6 +453,7 @@ CREATE TABLE `fb_store` (
   CONSTRAINT `base_store_fk1` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='店铺';
 
+-- ALTER TABLE `fb_store` ADD COLUMN `code` varchar(255) NOT NULL DEFAULT '' COMMENT '代码' AFTER `host_name`;  
 -- ALTER TABLE `fb_store` ADD COLUMN `lang_source` varchar(255) NOT NULL DEFAULT 'zh-CN' COMMENT '翻译源语言' AFTER `language`;  
 -- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言' AFTER `lang_source`;  
 -- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言' AFTER `lang_frontend`;  
@@ -759,12 +766,12 @@ INSERT INTO `fb_base_permission` VALUES ('5833', '1', '583', '删除', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('5834', '1', '583', '启禁', 'backend', '', '/base/schedule/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5835', '1', '583', '导出', 'backend', '', '/base/schedule/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5836', '1', '583', '导入', 'backend', '', '/base/schedule/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('6111', '1', '611', '查看', 'backend', '', '/base/student/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('6112', '1', '611', '编辑', 'backend', '', '/base/student/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('6113', '1', '611', '删除', 'backend', '', '/base/student/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('6114', '1', '611', '启禁', 'backend', '', '/base/student/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('6115', '1', '611', '导出', 'backend', '', '/base/student/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('6116', '1', '611', '导入', 'backend', '', '/base/student/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+-- INSERT INTO `fb_base_permission` VALUES ('6111', '1', '611', '查看', 'backend', '', '/base/student/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+-- INSERT INTO `fb_base_permission` VALUES ('6112', '1', '611', '编辑', 'backend', '', '/base/student/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+-- INSERT INTO `fb_base_permission` VALUES ('6113', '1', '611', '删除', 'backend', '', '/base/student/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+-- INSERT INTO `fb_base_permission` VALUES ('6114', '1', '611', '启禁', 'backend', '', '/base/student/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+-- INSERT INTO `fb_base_permission` VALUES ('6115', '1', '611', '导出', 'backend', '', '/base/student/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+-- INSERT INTO `fb_base_permission` VALUES ('6116', '1', '611', '导入', 'backend', '', '/base/student/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 
 
 INSERT INTO `fb_base_role_permission` VALUES ('1', '1', '', '3', '5601', '1', '50', '1', '1607671710', '1607671710', '1', '1');
@@ -794,10 +801,10 @@ INSERT INTO `fb_base_role_permission` VALUES ('24', '1', '', '3', '581', '1', '5
 INSERT INTO `fb_base_role_permission` VALUES ('25', '1', '', '3', '58', '1', '50', '1', '1607671711', '1607671711', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('26', '1', '', '3', '5831', '1', '50', '1', '1607671711', '1607671711', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('27', '1', '', '3', '583', '1', '50', '1', '1607671711', '1607671711', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('28', '1', '', '3', '6111', '1', '50', '1', '1607671711', '1607671711', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('29', '1', '', '3', '611', '1', '50', '1', '1607671711', '1607671711', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('30', '1', '', '3', '61', '1', '50', '1', '1607671711', '1607671711', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('31', '1', '', '3', '6', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('28', '1', '', '3', '6111', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('29', '1', '', '3', '611', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('30', '1', '', '3', '61', '1', '50', '1', '1607671711', '1607671711', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('31', '1', '', '3', '6', '1', '50', '1', '1607671711', '1607671711', '1', '1');
 
 INSERT INTO `fb_base_role_permission` VALUES ('128', '1', '', '50', '5', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('129', '1', '', '50', '6', '1', '50', '1', '1608030276', '1608030276', '1', '1');
@@ -825,12 +832,12 @@ INSERT INTO `fb_base_role_permission` VALUES ('150', '1', '', '50', '5673', '1',
 INSERT INTO `fb_base_role_permission` VALUES ('151', '1', '', '50', '5674', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('152', '1', '', '50', '5675', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('153', '1', '', '50', '5676', '1', '50', '1', '1608030276', '1608030276', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('154', '1', '', '50', '6111', '1', '50', '1', '1608030276', '1608030276', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('155', '1', '', '50', '6112', '1', '50', '1', '1608030276', '1608030276', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('156', '1', '', '50', '6113', '1', '50', '1', '1608030276', '1608030276', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('157', '1', '', '50', '6114', '1', '50', '1', '1608030276', '1608030276', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('158', '1', '', '50', '6115', '1', '50', '1', '1608030276', '1608030276', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('159', '1', '', '50', '6116', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('154', '1', '', '50', '6111', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('155', '1', '', '50', '6112', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('156', '1', '', '50', '6113', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('157', '1', '', '50', '6114', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('158', '1', '', '50', '6115', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('159', '1', '', '50', '6116', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 
 
 INSERT INTO `fb_base_user_role` VALUES ('1', '2', '', '2', '50', '1', '50', '1', '1', '1', '1', '1');
@@ -840,34 +847,35 @@ INSERT INTO `fb_base_user_role` VALUES ('5', '5', '', '5', '50', '1', '50', '1',
 INSERT INTO `fb_base_user_role` VALUES ('6', '6', '', '6', '50', '1', '50', '1', '1', '1', '1', '1');
 
 
-INSERT INTO `fb_base_setting_type` VALUES ('50', '1', '0', 'backend', '网站设置', 'website', '', 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('83', '1', '0', 'backend', '联系方式', 'contact', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('85', '1', '0', 'backend', '邮件设置', 'mail', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('89', '1', '0', 'backend', '系统设置', 'system', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('50', '1', '0', 'backend', '网站设置', 'website', '', 7, 1, 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('83', '1', '0', 'backend', '联系方式', 'contact', '', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('85', '1', '0', 'backend', '邮件设置', 'mail', '', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('89', '1', '0', 'backend', '系统设置', 'system', '', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES ('5001', '1', '50', 'backend', '网站标题', 'website_name', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5003', '1', '50', 'backend', '网站Logo', 'website_logo', '', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5005', '1', '50', 'backend', '网站favicon', 'website_favicon', '浏览器上小图标', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5007', '1', '50', 'backend', '网站banner', 'website_banner', 'Banner图', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5009', '1', '50', 'backend', 'SEO标题', 'website_seo_title', '浏览器标题栏便于搜索引擎收录', 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5010', '1', '50', 'backend', 'SEO关键字', 'website_seo_keywords', '便于搜索引擎收录', 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5011', '1', '50', 'backend', 'SEO描述', 'website_seo_description', '便于搜索引擎收录', 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5013', '1', '50', 'backend', '主题模板', 'website_theme', '', 'dropDownList', 'green:green,black:black', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5015', '1', '50', 'backend', '网站通告', 'website_brief', '', 'text', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5017', '1', '50', 'backend', '版权标识', 'website_copyright', '', 'text', '', '@2020 - 版权所有', '50', '1', '1601003987', '1601003987', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5021', '1', '50', 'backend', '统计代码', 'website_stat', '加载在底部，支持百度统计cnzz等', 'textarea', '', '', '50', '1', '1601008532', '1601008544', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5031', '1', '50', 'backend', '注册用户需要验证邮箱才能登录', 'user_login_need_verify', '', 'radioList', '0:否,1:是', '0', '50', '1', '1601008532', '1601008544', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5001', '1', '50', 'backend', '网站标题', 'website_name', '', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5003', '1', '50', 'backend', '网站Logo', 'website_logo', '', 7, 1, 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5005', '1', '50', 'backend', '网站favicon', 'website_favicon', '浏览器上小图标', 7, 1, 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5007', '1', '50', 'backend', '网站banner', 'website_banner', 'Banner图', 7, 1, 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5009', '1', '50', 'backend', 'SEO标题', 'website_seo_title', '浏览器标题栏便于搜索引擎收录', 7, 1, 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5010', '1', '50', 'backend', 'SEO关键字', 'website_seo_keywords', '便于搜索引擎收录', 7, 1, 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5011', '1', '50', 'backend', 'SEO描述', 'website_seo_description', '便于搜索引擎收录', 7, 1, 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5013', '1', '50', 'backend', '主题模板', 'website_theme', '', 7, 1, 'dropDownList', 'green:green,black:black', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5015', '1', '50', 'backend', '网站通告', 'website_brief', '', 7, 1, 'text', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5017', '1', '50', 'backend', '版权标识', 'website_copyright', '', 7, 1, 'text', '', '@2020 - 版权所有', '50', '1', '1601003987', '1601003987', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5021', '1', '50', 'backend', '统计代码', 'website_stat', '加载在底部，支持百度统计cnzz等', 7, 1, 'textarea', '', '', '50', '1', '1601008532', '1601008544', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5023', '1', '50', 'backend', '地图代码', 'website_map', 'iframe方式', 7, 1, 'text', '', '', '50', '1', '1601008532', '1601008544', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5031', '1', '50', 'backend', '注册用户需要验证邮箱才能登录', 'website_user_login_need_verify', '', 7, 1, 'radioList', '0:否,1:是', '0', '50', '1', '1601008532', '1601008544', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES ('8301', '1', '83', 'backend', '电话', 'contact_mobile', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('8303', '1', '83', 'backend', 'Email', 'contact_email', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('8305', '1', '83', 'backend', '邮编', 'contact_zipcode', '', 'text', '计算距离算运费时非常重要', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('8307', '1', '83', 'backend', '地址', 'contact_address', '', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('8301', '1', '83', 'backend', '电话', 'contact_mobile', '', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('8303', '1', '83', 'backend', 'Email', 'contact_email', '', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('8305', '1', '83', 'backend', '邮编', 'contact_zipcode', '', 7, 1, 'text', '计算距离算运费时非常重要', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('8307', '1', '83', 'backend', '地址', 'contact_address', '', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 
-INSERT INTO `fb_base_setting_type` VALUES ('8501', '1', '85', 'backend', 'Smtp Host', 'mail_smtp_host', '邮箱smtp主机地址，请申请outlook邮箱，并在设置中开启smtp，发送测试邮件后请在邮箱中确认', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('8503', '1', '85', 'backend', 'Smtp Port', 'mail_smtp_port', '端口号', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('8505', '1', '85', 'backend', 'Smtp Username', 'mail_smtp_username', '用户名', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('8507', '1', '85', 'backend', 'Smtp Password', 'mail_smtp_password', '密码', 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('8509', '1', '85', 'backend', 'Smtp Encryption', 'mail_smtp_encryption', '加密方式', 'text', '', 'tls', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('8501', '1', '85', 'backend', 'Smtp Host', 'mail_smtp_host', '邮箱smtp主机地址，请申请outlook邮箱，并在设置中开启smtp，发送测试邮件后请在邮箱中确认', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('8503', '1', '85', 'backend', 'Smtp Port', 'mail_smtp_port', '端口号', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('8505', '1', '85', 'backend', 'Smtp Username', 'mail_smtp_username', '用户名', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('8507', '1', '85', 'backend', 'Smtp Password', 'mail_smtp_password', '密码', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('8509', '1', '85', 'backend', 'Smtp Encryption', 'mail_smtp_encryption', '加密方式', 7, 1, 'text', '', 'tls', '50', '1', '1600948360', '1600948360', '1', '1');
 
 INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/backup', '', '数据库备份，每天凌晨执行', '* 3 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
 
