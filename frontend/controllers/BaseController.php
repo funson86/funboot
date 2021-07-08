@@ -33,8 +33,8 @@ class BaseController extends \common\components\controller\BaseController
 
         $store = $this->store;
 
-        // 如果未设置，前台强制为指定语言
-        strlen($store->lang_frontend_default) > 0 && !Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id) && Yii::$app->language = $store->lang_frontend_default;
+        // 如果未设置(后台方式和前台方式都为指定)，前台强制为指定语言
+        strlen($store->lang_frontend_default) > 0 && !Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id) && !Yii::$app->request->get('lang') && Yii::$app->language = $store->lang_frontend_default;
 
         if (Yii::$app->defaultRoute != 'site') {
             $this->theme = $store->settings[$store->route . '_theme'] ?? $store->settings['website_theme'] ?: 'default';

@@ -1,110 +1,124 @@
 <?php
+use common\models\cms\Page;
 
 /* @var $this yii\web\View */
-$this->title = $store->settings['website_seo_title'] . ' - ' . $store->settings['website_name'] ?: $store->name;
-$this->registerMetaTag(["name" => "keywords","content" => $store->settings['website_seo_title']]);
-$this->registerMetaTag(["name" => "description","content" => $store->settings['cms_seo_description']]);
+/* @var $context \frontend\controllers\BaseController */
+$this->title = $store->settings['website_seo_title'];
 
+$store = $this->context->store;
+$context = $this->context;
 ?>
 
-<section id="content">
-    <div class="index-product">
-        <div class="container index-product-container">
-            <h2 class="index-title"><?= $productModel ? $productModel['title'] : '产品中心' ?></h2>
-            <p class="index-title-brief">开放源代码的高端模板建站！响应式模板可用于企业建网站、专业建站！</p>
-            <div class="row margin-0 index-product-box">
-                <?php foreach ($productList as $item) { ?>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 index-product-card">
-                    <div class="index-product-card-content">
-                        <div class="index-product-card-thumb">
-                            <a href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => $item->id]) ?>">
-                                <img alt="<?= $item->title ?>" src="<?= $item->thumb ?>">
-                            </a>
-                        </div>
-                        <div class="index-product-card-main">
-                            <div class="index-product-card-title"><?= $item->title ?></div>
-                            <div class="index-product-card-brief">
-                                <div class="index-product-card-brief-text">￥999 <span>起</span></div>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => $item->id]) ?>" class="btn index-product-card-brief-btn">免费试用</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<section class="page-section bg-light text-dark">
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+        <div class="container marketing">
+
+            <h1 class="text-center pb-5"><?= $context->getBlockValue('home_service') ?></h1>
+
+            <!-- Three columns of text below the carousel -->
+            <div class="row text-center">
+                <?php for ($i = 0; $i < 3; $i++) { ?>
+                <div class="col-lg-4 wow fadeIn<?= $i == 0 ? 'Left' : ($i == 2 ? 'Right' : 'Up') ?>">
+                    <div class="icon-block mb-2"><i class="fa <?= $context->getBlockFieldIndex($i, 'home_service', 'param1') ?>"></i></div>
+                    <h3 class="mb-2"><?= $context->getBlockValueIndex($i, 'home_service', 'brief') ?></h3>
+                    <p><?= $context->getBlockValueIndex($i, 'home_service', 'content') ?></p>
+                </div><!-- /.col-lg-4 -->
                 <?php } ?>
-            </div>
+            </div><!-- /.row -->
         </div>
-        <!-- <a href="#" class="index-product-btn">查看更多</a> -->
+
+    </div><!-- /.container -->
+
+</section>
+
+<?php if (true) { $models = Page::findAll(['store_id' => Yii::$app->storeSystem->getId(), 'id' => ['251675914331488256', '251675417226772480', '251674778652377088']]); if (count($models)) { ?>
+<section class="page-section bg-white text-center">
+    <div class="container">
+        <div class="flexslider">
+            <ul class="slides">
+                <?php foreach ($models as $model) { ?>
+                <li data-thumb="<?= $model->thumb ?>">
+                    <img src="<?= $model->thumb ?>" />
+                </li>
+                <?php } ?>
+            </ul>
+        </div>
     </div>
-    </div>
-    <div class="index-news">
-        <div class="container index-news-container">
-            <h2 class="index-title"><?= $newsModel ? $newsModel['title'] : '新闻中心' ?></h2>
-            <p class="index-title-brief">建网站、做网站相关教程、资讯等</p>
-            <div class="row margin-0 index-news-box">
-                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 index-news-card">
-                    <div class="index-news-card-header">
-                        <div class="index-news-card-header-btn">
-                            <span class="index-news-card-header-btn-plus">+</span>
-                            <span class="index-news-card-header-btn-text">快速建站</span>
-                        </div>
-                        <a href="#" class="index-news-card-header-link">查看更多>></a>
-                    </div>
-                    <?php foreach ($newsList as $item) { ?>
-                        <div class="index-news-card-content">
-                            <div class="index-news-card-content-main">
-                                <div class="index-news-card-content-main-header">
-                                    <a href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => $item->id]) ?>" class="index-news-card-content-main-title"><?= $item['name'] ?></a>
-                                    <div class="index-news-card-content-main-click"><?= date('Y-m-d', $item['created_at']) ?></div>
-                                </div>
-                                <div class="index-news-card-content-main-brief"><?= $item['brief'] ?></div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div>
+</section>
+<?php } } ?>
 
-                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 index-news-card index-news-card-center">
-                    <div class="index-news-card-header">
-                        <div class="index-news-card-header-btn">
-                            <span class="index-news-card-header-btn-plus">+</span>
-                            <span class="index-news-card-header-btn-text">建站直播</span>
-                        </div>
-                        <a href="#" class="index-news-card-header-link">查看更多>></a>
-                    </div>
-                    <?php foreach ($newsList as $item) { ?>
-                        <div class="index-news-card-content index-news-card-content-center">
-                            <div class="index-news-card-content-main">
-                                <div class="index-news-card-content-main-header">
-                                    <a href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => $item->id]) ?>" class="index-news-card-content-main-title"><?= $item['name'] ?></a>
-                                    <div class="index-news-card-content-main-click"><?= date('Y-m-d', $item['created_at']) ?></div>
-                                </div>
-                                <div class="index-news-card-content-main-brief"><?= $item['brief'] ?></div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 index-news-card">
-                    <div class="index-news-card-header">
-                        <div class="index-news-card-header-btn">
-                            <span class="index-news-card-header-btn-plus">+</span>
-                            <span class="index-news-card-header-btn-text">资料阅读</span>
-                        </div>
-                        <a href="#" class="index-news-card-header-link">查看更多>></a>
-                    </div>
-                    <?php foreach ($newsList as $item) { ?>
-                        <div class="index-news-card-content">
-                            <div class="index-news-card-content-main">
-                                <div class="index-news-card-content-main-header">
-                                    <a href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => $item->id]) ?>" class="index-news-card-content-main-title"><?= $item['name'] ?></a>
-                                    <div class="index-news-card-content-main-click"><?= date('Y-m-d', $item['created_at']) ?></div>
-                                </div>
-                                <div class="index-news-card-content-main-brief"><?= $item['brief'] ?></div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div>
-
+<?php if (true) { ?>
+<section class="page-section bg-dark text-light" style="background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(<?= nl2br($context->getBlockValue('home_board', 'thumb')) ?>) center center;">
+    <div class="container">
+        <div class="row featurette ads">
+            <div class="col-md-12 wow fadeInUp">
+                <h3 class="mb-4"><?= nl2br($context->getBlockValue('home_board', 'content')) ?></h3>
             </div>
         </div>
     </div>
 </section>
+<?php } ?>
+
+<section class="page-section bg-white text-center" id="about">
+    <div class="container">
+
+        <h1 class="text-center pb-5"><?= $context->getBlockValue('home_about_us') ?></h1>
+
+        <div class="row featurette">
+            <div class="col-md-6 wow fadeInLeft mb-3">
+                <h2 class="text-lg-left"><?= $context->getBlockValue('home_about_us', 'brief') ?></h2>
+                <p class="lead text-lg-left"><?= nl2br($context->getBlockValue('home_about_us', 'content')) ?></p>
+            </div>
+            <div class="col-md-6 wow fadeInRight">
+                <img src="<?= nl2br($context->getBlockValue('home_about_us', 'thumb')) ?>" class="img-fluid img-square" />
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="page-section bg-light" id="contact">
+    <div class="container">
+        <h1 class="text-center pb-5"><?= $context->getBlockValue('home_contact_us') ?></h1>
+        <div class="row featurette">
+
+            <div class="col-xs-6 col-sm-6 col-md-3 contact-info text-center wow bounceIn" data-wow-duration="3s">
+                <i class="fa fa-envelope-o"></i>
+                <h4 class="contact_title"><?= Yii::t('cms', 'Email') ?></h4>
+                <p class="contact_description"><?= $context->getBlockValueIndex(0, 'home_contact_us', 'brief') ?></p>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-3 contact-info text-center wow bounceIn" data-wow-duration="3s">
+                <i class="fa fa-map-marker"></i>
+                <h4 class="contact_title"><?= Yii::t('cms', 'Address') ?></h4>
+                <p class="contact_description"><?= $context->getBlockValueIndex(1, 'home_contact_us', 'brief') ?></p>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-3 contact-info text-center wow bounceIn" data-wow-duration="3s">
+                <i class="fa fa-phone"></i>
+                <h4 class="contact_title"><?= Yii::t('cms', 'Call Us') ?></h4>
+                <p class="contact_description"><?= $context->getBlockValueIndex(2, 'home_contact_us', 'brief') ?></p>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-3 contact-info text-center wow bounceIn" data-wow-duration="3s">
+                <i class="fa fa-weixin"></i>
+                <h4 class="contact_title"><?= Yii::t('cms', 'WeChat') ?></h4>
+                <p class="contact_description"><?= $context->getBlockValueIndex(3, 'home_contact_us', 'brief') ?></p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<?php if (strlen($store->settings['website_map']) > 5) { ?>
+<section class="page-section bg-light pt-0" id="home-map">
+    <div class="container-fluid p-0" style="overflow: hidden; height: 100%">
+        <?= $store->settings['website_map'] ?>
+    </div>
+</section>
+<?php } ?>

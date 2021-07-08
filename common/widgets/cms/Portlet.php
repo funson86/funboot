@@ -1,6 +1,7 @@
 <?php
-
 namespace common\widgets\cms;
+
+use Yii;
 
 /**
  * Class Banner
@@ -9,10 +10,17 @@ namespace common\widgets\cms;
  */
 class Portlet extends \yii\base\Widget
 {
+    public $root;
     public $portlet;
+    public $page;
 
     public function run()
     {
-        return $this->render('portlet', ['portlet' => $this->portlet]);
+        $catalogId = Yii::$app->request->get('id');
+        if ($this->page) {
+            $catalogId = $this->page->catalog->id ?? 0;
+        }
+
+        return $this->render('portlet', ['root' => $this->root, 'portlet' => $this->portlet, 'catalogId' => $catalogId]);
     }
 }

@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'remark:ntext',
                         ['attribute' => 'lang_frontend', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getLanguageLabels($model->lang_frontend); }, 'filter' => false,],
                         ['attribute' => 'lang_frontend_default', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getLanguageCodeLabels($model->lang_frontend_default); }, 'filter' => false,],
-                        ['attribute' => 'type', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => false,],
+                        // ['attribute' => 'type', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => false,],
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
                         ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::status($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'created_at:datetime',
@@ -65,10 +65,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'header' => Yii::t('app', 'Actions'),
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{login} {edit} {delete}',
+                            'template' => '{login} {go} {edit} {delete}',
                             'buttons' => [
                                 'login' => function ($url, $model, $key) {
                                     return Html::buttonModal(['login', 'id' => $model->id], Yii::t('app', 'Login'), ['class' => 'btn btn-sm btn-success'], false, true);
+                                },
+                                'go' => function ($url, $model, $key) {
+                                    return Html::buttonModal(['go', 'id' => $model->id], Yii::t('app', 'Go'), ['class' => 'btn btn-sm btn-info'], false, true);
                                 },
                                 'edit' => function ($url, $model, $key) {
                                     return Html::editModal(['edit-ajax', 'id' => $model->id], null, ['size' => 'Large']);

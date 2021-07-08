@@ -41,6 +41,7 @@ Funboot将多语言数据存储在fb_base_lang表中，通过对每个需要加�
 
                     <?php if ($this->context->isMultiLang) { ?>
                     <div class="tab-pane fade" id="tab-content-lang">
+                        <?= $form->field($model, 'translating')->radioList(YesNo::getLabels())->hint(Yii::t('app', 'Auto translating while selecting yes and field is empty'), ['class' => 'ml-3']) ?>
                         <div class="row">
                             <div class="col-2 col-sm-2">
                                 <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
@@ -133,19 +134,19 @@ Funboot将多语言数据存储在fb_base_lang表中，通过对每个需要加�
 
 在controller中可以使用
 ```php
-fbt(Catalog::getTableCode(), $model->id, 'name', Yii::$app->language);
+fbt(Catalog::getTableCode(), $model->id, 'name', $model->name);
 
 // 也可以使用
-$this->getLang(Catalog::getTableCode(), $model->id, 'name', Yii::$app->language);
+$this->getLang(Catalog::getTableCode(), $model->id, 'name', $model->name, Yii::$app->language);
 ```
 
 在view中可以使用
 
 ```php
-fbt(Catalog::getTableCode(), $model->id, 'name', Yii::$app->language);
+fbt(Catalog::getTableCode(), $model->id, 'name', $model->name, Yii::$app->language);
 
 // 也可以使用
-$this->context->getLang(Catalog::getTableCode(), $model->id, 'name', Yii::$app->language);
+$this->context->getLang(Catalog::getTableCode(), $model->id, 'name', $model->name, Yii::$app->language);
 ```
 
 

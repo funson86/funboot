@@ -56,8 +56,12 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<store_id:\d+>' => 'mall/default/index', // 根据项目情况进行匹配，一个系统只能匹配一种
-                '<store_code:\w+>' => 'mall/default/index', // 根据项目情况进行匹配，一个系统只能匹配一种
+                'sid-<store_id:\d+>' => 'mall/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'site-<store_code:\w+>' => 'site/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'store-<store_code:\w+>' => 'mall/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'mall-<store_code:\w+>' => 'mall/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'cms-<store_code:\w+>' => 'cms/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'bbs-<store_code:\w+>' => 'bbs/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
 
                 // pay url 优化
                 'pay/<action:\w+>' => 'pay/default/<action>',

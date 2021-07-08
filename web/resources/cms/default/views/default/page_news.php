@@ -1,37 +1,30 @@
 <?php
-use yii\helpers\Html;
-use yii\widgets\ListView;
-use funson86\blog\Module;
+use frontend\helpers\Url;
 
-$this->title = $model->name . ' - ' . $store->settings['website_seo_title'];
+$this->title = $model->name;
 
-$this->registerMetaTag(["name" => "keywords","content" => ($model->seo_keywords ? $model->seo_keywords : $store->settings['website_seo_keywords'])]);
-$this->registerMetaTag(["name" => "description","content" => ($model->seo_description ? $model->seo_description : $store->settings['website_seo_description'])]);
+$this->registerMetaTag(["name" => "keywords", "content" => ($model->seo_keywords ? $model->seo_keywords : $store->settings['website_seo_keywords'])]);
+$this->registerMetaTag(["name" => "description", "content" => ($model->seo_description ? $model->seo_description : $store->settings['website_seo_description'])]);
 ?>
 
-<section id="content">
+<section id="content" class="page-section pt-4">
+    <div class="container">
 
-    <?= \common\widgets\cms\PortletTop::widget(['root' => $this->context->rootCatalog, 'portlet' => $this->context->portlet]) ?>
+        <?= \common\widgets\cms\PortletTop::widget(['root' => $this->context->rootCatalog, 'portlet' => $this->context->portlet, 'page' => $model]) ?>
 
+        <h2 class="text-center pt-5 pb-5"><?= $model->name ?></h2>
 
-    <div class="main-content page-news-content">
-        <div class="container page-news-container">
-            <div class="main-content-title page-news-main-content-title"><?= $model->name ?></div>
+        <div class="main-content-content page-product-main-content-content">
+            <p><?= $model->content ?></p>
+        </div>
 
-            <div class="main-content-click page-news-main-content-click"><i class="fa fa-clock-o"></i> <?= Yii::$app->formatter->asDate($model->created_at) ?> &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i> 点击数: <?= $model->click ?></div>
-
-            <div class="main-content-content page-news-main-content-content">
-                <p><?= $model->content ?></p>
+        <div class="row p-0 page-news-content-relative">
+            <div class="col-md-6 col-xs-12 mb-3 text-left page-news-content-relative-left">
+                <?= Yii::t('app', 'Previous One') ?>: <?php if (isset($prev)) { ?><a href="<?= Url::to(['/cms/default/page', 'id' => $prev->id]) ?>"> <?=$prev->title ?> </a> <?php } else echo '-'; ?>
             </div>
-            <div class="row margin-0 main-content-relative page-news-content-relative">
-                <div class="col-md-5 col-xs-11 main-content-relative-left  page-news-content-relative-left">
-                    上一篇：<?php if (isset($prev)) { ?><a href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => $prev->id]) ?>" color-blue> <?=$prev->title ?> </a> <?php } else echo '没有了'; ?>
-                </div>
-                <div class="col-md-5 col-xs-11 main-content-relative-right page-news-content-relative-right">
-                    下一篇：<?php if (isset($next)) { ?><a href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => $next->id]) ?>" color-blue> <?=$next->title ?> </a> <?php } else echo '没有了'; ?>
-                </div>
+            <div class="col-md-6 col-xs-12 mb-3 text-right page-news-content-relative-right">
+                <?= Yii::t('app', 'Next One') ?>: <?php if (isset($next)) { ?><a href="<?= Url::to(['/cms/default/page', 'id' => $next->id]) ?>"> <?=$next->title ?> </a> <?php } else echo '-'; ?>
             </div>
-
         </div>
 
     </div>

@@ -1,52 +1,38 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ListView;
-use funson86\blog\Module;
 
-$this->title = $model->name . ' - ' . $store->settings['website_seo_title'];
+$this->title = $model->name;
 
-$this->registerMetaTag(["name" => "keywords","content" => ($model->seo_keywords ? $model->seo_keywords : $store->settings['website_seo_keywords'])]);
-$this->registerMetaTag(["name" => "description","content" => ($model->seo_description ? $model->seo_description : $store->settings['website_seo_description'])]);
+$this->registerMetaTag(["name" => "keywords", "content" => ($model->seo_keywords ? $model->seo_keywords : $store->settings['website_seo_keywords'])]);
+$this->registerMetaTag(["name" => "description", "content" => ($model->seo_description ? $model->seo_description : $store->settings['website_seo_description'])]);
+
 ?>
 
-<?php if (strlen($model->banner) > 5) { ?>
-    <section id="banner">
-        <img src="<?= $model->banner ?>">
-    </section>
-<?php } ?>
+<section id="content" class="page-product-section pt-4">
+    <div class="container">
 
-<section id="content">
+        <?= \common\widgets\cms\PortletTop::widget(['root' => $this->context->rootCatalog, 'portlet' => $this->context->portlet, 'page' => $model]) ?>
 
-    <?php if (count($portlet) > 1) { ?>
-        <div class="sub-menu page-product-sub-menu">
-            <ul class="sub-menu-content page-product-sub-menu-content">
-                <?php foreach ($portlet as $item) { ?>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl(['site/' . $item['type'], 'id' => $item['id']]) ?>"><?= $item['title'] ?></a></li>
+        <h2 class="text-center pt-5 pb-5"><?= $model->name ?></h2>
+
+        <?php if (is_array($model->images) && count($model->images) > 0) { ?>
+        <div class="flexslider">
+            <ul class="slides">
+                <?php foreach ($model->images as $item) { ?>
+                    <li data-thumb="<?= $item ?>">
+                        <img src="<?= $item ?>" />
+                    </li>
                 <?php } ?>
             </ul>
         </div>
-    <?php } ?>
+        <?php } elseif (strlen($model->thumb) > 5) { ?>
+        <div class="text-center p-5"><img src="<?= $model->thumb ?>" /></div>
+        <?php } ?>
 
-
-    <div class="main-content page-product-content">
-        <div class="container page-product-container">
-            <div class="main-content-title page-product-main-content-title"><?= $model->name ?></div>
-
-            <div class="main-content-content page-product-main-content-content">
-                <p><?= $model->content ?></p>
-            </div>
-
-            <div class="row margin-0 main-content-relative page-product-content-relative">
-                <div class="col-md-5 col-xs-11 main-content-relative-left  page-product-content-relative-left">
-                    上一篇：<?php if (isset($prev)) { ?><a href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => $prev->id]) ?>" color-blue> <?=$prev->title ?> </a> <?php } else echo '没有了'; ?>
-                </div>
-                <div class="col-md-5 col-xs-11 main-content-relative-right page-product-content-relative-right">
-                    下一篇：<?php if (isset($next)) { ?><a href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => $next->id]) ?>" color-blue> <?=$next->title ?> </a> <?php } else echo '没有了'; ?>
-                </div>
-            </div>
-
+        <div class="main-content-content page-product-main-content-content">
+            <p><?= $model->content ?></p>
         </div>
 
     </div>
-
 </section>
