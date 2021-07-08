@@ -81,6 +81,9 @@ return [
         'cacheSystemBbs' => [
             'class' => 'common\components\bbs\CacheSystemBbs',
         ],
+        'cacheSystemCms' => [
+            'class' => 'common\components\cms\CacheSystemCms',
+        ],
         'qr' => [
             'class' => '\Da\QrCode\Component\QrCodeComponent',
             'size' => 500 // big and nice :D
