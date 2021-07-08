@@ -176,7 +176,7 @@ $format = Yii::$app->request->get('format');
                                                 <div class="form-group row field-catalog-redirect_url has-success">
                                                     <label class="control-label control-label-full"><?= Lang::getLanguageLabels(intval(Lang::getLanguageCode($language, false, true))) ?></label>
                                                     <?php
-                                                    if (ActiveModel::getLangFieldType($field) == 'textarea' || $model->catalog->code == 'default') {
+                                                    if (ActiveModel::getLangFieldType($field) == 'textarea' || ($model->catalog->code == 'default' && ActiveModel::getLangFieldType($field) != 'text')) {
                                                         echo Html::textarea("Lang[$field][$language]", $v, ['class' => 'form-control', 'rows' => 6]);
                                                     } elseif (ActiveModel::getLangFieldType($field) == 'Ueditor') {
                                                         echo \common\components\ueditor\Ueditor::widget([
