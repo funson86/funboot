@@ -534,9 +534,9 @@ class BaseController extends \common\components\controller\BaseController
                 continue;
             }
 
-            foreach ($this->modelClass::getLangFieldType() as $name => $type) {
-                !$lang[$name] && $lang[$name] = [];
-                $lang[$name][$target] = $mapLangContent[$name . '|' . $target] ?? '';
+            foreach ($this->modelClass::getLangFieldType() as $field => $type) {
+                !isset($lang[$field]) && !$lang[$field] && $lang[$field] = [];
+                $lang[$field][$target] = $mapLangContent[$field . '|' . $target] ?? '';
             }
         }
 
