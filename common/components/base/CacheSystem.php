@@ -184,8 +184,9 @@ class CacheSystem extends \yii\base\Component
      * @param $storeId
      * @return bool
      */
-    public function clearStoreSetting($storeId)
+    public function clearStoreSetting($storeId = null)
     {
+        !$storeId && $storeId = Yii::$app->storeSystem->getId();
         $data = $this->getAllSetting();
         unset($data[$storeId]);
         return Yii::$app->cache->set('allSetting', $data);
