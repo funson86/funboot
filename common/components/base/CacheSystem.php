@@ -268,7 +268,7 @@ class CacheSystem extends \yii\base\Component
     public function refreshStoreLang($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        $data = Lang::find()->where(['store' => $storeId])->all();
+        $data = Lang::find()->where(['store_id' => $storeId])->all();
         foreach ($data as $item) {
             Yii::$app->cache->set('lang:' . $item->table_code . ':' . $item->target_id . ':' . $item->name . ':' . $item->target, $item->content);
         }
