@@ -245,6 +245,15 @@ class CacheSystem extends \yii\base\Component
         return Yii::$app->cache->delete('allLang');
     }*/
 
+    /**
+     * @param $tableCode
+     * @param $targetId
+     * @param $field
+     * @param string $default
+     * @param null $target
+     * @param bool $force
+     * @return mixed|string
+     */
     public function getLang($tableCode, $targetId, $field, $default = '', $target = null, $force = false)
     {
         if ($force) {
@@ -252,7 +261,10 @@ class CacheSystem extends \yii\base\Component
         }
 
         !$target && $target = Yii::$app->language;
-        return Yii::$app->cache->get('lang:' . $tableCode . ':' . $targetId . ':' . $field . ':' . $target) ?: $default;
+        if (!Yii::$app->cache->get('lang:' . $tableCode . ':' . $targetId . ':' . $field . ':' . $target)) {
+            $this->refreshLang($tableCode, $targetId);
+        }
+        return  Yii::$app->cache->get('lang:' . $tableCode . ':' . $targetId . ':' . $field . ':' . $target) ?: $default;
     }
 
     public function refreshLang($tableCode, $targetId)
