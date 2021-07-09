@@ -18,7 +18,7 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => CmsAllAsse
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?> - <?= $this->context->getBlockValue('common_website_name') ?: $store->settings['website_name'] ?: $store->name ?></title>
+    <title><?= $this->title ? (Html::encode($this->title) . ' - ' . ($this->context->getBlockValue('common_website_name') ?: $store->settings['website_name'] ?: $store->name)) : ($this->context->getBlockValue('common_website_name') ?: $store->settings['website_name'] ?: $store->name) ?></title>
     <meta name="keywords" content="<?= Html::encode($store->settings['website_seo_keywords'] ?: $store->settings['website_name']) ?>"/>
     <meta name="description" content="<?= Html::encode($store->settings['website_seo_description'] ?: $store->settings['website_name']) ?>"/>
     <link rel="icon" href="<?= $this->context->getFavicon() ?>" type="image/x-icon" />

@@ -7,6 +7,7 @@ use common\helpers\ArrayHelper;
 use common\helpers\CommonHelper;
 use common\models\cms\Catalog;
 use common\models\cms\Page;
+use common\models\forms\base\FeedbackForm;
 use common\models\Store;
 use frontend\helpers\Url;
 use Yii;
@@ -236,22 +237,32 @@ class DefaultController extends BaseController
         $prev = Page::find()->where('id < ' . $id)->andWhere(['catalog_id' => $this->model->catalog_id, 'status' => Page::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->one();
         $next = Page::find()->where('id > ' . $id)->andWhere(['catalog_id' => $this->model->catalog_id, 'status' => Page::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->one();
 
-        $rootId = ArrayHelper::getRootId($this->model->catalog_id, $this->allCatalog);
-        $ids = ArrayHelper::getChildrenIds($rootId, $this->allCatalog);
-        $relates = Page::find()
-            ->where(['status' => Page::STATUS_ACTIVE, 'catalog_id' => $ids,])
-            ->andWhere(['<>', 'id', $id])
-            ->orderBy(['click' => SORT_DESC, 'id' => SORT_ASC])
-            ->limit(5)
-            ->all();
-
         $template = isset($this->mapAllCatalog[$this->model->catalog_id]['template_page']) ? $this->mapAllCatalog[$this->model->catalog_id]['template_page'] : 'page';
         return $this->render($template ?: $this->action->id, [
             'model' => $this->model,
             'store' => $this->store,
             'prev' => $prev,
             'next' => $next,
-            'relates' => $relates,
+        ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionContact()
+    {
+        $resultMsg = null;
+
+        $model = new FeedbackForm();
+        $model->checkCaptchaRequired();
+
+        if ($model->load(Yii::$app->request->post()) && $model->create()) {
+            $resultMsg = Yii::t('app', 'Thank you for your comment, we will contact you as soon as possible.');
+        }
+
+        return $this->render($this->action->id, [
+            'model' => $model,
+            'resultMsg' => $resultMsg,
         ]);
     }
 

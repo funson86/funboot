@@ -39,6 +39,8 @@ echo Nav::widget([
 
 $menuItems = $this->context->mainMenu2;
 
+$menuItems[] = ['label' => Yii::t('cms', 'Contact Us'), 'url' => Url::to(['/cms/default/contact', ]),];
+
 echo Nav::widget([
     'encodeLabels' => false,
     'options' => ['class' => 'navbar-nav ml-auto'],
