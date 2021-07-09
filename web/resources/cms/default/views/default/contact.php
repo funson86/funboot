@@ -5,10 +5,12 @@ use yii\widgets\ActiveForm;
 
 $this->title = Yii::t('app', 'Contact Us');
 
+$context = $this->context;
+$store = $this->context->store;
+
 $this->registerMetaTag(["name" => "keywords", "content" => $store->settings['website_seo_title']]);
 $this->registerMetaTag(["name" => "description", "content" => $store->settings['website_seo_description']]);
 
-$context = $this->context;
 ?>
 
 <section class="page-section bg-light">
