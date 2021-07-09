@@ -140,6 +140,8 @@ return [
     'smtp_port' => '587',
     'smtp_encryption' => 'tls',
 
+    'map_baidu_ak' => '',
+
     'baiduTranslate' => [
         'appId' => '',
         'appSecret' => '',
