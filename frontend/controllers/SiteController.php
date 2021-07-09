@@ -77,6 +77,15 @@ class SiteController extends BaseController
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            $this->module->setViewPath('@frontend/views');
+        }
+
+        return true;
+    }
+
     /**
      * Displays homepage.
      *
