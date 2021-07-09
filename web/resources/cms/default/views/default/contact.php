@@ -3,7 +3,7 @@ use frontend\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = Yii::t('app', 'Contact Us');
+$this->title = Yii::t('cms', 'Contact Us');
 
 $context = $this->context;
 $store = $this->context->store;

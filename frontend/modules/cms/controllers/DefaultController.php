@@ -237,9 +237,10 @@ class DefaultController extends BaseController
         $prev = Page::find()->where('id < ' . $id)->andWhere(['catalog_id' => $this->model->catalog_id, 'status' => Page::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->one();
         $next = Page::find()->where('id > ' . $id)->andWhere(['catalog_id' => $this->model->catalog_id, 'status' => Page::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->one();
 
+        $model = $this->buildLang($this->model, Page::getTableCode());
         $template = isset($this->mapAllCatalog[$this->model->catalog_id]['template_page']) ? $this->mapAllCatalog[$this->model->catalog_id]['template_page'] : 'page';
         return $this->render($template ?: $this->action->id, [
-            'model' => $this->model,
+            'model' => $model,
             'store' => $this->store,
             'prev' => $prev,
             'next' => $next,

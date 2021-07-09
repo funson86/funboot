@@ -297,6 +297,7 @@ class SiteController extends BaseController
     /**
      * 百度地图iframe
      * http://www.funboot.com/site/baidu-map?lng=114.15&lat=22.62&width=99%&height=400px&title=Funboot系统&remark=加油
+     * http://api.map.baidu.com/lbsapi/creatmap/index.html 获取坐标
      */
     public function actionBaiduMap()
     {
