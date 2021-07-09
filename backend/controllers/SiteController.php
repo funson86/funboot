@@ -246,6 +246,7 @@ class SiteController extends BaseController
             if (isset(Yii::$app->cacheSystemCms)) {
                 Yii::$app->cacheSystemCms->clearStoreCatalogs();
                 Yii::$app->cacheSystemCms->clearStorePages();
+                Yii::$app->cacheSystemCms->refreshStoreLang();
             }
         }
 
