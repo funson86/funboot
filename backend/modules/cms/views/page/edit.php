@@ -94,30 +94,6 @@ $format = Yii::$app->request->get('format');
                         <?= $form->field($model, 'seo_title')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'seo_description')->textarea() ?>
-                        <?= $form->field($model, 'banner')->widget(\common\components\uploader\FileWidget::class, [
-                            'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
-                            'theme' => 'default',
-                            'themeConfig' => [],
-                            'config' => [
-                                // 可设置自己的上传地址, 不设置则默认地址
-                                // 'server' => '',
-                                'pick' => [
-                                    'multiple' => true,
-                                ],
-                            ]
-                        ]); ?>
-                        <?= $form->field($model, 'banner_h5')->widget(\common\components\uploader\FileWidget::class, [
-                            'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
-                            'theme' => 'default',
-                            'themeConfig' => [],
-                            'config' => [
-                                // 可设置自己的上传地址, 不设置则默认地址
-                                // 'server' => '',
-                                'pick' => [
-                                    'multiple' => true,
-                                ],
-                            ]
-                        ]); ?>
                         <?php } ?>
                         <?= $form->field($model, 'thumb')->widget(\common\components\uploader\FileWidget::class, [
                             'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
