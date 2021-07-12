@@ -140,6 +140,10 @@ return [
     'smtp_port' => '587',
     'smtp_encryption' => 'tls',
 
+    // multiple smtp host send mailer
+    'smtpHosts' => [
+    ],
+
     'map_baidu_ak' => '',
 
     'baiduTranslate' => [

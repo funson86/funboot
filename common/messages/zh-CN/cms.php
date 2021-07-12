@@ -2,6 +2,7 @@
 return [
     'Home' => '主页',
     'Solution' => '解决方案',
+    'Product' => '产品服务',
     'About' => '关于我们',
     'About us' => '关于我们',
     'About Us' => '关于我们',
