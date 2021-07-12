@@ -121,7 +121,7 @@ use common\helpers\StringHelper;
         let name = parentObj.parent().attr('data-name');
         let boxId = parentObj.parent().attr('data-boxId');
 
-        if (multiple == true) {
+        if (multiple == true && name != undefined && !name) {
             name = name.substring(0, name.length - 2);
         }
 
