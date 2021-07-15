@@ -66,7 +66,7 @@ if (Yii::$app->user->isGuest) {
 
     // 个人中心
     $menuItems[] = [
-        'label' => Yii::$app->user->identity->email ?: Yii::$app->user->identity->username,
+        'label' => Html::tag('i', '', ['class' => 'fa fa-user']) . ' ' . Yii::$app->user->identity->email ?: Yii::$app->user->identity->username,
         'items' => [
             ['label' => Yii::t('app', 'Profile'), 'url' => ['/bbs/user/profile']],
             ['label' => Yii::t('app', 'Avatar'), 'url' => ['/bbs/user/avatar']],
