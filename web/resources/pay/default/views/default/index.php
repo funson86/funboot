@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\pay\Payment as ActiveModel;
 use frontend\assets\PayLandingAsset;
+use frontend\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\pay\Payment */
@@ -13,6 +14,7 @@ use frontend\assets\PayLandingAsset;
 $this->title = 'FunPay';
 
 $store = $this->context->store;
+$context = $this->context;
 
 ?>
 
@@ -24,71 +26,13 @@ $store = $this->context->store;
     }
 </style>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-        <a href="<?= Yii::$app->urlManager->createUrl(['/']) ?>" class="navbar-brand">
-            <img src="<?= $store->settings['website_logo'] ?: Yii::$app->params['defaultWebsiteLogo'] ?>" alt="Funpay" class="brand-image img-circle elevation-3"
-                 style="opacity: .8">
-            <span class="brand-text font-weight-light">FunPay</span>
-        </a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="<?= Yii::$app->urlManager->createUrl(['/']) ?>" class="nav-link"><?= Yii::t('app', 'Home') ?></a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= Yii::$app->urlManager->createUrl(['/pay/default/pay']) ?>" class="nav-link"><?= Yii::t('app', '支付体验') ?></a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= Yii::$app->urlManager->createUrl(['/pay/default/list']) ?>" class="nav-link"><?= Yii::t('app', '捐赠名单') ?></a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://github.com/funson86/funboot/" target="_blank" class="nav-link"><?= Yii::t('app', 'Funboot开发平台') ?></a>
-                </li>
-            </ul>
-        </div>
-
-        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto hidden-sm">
-            <!-- Messages Dropdown Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="https://github.com/funson86/funboot/" target="_blank"><i class="fab fa-github"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://github.com/funson86" target="_blank"><i class="fas fa-user-alt"></i></a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="fab fa-qq"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <a href="#" class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media text-center" style="text-align: center; align-items: center">
-                            <img src="/resources/images/funboot-qq-qun.png">
-                        </div>
-                        <!-- Message End -->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="https://jq.qq.com/?_wv=1027&k=OZ8X3qjK" target="_blank" class="dropdown-item dropdown-footer">QQ 群：798843502</a>
-                </div>
-            </li>
-        </ul>
-
-    </div>
-</nav>
-
 <header class="masthead">
     <div class="container h-100">
         <div class="row h-100">
             <div class="col-lg-6 my-auto">
                 <div class="header-content mx-auto">
                     <h1 class="mb-5">FunPay 个人收款支付系统<span class="">V1.1</span></h1>
-                    <a href="<?= Yii::$app->urlManager->createUrl(['pay/default/pay']) ?>" class="btn btn-outline btn-xl js-scroll-trigger">立即体验</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="<?= Url::to(['/pay/default/pay']) ?>" class="btn btn-outline btn-xl js-scroll-trigger">立即体验</a> &nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="https://github.com/funson86/funpay" class="btn btn-outline btn-xl js-scroll-trigger orange">开发教程</a>
                 </div>
             </div>
@@ -102,7 +46,7 @@ $store = $this->context->store;
                         <div class="device">
                             <div class="screen">
                                 <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                <img src="/resources/pay/images/demo-screen-0.jpg" class="img-fluid" alt="">
+                                <img src="<?= $context->getImage('demo-screen-0.jpg') ?>" class="img-fluid" alt="">
                             </div>
                             <div class="button">
                                 <!-- You can hook the "home button" to some JavaScript events or just remove it -->
@@ -129,7 +73,7 @@ $store = $this->context->store;
                         <div class="device">
                             <div class="screen">
                                 <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                <img src="/resources/pay/images/demo-screen-1.jpg" class="img-fluid" alt="">
+                                <img src="<?= $context->getImage('demo-screen-1.jpg') ?>" class="img-fluid" alt="">
                             </div>
                             <div class="button">
                                 <!-- You can hook the "home button" to some JavaScript events or just remove it -->
@@ -143,14 +87,14 @@ $store = $this->context->store;
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="feature-item">
-                                <i class="fas fa-lock text-primary"></i>
+                                <i class="fa fa-lock text-primary"></i>
                                 <h3>安全</h3>
                                 <p class="text-muted">无需任何外挂监听，无封号冻结风险，资金流量不经过任何第三方直达个人账号</p>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="feature-item">
-                                <i class="fas fa-gift text-primary"></i>
+                                <i class="fa fa-gift text-primary"></i>
                                 <h3>免费</h3>
                                 <p class="text-muted">每笔交易直接全额到达你的个人账户，无任何中间手续费、通道费等各种名目费用</p>
                             </div>
@@ -159,14 +103,14 @@ $store = $this->context->store;
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="feature-item">
-                                <i class="fas fa-book-open text-primary"></i>
+                                <i class="fa fa-book text-primary"></i>
                                 <h3>易用</h3>
                                 <p class="text-muted">无需签约，一张收款二维码搞定收款，支持微信、支付宝、QQ、云闪付等，无需集成任何支付SDK代码</p>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="feature-item">
-                                <i class="fab fa-github text-primary"></i>
+                                <i class="fa fa-github text-primary"></i>
                                 <h3>开源</h3>
                                 <p class="text-muted">所有代码代码开源免费，基于Funboot开发平台，遵循MIT协议!</p>
                             </div>
@@ -239,9 +183,3 @@ $store = $this->context->store;
         </div>
     </div>
 </section>
-
-<footer>
-    <div class="container">
-        <p>&copy; FunPay <?= date('Y') ?>. All Rights Reserved.</p>
-    </div>
-</footer>

@@ -13,26 +13,22 @@ use common\helpers\CommonHelper;
 $this->title = Yii::t('app', 'FunPay收银台 收款方: Funson');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Addresses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$context = $this->context;
 ?>
 
-<style>
-</style>
-
-<section class="content-header">
-    &nbsp;
-</section>
-<div class="row content-row">
+<div class="row content-row pt-5 pb-5">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
         <div class="card">
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
                 <div class="col-sm-12 text-center checkout">
-                    <img class="bank-code-img" src="/resources/pay/bank/<?= $model->bank_code ?>.png">
+                    <img class="bank-code-img" src="<?= $context->getImage('bank/' . $model->bank_code . '.png') ?>">
                     <p class="payment-detail">扫一扫付款（元）</p>
                     <p class="payment-money"><?= number_format($model->money, 2) ?></p>
                     <div class="qrcode-box">
                         <div class="timeout" style="display: none">二维码已过期</div>
-                        <img src="/resources/pay/bank/<?= $model->bank_code ?>/<?= intval($model->money) ?>.png">
+                        <img src="<?= $context->getImage('bank/' . $model->bank_code . '/' . intval($model->money * 100) . '.png') ?>">
                     </div>
 
                     <?= $explain ?>

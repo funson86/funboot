@@ -368,31 +368,6 @@ section.contact ul.list-social li.social-google-plus a:hover {
   background-color: #d73925;
 }
 
-footer {
-  padding: 25px 0;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.3);
-  background-color: #222222;
-}
-
-footer p {
-  font-size: 12px;
-  margin: 0;
-}
-
-footer ul {
-  margin-bottom: 0;
-}
-
-footer ul li a {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
-}
-
-footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li a.active {
-  text-decoration: none;
-}
-
 .bg-primary {
   background: #fdcc52;
   background: linear-gradient(#fdcc52, #fdc539);
@@ -899,4 +874,20 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 
 span.btn-xs {
   min-width: 30px;
+}
+
+.btn-scroll-top {
+  border-color: #666;
+  background-color: #666;
+  color: #ffffff;
+  position: fixed;
+  display: none;
+  right: 10px;
+  bottom: 20px;
+  z-index: 1601;
+  line-height: 1em;
+  padding: 10px;
+  border-radius: 50%;
+  outline: none !important;
+  box-shadow: none !important;
 }

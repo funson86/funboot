@@ -28,10 +28,7 @@ $this->title = Yii::t('app', '确认订单');
     }
 </style>
 
-<div class="content-wrapper">
-    <section class="content-header">
-        &nbsp;&nbsp;
-    </section>
+<div class="content-wrapper pt-5 pb-5">
     <div class="row content-row">
         <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
             <div class="card">

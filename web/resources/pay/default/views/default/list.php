@@ -24,10 +24,7 @@ $statusLabel = ActiveModel::getStatusLabels($status);
     }
 </style>
 <div class="content-wrapper">
-    <section class="content-header">
-        &nbsp;&nbsp;
-    </section>
-    <div class="row content-row">
+    <div class="row content-row pb-5 pt-5">
         <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
             <div class="card">
                 <div class="card-header p-0 border-bottom-0">

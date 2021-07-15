@@ -9,8 +9,8 @@ use common\helpers\Url;
 use common\helpers\ValidHelper;
 use common\models\ModelSearch;
 use common\models\Store;
+use frontend\controllers\BaseController;
 use Yii;
-use common\components\controller\BaseController;
 use common\models\pay\Payment;
 
 /**
@@ -20,7 +20,6 @@ class DefaultController extends BaseController
 {
     public function beforeAction($action)
     {
-        $this->layout = 'main';
         return parent::beforeAction($action);
     }
 
@@ -30,16 +29,7 @@ class DefaultController extends BaseController
      */
     public function actionIndex()
     {
-        $this->layout = 'landing';
-        $model = new Payment();
-
-        if (Yii::$app->request->isPost) {
-            var_dump(Yii::$app->request->post());
-        }
-
-        return $this->render($this->action->id, [
-            'model' => $model,
-        ]);
+        return $this->render($this->action->id, []);
     }
 
     /**
@@ -51,7 +41,7 @@ class DefaultController extends BaseController
         $model = new Payment();
         $model->id = IdHelper::snowFlakeId();
         $model->store_id = $this->getStoreId();
-        $store = Store::findOne($this->getStoreId());
+        $store = $this->store;
 
         $model->captchaRequired();
         if (Yii::$app->request->isPost) {
