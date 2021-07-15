@@ -33,7 +33,7 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => BbsAsset::
 <body class="bg-light">
 <?php $this->beginBody() ?>
     <header>
-        <?= $this->render('headerNav') ?>
+        <?= $this->render('nav') ?>
     </header>
 
     <main class="container">
