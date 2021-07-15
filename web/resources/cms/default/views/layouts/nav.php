@@ -11,7 +11,7 @@ $store = $this->context->store;
 
 NavBar::begin([
 //     'brandLabel' => Html::img('/images/logo.png'),
-    'brandLabel' => $context->getBlockValue('common_website_name') ?: $this->context->store->settings['website_name'] ?: $this->context->store->name,
+    'brandLabel' => $context->getBlockValue('common_website_name') ?: $store->settings['website_name'] ?: $store->name,
     'brandUrl' => Yii::$app->homeUrl,
     'options' => [
         'class' => 'navbar navbar-expand-lg navbar-dark fixed-top',

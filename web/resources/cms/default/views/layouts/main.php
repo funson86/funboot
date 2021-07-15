@@ -26,9 +26,8 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => CmsAllAsse
 </head>
 <body>
 <?php $this->beginBody() ?>
-    <header>
-        <?= $this->render('nav') ?>
-    </header>
+
+    <?= $this->render('nav') ?>
 
     <main class="container">
         <?= Alert::widget() ?>
@@ -36,9 +35,7 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => CmsAllAsse
 
     <?= $content ?>
 
-    <footer>
-        <?= $this->render('footer') ?>
-    </footer>
+    <?= $this->render('footer') ?>
 
     <!-- Scroll to Top -->
     <button type="button" class="btn btn-scroll-top" id="goTop" title="<?= Yii::t('app', 'Go Top') ?>"><span class="fa fa-chevron-up"></span></button>
