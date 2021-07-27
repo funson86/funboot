@@ -23,9 +23,7 @@ class Html extends \yii\helpers\Html
      */
     public static function a($text, $url = null, $options = [], $check = true)
     {
-        if ($url !== null) {
-            $options['href'] = Url::to($url, false, $check);
-        }
+        !is_null($url) && $options['href'] = Url::to($url, false, $check);
 
         return static::tag('a', $text, $options);
     }
@@ -102,9 +100,8 @@ class Html extends \yii\helpers\Html
      */
     public static function buttonConfirm(array $url = ['delete'], $name = null, $options = [])
     {
-        if (!$name) {
-            $name = Yii::t('app', 'Delete');
-        }
+        !$name && $name = Yii::t('app', 'Delete');
+
         $options = ArrayHelper::merge([
             'class' => 'btn btn-danger btn-sm',
             'onclick' => "fbConfirm(this); return false;"
@@ -122,9 +119,8 @@ class Html extends \yii\helpers\Html
      */
     public static function view(array $url = ['view'], $name = null, $options = [])
     {
-        if (!$name) {
-            $name = Yii::t('app', 'View');
-        }
+        !$name && $name = Yii::t('app', 'View');
+
         $options = ArrayHelper::merge([
             'class' => 'btn btn-default btn-sm',
         ], $options);
@@ -161,9 +157,8 @@ class Html extends \yii\helpers\Html
      */
     public static function create(array $url = ['edit'], $name = null, $options = [])
     {
-        if (!$name) {
-            $name = Yii::t('app', 'Create');
-        }
+        !$name && $name = Yii::t('app', 'Create');
+
         $options = ArrayHelper::merge([
             'class' => "btn btn-primary btn-sm"
         ], $options);
@@ -202,9 +197,7 @@ class Html extends \yii\helpers\Html
      */
     public static function edit(array $url = ['edit'], $name = null, $options = [])
     {
-        if (!$name) {
-            $name = Yii::t('app', 'Edit');
-        }
+        !$name && $name = Yii::t('app', 'Edit');
 
         if (!isset($options['class'])) {
             $options = ArrayHelper::merge([
@@ -242,9 +235,8 @@ class Html extends \yii\helpers\Html
      */
     public static function delete(array $url = ['delete'], $name = null, $options = [])
     {
-        if (!$name) {
-            $name = Yii::t('app', 'Delete');
-        }
+        !$name && $name = Yii::t('app', 'Delete');
+
         $options = ArrayHelper::merge([
             'class' => 'btn btn-danger btn-sm',
             'onclick' => "fbDelete(this); return false;"
@@ -355,15 +347,11 @@ class Html extends \yii\helpers\Html
      * @param array $options
      * @return string
      */
-    public static function import($url = ['import-ajax'], $name = null, $options = [])
+    public static function import($url = null, $name = null, $options = [])
     {
-        if (empty($url)) {
-            $url = ['import-ajax'];
-        }
+        !$url && $url = ['import-ajax'];
+        !$name && $name = Yii::t('app', 'Import');
 
-        if (!$name) {
-            $name = Yii::t('app', 'Import');
-        }
         $options = ArrayHelper::merge([
             'class' => "btn btn-info btn-xs",
             'data-toggle' => 'modal',
@@ -540,6 +528,7 @@ class Html extends \yii\helpers\Html
         if (empty($options)) {
             return null;
         }
+
         $template = '';
         $buttons = [];
         foreach ($options as $option) {

@@ -109,7 +109,7 @@ class SignupEmailForm extends Model
      */
     protected function sendEmail($user)
     {
-        $content = CommonHelper::render(Yii::getAlias('@common/mail/bbs/emailVerify-html.php'), [
+        $content = CommonHelper::render(Yii::getAlias('@common/mail/emailVerify-html.php'), [
             'user' => $user,
         ], $this, Yii::getAlias('@common/mail/layouts/html.php'));
 

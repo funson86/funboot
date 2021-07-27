@@ -42,6 +42,18 @@ class StoreSystem extends \yii\base\Component
         return $this->store;
     }
 
+    public function getById($storeId = null)
+    {
+        if (!$storeId) {
+            return $this->store;
+        }
+
+        $data = ArrayHelper::mapIdData(Yii::$app->cacheSystem->getAllStore());
+
+        return $data[$storeId] ?? $this->store;
+    }
+
+
     public function getId()
     {
         return $this->store->id ?? Yii::$app->params['defaultStoreId'];

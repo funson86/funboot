@@ -311,6 +311,18 @@
     color: #FF0000;
 }
 
+.btn-xs {
+    padding:1px 5px;
+    font-size:12px;
+    line-height:1.5;
+    border-radius:3px
+}
+
+.overflow-hidden {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
 /*** begin of floating label ***/
 .form-label-group {
@@ -422,3 +434,12 @@
 }
 
 /*** end of floating label ***/
+
+.control-label-full {
+    display: block;
+    width: 100%;
+}
+
+.control-full {
+    width: 100%;
+}

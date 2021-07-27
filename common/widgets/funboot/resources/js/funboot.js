@@ -288,17 +288,13 @@ function postLink(url, data = '', name = '_self')
     tempForm.action = url;
     tempForm.target = name;    // _blank - URL加载到一个新的窗口
 
-    var hideInput = document.createElement("input");
-    hideInput.type = "hidden";
-    hideInput.name = "content";
-    hideInput.value = data;
-    tempForm.appendChild(hideInput);
-    // 可以传多个参数
-    /* var nextHideInput = document.createElement("input");
-    nextHideInput.type = "hidden";
-    nextHideInput.name = "content";
-    nextHideInput.value = data;
-    tempForm.appendChild(nextHideInput); */
+    for (var item in data) {
+        var opt = document.createElement("input");//添加一个input类型
+        opt.setAttribute('name', item)
+        opt.setAttribute('value', data[item])
+        tempForm.appendChild(opt);
+    }
+
     if(document.all){    // 兼容不同浏览器
         tempForm.attachEvent("onsubmit",function(){});        //IE
     }else{
@@ -310,6 +306,7 @@ function postLink(url, data = '', name = '_self')
     }else{
         tempForm.dispatchEvent(new Event("submit"));
     }
+
     tempForm.submit();
     document.body.removeChild(tempForm);
 }

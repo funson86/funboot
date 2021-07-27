@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="card-body">
 
-                <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+                    <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
                     <?= $form->field($model, 'email', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['autofocus' => true, 'placeholder' => Yii::t('app', ' ')]) ?>
 
@@ -32,8 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= Html::a(Yii::t('app', 'Forgot Password?'), ['/bbs/default/request-password-reset']) ?>
                     </div>
 
-                <?php ActiveForm::end(); ?>
+                    <?php ActiveForm::end(); ?>
 
+                </div>
             </div>
         </div>
     </div>

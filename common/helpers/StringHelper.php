@@ -187,4 +187,41 @@ class StringHelper extends BaseStringHelper
 
         return substr($arr[0], 0, 3) . $secretChar . '@' . $secretChar. substr($arr[1], -8);
     }
+
+    /**
+     * 百分比转数值
+     * @param $str
+     * @param int $decimals
+     * @return float|int|string
+     */
+    public static function strToNumberOfPercent($str, $decimals = 0)
+    {
+        return $decimals > 0 ? number_format(floatval($str) / 100, $decimals) : (floatval($str) / 100);
+    }
+
+    /**
+     * 数值转百分比
+     * @param $number
+     * @param int $decimals
+     * @return float|int|string
+     */
+    public static function percentToStr($number, $decimals = 0)
+    {
+        return ($decimals > 0 ? round($number * 100, 2) : $number * 100) . '%';
+    }
+
+    /**
+     * 计算中文字符的Ord累加值
+     * @param $str
+     */
+    public static function mbStringOrd($str)
+    {
+        $len = mb_strlen($str);
+        $index = 0;
+        for ($i = 0; $i < $len; $i++) {
+            $index += mb_ord(mb_substr($str, $i));
+        }
+
+        return $index;
+    }
 }

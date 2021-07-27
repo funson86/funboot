@@ -31,9 +31,7 @@ class ResultHelper
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        if (!$msg) {
-            $msg = self::getMsg($code);
-        }
+        !$msg && $msg = self::getMsg($code);
 
         return [
             'code' => $code,

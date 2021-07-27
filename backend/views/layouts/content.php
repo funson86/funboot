@@ -35,10 +35,10 @@ use common\helpers\Url;
     </section>
 <?php } ?>
 
-    <section class="content">
-        <div class="container-fluid">
-            <?php if (!Yii::$app->request->isAjax) { echo \common\widgets\Alert::widget(); } ?>
-            <?= $content ?>
-        </div>
-    </section>
+<section class="content">
+    <div class="container-fluid">
+        <?= !Yii::$app->request->isAjax ? \common\widgets\alert\SweetAlert2::widget() : '' ?>
+        <?= $content ?>
+    </div>
+</section>
 

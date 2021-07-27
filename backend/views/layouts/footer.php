@@ -112,6 +112,7 @@ $this->registerJs($script, \yii\web\View::POS_END);
 <?php
 $urlEditAjaxField = Url::to(['edit-ajax-field'], false, false);
 $urlEditAjaxStatus = Url::to(['edit-ajax-status'], false, false);
+$csrf = Yii::$app->request->getCsrfToken();
 $js = <<<JS
 // 小模拟框清除
 $('#ajaxModal').on('hide.bs.modal', function (e) {
@@ -278,7 +279,7 @@ function fbDelete(obj, text) {
         cancelButtonText: fbT('Cancel')
     }).then((result) => {
         if (result.value) {
-            postLink($(obj).attr('href'));
+            postLink($(obj).attr('href'), {'_csrf-backend': '$csrf'});
             // window.location = $(obj).attr('href');
         }
     });
@@ -300,7 +301,7 @@ function fbConfirm(obj, text) {
         cancelButtonText: fbT('Cancel')
     }).then((result) => {
         if (result.value) {
-            postLink($(obj).attr('href'));
+            postLink($(obj).attr('href'), {'_csrf-backend': '$csrf'});
             // window.location = $(obj).attr('href');
         }
     });

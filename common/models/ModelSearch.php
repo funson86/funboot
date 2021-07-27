@@ -61,12 +61,16 @@ class ModelSearch extends Model
     private $modelClassName;
     private $relationAttributes = [];
     private $rules;
-    private $scenarios;
+
+    /**
+     * @var string 场景
+     */
+    public $scenarios = 'default';
 
     /**
      * @var string 默认排序
      */
-    public $defaultOrder;
+    public $defaultOrder = ['sort' => SORT_ASC, 'id' => SORT_DESC];
 
     /**
      * @var string 分组
