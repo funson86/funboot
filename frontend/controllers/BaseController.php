@@ -19,6 +19,9 @@ class BaseController extends \common\components\controller\BaseController
     // 判断是否为手机版
     public $isMobile;
 
+    // 模版类型 模板类型1，表示目录级别切换，模板类型为2，表示使用default模板，只是在颜色上微调
+    public $themeType = 1;
+
     //模板
     public $theme = 'default';
 
@@ -37,7 +40,7 @@ class BaseController extends \common\components\controller\BaseController
         strlen($store->lang_frontend_default) > 0 && !Yii::$app->cacheSystem->getLanguage(Yii::$app->user->id ?? 0, Yii::$app->session->id) && !Yii::$app->request->get('lang') && Yii::$app->language = $store->lang_frontend_default;
 
         if (Yii::$app->defaultRoute != 'site') {
-            $this->theme = $store->settings[$store->route . '_theme'] ?? $store->settings['website_theme'] ?: 'default';
+            $this->themeType == 1 && $this->theme = $store->settings[$store->route . '_theme'] ?? $store->settings['website_theme'] ?: 'default';
             $this->module->setViewPath('@webroot/resources/' . $store->route . '/' . $this->theme . '/views');
             $this->layout = 'main';
             $this->prefixStatic = Yii::getAlias('@web/resources/' . $store->route . '/' . $this->theme);

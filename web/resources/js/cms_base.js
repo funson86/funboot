@@ -16,6 +16,7 @@ try {
 onscroll = function() {
     var st = document.documentElement.scrollTop || document.body.scrollTop;
     var goTop = document.getElementById('goTop');
+    if (!goTop) return;
     if (!goTop.offsetWidth && st >= 700) {
         goTop.style.display = 'block';
     } else if (!!goTop.offsetWidth && st < 700) {

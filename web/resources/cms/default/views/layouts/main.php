@@ -29,13 +29,10 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => CmsAllAsse
 
     <?= $this->render('nav') ?>
 
-    <main class="container">
-        <?= Alert::widget() ?>
-    </main>
-
     <?= $content ?>
 
     <?= $this->render('footer') ?>
+    <?= \common\widgets\alert\SweetAlert2::widget() ?>
 
     <!-- Scroll to Top -->
     <button type="button" class="btn btn-scroll-top" id="goTop" title="<?= Yii::t('app', 'Go Top') ?>"><span class="fa fa-chevron-up"></span></button>

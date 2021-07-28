@@ -242,7 +242,7 @@ class CartController extends BaseController
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = Yii::$app->user->id;
             if ($model->save())
-                return $this->redirect(['cart/checkout']);
+                return $this->redirect(['/mall/cart/checkout']);
         }
 
         return $this->render('address', [

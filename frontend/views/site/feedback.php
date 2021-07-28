@@ -48,25 +48,3 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-
-<?php
-if (!$resultMsg) return;
-
-$this->registerCssFile('@web/resources/toastr/toastr.min.css');
-$this->registerJsFile("@web/resources/toastr/toastr.min.js");
-
-echo "<style>.toast-top-center {top: 200px;}</style>";
-$js = <<<JS
-toastr.options = {
-    "closeButton": true, //是否显示关闭按钮
-    "positionClass": "toast-top-center",//弹出窗的位置
-    "timeOut": "59000", //展现时间
-};
-$(document).ready(function () {
-    toastr.success("{$resultMsg}");
-    setTimeout(function() {
-        window.location.href = '/';
-    }, 5000);
-});
-JS;
-$this->registerJs($js);

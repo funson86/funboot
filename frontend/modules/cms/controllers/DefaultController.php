@@ -252,18 +252,15 @@ class DefaultController extends BaseController
      */
     public function actionContact()
     {
-        $resultMsg = null;
-
         $model = new FeedbackForm();
         $model->checkCaptchaRequired();
 
         if ($model->load(Yii::$app->request->post()) && $model->create()) {
-            $resultMsg = Yii::t('app', 'Thank you for your comment, we will contact you as soon as possible.');
+            $this->flashSuccess(Yii::t('app', 'Thank you for your comment, we will contact you as soon as possible.'));
         }
 
         return $this->render($this->action->id, [
             'model' => $model,
-            'resultMsg' => $resultMsg,
         ]);
     }
 

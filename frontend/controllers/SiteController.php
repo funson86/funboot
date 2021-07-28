@@ -279,18 +279,15 @@ class SiteController extends BaseController
 
     public function actionFeedback()
     {
-        $resultMsg = null;
-
         $model = new FeedbackForm();
         $model->checkCaptchaRequired();
 
         if ($model->load(Yii::$app->request->post()) && $model->create()) {
-            $resultMsg = Yii::t('app', 'Operate Successfully');
+            $this->flashSuccess(Yii::t('app', 'Operate Successfully'));
         }
 
         return $this->render($this->action->id, [
             'model' => $model,
-            'resultMsg' => $resultMsg,
         ]);
     }
 

@@ -46,7 +46,7 @@ class DefaultController extends BaseController
         $model->captchaRequired();
         if (Yii::$app->request->isPost) {
             if ($store->status != Store::STATUS_ACTIVE) {
-                $resultMsg = Yii::t('app', 'Closed Yet, please try it later');
+                $this->flashError(Yii::t('app', 'Closed Yet, please try it later'));
             } else {
                 Yii::$app->session->set('paymentSubmit', Yii::$app->session->get('paymentSubmit', 0) + 1);
 
@@ -59,7 +59,7 @@ class DefaultController extends BaseController
 
                         $this->sendMail($model);
 
-                        return $this->redirect(['/pay/default/checkout', 'id' => $model->id]);
+                        return $this->redirectSuccess(['/pay/default/checkout', 'id' => $model->id]);
                     }
                 }
             }
@@ -67,7 +67,6 @@ class DefaultController extends BaseController
 
         return $this->render($this->action->id, [
             'model' => $model,
-            'resultMsg' => $resultMsg ?? null,
         ]);
     }
 
