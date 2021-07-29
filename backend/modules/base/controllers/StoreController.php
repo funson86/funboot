@@ -134,10 +134,6 @@ class StoreController extends BaseController
      */
     public function actionLogin($id)
     {
-        if ($this->isSuperAdmin()) {
-            return $this->goBack();
-        }
-
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
@@ -170,7 +166,8 @@ class StoreController extends BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        return $this->redirect(Yii::$app->params['httpProtocol'] . $model->host_name . '/');
+        $hostNames = explode('|', $model->host_name);
+        return $this->redirect(Yii::$app->params['httpProtocol'] . ($hostNames[0] ?? $model->host_name) . '/');
     }
 
     /**
