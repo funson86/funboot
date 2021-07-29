@@ -6,6 +6,7 @@ use common\helpers\ArrayHelper;
 use common\helpers\IdHelper;
 use common\helpers\OfficeHelper;
 use common\models\base\SettingType;
+use common\models\food\Product;
 use Yii;
 use common\models\base\Setting;
 use common\models\ModelSearch;
@@ -125,6 +126,27 @@ class SettingController extends BaseController
     }
 
     /**
+     * @param $setting
+     */
+    protected function afterEditAjaxSave($setting)
+    {
+        foreach ($setting as $code => $value) {
+            // 如果是整站打折
+            if ($code == 'promotion_all_product_discount') {
+                $discount = intval(str_replace('%', '', $value));
+                if (!is_int($discount)) {
+                    $discount = 0;
+                }
+                $discount = (100 + $discount) / 100;
+                Product::updateAll(['price' => new Expression('market_price * ' . $discount)], ['store_id' => $this->getStoreId()]);
+                if ($discount == 1) {
+                    Product::updateAll(['type' => new Expression('type & ' . 0x7ffffffB)], ['store_id' => $this->getStoreId()]);
+                }
+            }
+        }
+    }
+
+    /**
      * 返回模型
      *
      * @param $value
@@ -155,9 +177,80 @@ class SettingController extends BaseController
         return $model;
     }
 
-    protected function beforeImport($model = null)
+
+    /**
+     * 导入
+     *
+     * @return mixed
+     */
+    public function actionImportAjax()
     {
-        $model->setting_type_id = 1001;
+        $settingTypes = SettingType::find()->all();
+        $mapCodeId = ArrayHelper::map($settingTypes, 'code', 'id');
+        $mapCodeName = ArrayHelper::map($settingTypes, 'code', 'name');
+        if (Yii::$app->request->isPost) {
+            try {
+                $file = $_FILES['importFile'];
+                $data = OfficeHelper::readExcel($file['tmp_name'], 1);
+                $count = count($data);
+
+                $countCreate = $countUpdate = 0;
+                $errorLines = $errorMsgs = [];
+                for ($i = 2; $i <= $count; $i++) { // 忽略第1行表头
+                    $row = $data[$i];
+
+                    $code = trim($row[0]);
+                    if (!isset($mapCodeId[$code])) {
+                        continue;
+                    }
+
+                    // 更新的话ID必须在第一行，有数据才查找
+                    if (isset($row[0]) && strlen($row[0]) > 0) {
+                        $model = $this->modelClass::find()->where(['store_id' => $this->getStoreId(), 'code' => $row[0]])->one();
+                        if (!$model) {
+                            $model = new $this->modelClass();
+                            $model->code = trim($row[0]);
+                        }
+                    }
+                    if (isset($model->store_id)) { // 设置store_id为当前id
+                        $model->store_id = $this->getStoreId();
+                    }
+
+                    $j = 0;
+                    $errorData = false;
+                    $model->value = trim($row[1]);
+                    $model->setting_type_id = $mapCodeId[$code] ?? 1001;
+                    $model->name = $mapCodeName[$code] ?? 'tmp';
+
+                    //数据无错误才插入
+                    if (!$errorData) {
+                        $this->beforeImport($model);
+                        if (!$model->save()) {
+                            array_push($errorLines, $i);
+                            array_push($errorMsgs, json_encode($model->errors));
+                        }
+                        $this->afterImport($model);
+                        $countCreate++;
+                    }
+
+                    if (count($errorLines)) {
+                        $strLine = implode(', ', $errorLines);
+                        $strMsg = implode(', ', $errorMsgs);
+                        $this->flashError(Yii::t('app', "Line {strLine} error.", ['strLine' => $strLine . $strMsg]));
+                    }
+
+                    $this->flashSuccess(Yii::t('app', "Import Data Success. Create: {countCreate}  Update: {countUpdate}", ['countCreate' => $countCreate, 'countUpdate' => $countUpdate]));
+                }
+
+
+            } catch (\Exception $e) {
+                return $this->redirectError($e->getMessage(), null, true);
+            }
+
+            return $this->redirectSuccess();
+        }
+
+        return $this->renderAjax('@backend/views/site/' . $this->action->id);
     }
 
     public function actionImportRepairSettingType()
@@ -170,7 +263,6 @@ class SettingController extends BaseController
         $mapCodeId = ArrayHelper::map($settingTypes, 'code', 'id');
         $mapCodeName = ArrayHelper::map($settingTypes, 'code', 'name');
 
-        Setting::updateAll(['status' => Setting::STATUS_DELETED]);
         $models = Setting::find()->all();
         foreach ($models as $model) {
             Setting::deleteAll(['and', ['store_id' => $model->store_id, 'code' => $model->code], 'id < ' . $model->id]);
@@ -191,7 +283,8 @@ class SettingController extends BaseController
             return $this->goBack();
         }
 
-        $codes = ['store_id', 'website_name', 'website_logo'];
+        $codes = ['store_id'];//, 'website_name', 'contact_email', 'payment_publish_key', 'printer_code', 'website_logo'];
+        $codes = ArrayHelper::merge($codes, ArrayHelper::getColumn(SettingType::find()->all(), 'code'));
 
         $fields = [];
         foreach ($codes as $k => $code) {
@@ -212,15 +305,46 @@ class SettingController extends BaseController
             }
             $models[$setting['store_id']][$setting['code']] = $setting['value'];
         }
-        //var_dump($models);
 
-        $spreadSheet = $this->arrayToSheet($models, $fields);//vd($spreadSheet);
+        $models = array_values($models);
+        $spreadSheet = $this->arrayToSheet($models, $fields);
 
         $arrModelClass = explode('\\', strtolower($this->modelClass));
         OfficeHelper::write($spreadSheet, $ext, 'settings_' . array_pop($arrModelClass) . '_' . date('mdHis') . '.' . $ext);
 
         exit();
+    }
 
-        return $this->redirectSuccess(Yii::$app->request->referrer);
+    public function actionEditAjaxCodeValue()
+    {
+        $code = Yii::$app->request->get('code');
+        $value = Yii::$app->request->get('value');
+
+        if (!$code || is_null($value)) {
+            return $this->error();
+        }
+
+        $settingType = SettingType::findOne(['code' => $code]);
+        if (!$settingType) {
+            return $this->error();
+        }
+
+        $model = Setting::find()->where(['store_id' => $this->store->id, 'code' => $code])->one();
+        if (!$model) {
+            $model = $this->findModelByField($code, 'code');
+            $model->app_id = Yii::$app->id;
+            $model->name = $settingType->name;
+            $model->setting_type_id = $settingType->id;
+            $model->code = $code;
+        }
+        $model->value = is_array($value) ? Json::encode($value) : $value;
+
+        if (!$model->save()) {
+            Yii::$app->logSystem->db($model->errors);
+            return $this->error();
+        }
+
+        Yii::$app->cacheSystem->clearStoreSetting($this->store->id);
+        return $this->success();
     }
 }
