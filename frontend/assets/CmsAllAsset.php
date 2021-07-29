@@ -25,7 +25,7 @@ class CmsAllAsset extends AssetBundle
         'common\components\assets\CookieBarAsset',
         'common\components\assets\LazyloadAsset',
         'common\components\assets\FlagIconCssAsset',
-        'common\components\assets\FuncyBoxAsset',
+        'common\components\assets\FancyBoxAsset',
         'common\components\assets\FontAwesomeAsset',
         'common\components\assets\AnimateAsset',
         'common\components\assets\WowAsset',
