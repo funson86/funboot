@@ -22,6 +22,6 @@ class MailJob extends BaseJob
             return false;
         }
 
-        Yii::$app->mailSystem->send($this->to, $this->subject, $this->content, $this->cc, $this->from);
+        Yii::$app->mailSystem->sendReal($this->to, $this->subject, $this->content, $this->cc, $this->from);
     }
 }

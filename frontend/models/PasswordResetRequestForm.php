@@ -47,6 +47,7 @@ class PasswordResetRequestForm extends Model
     {
         /* @var $user User */
         $user = User::findOne([
+            'store_id' => Yii::$app->storeSystem->getId(),
             'status' => User::STATUS_ACTIVE,
             'email' => $this->email,
         ]);
@@ -62,7 +63,7 @@ class PasswordResetRequestForm extends Model
             }
         }
 
-        $content = CommonHelper::render(Yii::getAlias('@common/mail/bbs/passwordResetToken-html.php'), [
+        $content = CommonHelper::render(Yii::getAlias('@common/mail/passwordResetToken-html.php'), [
             'user' => $user,
         ], $this, Yii::getAlias('@common/mail/layouts/html.php'));
 

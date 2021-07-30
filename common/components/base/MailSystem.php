@@ -26,8 +26,9 @@ class MailSystem extends \yii\base\Component
 
     public $mailer;
 
-    public function __construct($config = [])
+    public function init()
     {
+        parent::init();
         $this->mailer = new SmtpMailer();
     }
 
@@ -40,7 +41,7 @@ class MailSystem extends \yii\base\Component
     {
         // 插入队列
         if ($this->queue) {
-            Yii::$app->queue->push(new MailJob([
+            return Yii::$app->queue->push(new MailJob([
                 'to' => $to,
                 'subject' => $subject,
                 'content' => $content,

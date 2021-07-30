@@ -23,15 +23,6 @@ class StoreSystem extends \yii\base\Component
 {
     public $store;
 
-    /**
-     * AuthSystem constructor.
-     * @param array $config
-     */
-    public function __construct($config = [])
-    {
-        parent::__construct($config);
-    }
-
     public function set($store)
     {
         $this->store = $store;

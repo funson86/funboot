@@ -21,6 +21,7 @@ class CommonHelper
 
         return $mapIdStore[$id] ?? null;
     }
+
     /**
      * 根据code得到对应的store
      * @return Store|mixed|null

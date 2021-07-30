@@ -22,9 +22,9 @@ class DictSystem extends \yii\base\Component
 
     public $mapCodeDictData;
 
-    public function __construct($config = [])
+    public function init()
     {
-        parent::__construct($config);
+        parent::init();
 
         $this->allDict = Yii::$app->cacheSystem->getAllDict();
         $this->mapCodeDict = ArrayHelper::mapIdData($this->allDict, 'code');

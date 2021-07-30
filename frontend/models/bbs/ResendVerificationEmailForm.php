@@ -1,7 +1,7 @@
 <?php
 
 
-namespace frontend\models;
+namespace frontend\models\bbs;
 
 use common\helpers\CommonHelper;
 use Yii;
@@ -56,7 +56,7 @@ class ResendVerificationEmailForm extends Model
             return false;
         }
 
-        $content = CommonHelper::render(Yii::getAlias('@common/mail/emailVerify-html.php'), [
+        $content = CommonHelper::render(Yii::getAlias('@common/mail/bbs/emailVerify-html.php'), [
             'user' => $user,
         ], $this, Yii::getAlias('@common/mail/layouts/html.php'));
 

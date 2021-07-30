@@ -18,10 +18,6 @@ use yii\helpers\Json;
  */
 class SettingSystem extends \yii\base\Component
 {
-    public function __construct($config = [])
-    {
-        parent::__construct($config);
-    }
 
     public function getValue($code, $storeId)
     {

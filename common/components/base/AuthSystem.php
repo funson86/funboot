@@ -44,9 +44,9 @@ class AuthSystem extends \yii\base\Component
      * AuthSystem constructor.
      * @param array $config
      */
-    public function __construct($config = [])
+    public function init()
     {
-        parent::__construct($config);
+        parent::init();
 
         // 获取所有权限
         $this->allPermission = Yii::$app->cacheSystem->getAllPermission();
