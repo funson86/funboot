@@ -2,17 +2,8 @@
 namespace common\components\base;
 
 use common\components\mailer\SmtpMailer;
-use common\helpers\CommonHelper;
-use common\helpers\IdHelper;
-use common\helpers\IpHelper;
-use common\job\base\LogJob;
 use common\job\base\MailJob;
-use common\models\base\Log;
 use Yii;
-use yii\base\InvalidConfigException;
-use yii\web\Request;
-use yii\web\Response;
-use yii\base\Exception;
 
 /**
  * Class MailSystem

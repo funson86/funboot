@@ -1,5 +1,5 @@
 # mysqldump备份数据库
-# * * * * *  . /etc/profile; sh /www/funboot/console/mysqlbackup.sh >> /home/centos/log/mysqlbackup.log
+# * * * * *  . /etc/profile; sh /www/funboot/console/shell/mysqlbackup.sh >> /home/centos/log/mysqlbackup.log
 
 # !/bin/bash
 # 备份文件存储目录
