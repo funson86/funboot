@@ -57,7 +57,7 @@ if ($this->context->isAdmin()) { //管理员显示
         array_push($menus, ['label' => Yii::t('permission', 'Gii'), 'icon' => 'fas fa-code', 'url' => '#', 'class' => '', 'items' => $subMenu]);
 
         $subMenu = [
-            ['label' => Yii::t('permission', 'Qr Code'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/qr'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
+            ['label' => Yii::t('permission', '二维码'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/qr'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
             ['label' => Yii::t('permission', 'Crud'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/crud'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
             ['label' => Yii::t('permission', 'Crud Modal'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/crud-modal'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
             ['label' => Yii::t('permission', '树形表格'), 'icon' => 'fas fa-puzzle-piece', 'url' => ['/tool/tree'], 'class' => 'nav-link J_menuItem', 'target' => '_self'],
