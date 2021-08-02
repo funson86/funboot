@@ -224,4 +224,24 @@ class StringHelper extends BaseStringHelper
 
         return $index;
     }
+
+    /**
+     * 判断url文件是否存在
+     * @param $url
+     */
+    public static function getAttachmentPath($url)
+    {
+        if (ValidHelper::isUrl($url)) {
+            if (!ValidHelper::isUrl(Yii::getAlias('@attachmentUrl'))) {
+                $prefix = Yii::$app->request->hostInfo . Yii::getAlias('@attachmentUrl');
+                $url = str_replace($prefix, '', $url);
+            } else {
+                $url = str_replace(Yii::getAlias('@attachmentUrl'), '', $url);
+            }
+        } else {
+            $url = str_replace(Yii::getAlias('@attachmentUrl'), '', $url);
+        }
+
+        return Yii::getAlias('@attachment') . $url;
+    }
 }

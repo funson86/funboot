@@ -27,61 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="card-body">
 
-                <h3 class="card-title pt-3 pb-3"><i class="fas fa-chart-area"></i> <?= Yii::t('system', 'CPU/MEMORY Usage') ?></h3>
-                <table class="table">
-                    <tr>
-                        <td colspan="4">
-                            <div id="cpuChart" style="width: 100%; height:400px;"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><?= Yii::t('system', 'Cpu Cores') ?></td>
-                        <td><?= $model['cpu']['cpuCores'] ?></td>
-                        <td><?= Yii::t('system', 'Total Memory') ?></td>
-                        <td><?= $model['memory']['totalMem'] ?>M</td>
-                    </tr>
-                    <tr>
-                        <td><?= Yii::t('system', 'Cpu Model') ?></td>
-                        <td><?= $model['cpu']['cpuModel'] ?></td>
-                        <td><?= Yii::t('system', 'Used Memory') ?></td>
-                        <td><?= $model['memory']['usedMem'] ?>M</td>
-                    </tr>
-                    <tr>
-                        <td><?= Yii::t('system', 'Cpu Vendor') ?></td>
-                        <td><?= $model['cpu']['cpuVendor'] ?></td>
-                        <td><?= Yii::t('system', 'Total Swap') ?></td>
-                        <td><?= $model['memory']['totalSwap'] ?>M</td>
-                    </tr>
-                    <tr>
-                        <td><?= Yii::t('system', 'Load Avg') ?></td>
-                        <td id="loadAvg"><?= $model['loadavg']['loadavg'] ?></td>
-                        <td><?= Yii::t('system', 'Used Swap') ?></td>
-                        <td><?= $model['memory']['usedSwap'] ?>M</td>
-                    </tr>
-                </table>
-
-                <h3 class="card-title pt-3 pb-3"><i class="fas fa-chart-line"></i> <?= Yii::t('system', 'Server Net Info') ?></h3>
-                <table class="table">
-                    <tr>
-                        <td colspan="4">
-                            <div id="netChart" style="width: 100%; height:400px;"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><?= Yii::t('system', 'All Output') ?></td>
-                        <td id="net_allOutputSpeed"><?= $model['net']['allOutputSpeed'] ?></td>
-                        <td><?= Yii::t('system', 'All Input') ?></td>
-                        <td id="net_allInputSpeed"><?= $model['net']['allInputSpeed'] ?></td>
-                    </tr>
-                    <tr>
-                        <td><?= Yii::t('system', 'Output Speed') ?></td>
-                        <td id="net_currentOutputSpeed"><?= $model['net']['currentOutputSpeed'] ?></td>
-                        <td><?= Yii::t('system', 'Input Speed') ?></td>
-                        <td id="net_currentInputSpeed"><?= $model['net']['currentInputSpeed'] ?></td>
-                    </tr>
-                </table>
-
-
                 <h3 class="card-title pt-3 pb-3"><i class="fa fa-cog"></i> <?= Yii::t('system', 'Server Info') ?></h3>
                 <table class="table">
                     <tr>
@@ -113,6 +58,60 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><span id="divTime"></span></td>
                         <td><?= Yii::t('system', 'Server Up Time') ?></td>
                         <td><?= floor(intval($model['uptime']) / 86400) . Yii::t('app', ' Days ') .  floor(intval($model['uptime']) % 86400 / 3600) . Yii::t('app', ' Hours ') .  floor(intval($model['uptime']) % 86400 % 3600 / 60) . Yii::t('app', ' Minutes ') .  floor(intval($model['uptime']) % 86400 % 3600 % 60) . Yii::t('app', ' Seconds ') ?></td>
+                    </tr>
+                </table>
+
+                <h3 class="card-title pt-3 pb-3"><i class="fas fa-chart-area"></i> <?= Yii::t('system', 'CPU/MEMORY Usage') ?></h3>
+                <table class="table">
+                    <tr>
+                        <td colspan="4">
+                            <div id="cpuChart" style="width: 100%; height:400px;"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?= Yii::t('system', 'Cpu Cores') ?></td>
+                        <td><?= $model['cpu']['cpuCores'] ?></td>
+                        <td><?= Yii::t('system', 'Total Memory') ?></td>
+                        <td><?= $model['memory']['totalMem'] ?>M</td>
+                    </tr>
+                    <tr>
+                        <td><?= Yii::t('system', 'Cpu Model') ?></td>
+                        <td><?= $model['cpu']['cpuModel'] ?></td>
+                        <td><?= Yii::t('system', 'Used Memory') ?></td>
+                        <td><?= $model['memory']['usedMem'] ?>M</td>
+                    </tr>
+                    <tr>
+                        <td><?= Yii::t('system', 'Cpu Vendor') ?></td>
+                        <td><?= $model['cpu']['cpuVendor'] ?></td>
+                        <td><?= Yii::t('system', 'Total Swap') ?></td>
+                        <td><?= $model['memory']['totalSwap'] ?>M</td>
+                    </tr>
+                    <tr>
+                        <td><?= Yii::t('system', 'Load Avg') ?></td>
+                        <td id="loadAvg"><?= $model['loadavg']['explain'] ?></td>
+                        <td><?= Yii::t('system', 'Used Swap') ?></td>
+                        <td><?= $model['memory']['usedSwap'] ?>M</td>
+                    </tr>
+                </table>
+
+                <h3 class="card-title pt-3 pb-3"><i class="fas fa-chart-line"></i> <?= Yii::t('system', 'Server Net Info') ?></h3>
+                <table class="table">
+                    <tr>
+                        <td colspan="4">
+                            <div id="netChart" style="width: 100%; height:400px;"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?= Yii::t('system', 'All Output') ?></td>
+                        <td id="net_allOutputSpeed"><?= $model['net']['allOutputSpeed'] ?></td>
+                        <td><?= Yii::t('system', 'All Input') ?></td>
+                        <td id="net_allInputSpeed"><?= $model['net']['allInputSpeed'] ?></td>
+                    </tr>
+                    <tr>
+                        <td><?= Yii::t('system', 'Output Speed') ?></td>
+                        <td id="net_currentOutputSpeed"><?= $model['net']['currentOutputSpeed'] ?></td>
+                        <td><?= Yii::t('system', 'Input Speed') ?></td>
+                        <td id="net_currentInputSpeed"><?= $model['net']['currentInputSpeed'] ?></td>
                     </tr>
                 </table>
 
@@ -269,7 +268,7 @@ $js = <<<JS
             success: function(data) {
                 if (data.code == 200) {
                     var data = data.data;
-                    $('#loadAvg').html(data.loadavg.loadavg);
+                    $('#loadAvg').html(data.loadavg.explain);
 
                     // cpu内存图表
                     cpuUsage.shift();
