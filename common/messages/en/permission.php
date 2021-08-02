@@ -15,6 +15,7 @@ return [
     '店铺管理' => 'Store',
     '部门管理' => 'Department',
     '消息管理' => 'Message',
+    '消息类型' => 'Message Type',
     '文件管理' => 'Attachment',
     '角色权限管理' => 'Role',
     '菜单权限管理' => 'Menu Permission',
@@ -28,6 +29,7 @@ return [
 
     '二次开发' => 'Develop',
     '树形表格' => 'Tree',
+    '二维码' => 'Qrcode',
     '接口文档' => 'Swagger Api',
     'Funboot开发指南' => 'Funboot Develop Docs',
     'QQ开发交流群' => 'Funboot QQ Group',

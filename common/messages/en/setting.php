@@ -3,7 +3,6 @@ return [
     '网站设置' => 'Website',
     '联系方式' => 'Contact',
     '邮件设置' => 'Email',
-    '订单管理' => 'Orders Management',
 
     '网站标题' => 'Website Title',
     '网站Logo' => 'Website Logo',
@@ -38,13 +37,7 @@ return [
 
     '是' => 'Yes',
     '否' => 'No',
-    '暂停营业' => 'Business Closed Today',
-    '正常营业' => 'Opening',
-    '开始时间' => 'Started Time',
-    '结束时间' => 'Ended Time',
-    '英镑' => 'GBP Pound',
-    '美元' => 'USD Dollars',
-    '欧元' => 'EUR Euro',
-    '人民币' => 'CNY Renminbi',
+
+
 ];
 

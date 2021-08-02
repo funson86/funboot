@@ -56,6 +56,11 @@ return [
     'UPLOAD_TYPE_VOICE' => 'Voice',
 
 
+    'low' => 'Low',
+    'medium' => 'Medium',
+    'quartile' => 'Quartile',
+    'high' => 'High',
+
     'TYPE_BOARD' => 'Board',
     'TYPE_NOTICE' => 'Notice',
     'TYPE_PRIVATE' => 'Private',
@@ -103,7 +108,8 @@ return [
     'SHIPMENT_STATUS_PREPARING' => 'Preparing',
     'SHIPMENT_STATUS_ON_TIME' => 'On Time',
     'SHIPMENT_STATUS_DELAY' => 'Delay',
-    'SHIPMENT_STATUS_DONE' => 'Done',
+    'SHIPMENT_STATUS_DONE' => 'Ready for collection',
+    'SHIPMENT_STATUS_COLLECTED' => 'Collected',
     'SHIPMENT_STATUS_SHIPPING' => 'Shipping',
     'SHIPMENT_STATUS_RECEIVED' => 'Received',
 
@@ -136,18 +142,21 @@ return [
     'ROUTE_CMS' => 'Cms',
     'ROUTE_PAY' => 'Pay',
     'ROUTE_BBS' => 'BBS',
+    'ROUTE_WECHAT' => 'Wechat',
+    'ROUTE_MINI' => 'Mini Program',
+
+    'SUPPORT_ROLE_SUPER_ADMIN' => 'Super Admin',
+    'SUPPORT_ROLE_ADMIN' => 'Admin',
+    'SUPPORT_ROLE_STORE' => 'Store Owner',
+    'SUPPORT_ROLE_FRONTEND' => 'Frontend',
+
+    'KIND_NEWS' => 'News',
+    'KIND_PRODUCT' => 'Product',
+    'KIND_GALLERY' => 'Gallery',
 
     'TYPE_LIST' => 'List',
     'TYPE_MENU' => 'Menu',
     'TYPE_LINK' => 'Link',
-
-    'TYPE_PERCENT' => 'Percent',
-    'TYPE_FIXED' => 'Fixed',
-    'TYPE_GIFT_VOUCHER' => 'Gift Voucher',
-
-    'TYPE_HOT' => 'Hot',
-    'TYPE_NEW' => 'New',
-    'TYPE_PROMOTION' => 'Promotion',
 
     'STATUS_PAID' => 'Paid',
     'STATUS_UNPAID' => 'Unpaid',

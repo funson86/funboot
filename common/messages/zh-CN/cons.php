@@ -56,6 +56,11 @@ return [
     'UPLOAD_TYPE_VOICE' => '语音',
 
 
+    'low' => '低',
+    'medium' => '中',
+    'quartile' => '良',
+    'high' => '高',
+
     'TYPE_BOARD' => '公告',
     'TYPE_NOTICE' => '提醒',
     'TYPE_PRIVATE' => '私信',
@@ -97,16 +102,17 @@ return [
     'STATUS_CANCEL' => '已取消',
     'STATUS_DELETED' => '删除',
     'PAYMENT_STATUS_COD' => '现金',
-    'PAYMENT_STATUS_UNPAID' => 'Unpaid',
+    'PAYMENT_STATUS_UNPAID' => '未付款',
     'PAYMENT_STATUS_PAYING' => '正在付款',
     'PAYMENT_STATUS_PAID' => 'Paid',
     'SHIPMENT_STATUS_UNSHIPPED' => '未配送',
     'SHIPMENT_STATUS_PREPARING' => '准备',
     'SHIPMENT_STATUS_ON_TIME' => '准时',
     'SHIPMENT_STATUS_DELAY' => '延迟',
-    'SHIPMENT_STATUS_DONE' => '已做好',
+    'SHIPMENT_STATUS_DONE' => '可取餐',
+    'SHIPMENT_STATUS_COLLECTED' => '已取餐',
     'SHIPMENT_STATUS_SHIPPING' => '已出发',
-    'SHIPMENT_STATUS_RECEIVED' => '已收货',
+    'SHIPMENT_STATUS_RECEIVED' => '已送达',
 
     'POINT_TYPE_BOUGHT' => '购买商品',
     'POINT_TYPE_COMMENT' => '评价商品',
@@ -137,18 +143,21 @@ return [
     'ROUTE_CMS' => '网站',
     'ROUTE_PAY' => '支付',
     'ROUTE_BBS' => '社区',
+    'ROUTE_WECHAT' => '公众号',
+    'ROUTE_MINI' => '小程序',
+
+    'SUPPORT_ROLE_SUPER_ADMIN' => '超级管理员',
+    'SUPPORT_ROLE_ADMIN' => '管理员',
+    'SUPPORT_ROLE_STORE' => '店主',
+    'SUPPORT_ROLE_FRONTEND' => '前端',
+
+    'KIND_NEWS' => '新闻',
+    'KIND_PRODUCT' => '产品',
+    'KIND_GALLERY' => '图集',
 
     'TYPE_LIST' => '列表',
     'TYPE_MENU' => '单页面',
     'TYPE_LINK' => '外部链接',
-
-    'TYPE_PERCENT' => '按比例扣减',
-    'TYPE_FIXED' => '固定扣减',
-    'TYPE_GIFT_VOUCHER' => '礼品券',
-
-    'TYPE_HOT' => '热门',
-    'TYPE_NEW' => '新品',
-    'TYPE_PROMOTION' => '促销',
 
     'STATUS_PAID' => '成功',
     'STATUS_UNPAID' => '待支付',
@@ -184,7 +193,5 @@ return [
 
     'TYPE_TEMP' => '临时',
     'TYPE_PERM' => '永久',
-
-
 
 ];
