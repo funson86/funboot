@@ -810,13 +810,13 @@ INSERT INTO `fb_base_role_permission` VALUES ('27', '1', '', '3', '583', '1', '5
 -- INSERT INTO `fb_base_role_permission` VALUES ('31', '1', '', '3', '6', '1', '50', '1', '1607671711', '1607671711', '1', '1');
 
 INSERT INTO `fb_base_role_permission` VALUES ('128', '1', '', '50', '5', '1', '50', '1', '1608030276', '1608030276', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('129', '1', '', '50', '6', '1', '50', '1', '1608030276', '1608030276', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('130', '1', '', '50', '61', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('129', '1', '', '50', '6', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('130', '1', '', '50', '61', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('131', '1', '', '50', '560', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('132', '1', '', '50', '56', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('133', '1', '', '50', '562', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('134', '1', '', '50', '567', '1', '50', '1', '1608030276', '1608030276', '1', '1');
-INSERT INTO `fb_base_role_permission` VALUES ('135', '1', '', '50', '611', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+-- INSERT INTO `fb_base_role_permission` VALUES ('135', '1', '', '50', '611', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('136', '1', '', '50', '5601', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('137', '1', '', '50', '5602', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('138', '1', '', '50', '5603', '1', '50', '1', '1608030276', '1608030276', '1', '1');
