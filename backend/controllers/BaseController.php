@@ -152,8 +152,6 @@ class BaseController extends \common\components\controller\BaseController
             $permissionName = '/' . Yii::$app->controller->route;
             if (!Yii::$app->authSystem->verify($permissionName)) {
                 if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
-                    echo json_encode($this->error(403));
-                    exit();
                     return false;
                 } else {
                     throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
@@ -289,6 +287,7 @@ class BaseController extends \common\components\controller\BaseController
                     return $this->redirectSuccess(['index']);
                 } else {
                     Yii::$app->logSystem->db($model->errors);
+                    $this->flashError($this->getError($model));
                 }
             }
         }
@@ -319,7 +318,7 @@ class BaseController extends \common\components\controller\BaseController
             $this->beforeEditSave($id, $model);
 
             if (!$model->save()) {
-                $this->redirectError($model);
+                return $this->redirectError($this->getError($model));
             }
 
             $this->afterEdit($id, $model);
@@ -493,7 +492,7 @@ class BaseController extends \common\components\controller\BaseController
 
         if (!$result) {
             Yii::$app->logSystem->db($model->errors);
-            return $this->redirectError();
+            return $this->redirectError($this->getError($model));
         }
 
         if ($tree) {

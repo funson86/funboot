@@ -115,7 +115,7 @@ class DictDataController extends BaseController
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
             if (!$model->save()) {
-                $this->redirectError($model);
+                $this->redirectError($this->getError($model));
             }
 
             Yii::$app->cacheSystem->clearDict();
@@ -142,7 +142,7 @@ class DictDataController extends BaseController
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
             if (!$model->save()) {
-                $this->redirectError($model);
+                $this->redirectError($this->getError($model));
             }
 
             Yii::$app->cacheSystem->clearDict();

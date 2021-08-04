@@ -52,7 +52,7 @@ class UserBase extends BaseModel implements IdentityInterface
     public function rules()
     {
         return [
-            [['id'], 'safe'],
+            [['id', 'name'], 'safe'],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
     }

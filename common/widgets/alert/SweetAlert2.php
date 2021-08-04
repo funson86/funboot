@@ -33,8 +33,8 @@ class SweetAlert2 extends \yii\bootstrap4\Widget
      * - value: the bootstrap alert type (i.e. danger, success, info, warning)
      */
     public $alertTypes = [
-        'error'   => 'danger',
-        'danger'  => 'danger',
+        'error'   => 'error',
+        'danger'  => 'error',
         'success' => 'success',
         'info'    => 'info',
         'warning' => 'warning'
@@ -63,6 +63,7 @@ class SweetAlert2 extends \yii\bootstrap4\Widget
                 continue;
             }
 
+            $type = $this->alertTypes[$type] ?? $type;
             $this->view->registerJs("Swal.fire({text: '$flash', icon: '$type', confirmButtonText: 'OK'});", View::POS_READY);
 
             $session->removeFlash($type);

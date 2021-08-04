@@ -103,7 +103,7 @@ class DepartmentController extends BaseController
             }
 
             if (!$model->save()) {
-                $this->redirectError($model);
+                $this->redirectError($this->getError($model));
             }
 
             return $this->redirectSuccess();

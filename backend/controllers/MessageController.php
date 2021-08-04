@@ -163,7 +163,7 @@ class MessageController extends BaseController
         $model->status = Message::STATUS_RECYCLE;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
-            return $this->redirectError();
+            return $this->redirectError($this->getError($model));
         }
 
         return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete Successfully'));

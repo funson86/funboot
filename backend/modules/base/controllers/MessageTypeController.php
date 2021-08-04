@@ -70,7 +70,7 @@ class MessageTypeController extends BaseController
             $model->send_type = ArrayHelper::arrayToInt(Yii::$app->request->post($model->formName())['sendTypes'] ?? []);
 
             if (!$model->save()) {
-                $this->redirectError($model);
+                $this->redirectError($this->getError($model));
             }
 
             if (!$id) { //编辑的新消息才发送

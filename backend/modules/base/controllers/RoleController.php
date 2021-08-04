@@ -75,7 +75,7 @@ class RoleController extends BaseController
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
             if (!$model->save()) {
-                $this->redirectError($model);
+                $this->redirectError($this->getError($model));
             }
 
             if ($model->is_default == YesNo::YES) {

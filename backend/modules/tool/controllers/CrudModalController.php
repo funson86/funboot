@@ -57,7 +57,7 @@ class CrudModalController extends BaseController
             $model->ended_at = strtotime($post['Crud']['endedTime']);
 
             if (!$model->save()) {
-                $this->redirectError($model);
+                $this->redirectError($this->getError($model));
             }
 
             return $this->redirectSuccess();

@@ -101,14 +101,14 @@ class StoreController extends BaseController
                 $this->setDefaultData($model);
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($user->errors);
-                    $this->redirectError($model);
+                    $this->redirectError($this->getError($model));
                 }
 
                 Yii::$app->cacheSystem->clearAllStore();
                 $this->generateHostFile();
                 $this->redirectSuccess();
             } else {
-                $this->redirectError($model);
+                $this->redirectError($this->getError($model));
             }
         }
 
