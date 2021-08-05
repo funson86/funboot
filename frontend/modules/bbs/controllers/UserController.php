@@ -131,7 +131,8 @@ class UserController extends BaseController
         $model = new ChangePasswordForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changePassword()) {
-            return $this->redirectSuccess([$this->action->id]);
+            Yii::$app->user->logout();
+            return $this->redirectSuccess(['/bbs/default/login']);
         }
 
         return $this->render($this->action->id, [

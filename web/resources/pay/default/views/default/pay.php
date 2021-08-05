@@ -52,7 +52,7 @@ $this->title = Yii::t('app', '确认订单');
                         <?php if ($model->scenario == 'captchaRequired') { ?>
                             <?= $form->field($model,'verifyCode')->widget(\yii\captcha\Captcha::class, [
                                 'captchaAction' => '/site/captcha',
-                                'template' => '<div class="row"><div class="col-xs-7">{input}</div><div class="col-xs-5">{image}</div></div>',
+                                'template' => '<div class="row mx-1"><div class="col-xs-7">{input}</div><div class="col-xs-5">{image}</div></div>',
                                 'imageOptions' => [
                                     'alt' => Yii::t('app', 'Click to change'),
                                     'title' => Yii::t('app', 'Click to change'),
