@@ -63,6 +63,6 @@ class UserRoleBase extends BaseModel
 
     public function getPermission()
     {
-        return $this->hasMany(RolePermission::className(), ['role_id' => 'role_id']);
+        return $this->hasMany(RolePermission::className(), ['role_id' => 'role_id'])->orderBy(['permission_id' => SORT_ASC]);
     }
 }
