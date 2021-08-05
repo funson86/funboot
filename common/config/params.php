@@ -159,8 +159,8 @@ return [
     'bbs' => [
         'managerRoleIds' => [50, 106], //管理员role id
         'indexNodeChildren' => [ // 主页二级栏目
-            ['id' => 0, 'name' => Yii::t('app', 'All')],
-            ['id' => 1, 'name' => Yii::t('app', 'Job')],
+            ['id' => 0, 'name' => 'All'],
+            ['id' => 1, 'name' => 'Job'],
         ],
     ],
 
