@@ -41,6 +41,12 @@ class BaseController extends ActiveController
     protected $pageSize = 10;
 
     /**
+     * 是否高并发
+     * @var bool
+     */
+    protected $highConcurrency = false;
+
+    /**
      * 序列化数据
      * @var string[]
      */
@@ -282,6 +288,25 @@ class BaseController extends ActiveController
     protected function afterDeleteModel($id, $soft = false, $tree = false)
     {
         return true;
+    }
+
+    /**
+     * 要操作的必须先查询有权限的ID
+     * @param $id
+     * @return |null
+     */
+    protected function findModel($id, $action = true)
+    {
+        $storeId = $this->getStoreId();
+        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id, 'status' => $this->modelClass::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->one())))) {
+            if ($action) {
+                return null;
+            }
+
+            $model = new $this->modelClass();
+        }
+
+        return $model;
     }
 
     /**
