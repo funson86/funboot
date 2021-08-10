@@ -23,20 +23,21 @@ class ResultHelper
      *
      * @param  integer $code
      * @param  string $msg
-     * @param  array $data
-     * @param  array $map for pageSize pageNo count etc
+     * @param  mixed $data
+     * @param  array $map for totalCount pageCount currentPage perPage
      * @return array
      */
-    public static function ret($code, $msg = null, $data = [], $map = [])
+    public static function ret($code, $msg = null, $data = null, $map = [])
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         !$msg && $msg = self::getMsg($code);
+        !$msg && $msg = $data['message'] ?? '';
 
         return [
             'code' => $code,
             'msg' => $msg,
-            'data' => $data,
+            'data' => $data ?? [],
             'map' => $map,
         ];
     }

@@ -18,5 +18,5 @@ class StudentController extends BaseController
      */
     public $modelClass = Student::class;
 
-    public $needAuth = false;
+    public $optionalAuth = ['index', 'view', 'create', 'update', 'delete'];
 }

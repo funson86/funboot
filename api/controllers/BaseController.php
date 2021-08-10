@@ -6,20 +6,14 @@ use common\helpers\ArrayHelper;
 use common\helpers\CommonHelper;
 use common\helpers\IdHelper;
 use common\models\Store;
-use common\models\User;
 use Yii;
-use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBasicAuth;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\HttpHeaderAuth;
 use yii\filters\auth\QueryParamAuth;
-use yii\helpers\Json;
+use yii\filters\RateLimiter;
 use yii\rest\ActiveController;
-use yii\web\ForbiddenHttpException;
-use yii\web\NotFoundHttpException;
 
 /**
  * Class BaseController
@@ -29,9 +23,26 @@ use yii\web\NotFoundHttpException;
 class BaseController extends ActiveController
 {
     /**
+     * @var Model
+     */
+    public $modelClass;
+
+    /**
+     * 不需要使用modelClass，无需判断是否
+     * @var string[]
+     */
+    public $skipModelClass = [];
+
+    /**
      * @var Store
      */
     protected $store;
+
+    /**
+     * 列表默认排序
+     * @var array[]
+     */
+    protected $defaultOrder = ['sort' => SORT_ASC, 'id' => SORT_DESC];
 
     /**
      * 默认分页
@@ -57,12 +68,6 @@ class BaseController extends ActiveController
     ];
 
     /**
-     * 是否需要鉴权
-     * @var bool
-     */
-    public $needAuth = true;
-
-    /**
      * 要鉴权中不需要鉴权的action id
      * @var string[]
      */
@@ -83,10 +88,6 @@ class BaseController extends ActiveController
     {
         $behaviors = parent::behaviors();
 
-        if (!$this->needAuth) {
-            return $behaviors;
-        }
-
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::className(),
             'authMethods' => [
@@ -104,6 +105,12 @@ class BaseController extends ActiveController
             // 忽略的action id
             'optional' => $this->optionalAuth,
         ];
+
+        $behaviors['rateLimiter'] = [
+            'class' => RateLimiter::class,
+            'enableRateLimitHeaders' => true,
+        ];
+
         return $behaviors;
 
     }
@@ -120,7 +127,7 @@ class BaseController extends ActiveController
             return false;
         }
 
-        // 鉴权
+        // 鉴权 如自定义RBAC方式
         $this->checkAccess($action->id, $this->modelClass, Yii::$app->request->get());
 
         $model = CommonHelper::getStoreByHostName();
@@ -132,6 +139,11 @@ class BaseController extends ActiveController
 
         // 设置语言
         Yii::$app->language = CommonHelper::getLanguage($model);
+
+        // 不是通配符 且不再忽略名单中，modelClass不是Model子类
+        if ($this->skipModelClass != '*' && !in_array($this->action->id, $this->skipModelClass) && !is_subclass_of($this->modelClass, Model::class)) {
+            return false;
+        }
 
         return true;
     }
@@ -147,8 +159,7 @@ class BaseController extends ActiveController
             'query' => $this->modelClass::find()
                 ->where(['status' => $this->modelClass::STATUS_ACTIVE])
                 ->andFilterWhere(['store_id' => $this->getStoreId()])
-                ->orderBy('id desc')
-                ->asArray(),
+                ->orderBy($this->defaultOrder),
             'pagination' => [
                 'pageSize' => $this->pageSize,
                 'validatePage' => false,// 超出分页不返回data
@@ -274,6 +285,9 @@ class BaseController extends ActiveController
 
     /**
      * 删除动作前处理，子方法只需覆盖该函数即可
+     * @param $id
+     * @param bool $soft
+     * @param bool $tree
      * @return bool
      */
     protected function beforeDeleteModel($id, $soft = false, $tree = false)
@@ -283,6 +297,9 @@ class BaseController extends ActiveController
 
     /**
      * 删除动作后处理，子方法只需覆盖该函数即可
+     * @param $id
+     * @param bool $soft
+     * @param bool $tree
      * @return bool
      */
     protected function afterDeleteModel($id, $soft = false, $tree = false)
@@ -293,7 +310,8 @@ class BaseController extends ActiveController
     /**
      * 要操作的必须先查询有权限的ID
      * @param $id
-     * @return |null
+     * @param bool $action
+     * @return mixed|null |null
      */
     protected function findModel($id, $action = true)
     {
@@ -310,13 +328,13 @@ class BaseController extends ActiveController
     }
 
     /**
-     * @param array $data
+     * @param mixed $data
      * @param array $map
      * @param string $msg
      * @param int $code
      * @return mixed
      */
-    protected function success($data = [], $map = [], $msg = '', $code = 200)
+    protected function success($data = null, $map = [], $msg = '', $code = 200)
     {
         return Yii::$app->responseSystem->success($data, $map, $msg, $code);
     }

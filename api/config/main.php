@@ -27,8 +27,10 @@ return [
     ],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => 'api\models\User',
+             'enableAutoLogin' => true,
+             'enableSession' => false,// 显示一个HTTP 403 错误, 不是跳转到登录界面
+            'loginUrl' => null,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -61,10 +63,12 @@ return [
             'on beforeSend' => function ($event) {
                 $response = $event->sender;
                 if ($response->statusCode != 200) {
+                    $data = $response->data;
                     $response->data = [
                         'data' => $response->data,
                         'code' => $response->statusCode,
                     ];
+                    (!isset($response->data['msg']) || !$response->data['msg']) && $response->data['msg'] = $data['message'] ?? '';
                     $response->statusCode = 200;
                 }
             },
@@ -82,7 +86,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => [
                         'student',
-                        'school/student',
+                        'v1/user',
                     ]
                 ],
                 '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',

@@ -1,6 +1,7 @@
 <?php
 namespace api\controllers;
 
+use api\models\LoginForm;
 use api\modules\v1\models\User;
 use Yii;
 use yii\base\Response;
@@ -12,8 +13,14 @@ use yii\web\NotFoundHttpException;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
+    public $modelClass = '';
+
+    public $skipModelClass = '*';
+
+    public $optionalAuth = ['index', 'login', 'logout'];
+
     /**
      * @return string
      */
@@ -35,4 +42,36 @@ class SiteController extends Controller
     {
         return 'funboot';
     }
+
+    public function actionLogin()
+    {
+        $model = new LoginForm();
+        $model->attributes = Yii::$app->request->post();
+        if ($model->validate()) {
+            return $this->success(Yii::$app->accessTokenSystem->refreshAccessToken($model->getUser()));
+        }
+
+        return $this->error();
+    }
+
+    public function actionLogout()
+    {
+        if (Yii::$app->accessTokenSystem->disableAccessToken(Yii::$app->user->identity->access_token)) {
+            return $this->success();
+        }
+
+        return $this->error();
+    }
+
+
+    /**
+     * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionProfile()
+    {
+        return 'profile';
+    }
+
 }

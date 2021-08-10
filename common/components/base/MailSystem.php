@@ -7,9 +7,8 @@ use Yii;
 
 /**
  * Class MailSystem
+ * @package common\components\base
  * @author funson86 <funson86@gmail.com>
- *
- * @property-write mixed $config
  */
 class MailSystem extends \yii\base\Component
 {

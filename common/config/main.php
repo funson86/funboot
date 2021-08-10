@@ -69,6 +69,9 @@ return [
             'class' => 'common\components\base\MailSystem',
             'queue' => true, //false, // 默认通过队列方式发送邮件
         ],
+        'accessTokenSystem' => [
+            'class' => 'common\components\base\AccessTokenSystem',
+        ],
         'wechat' => [
             'class' => 'common\components\wechat\WechatSystem',
             'userOptions' => [],  // 用户身份类参数
