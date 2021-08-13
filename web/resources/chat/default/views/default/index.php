@@ -98,6 +98,10 @@ $context = $this->context;
                     client_list[data['client_id']] = data['client_name'];
                 }
 
+                for (i in data['log_list']) {
+                    say(data['log_list'][i]['client_id'], data['log_list'][i]['client_name'], data['log_list'][i]['content'], data['log_list'][i]['time']);
+                }
+
                 say(data['client_id'], data['client_name'],  client_name+' 加入了聊天室', data['time']);
 
                 flush_client_list();
@@ -207,7 +211,7 @@ $context = $this->context;
 </script>
 
 
-<div class="row clearfix">
+<div class="row clearfix mt-5">
     <div class="col-md-1 column">
     </div>
     <div class="col-md-6 column">
@@ -220,8 +224,8 @@ $context = $this->context;
             </select>
             <textarea class="textarea thumbnail" id="textarea"></textarea>
             <div class="say-btn">
-                <input type="button" class="btn btn-default face pull-left" value="表情" />
-                <input type="submit" class="btn btn-default" value="发表" />
+                <input type="button" class="btn btn-info face pull-left" value="表情" />
+                <input type="submit" class="btn btn-success" value="发表" />
             </div>
         </form>
         <div>
