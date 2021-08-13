@@ -32,7 +32,7 @@ class DefaultController extends BaseController
         $model = new LoginEmailForm();
         $model->attributes = Yii::$app->request->post();
         if ($model->validate()) {
-            return $this->success(Yii::$app->accessTokenSystem->refreshAccessToken($model->getUser()));
+            return $this->success(Yii::$app->accessTokenSystem->getAccessToken($model->getUser()));
         }
 
         return $this->error();

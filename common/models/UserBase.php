@@ -97,6 +97,7 @@ class UserBase extends BaseModel implements IdentityInterface
             'auth_key' => Yii::t('app', 'Auth Key'),
             'token' => Yii::t('app', 'Token'),
             'access_token' => Yii::t('app', 'Access Token'),
+            'refresh_token' => Yii::t('app', 'Refresh Token'),
             'password_hash' => Yii::t('app', 'Password Hash'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'verification_token' => Yii::t('app', 'Verification Token'),

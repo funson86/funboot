@@ -24,10 +24,11 @@ class AccessTokenSystem extends \yii\base\Component
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function refreshAccessToken(User $model)
+    public function getAccessToken(User $model)
     {
         !empty($model->access_token) && Yii::$app->cache->delete($this->getCacheKey($model->access_token));
         $model->access_token = Yii::$app->security->generateRandomString() . '_' . time();
+        $model->refresh_token = Yii::$app->security->generateRandomString() . '_' . time();
         if (!$model->save(false)) {
             Yii::$app->logSystem->db($model->errors);
         }
@@ -67,13 +68,7 @@ class AccessTokenSystem extends \yii\base\Component
 
     public function getFromCache($token, $type = null)
     {
-        return Yii::$app->cache->get($this->getCacheKey($token)) ?? $this->findIdentityByAccessToken($token, $type);
-    }
-
-
-    public function findIdentityByAccessToken($token, $type = null)
-    {
-        return User::findOne(['access_token' => $token, 'status' => User::STATUS_ACTIVE]);
+        return Yii::$app->cache->get($this->getCacheKey($token)) ?? User::findUserByAccessToken($token, $type);
     }
 
 }

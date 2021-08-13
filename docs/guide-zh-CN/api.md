@@ -61,9 +61,14 @@ Api
 
 默认的api/controller/BaseController支持的方法index, view, create, update, delete都需要提供access-token，注意返回的是access_token
 
-![](images/api-access-token.png)
+![](images/api-access-token.png)![]
 
 如果函数不需要鉴权，在controller中的optionalAuth变量中写入action id
+
+使用refresh_token重新更新access_token
+
+![](images/api-refresh-token.png)
+
 
 ```php
     public $optionalAuth = ['index', 'login', 'logout'];

@@ -27,7 +27,7 @@ class User extends \common\models\User implements RateLimitInterface
 
     public function fields()
     {
-        return ['id', 'access_token', 'username', 'email', 'store'];
+        return ['id', 'access_token', 'refresh_token', 'username', 'email', 'store'];
     }
 
     public function extraFields()
@@ -46,10 +46,31 @@ class User extends \common\models\User implements RateLimitInterface
             $time = intval(substr($token, strrpos($token, '_') + 1));
             $expire = intval(Yii::$app->params['user']['accessTokenExpired']);
             if (($time + $expire) < time()) {
-                throw new UnauthorizedHttpException(Yii::t('app', 'Token Expired'));
+                throw new UnauthorizedHttpException(Yii::t('app', 'Access Token Expired'));
             }
         }
         return Yii::$app->accessTokenSystem->getFromCache($token, $type);
+    }
+
+    /**
+     * 根据access_token查询用户
+     * @param $token
+     * @param null $type
+     * @return User|null
+     */
+    public function findUserByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token, 'status' => User::STATUS_ACTIVE]);
+    }
+
+    /**
+     * @param mixed $token
+     * @param null $type
+     * @return User|mixed|void|IdentityInterface|null
+     */
+    public static function findIdentityByRefreshToken($token, $type = null)
+    {
+        return static::findOne(['refresh_token' => $token, 'status' => User::STATUS_ACTIVE]);
     }
 
     /**
@@ -87,6 +108,10 @@ class User extends \common\models\User implements RateLimitInterface
         return 'apiRate:' . md5($id . '_' . $actionId);
     }
 
+    /**
+     * 指定extraFields中显示哪些字段
+     * @return \yii\db\ActiveQuery|null
+     */
     public function getStore()
     {
         return parent::getStore() ? parent::getStore()->select(['name']) : null;

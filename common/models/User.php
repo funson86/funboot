@@ -15,6 +15,7 @@ use common\models\Store;
  * @property string $auth_key 权限
  * @property string $token Token
  * @property string $access_token 访问Token
+ * @property string $refresh_token 刷新Token
  * @property string $password_hash 密码
  * @property string $password_reset_token 重置密码
  * @property string $verification_token 校验Token
@@ -71,7 +72,7 @@ class User extends UserBase
             [['username'], 'string', 'max' => 190],
             [['auth_key'], 'string', 'max' => 32],
             [['token'], 'string', 'max' => 64],
-            [['access_token', 'password_hash', 'password_reset_token', 'verification_token', 'email', 'mobile', 'name', 'brief', 'area', 'address', 'remark', 'last_login_ip', 'last_paid_ip'], 'string', 'max' => 255],
+            [['access_token', 'refresh_token', 'password_hash', 'password_reset_token', 'verification_token', 'email', 'mobile', 'name', 'brief', 'area', 'address', 'remark', 'last_login_ip', 'last_paid_ip'], 'string', 'max' => 255],
             [['avatar'], 'string', 'max' => 1022],
             [['username'], 'unique'],
         ]);
@@ -91,6 +92,7 @@ class User extends UserBase
                 'auth_key' => '权限',
                 'token' => 'Token',
                 'access_token' => '访问Token',
+                'refresh_token' => '刷新Token',
                 'password_hash' => '密码',
                 'password_reset_token' => '重置密码',
                 'verification_token' => '校验Token',
@@ -133,6 +135,7 @@ class User extends UserBase
                 'auth_key' => Yii::t('app', 'Auth Key'),
                 'token' => Yii::t('app', 'Token'),
                 'access_token' => Yii::t('app', 'Access Token'),
+                'refresh_token' => Yii::t('app', 'Refresh Token'),
                 'password_hash' => Yii::t('app', 'Password Hash'),
                 'password_reset_token' => Yii::t('app', 'Password Reset Token'),
                 'verification_token' => Yii::t('app', 'Verification Token'),

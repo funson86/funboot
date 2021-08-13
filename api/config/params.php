@@ -7,9 +7,14 @@ return [
     'timeLimit' => 100,
 
     'user' => [
-        // token有效期是否验证
+        // access token有效期是否验证
         'accessTokenValid' => true,
-        // token缓存有效期
+        // access token缓存有效期
         'accessTokenExpired' => 2 * 3600,
+
+        // refresh token有效期是否验证
+        'refreshTokenValid' => true,
+        // refresh token缓存有效期
+        'refreshTokenExpired' => 30 * 24 * 3600,
     ]
 ];
