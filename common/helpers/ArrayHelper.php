@@ -353,4 +353,11 @@ class ArrayHelper extends BaseArrayHelper
 
         return $array;
     }
+
+    public static function sortByField($array, $field = 'id', $key = false)
+    {
+        $arrMap = self::mapIdData($array, $field);
+        ksort($arrMap);
+        return $key ? $arrMap : array_values($arrMap);
+    }
 }

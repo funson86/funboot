@@ -36,6 +36,9 @@ return [
         'wechat' => [
             'class' => 'backend\modules\wechat\Module',
         ],
+        'chat' => [
+            'class' => 'backend\modules\chat\Module',
+        ],
     ],
     'components' => [
         'request' => [

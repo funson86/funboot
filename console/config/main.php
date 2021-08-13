@@ -24,6 +24,11 @@ return [
             'class' => 'e282486518\migration\ConsoleController',
         ],
     ],
+    'modules' => [
+        'chat' => [
+            'class' => 'console\modules\chat\Module',
+        ],
+    ],
     'components' => [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

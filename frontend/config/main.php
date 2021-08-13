@@ -25,6 +25,9 @@ return [
         'mall' => [
             'class' => 'frontend\modules\mall\Module',
         ],
+        'chat' => [
+            'class' => 'frontend\modules\chat\Module',
+        ],
     ],
     'components' => [
         'request' => [

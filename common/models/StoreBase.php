@@ -58,6 +58,7 @@ class StoreBase extends BaseModel
     const ROUTE_BBS = 'bbs';
     const ROUTE_MALL = 'mall';
     const ROUTE_WECHAT = 'wechat';
+    const ROUTE_CHAT = 'chat';
 
     public $expiredTime;
     public $types;
@@ -124,6 +125,7 @@ class StoreBase extends BaseModel
             self::ROUTE_BBS => Yii::t('cons', 'ROUTE_BBS'),
             self::ROUTE_MALL => Yii::t('cons', 'ROUTE_MALL'),
             self::ROUTE_WECHAT => Yii::t('cons', 'ROUTE_WECHAT'),
+            self::ROUTE_CHAT => Yii::t('cons', 'ROUTE_CHAT'),
         ];
 
         $all && $data += [];

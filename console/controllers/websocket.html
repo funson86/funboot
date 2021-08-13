@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+
+<script>
+// Create WebSocket connection.
+const ws = new WebSocket('ws://127.0.0.1:2000/'); // 这里是获取的网站的域名，测试的时候可以改为自己的本地的ip地址
+
+// Connection opened
+ws.addEventListener('open', function (event) {
+ws.send('Hello Server!');
+});
+
+// Listen for messages
+ws.addEventListener('message', function (event) {
+console.log('Message from server ', event.data);
+});
+
+setTimeout(function() {
+ws.send('ssssss');
+}, 10000);
+
+</script>
 </body>
 </html>
