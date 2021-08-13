@@ -31,6 +31,8 @@ class Events
                 return static::login($clientId, $messageArr);
             case 'say':
                 return static::say($clientId, $messageArr);
+            default:
+                throw new NotFoundHttpException('Unexpected type');
         }
     }
     
@@ -77,7 +79,7 @@ class Events
             ->select(['id', 'name as client_name', 'from_client_id as client_id', 'content', 'FROM_UNIXTIME(created_at, "%Y-%m-%d %H:%i:%S") as time'])
             ->orderBy(['created_at' => SORT_DESC])->limit(5)->asArray()->all();
         $clientNew['log_list'] = ArrayHelper::sortByField($logs);
-        Gateway::sendToCurrentClient(json_encode($clientNew));
+        return Gateway::sendToCurrentClient(json_encode($clientNew));
     }
 
     public static function say($clientId, $arr)

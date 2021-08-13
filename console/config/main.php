@@ -30,6 +30,10 @@ return [
         ],
     ],
     'components' => [
+        'db' => [
+            'class' => 'console\components\Connection',
+            'attributes' => [PDO::ATTR_PERSISTENT => true], // 长连接
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

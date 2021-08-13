@@ -84,11 +84,11 @@ NavBar::end();
 
 <?php if ($style == 'other') { ?>
 
-    <header class="masthead" style="height: 15vh; min-height: 15vh">
+    <header class="masthead" style="height: 8rem; min-height: 8rem">
         <div class="container h-100">
             <div class="row h-100">
                 <div class="col-lg-12 text-center my-auto">
-                    <h5 class="mt-3">代码开源 免费使用 无需签约 容易部署</h5>
+                    <h5 class="mt-3">基于Workerman和Yii2有历史消息的聊天室</h5>
                 </div>
             </div>
         </div>
