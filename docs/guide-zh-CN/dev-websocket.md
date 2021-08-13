@@ -1,7 +1,7 @@
 WebSocket
 ------
 
-以一个带历史消息的简单聊天室演示如何结合Yii2和Workerman实现。主体代码参考[Workerman 官方聊天室](https://www.workerman.net/workerman-chat)
+以一个带历史消息的简单聊天室演示如何结合Yii2和Workerman使用Websocket。主体代码参考[Workerman 官方聊天室](https://www.workerman.net/workerman-chat)
 
 ### 启动
 

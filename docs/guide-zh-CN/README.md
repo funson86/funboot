@@ -27,6 +27,7 @@ Funboot开发文档
 * [快速开发常用代码](dev-view.md)
 * [验收测试](dev-test.md)：优化系统代码变更无需一个个检查
 * [定时任务](dev-schedule.md)
+* [Websocket](dev-websocket.md)
 
 
 ### API接口

@@ -3,6 +3,11 @@
 
 Funboot是一个一站式Saas快速开发平台，基于Yii 2.0框架，提供代码生成器，提供通用组件帮助开发者聚焦业务，并提供多域名、多商户支持。
 
+### 问题反馈
+
+在使用中有任何问题，欢迎在QQ群众反馈 QQ群：[798843502](https://jq.qq.com/?_wv=1027&k=4BeVA2r)
+
+
 ### 在线Demo
 
 - Funboot在线demo：https://funboot.mayicun.com/backend test 123456
@@ -41,14 +46,23 @@ https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md
 - [Yii 2](http://www.yiiframework.com/): 2.0系列最新版
 - [Adminlte 3.x](https://adminlte.io/): Adminlte 3.x [文档](https://adminlte.io/docs/3.0/components/main-header.html)
 - [PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet): 导入导出数据
+- [File System](https://github.com/thephpleague/flysystem): 文件系统
+- [OAuth 2.0](https://github.com/thephpleague/oauth2-server): OAuth 2.0授权
 - [IP地址](https://github.com/zhuzhichao/ip-location-zh): 根据IP获取地址相关信息
 - [Uuid](https://github.com/ramsey/uuid):分布式ID
 - [SnowFlake](https://github.com/godruoyi/php-snowflake): 分布式ID
+- [Easy Wechat](https://github.com/jianyan74/yii2-treegrid): Easy Wechat微信公众号小程序开发
+- [php-simple-html-dom-parser](https://github.com/Kub-AT/php-simple-html-dom-parser): 简单Html Dom分析器，适用要求不高的采集
+- [Workerman](https://github.com/walkor/Workerman): 基于Workerman的Websocket开发，系统提供一个带历史消息的聊天室
+- [Qrcode](https://github.com/2amigos/qrcode-library): 二维码
+- [Pinyin](https://github.com/overtrue/pinyin): 拼音
+- [Treegrid](https://github.com/jianyan74/yii2-treegrid): Yii树状表
 - [yii2-scheduling](https://github.com/omnilight/yii2-scheduling): 定时任务
 - [Swagger](https://github.com/zircote/swagger-php): Api文档生成
 - [Qrcode](https://github.com/2amigos/qrcode-library): 二维码  [文档](https://qrcode-library.readthedocs.io/en/latest/)
 - [IconPicker](https://github.com/itsjavi/fontawesome-iconpicker): fontawesome图标选择器
 - [Toastr](https://github.com/CodeSeven/toastr): 通知提示框
 - [Sweetalert2](https://github.com/sweetalert2/sweetalert2): 弹窗
+- [Kartik Widgets](https://github.com/kartik-v/yii2-widget-datetimepicker): Kartik 各种组件
 - [jsTree](https://www.jstree.com/): 树状选择框
-- [graylog](https://blog.forecho.com/use-graylog.html)
+

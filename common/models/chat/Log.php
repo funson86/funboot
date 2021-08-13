@@ -23,8 +23,6 @@ use common\models\Store;
  * @property int $updated_at 更新时间
  * @property int $created_by 创建用户
  * @property int $updated_by 更新用户
- *
- * @property Store $store
  */
 class Log extends LogBase
 {
@@ -45,7 +43,6 @@ class Log extends LogBase
             [['store_id', 'room_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['content'], 'string'],
             [['from_client_id', 'to_client_id', 'name'], 'string', 'max' => 255],
-            [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ]);
     }
 
@@ -89,13 +86,5 @@ class Log extends LogBase
                 'updated_by' => Yii::t('app', 'Updated By'),
             ]);
         }
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
     }
 }
