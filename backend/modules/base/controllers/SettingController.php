@@ -58,7 +58,7 @@ class SettingController extends BaseController
         'value' => 'text',
     ];
 
-    protected $exportSort = ['store_id' => SORT_ASC, 'setting_type_id' => SORT_DESC];
+    protected $exportSort = ['store_id' => SORT_ASC, 'setting_type_id' => SORT_ASC];
 
     /**
       * ajax编辑/创建
@@ -116,6 +116,7 @@ class SettingController extends BaseController
                     return $this->error();
                 }
             }
+            $this->afterEditAjaxSave($setting);
 
             Yii::$app->cacheSystem->clearStoreSetting($this->getStoreId());
             return $this->success();
@@ -163,13 +164,8 @@ class SettingController extends BaseController
             $model = new $this->modelClass();
             $model->loadDefaultValues();
 
-            if ($highConcurrency) {
-                $model->id = IdHelper::snowFlakeId();
-            }
-
-            if (isset($model->store_id)) {
-                $model->store_id = $this->getStoreId();
-            }
+            $highConcurrency && $model->id = IdHelper::snowFlakeId();
+            isset($model->store_id) && $model->store_id = $this->getStoreId();
 
             return $model;
         }
@@ -253,6 +249,10 @@ class SettingController extends BaseController
         return $this->renderAjax('@backend/views/site/' . $this->action->id);
     }
 
+    /**
+     * 删除重复的，根据code重新修复setting_type_id，根据code重新修复name
+     * @return mixed|\yii\web\Response
+     */
     public function actionImportRepairSettingType()
     {
         if (!$this->isAdmin()) {
@@ -343,8 +343,14 @@ class SettingController extends BaseController
             Yii::$app->logSystem->db($model->errors);
             return $this->error();
         }
+        $this->afterEditAjaxSave([$code => $value]);
 
         Yii::$app->cacheSystem->clearStoreSetting($this->store->id);
         return $this->success();
+    }
+
+    public function actionEditQuick()
+    {
+        return $this->render($this->action->id);
     }
 }

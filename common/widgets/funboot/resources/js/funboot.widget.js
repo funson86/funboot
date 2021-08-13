@@ -134,6 +134,13 @@ $(document).on("click", ".upload-box .fa-cloud-upload", function (e) {
     }
 });
 
+// 触发上传
+$('.upload-box-immediately').click(function () {
+    let boxId = $(this).parent().parent().parent().attr('data-boxId');
+
+    $('#upload-' + boxId + ' .webuploader-container input').trigger('click');
+});
+
 $(function () {
     //初始化上传控件
     $.fn.InitUploader = function (config) {

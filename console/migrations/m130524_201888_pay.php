@@ -15,6 +15,7 @@ class m130524_201888_pay extends Migration
         $sql = "
 
 SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS `fb_pay_payment`;
 CREATE TABLE `fb_pay_payment` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',

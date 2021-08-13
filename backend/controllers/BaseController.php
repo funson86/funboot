@@ -167,7 +167,7 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
-     * 列表页
+     * 列表页 1带搜索列表 11只显示parent_id为0 2树形(不分页) 3非常规表格
      *
      * @return string
      * @throws \yii\web\NotFoundHttpException

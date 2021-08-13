@@ -195,6 +195,8 @@ class Uploader
         if ($this->uploadType = Attachment::UPLOAD_TYPE_IMAGE) {
             //$this->uploadType
         }
+
+        return $this->paths;
     }
 
     protected function filter($config, $uploadType)
