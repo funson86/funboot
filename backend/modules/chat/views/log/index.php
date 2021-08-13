@@ -21,9 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Logs'] ?? null) ?></h2>
                 <div class="card-tools">
-                    <?= Html::createModal() ?>
+                    <!--<?= Html::createModal() ?>-->
                     <?= Html::export() ?>
-                    <?= Html::import() ?>
+                    <!--<?= Html::import() ?>-->
                 </div>
             </div>
             <div class="card-body">
@@ -42,9 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'room_id',
                         'from_client_id',
                         'to_client_id',
-                        ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        'name',
+                        //['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
                         'content:ntext',
-                        'type',
+                        // 'type',
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
                         // ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::status($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'created_at:datetime',
@@ -52,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'created_by',
                         // 'updated_by',
 
-                        Html::actionsModal(),
+                        // Html::actionsModal(),
                     ]
                 ]); ?>
             </div>
