@@ -882,7 +882,7 @@ INSERT INTO `fb_base_setting_type` VALUES ('8505', '1', '85', 'backend', 'Smtp U
 INSERT INTO `fb_base_setting_type` VALUES ('8507', '1', '85', 'backend', 'Smtp Password', 'mail_smtp_password', '密码', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('8509', '1', '85', 'backend', 'Smtp Encryption', 'mail_smtp_encryption', '加密方式', 7, 1, 'text', '', 'tls', '50', '1', '1600948360', '1600948360', '1', '1');
 
-INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/backup', '', '数据库备份，每天凌晨执行', '* 3 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
+INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/backup', '', '数据库备份，每天凌晨执行', '0 3 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
 
         ";
 
