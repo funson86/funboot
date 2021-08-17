@@ -215,11 +215,12 @@ class UserBase extends BaseModel implements IdentityInterface
      * Finds user by username
      *
      * @param string $username
+     * @param null $storeId
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByUsername($username, $storeId = null)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::find()->where(['username' => $username, 'status' => self::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->one();
     }
 
     /**

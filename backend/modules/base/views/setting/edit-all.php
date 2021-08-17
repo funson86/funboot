@@ -16,6 +16,11 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
+<style>
+    .text-sm .btn, .btn-sm, .btn-group-sm > .btn {
+        margin-bottom: 0;
+    }
+</style>
 
 <div class="row pt-3 pb-5">
     <div class="col-md-2 col-sm-2 col-xs-2 pr-0">
@@ -133,4 +138,13 @@ $this->params['breadcrumbs'][] = $this->title;
         });
         return o;
     };
+
+    function createKey(num, id) {
+        let letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let str = '';
+        for (let i = 0; i < num; i++) {
+            str += letters[parseInt(Math.random() * 61) + 1];
+        }
+        $('#' + id).val(str);
+    }
 </script>

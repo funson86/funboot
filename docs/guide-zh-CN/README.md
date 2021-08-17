@@ -34,6 +34,7 @@ Funboot开发文档
 
 * [api接口规划](api.md)
 * [Swagger接口文档](api-swagger.md)
+* [OAuth 2.0](oauth2.md)
 
 
 ### 子系统

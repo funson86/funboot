@@ -14,6 +14,7 @@ use yii\filters\auth\HttpHeaderAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\RateLimiter;
 use yii\rest\ActiveController;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class BaseController
@@ -28,7 +29,7 @@ class BaseController extends ActiveController
     public $modelClass;
 
     /**
-     * 不需要使用modelClass，无需判断是否
+     * 不需要使用modelClass，'*'所有方法无需判断
      * @var string[]
      */
     public $skipModelClass = [];

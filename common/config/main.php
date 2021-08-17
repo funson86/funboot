@@ -72,6 +72,9 @@ return [
         'accessTokenSystem' => [
             'class' => 'common\components\base\AccessTokenSystem',
         ],
+        'oauthSystem' => [
+            'class' => 'common\components\base\OauthSystem',
+        ],
         'wechat' => [
             'class' => 'common\components\wechat\WechatSystem',
             'userOptions' => [],  // 用户身份类参数

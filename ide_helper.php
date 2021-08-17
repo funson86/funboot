@@ -24,10 +24,11 @@ class Yii
  * @property \common\components\base\SettingSystem settingSystem
  * @property \common\components\base\MessageSystem messageSystem
  * @property \common\components\base\MailSystem mailSystem
+ * @property \api\components\response\ResponseSystem responseSystem
  * @property \common\components\base\AccessTokenSystem accessTokenSystem
+ * @property \common\components\base\OauthSystem oauthSystem
  * @property \common\components\bbs\CacheSystemBbs cacheSystemBbs
  * @property \common\components\cms\CacheSystemCms cacheSystemCms
- * @property \api\components\response\ResponseSystem responseSystem
  * @property \common\components\wechat\WechatSystem wechat
  *
  * @author funson86 <funson86@gmail.com>

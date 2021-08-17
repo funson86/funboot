@@ -24,14 +24,22 @@ class JsonResponseFormatterSystem extends \yii\web\JsonResponseFormatter
             if ($this->prettyPrint) {
                 $options |= JSON_PRETTY_PRINT;
             }
+            // 拼接字段
             if (is_array($response->data)) {
-                $data = $response->data;
+                if (isset($response->data['data'])) {
+                    $data = $response->data;
+                    unset($data['data']);
+                    $data['data'] = $response->data['data'];
+                } else {
+                    $data['data'] = $response->data;
+                }
             } else {
-                $data['data'] = $response->data;
+                $data['data'] = is_object($response->data) ? json_encode($response->data) : $response->data;
             }
 
-            !isset($data['code']) && $data['code'] = $response->statusCode;
-            !isset($data['msg']) && $data['msg'] = ResultHelper::getMsg($data['code']);
+            (!isset($data['code']) || !$data['code']) && $data['code'] = $response->statusCode;
+            (!isset($data['msg']) || !$data['msg']) && ($data['msg'] = $data['data']['message'] ?? ResultHelper::getMsg($data['code']));
+            $data['timestamp'] = time();
 
             $response->content = Json::encode($data, $options);
         } elseif ($response->content === null) {

@@ -12,6 +12,9 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'api\controllers',
     'modules' => [
+        'oauth' => [
+            'class' => 'api\modules\oauth\Module',
+        ],
         'v1' => [
             'basePath' => '@api/modules/v1',
             'class' => 'api\modules\v1\Module'
@@ -49,6 +52,7 @@ return [
             'csrfParam' => '_csrf-api',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
+                'text/json' => 'yii\web\JsonParser',
             ]
         ],
         'response' => [
@@ -61,16 +65,15 @@ return [
                 ],
             ],
             'on beforeSend' => function ($event) {
-                $response = $event->sender;
-                if ($response->statusCode != 200) {
-                    $data = $response->data;
-                    $response->data = [
-                        'data' => $response->data,
-                        'code' => $response->statusCode,
-                    ];
-                    (!isset($response->data['msg']) || !$response->data['msg']) && $response->data['msg'] = $data['message'] ?? '';
-                    $response->statusCode = 200;
-                }
+                /* $response = $event->sender;
+                $data = $response->data;
+                $response->data = [
+                    'code' => $response->statusCode,
+                    'msg' => $data['msg'] ?? null
+                ];
+                (!isset($response->data['msg']) || !$response->data['msg']) && $response->data['msg'] = $data['message'] ?? '';
+                unset($data['code'], $data['msg']);
+                $response->data['data'] = $data;*/
             },
         ],
         'responseSystem' => [
@@ -80,7 +83,7 @@ return [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'enableStrictParsing' => true,
+            // 'enableStrictParsing' => true,
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -89,11 +92,7 @@ return [
                         'v1/user',
                     ]
                 ],
-                '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
-                '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
                 '<modules:\w+>/<controller:\w+>/<action:\w+>'=>'<modules>/<controller>/<action>',
-                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],

@@ -58,7 +58,7 @@ class User extends \common\models\User implements RateLimitInterface
      * @param null $type
      * @return User|null
      */
-    public function findUserByAccessToken($token, $type = null)
+    public static function findUserByAccessToken($token, $type = null)
     {
         return static::findOne(['access_token' => $token, 'status' => User::STATUS_ACTIVE]);
     }

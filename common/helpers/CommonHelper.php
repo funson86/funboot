@@ -191,6 +191,17 @@ class CommonHelper
         return false;
     }
 
+
+    /**
+     * 验证是否Windows
+     *
+     * @return bool
+     */
+    public static function isWin()
+    {
+        return strncmp(PHP_OS, 'WIN', 3) === 0;
+    }
+
     public static function isPad()
     {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
