@@ -3,10 +3,10 @@ use common\models\cms\Page;
 
 /* @var $this yii\web\View */
 /* @var $context \frontend\controllers\BaseController */
-$this->title = $context->getBlockValue('common_website_name') ?: '';
-
 $store = $this->context->store;
 $context = $this->context;
+$this->title = $context->getBlockValue('common_website_name') ?: '';
+
 ?>
 
 <section class="page-section bg-light text-dark">

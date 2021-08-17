@@ -45,6 +45,14 @@ class BaseController extends \common\components\controller\BaseController
             $this->layout = 'main';
             $this->prefixStatic = Yii::getAlias('@web/resources/' . $store->route . '/' . $this->theme);
             $this->isMobile = CommonHelper::isMobile();
+        } else {
+            $routes = array_keys(Store::getRouteLabels());
+            if (in_array($this->module->getUniqueId(), $routes)) {
+                $this->module->setLayoutPath('@webroot/resources/' . $this->module->getUniqueId() . '/default/views/layouts');
+                $this->module->setViewPath('@webroot/resources/' . $this->module->getUniqueId() . '/default/views');
+                $this->layout = 'main';
+                $this->prefixStatic = Yii::getAlias('@web/resources/' . $this->module->getUniqueId() . '/default');
+            }
         }
 
         return true;
