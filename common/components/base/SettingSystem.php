@@ -19,8 +19,9 @@ use yii\helpers\Json;
 class SettingSystem extends \yii\base\Component
 {
 
-    public function getValue($code, $storeId)
+    public function getValue($code, $storeId = null)
     {
+        !$storeId && $storeId = Yii::$app->storeSystem->getId();
         $settingTypes = Yii::$app->cacheSystem->getStoreSetting($storeId);
 
         foreach ($settingTypes as $settingType) {
