@@ -20,7 +20,7 @@ class SiteController extends BaseController
 
     public $skipModelClass = '*';
 
-    public $optionalAuth = ['index', 'login', 'refresh', 'logout'];
+    public $optionalAuth = ['error', 'index', 'login', 'refresh', 'logout'];
 
     /**
      * @return string
@@ -49,7 +49,7 @@ class SiteController extends BaseController
         $model = new LoginForm();
         $model->attributes = Yii::$app->request->post();
         if ($model->validate()) {
-            return $this->success(Yii::$app->accessTokenSystem->getAccessToken($model->getUser()));
+            return Yii::$app->accessTokenSystem->getAccessToken($model->getUser());
         }
 
         return $this->error();
@@ -60,7 +60,7 @@ class SiteController extends BaseController
         $model = new RefreshForm();
         $model->attributes = Yii::$app->request->post();
         if ($model->validate()) {
-            return $this->success(Yii::$app->accessTokenSystem->getAccessToken($model->getUser()));
+            return Yii::$app->accessTokenSystem->getAccessToken($model->getUser());
         }
 
         return $this->error();
@@ -69,7 +69,7 @@ class SiteController extends BaseController
     public function actionLogout()
     {
         if (Yii::$app->accessTokenSystem->disableAccessToken(Yii::$app->user->identity->access_token)) {
-            return $this->success();
+            return '';
         }
 
         return $this->error();

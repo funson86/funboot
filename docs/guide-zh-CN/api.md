@@ -74,8 +74,11 @@ Api
     public $optionalAuth = ['index', 'login', 'logout'];
 ```
 
-- 如果需要RBAC鉴权或其他方式，在api/controller/BaseController中覆盖checkAccess函数
+- 注销
 
+![](images/api-logout.png)
+
+- 如果需要RBAC鉴权或其他方式，在api/controller/BaseController中覆盖checkAccess函数
 
 - 其他方式登录可以参考v1/controller/DefaultController中的actionLogin
 

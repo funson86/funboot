@@ -43,7 +43,7 @@ class AccessTokenSystem extends \yii\base\Component
         Yii::$app->cache->delete($this->getCacheKey($accessToken));
         if (!Yii::$app->user->isGuest) {
             Yii::$app->user->logout();
-            $model = $this->findIdentityByAccessToken($accessToken);
+            $model = User::findUserByAccessToken($accessToken);
             $model->access_token = '';
             if (!$model->save(false)) {
                 Yii::$app->logSystem->db($model->errors);
@@ -70,5 +70,4 @@ class AccessTokenSystem extends \yii\base\Component
     {
         return Yii::$app->cache->get($this->getCacheKey($token)) ?? User::findUserByAccessToken($token, $type);
     }
-
 }
