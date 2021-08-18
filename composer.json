@@ -39,6 +39,8 @@
         "consilience/flysystem-azure-file-storage": "^0.1.4",
         "league/flysystem-azure": "^1.0",
         "xxtime/flysystem-aliyun-oss": "^1.5",
+        "xj/yii2-oauth": "~2.0.0",
+        "geoip2/geoip2": "~2.0",
         "zhuzhichao/ip-location-zh": "^2.4",
         "ramsey/uuid": "^3.9",
         "2amigos/qrcode-library": "^1.1",
