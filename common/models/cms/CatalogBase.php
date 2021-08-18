@@ -24,6 +24,12 @@ class CatalogBase extends BaseModel
         'content' => 'Ueditor',
     ];
 
+    /**
+     * 是否启用高并发，需要启用的在XxxBase中设置
+     * @var bool
+     */
+    protected $highConcurrency = true;
+
     const KIND_NEWS = 1;
     const KIND_PRODUCT = 2;
     const KIND_GALLERY = 4;

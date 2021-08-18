@@ -18,9 +18,6 @@
 
 ```php
 
-    /* 高并发，默认为false, new model 后直接使用 $model->id = IdHelper::snowFlakeId(); */
-    'highConcurrency' => false,
-
     // Snowflake唯一ID
     'snowFlakeUniqueId' => false, // 修改此处不会影响ID顺序，如ID按照15261***开头，修改还是15261***开头，并且按照先后顺序
     'snowFlakeDataCenterId' => 0,
@@ -39,9 +36,34 @@
 - 多台机器，酌情在params-local中设置dataId和workerId
 - 新创建一个model的时候，下一行设置ID，如果不设置，主键虽然设置自增ID，但是冲突的概率理论上是存在的
 
+在系统中的XxxBase如SettingBase.php中将$highConcurrency设置为true，BaseModel的构造函数会自动变更id
+
+```
+    /**
+     * 是否启用高并发，需要启用的在XxxBase中设置
+     * @var bool
+     */
+    protected $highConcurrency = true;
+```
+
 ```php
     $model = new $this->modelClass();
-    $model->id = IdHelper::snowFlakeId();
+
+    // BaseModel的构造函数会自动变更id
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+
+        // 高性能
+        $this->highConcurrency && $this->id = IdHelper::snowFlakeId();
+
+        // 设置store_id
+        (isset($this->store_id) && intval($this->store_id) <= 0) && $this->store_id = Yii::$app->storeSystem->getId();
+
+        $this->on(self::EVENT_AFTER_INSERT, [get_class($this), 'afterInsert']);
+        $this->on(self::EVENT_AFTER_UPDATE, [get_class($this), 'afterUpdate']);
+        $this->on(self::EVENT_BEFORE_DELETE, [get_class($this), 'beforeDeleteBase']);
+    }
 ```
 
 

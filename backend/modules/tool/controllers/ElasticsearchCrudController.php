@@ -19,8 +19,6 @@ class ElasticsearchCrudController extends BaseController
 {
     protected $style = 3;
 
-    protected $highConcurrency = true;
-
     /**
       * @var ElasticsearchCrud
       */

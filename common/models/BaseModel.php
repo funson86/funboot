@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\helpers\ArrayHelper;
+use common\helpers\IdHelper;
 use common\models\base\Log;
 use Yii;
 use yii\base\ModelEvent;
@@ -30,6 +31,12 @@ class BaseModel extends ActiveRecord
     ];
     public $translating = 0;
 
+    /**
+     * 是否启用高并发，需要启用的在XxxBase中设置
+     * @var bool
+     */
+    protected $highConcurrency = false;
+
     const SORT_DEFAULT = 50;
     const SORT_TOP = 10;
 
@@ -44,6 +51,9 @@ class BaseModel extends ActiveRecord
     public function __construct($config = [])
     {
         parent::__construct($config);
+
+        // 高性能
+        $this->highConcurrency && $this->id = IdHelper::snowFlakeId();
 
         // 设置store_id
         (isset($this->store_id) && intval($this->store_id) <= 0) && $this->store_id = Yii::$app->storeSystem->getId();

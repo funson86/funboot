@@ -29,12 +29,6 @@ class SettingController extends BaseController
     public $modelClass = Setting::class;
 
     /**
-     * 是否启用高并发
-     * @var bool
-     */
-    protected $highConcurrency = true;
-
-    /**
       * 模糊查询字段
       * @var string[]
       */
@@ -152,20 +146,16 @@ class SettingController extends BaseController
      *
      * @param $value
      * @param string $field
-     * @param bool $highConcurrency
      * @return \yii\db\ActiveRecord
      * @throws \Exception
      */
-    protected function findModelByField($value, $field = 'name', $highConcurrency = false)
+    protected function findModelByField($value, $field = 'name')
     {
         /* @var $model \yii\db\ActiveRecord */
         $storeId = $this->getStoreId();
         if ((empty(($model = $this->modelClass::find()->where([$field => $value])->andFilterWhere(['store_id' => $storeId])->one())))) {
             $model = new $this->modelClass();
             $model->loadDefaultValues();
-
-            $highConcurrency && $model->id = IdHelper::snowFlakeId();
-            isset($model->store_id) && $model->store_id = $this->getStoreId();
 
             return $model;
         }

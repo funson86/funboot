@@ -39,13 +39,6 @@ class BaseController extends Controller
      */
     protected $pageSize = 10;
 
-    /**
-     * 是否启用高并发
-     * @var bool
-     */
-    protected $highConcurrency = false;
-
-
     public function beforeAction($action)
     {
         // 优先级从先到后：指定store_code, store_id，用户store_id，host_name，其中指定store_id放到session中，后续其他url无需再指定store_id也能匹配
@@ -111,17 +104,6 @@ class BaseController extends Controller
 
             $model = new $this->modelClass();
             $model->loadDefaultValues();
-
-            // 如果配置了高并发
-            if ($this->highConcurrency || Yii::$app->params['highConcurrency']) {
-                $model->id = IdHelper::snowFlakeId();
-            }
-
-            if (isset($model->store_id)) {
-                $model->store_id = $this->getStoreId();
-            }
-
-            return $model;
         }
 
         return $model;

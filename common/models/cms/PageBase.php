@@ -23,6 +23,12 @@ class PageBase extends BaseModel
         'content' => 'Ueditor',
     ];
 
+    /**
+     * 是否启用高并发，需要启用的在XxxBase中设置
+     * @var bool
+     */
+    protected $highConcurrency = true;
+
     const FORMAT_HTML = 1;
     const FORMAT_MARKDOWN = 2;
     const FORMAT_TEXTAREA = 4;

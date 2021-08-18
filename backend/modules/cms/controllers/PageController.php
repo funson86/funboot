@@ -23,12 +23,6 @@ class PageController extends BaseController
     public $isAutoTranslation = true;
 
     /**
-     * 是否启用高并发
-     * @var bool
-     */
-    protected $highConcurrency = true;
-
-    /**
       * @var Page
       */
     public $modelClass = Page::class;

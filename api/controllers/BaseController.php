@@ -53,12 +53,6 @@ class BaseController extends ActiveController
     protected $pageSize = 10;
 
     /**
-     * 是否高并发
-     * @var bool
-     */
-    protected $highConcurrency = false;
-
-    /**
      * 序列化数据
      * @var string[]
      */
@@ -197,10 +191,6 @@ class BaseController extends ActiveController
         /* @var $model \yii\db\ActiveRecord */
         $model = new $this->modelClass;
         $model->attributes = Yii::$app->request->post();
-        if ($this->highConcurrency || Yii::$app->params['highConcurrency']) {
-            $model->id = IdHelper::snowFlakeId();
-        }
-        isset($model->store_id) && $model->store_id = $this->getStoreId();
 
         if (!$model->save()) {
             return $this->error();

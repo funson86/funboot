@@ -25,11 +25,6 @@ class CatalogController extends BaseController
 
     protected $style = 2;
 
-    /**
-     * 是否启用高并发
-     * @var bool
-     */
-    protected $highConcurrency = true;
 
     /**
       * @var Catalog

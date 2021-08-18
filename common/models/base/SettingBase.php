@@ -13,6 +13,11 @@ use Yii;
  */
 class SettingBase extends BaseModel
 {
+    /**
+     * 是否启用高并发，需要启用的在XxxBase中设置
+     * @var bool
+     */
+    protected $highConcurrency = true;
 
     /**
      * @return array|array[]

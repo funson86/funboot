@@ -33,9 +33,6 @@ return [
     ],
     'htmlReturnFile' => '@frontend/views/site/html-return.php', // html样式返回成功失败
 
-    /* 高并发，默认为false, new model 后直接使用 $model->id = IdHelper::snowFlakeId(); */
-    'highConcurrency' => false,
-
     // Snowflake唯一ID
     'snowFlakeUniqueId' => false, // 修改此处不会影响ID顺序，如ID按照15261***开头，修改还是15261***开头，并且按照先后顺序
     'snowFlakeDataCenterId' => 0,

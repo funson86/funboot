@@ -777,39 +777,6 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
-     * 返回模型
-     *
-     * @param $id
-     * @param bool $action
-     * @return \yii\db\ActiveRecord
-     * @throws \Exception
-     */
-    protected function findModel($id, $action = false)
-    {
-        /* @var $model \yii\db\ActiveRecord */
-        $storeId = $this->isAdmin() ? null : $this->getStoreId();
-        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
-            if ($action) {
-                return null;
-            }
-
-            $model = new $this->modelClass();
-            $model->loadDefaultValues();
-
-            // 如果配置了高并发
-            if ($this->highConcurrency || Yii::$app->params['highConcurrency']) {
-                $model->id = IdHelper::snowFlakeId();
-            }
-
-            isset($model->store_id) && $model->store_id = $this->getStoreId();
-
-            return $model;
-        }
-
-        return $model;
-    }
-
-    /**
      * @param $model \yii\db\ActiveRecord|Model
      * @throws \yii\base\ExitException
      */

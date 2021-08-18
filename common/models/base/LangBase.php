@@ -14,6 +14,12 @@ use Yii;
  */
 class LangBase extends BaseModel
 {
+    /**
+     * 是否启用高并发，需要启用的在XxxBase中设置，不同店主在批量翻译时有可能会在mysql冲突
+     * @var bool
+     */
+    protected $highConcurrency = true;
+
     const LANGUAGE_EN = 1 << 0;
     const LANGUAGE_ZH_CN = 1 << 1;
     const LANGUAGE_ZH_HK = 1 << 2;

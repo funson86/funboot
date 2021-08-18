@@ -18,8 +18,6 @@ class RedisCrudController extends BaseController
 {
     protected $style = 3;
 
-    protected $highConcurrency = true;
-
     /**
       * @var RedisCrud
       */
