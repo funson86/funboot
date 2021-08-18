@@ -56,7 +56,7 @@ class StuffController extends BaseController
     {
         $models = [];
         $model->type = Yii::$app->request->get('type', $this->modelClass::TYPE_TEXT);
-        $this->store->route == Store::ROUTE_BBS && $models = Node::find()->where(['status' => Node::STATUS_ACTIVE, 'store_id' => $this->getStoreId()])->asArray()->all();
+        $this->store->route == 'bbs' && $models = Node::find()->where(['status' => Node::STATUS_ACTIVE, 'store_id' => $this->getStoreId()])->asArray()->all();
         $model->mapCode = ArrayHelper::map($models, 'id', 'name');
     }
 }

@@ -57,16 +57,9 @@ class StoreSystem extends \yii\base\Component
 
     public function getRouteCode()
     {
-        $data = [
-            Store::ROUTE_SITE => SettingType::SUPPORT_SYSTEM_SITE,
-            Store::ROUTE_PAY => SettingType::SUPPORT_SYSTEM_PAY,
-            Store::ROUTE_CMS => SettingType::SUPPORT_SYSTEM_CMS,
-            Store::ROUTE_BBS => SettingType::SUPPORT_SYSTEM_BBS,
-            Store::ROUTE_MALL => SettingType::SUPPORT_SYSTEM_MALL,
-            Store::ROUTE_WECHAT => SettingType::SUPPORT_SYSTEM_WECHAT,
-        ];
+        $data = Yii::$app->params['routeCode'];
 
-        return $data[$this->store->route] ?? SettingType::SUPPORT_SYSTEM_SITE;
+        return $data[$this->store->route] ?? 1;
     }
 
 }

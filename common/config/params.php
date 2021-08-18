@@ -44,6 +44,28 @@ return [
         'database' => 0,
     ],
 
+    // 子系统路径
+    'routes' => [
+        'site' => 'ROUTE_SITE',
+        'pay' => 'ROUTE_PAY',
+        'cms' => 'ROUTE_CMS',
+        'bbs' => 'ROUTE_BBS',
+        'mall' => 'ROUTE_MALL',
+        'wechat' => 'ROUTE_WECHAT',
+        'mini' => 'ROUTE_MINI',
+        'chat' => 'ROUTE_CHAT',
+    ],
+    'routeCode' => [
+        'site' => 1,
+        'pay' => 2,
+        'cms' => 4,
+        'bbs' => 8,
+        'mall' => 16,
+        'wechat' => 32,
+        'mini' => 64,
+        'chat' => 128,
+    ],
+
     // 定时任务存储路径
     'scheduleFile' => '@console/runtime/schedule/schedule.php',
 
