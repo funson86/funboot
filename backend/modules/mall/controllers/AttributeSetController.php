@@ -61,7 +61,6 @@ class AttributeSetController extends BaseController
                 $modelTemp = AttributeSetAttribute::find()->where(['store_id' => $this->getStoreId(), 'attribute_set_id' => $id, 'attribute_id' => $sub['attribute_id'][$i]])->one();
                 if (!$modelTemp) {
                     $modelTemp = new AttributeSetAttribute();
-                    $modelTemp->store_id = $this->getStoreId();
                     $modelTemp->attribute_set_id = $id;
                     $modelTemp->attribute_id = $sub['attribute_id'][$i];
                 }

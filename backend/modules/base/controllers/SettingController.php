@@ -198,9 +198,6 @@ class SettingController extends BaseController
                             $model->code = trim($row[0]);
                         }
                     }
-                    if (isset($model->store_id)) { // 设置store_id为当前id
-                        $model->store_id = $this->getStoreId();
-                    }
 
                     $j = 0;
                     $errorData = false;

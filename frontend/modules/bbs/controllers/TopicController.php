@@ -107,7 +107,6 @@ class TopicController extends BaseController
                             $topicMeta = TopicMeta::find()->where(['topic_id' => $model->id, 'meta_id' => $k, 'store_id' => $this->getStoreId()])->one();
                             if (!$topicMeta) {
                                 $topicMeta = new TopicMeta();
-                                $topicMeta->store_id = $this->getStoreId();
                                 $topicMeta->topic_id = $model->id;
                                 $topicMeta->meta_id = $k;
                                 $topicMeta->name = $meta->name;

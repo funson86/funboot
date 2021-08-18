@@ -61,7 +61,6 @@ class MetaController extends BaseController
                 $modelTemp = Meta::find()->where(['store_id' => $this->getStoreId(), 'parent_id' => $model->id, 'name' => $sub['name'][$i]])->one();
                 if (!$modelTemp) {
                     $modelTemp = new Meta();
-                    $modelTemp->store_id = $this->getStoreId();
                     $modelTemp->parent_id = $model->id;
                     $modelTemp->name = $sub['name'][$i];
                 }

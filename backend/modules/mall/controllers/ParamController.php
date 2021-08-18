@@ -61,7 +61,6 @@ class ParamController extends BaseController
                 $modelTemp = Param::find()->where(['store_id' => $this->getStoreId(), 'parent_id' => $model->id, 'name' => $sub['name'][$i]])->one();
                 if (!$modelTemp) {
                     $modelTemp = new Param();
-                    $modelTemp->store_id = $this->getStoreId();
                     $modelTemp->parent_id = $model->id;
                     $modelTemp->name = $sub['name'][$i];
                 }

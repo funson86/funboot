@@ -571,7 +571,6 @@ class BaseController extends \common\components\controller\BaseController
                     $lang = Lang::find()->where(['store_id' => $this->getStoreId(), 'table_code' => $this->modelClass::getTableCode(), 'target_id' => $model->id, 'target' => $target, 'name' => $field])->one();
                     if (!$lang) {
                         $lang = new Lang();
-                        $lang->store_id = $this->getStoreId();
                         $lang->table_code = $this->modelClass::getTableCode();
                         $lang->name = $field;
                         $lang->source = $this->store->lang_source;
@@ -716,9 +715,6 @@ class BaseController extends \common\components\controller\BaseController
                         }
                     } else {
                         $model = new $this->modelClass();
-                    }
-                    if (isset($model->store_id)) { // 设置store_id为当前id
-                        $model->store_id = $this->getStoreId();
                     }
 
                     $j = 0;

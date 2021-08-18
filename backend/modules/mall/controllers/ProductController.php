@@ -82,7 +82,6 @@ class ProductController extends BaseController
                     foreach ($tags as $tagId) {
                         $modelTemp = ProductTag::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'tag_id' => $tagId])->one();
                         !$modelTemp && $modelTemp = new ProductTag();
-                        $modelTemp->store_id = $this->getStoreId();
                         $modelTemp->product_id = $model->id;
                         $modelTemp->tag_id = $tagId;
                         $modelTemp->status = Tag::STATUS_ACTIVE;
@@ -102,7 +101,6 @@ class ProductController extends BaseController
                         foreach ($skus as $attributeValue => $item) {
                             $modelTemp = ProductSku::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'attribute_value' => $attributeValue])->one();
                             !$modelTemp && $modelTemp = new ProductSku();
-                            $modelTemp->store_id = $this->getStoreId();
                             // 按照id顺序用逗号分隔存储
                             $arrAttributeValue = explode(',', $attributeValue);
                             $modelTemp->attribute_value = implode(',', ArrayHelper::intValue($arrAttributeValue, true));
@@ -143,7 +141,6 @@ class ProductController extends BaseController
                         foreach ($productAttributeValueLabels as $attributeValueId => $label) {
                             $modelTemp = ProductAttributeValueLabel::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'attribute_value_id' => $attributeValueId])->one();
                             !$modelTemp && $modelTemp = new ProductAttributeValueLabel();
-                            $modelTemp->store_id = $this->getStoreId();
                             $modelTemp->product_id = $model->id;
                             $modelTemp->attribute_value_id = $attributeValueId;
                             $modelTemp->name = $mapAttributeValueIdName[$attributeValueId] ?? '-';
@@ -172,7 +169,6 @@ class ProductController extends BaseController
                             var_dump($id);
                             $modelTemp = ProductParam::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'param_id' => $id])->one();
                             !$modelTemp && $modelTemp = new ProductParam();
-                            $modelTemp->store_id = $this->getStoreId();
                             $modelTemp->product_id = $model->id;
                             $modelTemp->param_id = $id;
                             $modelTemp->name = $mapAllParamIdName[$id] ?? '-';

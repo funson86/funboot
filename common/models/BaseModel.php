@@ -55,8 +55,10 @@ class BaseModel extends ActiveRecord
         // 高性能
         $this->highConcurrency && $this->id = IdHelper::snowFlakeId();
 
-        // 设置store_id
-        (isset($this->store_id) && intval($this->store_id) <= 0) && $this->store_id = Yii::$app->storeSystem->getId();
+        // 设置store_id，store表没有该字段
+        if (!$this instanceof Store) {
+            $this->store_id = Yii::$app->storeSystem->getId();
+        }
 
         $this->on(self::EVENT_AFTER_INSERT, [get_class($this), 'afterInsert']);
         $this->on(self::EVENT_AFTER_UPDATE, [get_class($this), 'afterUpdate']);

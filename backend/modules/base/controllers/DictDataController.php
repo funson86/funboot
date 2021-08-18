@@ -118,7 +118,7 @@ class DictDataController extends BaseController
                 $this->redirectError($this->getError($model));
             }
 
-            Yii::$app->cacheSystem->clearDict();
+            Yii::$app->cacheSystem->clearAllDict();
             return $this->redirectSuccess();
         }
 
@@ -145,7 +145,7 @@ class DictDataController extends BaseController
                 $this->redirectError($this->getError($model));
             }
 
-            Yii::$app->cacheSystem->clearDict();
+            Yii::$app->cacheSystem->clearAllDict();
             return $this->redirectSuccess();
         }
 
@@ -174,7 +174,7 @@ class DictDataController extends BaseController
             return $this->redirectError();
         }
 
-        Yii::$app->cacheSystem->clearDict();
+        Yii::$app->cacheSystem->clearAllDict();
         return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete Successfully'));
     }
 
@@ -189,9 +189,6 @@ class DictDataController extends BaseController
         /* @var $model \yii\db\ActiveRecord */
         if (empty($id) || empty(($model = Dict::findOne($id)))) {
             $model = new Dict();
-            $model->id = IdHelper::snowFlakeId();
-            $model->store_id = $this->getStoreId();
-
             return $model->loadDefaultValues();
         }
 
