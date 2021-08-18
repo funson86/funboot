@@ -50,6 +50,11 @@ class StoreController extends BaseController
        'type' => 'select',
    ];
 
+   protected function filterParams(&$params)
+   {
+       $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
+   }
+
     /**
       * ajax编辑/创建
       *
@@ -87,7 +92,7 @@ class StoreController extends BaseController
                 if (!$user->save()) {
                     $model->delete();
                     Yii::$app->logSystem->db($user->errors);
-                    $this->flashError($this->getError($user));
+                    return $this->redirectError($this->getError($user));
                 }
 
                 // 增加user为默认店铺角色
@@ -101,14 +106,14 @@ class StoreController extends BaseController
                 $this->setDefaultData($model);
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($user->errors);
-                    $this->redirectError($this->getError($model));
+                    return $this->redirectError($this->getError($model));
                 }
 
                 Yii::$app->cacheSystem->clearAllStore();
                 $this->generateHostFile();
-                $this->redirectSuccess();
+                return $this->redirectSuccess();
             } else {
-                $this->redirectError($this->getError($model));
+                return $this->redirectError($this->getError($model));
             }
         }
 

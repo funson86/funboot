@@ -96,7 +96,7 @@ class BaseController extends Controller
     protected function findModel($id, $action = false)
     {
         /* @var $model \yii\db\ActiveRecord */
-        $storeId = $this->getStoreId();
+        $storeId = ($this->modelClass === Store::class) ? null : $this->getStoreId();
         if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
             if ($action) {
                 return null;

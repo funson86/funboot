@@ -223,12 +223,22 @@ class BaseController extends \common\components\controller\BaseController
         if ($this->style == 11) {
             $params['ModelSearch']['parent_id'] = 0;
         }
+        $this->filterParams($params);
         $dataProvider = $searchModel->search($params);
 
         return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
         ]);
+    }
+
+    /**
+     * 自定义过滤参数
+     * @param $params
+     */
+    protected function filterParams(&$params)
+    {
+        return true;
     }
 
     /**
