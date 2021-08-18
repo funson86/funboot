@@ -39,8 +39,6 @@ class DefaultController extends BaseController
     public function actionPay()
     {
         $model = new Payment();
-        $model->id = IdHelper::snowFlakeId();
-        $model->store_id = $this->getStoreId();
         $store = $this->store;
 
         $model->captchaRequired();

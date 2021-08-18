@@ -17,6 +17,12 @@ class PaymentBase extends BaseModel
     public $kind = 10;
     public $verifyCode;
 
+    /**
+     * 是否启用高并发，需要启用的在XxxBase中设置
+     * @var bool
+     */
+    protected $highConcurrency = true;
+
     const STATUS_UNPAID = 0;
     const STATUS_PAID = 1;
     const STATUS_PAID_WITHOUT_LIST = 2;

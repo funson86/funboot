@@ -15,6 +15,12 @@ use common\models\Store;
  */
 class LogBase extends BaseModel
 {
+    /**
+     * 是否启用高并发，需要启用的在XxxBase中设置
+     * @var bool
+     */
+    protected $highConcurrency = true;
+
     const TYPE_OPERATION = 1;
     const TYPE_ERROR = 2;
     const TYPE_LOGIN = 3;
