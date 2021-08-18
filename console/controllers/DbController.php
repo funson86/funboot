@@ -30,6 +30,14 @@ class DbController extends BaseController
         return $msg;
     }
 
+    /**
+     * 清楚数据表中30天之前的日志
+     */
+    public function actionDeleteLog()
+    {
+        var_dump(Log::deleteAll('created_at <' . (time() - 30 * 86400)));
+    }
+
     public function actionDropForeignKey()
     {
         $sql = "

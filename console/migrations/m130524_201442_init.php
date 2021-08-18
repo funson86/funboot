@@ -855,7 +855,6 @@ INSERT INTO `fb_base_user_role` VALUES ('6', '6', '', '6', '50', '1', '50', '1',
 INSERT INTO `fb_base_setting_type` VALUES ('50', '1', '0', 'backend', '网站设置', 'website', '', 7, 1, 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('83', '1', '0', 'backend', '联系方式', 'contact', '', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('85', '1', '0', 'backend', '邮件设置', 'mail', '', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('89', '1', '0', 'backend', '系统设置', 'system', '', 7, 1, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 
 INSERT INTO `fb_base_setting_type` VALUES ('5001', '1', '50', 'backend', '网站标题', 'website_name', '', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('5003', '1', '50', 'backend', '网站Logo', 'website_logo', '', 7, 1, 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
@@ -883,6 +882,7 @@ INSERT INTO `fb_base_setting_type` VALUES ('8507', '1', '85', 'backend', 'Smtp P
 INSERT INTO `fb_base_setting_type` VALUES ('8509', '1', '85', 'backend', 'Smtp Encryption', 'mail_smtp_encryption', '加密方式', 7, 1, 'text', '', 'tls', '50', '1', '1600948360', '1600948360', '1', '1');
 
 INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/backup', '', '数据库备份，每天凌晨执行', '0 3 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
+INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/delete-log', '', '删除30天前日志，每天凌晨执行', '30 2 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
 
         ";
 
