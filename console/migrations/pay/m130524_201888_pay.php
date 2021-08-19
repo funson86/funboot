@@ -59,8 +59,6 @@ INSERT INTO `fb_base_role_permission` VALUES ('226', '1', '', '50', '5514', '1',
 INSERT INTO `fb_base_role_permission` VALUES ('227', '1', '', '50', '5515', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('228', '1', '', '50', '5516', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 
-
-
         ";
 
         $this->execute($sql);
@@ -68,5 +66,16 @@ INSERT INTO `fb_base_role_permission` VALUES ('228', '1', '', '50', '5516', '1',
 
     public function down()
     {
+        $sql = "
+
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE `fb_pay_payment`;
+
+SET FOREIGN_KEY_CHECKS=1;
+        ";
+
+        $this->execute($sql);
+
     }
 }

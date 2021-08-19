@@ -23,6 +23,42 @@ return [
         'migrate' => [
             'class' => 'e282486518\migration\ConsoleController',
         ],
+        'migrate-tool' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@console/migrations/tool',
+        ],
+        'migrate-region' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@console/migrations/region',
+        ],
+        'migrate-oauth' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@console/migrations/oauth',
+        ],
+        'migrate-pay' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@console/migrations/pay',
+        ],
+        'migrate-cms' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@console/migrations/cms',
+        ],
+        'migrate-bbs' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@console/migrations/bbs',
+        ],
+        'migrate-mall' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@console/migrations/mall',
+        ],
+        'migrate-wechat' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@console/migrations/wechat',
+        ],
+        'migrate-chat' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@console/migrations/chat',
+        ],
     ],
     'modules' => [
         'chat' => [
