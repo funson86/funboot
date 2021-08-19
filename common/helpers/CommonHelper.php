@@ -78,7 +78,7 @@ class CommonHelper
         // store指定了语言
         $field = 'lang_' . str_replace('app-', '', Yii::$app->id) . '_default';
         if (isset($store->$field) && self::checkLang($store->$field)) {
-            return $lang;
+            return $store->$field;
         }
 
         return CommonHelper::parseBrowserLanguage();

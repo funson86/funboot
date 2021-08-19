@@ -83,7 +83,7 @@ class SignupEmailForm extends Model
     {
         if ($this->validate()) {
             $user = new User();
-            $user->username = str_replace('.', '_', str_replace('@', '_', $this->email));
+            $user->username = str_replace('.', '_', str_replace('@', '_', $this->email)) . '_' . Yii::$app->storeSystem->getId();
             $user->email = $this->email;
             $user->store_id = $this->storeId ?: Yii::$app->storeSystem->getId();
             $user->setPassword($this->password);
