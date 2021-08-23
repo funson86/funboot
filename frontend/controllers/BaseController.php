@@ -92,7 +92,7 @@ class BaseController extends \common\components\controller\BaseController
     {
         !$ext && $ext = '.css';
         (strpos($name, '.') === false) && $name .= $ext;
-        !$version && $name .= '?v=' . $version;
+        $version && $name .= $name . ('?v=' . $version);
 
         return $this->prefixStatic . '/css/' . $name;
     }
@@ -101,7 +101,7 @@ class BaseController extends \common\components\controller\BaseController
     {
         !$ext && $ext = '.js';
         (strpos($name, '.') === false) && $name .= $ext;
-        !$version && $name .= '?v=' . $version;
+        $version && $name .= '?v=' . $version;
 
         return $this->prefixStatic . '/js/' . $name;
     }
@@ -110,7 +110,7 @@ class BaseController extends \common\components\controller\BaseController
     {
         !$ext && $ext = '.jpg';
         (strpos($name, '.') === false) && $name .= $ext;
-        !$version && $name .= '?v=' . $version;
+        $version && $name .= '?v=' . $version;
 
         return $this->prefixStatic . '/images/' . $name;
     }
@@ -120,7 +120,7 @@ class BaseController extends \common\components\controller\BaseController
         !$ext && $ext = '.jpg';
         $name = CommonHelper::isMobile() ? $name : ($pc ?? str_replace('-h5', '', $name));
         (strpos($name, '.') === false) && $name .= $ext;
-        !$version && $name .= '?v=' . $version;
+        $version && $name .= '?v=' . $version;
 
         return $this->prefixStatic . '/images/' . $name;
     }
@@ -135,12 +135,12 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         if (file_exists(Yii::getAlias('@webroot' . $this->prefixStatic . '/images/' . $name))) {
-            !$version && $name .= '?v=' . $version;
+            $version && $name .= '?v=' . $version;
             return $this->prefixStatic . '/images/' . $name;
         }
 
         $langCode && $name = str_replace('-' . $langCode, '', $name);
-        !$version && $name .= '?v=' . $version;
+        $version && $name .= '?v=' . $version;
         return $this->prefixStatic . '/images/' . $name;
     }
 
