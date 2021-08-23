@@ -92,7 +92,7 @@ class BaseController extends \common\components\controller\BaseController
     {
         !$ext && $ext = '.css';
         (strpos($name, '.') === false) && $name .= $ext;
-        $version && $name .= $name . ('?v=' . $version);
+        $version && $name .= '?v=' . $version;
 
         return $this->prefixStatic . '/css/' . $name;
     }
