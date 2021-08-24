@@ -12,6 +12,7 @@ use common\models\base\Lang;
 use common\models\base\Permission;
 use common\models\BaseModel;
 use common\models\ModelSearch;
+use common\models\Store;
 use common\services\base\UserPermission;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
@@ -780,6 +781,24 @@ class BaseController extends \common\components\controller\BaseController
     protected function afterImport($model = null)
     {
         return true;
+    }
+
+    protected function findModel($id, $action = false)
+    {
+        /* @var $model \yii\db\ActiveRecord */
+
+        // 管理员无需store_id
+        $storeId = (($this->modelClass === Store::class) || $this->isAdmin()) ? null : $this->getStoreId();
+        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
+            if ($action) {
+                return null;
+            }
+
+            $model = new $this->modelClass();
+            $model->loadDefaultValues();
+        }
+
+        return $model;
     }
 
     /**
