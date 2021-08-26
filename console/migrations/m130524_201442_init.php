@@ -121,7 +121,7 @@ CREATE TABLE `fb_base_dict_data` (
   KEY `base_dict_data_k1` (`dict_id`),
   CONSTRAINT `base_dict_data_fk1` FOREIGN KEY (`dict_id`) REFERENCES `fb_base_dict` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `base_dict_data_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=152632253803921409 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='字典数据';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='字典数据';
 
 -- ----------------------------
 -- Table structure for fb_base_log
@@ -153,7 +153,7 @@ CREATE TABLE `fb_base_log` (
   PRIMARY KEY (`id`),
   KEY `base_log_fk2` (`store_id`),
   CONSTRAINT `base_log_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=177599032061853697 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='日志';
 
 -- ----------------------------
 -- Table structure for fb_base_message_type
@@ -357,7 +357,7 @@ CREATE TABLE `fb_base_setting` (
   PRIMARY KEY (`id`),
   KEY `base_setting_k0` (`store_id`),
   CONSTRAINT `base_setting_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=159112575663997031 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='配置';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='配置';
 
 -- ----------------------------
 -- Table structure for fb_base_setting_type
@@ -369,7 +369,7 @@ CREATE TABLE `fb_base_setting_type` (
   `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父节点',
   `app_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'backend' COMMENT '子系统',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '代码',
+  `code` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '代码',
   `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介',
   `support_role` int(11) NOT NULL DEFAULT '7' COMMENT '支持角色',
   `support_system` int(11) NOT NULL DEFAULT '1' COMMENT '支持系统',
@@ -386,7 +386,7 @@ CREATE TABLE `fb_base_setting_type` (
   UNIQUE KEY `base_setting_type_code` (`code`),
   KEY `base_setting_type_k0` (`store_id`),
   CONSTRAINT `base_setting_type_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='配置类型';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='配置类型';
 
 -- ALTER TABLE `fb_base_setting_type` ADD COLUMN `support_role` int(11) NOT NULL DEFAULT '7' COMMENT '支持角色' AFTER `brief`;  
 -- ALTER TABLE `fb_base_setting_type` ADD COLUMN `support_system` int(11) NOT NULL DEFAULT '1' COMMENT '支持系统' AFTER `support_role`;  
@@ -513,7 +513,7 @@ CREATE TABLE `fb_user` (
   KEY `base_created_at` (`created_at`),
   KEY `base_user_fk2` (`store_id`),
   CONSTRAINT `base_user_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=156199573910454280 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户';
 
 DROP TABLE IF EXISTS `fb_school_student`;
 CREATE TABLE `fb_school_student` (
@@ -636,6 +636,7 @@ CREATE TABLE `fb_base_stuff` (
 -- ALTER TABLE `fb_base_role` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 
 
+SET FOREIGN_KEY_CHECKS=1;
         ";
 
         $this->execute($sql);
@@ -882,7 +883,7 @@ INSERT INTO `fb_base_setting_type` VALUES ('8507', '1', '85', 'backend', 'Smtp P
 INSERT INTO `fb_base_setting_type` VALUES ('8509', '1', '85', 'backend', 'Smtp Encryption', 'mail_smtp_encryption', '加密方式', 7, 1, 'text', '', 'tls', '50', '1', '1600948360', '1600948360', '1', '1');
 
 INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/backup', '', '数据库备份，每天凌晨执行', '0 3 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
-INSERT INTO `fb_base_schedule` VALUES ('1', '1', 'db/delete-log', '', '删除30天前日志，每天凌晨执行', '30 2 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
+INSERT INTO `fb_base_schedule` VALUES ('2', '1', 'db/delete-log', '', '删除30天前日志，每天凌晨执行', '30 2 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
 
         ";
 

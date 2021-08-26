@@ -63,6 +63,8 @@
         "sebastian/phpcpd": "*",
         "w7corp/easywechat": "4.x",
         "league/oauth2-server": "^8.2",
+        "workerman/workerman": "^4.0",
+        "workerman/gateway-worker": "^3.0",
         "kub-at/php-simple-html-dom-parser": "^1.9"
     },
     "require-dev": {
