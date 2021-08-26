@@ -2,6 +2,7 @@
 
 namespace frontend\modules\wechat\controllers;
 
+use common\helpers\IdHelper;
 use common\models\User;
 use common\traits\WechatLogin;
 use Yii;
@@ -46,8 +47,12 @@ class BaseController extends \frontend\controllers\BaseController
             $model = new User();
             $model->openid = $model->username = $model['id'];
             $model->name = $user['nickname'];
-            $model->sex = $user['sex'];
+            $model->sex = $original['sex'];
             $model->avatar = $user['avatar'];
+            $model->access_token = $user['access_token'];
+            $model->refresh_token = $user['refresh_token'];
+            $model->setPassword(IdHelper::snowFlakeId());
+            $model->generateAuthKey();
             if (!$model->save()) {
                 Yii::$app->logSystem->db($model->errors);
                 return false;
