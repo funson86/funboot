@@ -26,7 +26,8 @@ class BaseController extends \frontend\controllers\BaseController
             return false;
         }
 
-        if (!in_array($this->action->id, $this->optionalAuth)) {
+        // 必须鉴权且为游客
+        if (!in_array($this->action->id, $this->optionalAuth) && Yii::$app->user->isGuest) {
             return $this->login();
         }
 
@@ -45,7 +46,7 @@ class BaseController extends \frontend\controllers\BaseController
         if (!$model) {
             $original = Yii::$app->params['wechat']['userInfo']['original'];
             $model = new User();
-            $model->openid = $model->username = $model['id'];
+            $model->openid = $model->username = $user['id'];
             $model->name = $user['nickname'];
             $model->sex = $original['sex'];
             $model->avatar = $user['avatar'];
@@ -58,9 +59,10 @@ class BaseController extends \frontend\controllers\BaseController
                 return false;
             }
 
-            // 登录
-            Yii::$app->user->login($model);
         }
+
+        // 登录
+        Yii::$app->user->login($model);
 
         return true;
     }

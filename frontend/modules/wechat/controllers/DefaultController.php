@@ -28,6 +28,12 @@ class DefaultController extends BaseController
         return $this->render($this->action->id, []);
     }
 
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+        return $this->goHome();
+    }
+
     public function actionPay()
     {
         $totalFee = 1;// 支付金额单位：分

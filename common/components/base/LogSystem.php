@@ -117,11 +117,11 @@ class LogSystem extends \yii\base\Component
         $model = $this->newModel();
         $user = Yii::$app->user ?? null;
         if ($user && $user->identity) {
-            $model->name = $user->identity->username;
+            $model->name = $user->identity->username ?? '';
             $model->user_id = $user->id;
             $model->store_id = $user->identity->store_id;
         } elseif (isset($data['username'])) {
-            $model->name = $data['username'];
+            $model->name = $data['username'] ?? '';
         }
 
         // 控制台批量修改不记录日志，否则数据库都是控制台修改日志
@@ -132,7 +132,7 @@ class LogSystem extends \yii\base\Component
         $model->url = $request instanceof Request ? $request->getUrl() : 'console';
         $model->method = $request instanceof Request ? strtoupper($request->getMethod()) : 'console';
         $model->params = $request instanceof Request ? json_encode($request->getBodyParams()) : 'console';
-        $model->user_agent = $request instanceof Request ? $request->getUserAgent() : 'console';
+        $model->user_agent = $request instanceof Request ? substr($request->getUserAgent(), 0, 255) : 'console';
         $model->agent_type = CommonHelper::isMobile() ? Log::AGENT_TYPE_MOBILE : Log::AGENT_TYPE_PC;
         $model->ip = $request instanceof Request ? $request->getRemoteIP() : '';
         $model->ip_info = IpHelper::ip2Location($model->ip);
