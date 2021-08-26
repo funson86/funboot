@@ -25,6 +25,9 @@ return [
         'mall' => [
             'class' => 'frontend\modules\mall\Module',
         ],
+        'wechat' => [
+            'class' => 'frontend\modules\wechat\Module',
+        ],
         'chat' => [
             'class' => 'frontend\modules\chat\Module',
         ],

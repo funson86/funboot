@@ -19,6 +19,8 @@ use common\models\Store;
  * @property string $password_hash 密码
  * @property string $password_reset_token 重置密码
  * @property string $verification_token 校验Token
+ * @property string $openid 微信Id
+ * @property string $unionid 微信唯一Id
  * @property string $email 邮箱
  * @property string $mobile 手机
  * @property int $auth_role 用户类型
@@ -72,7 +74,7 @@ class User extends UserBase
             [['username'], 'string', 'max' => 190],
             [['auth_key'], 'string', 'max' => 32],
             [['token'], 'string', 'max' => 64],
-            [['access_token', 'refresh_token', 'password_hash', 'password_reset_token', 'verification_token', 'email', 'mobile', 'name', 'brief', 'area', 'address', 'remark', 'last_login_ip', 'last_paid_ip'], 'string', 'max' => 255],
+            [['access_token', 'refresh_token', 'password_hash', 'password_reset_token', 'verification_token', 'openid', 'unionid', 'email', 'mobile', 'name', 'brief', 'area', 'address', 'remark', 'last_login_ip', 'last_paid_ip'], 'string', 'max' => 255],
             [['avatar'], 'string', 'max' => 1022],
             [['username'], 'unique'],
         ]);
@@ -96,6 +98,8 @@ class User extends UserBase
                 'password_hash' => '密码',
                 'password_reset_token' => '重置密码',
                 'verification_token' => '校验Token',
+                'openid' => '微信Id',
+                'unionid' => '微信唯一Id',
                 'email' => '邮箱',
                 'mobile' => '手机',
                 'auth_role' => '用户类型',
@@ -139,6 +143,8 @@ class User extends UserBase
                 'password_hash' => Yii::t('app', 'Password Hash'),
                 'password_reset_token' => Yii::t('app', 'Password Reset Token'),
                 'verification_token' => Yii::t('app', 'Verification Token'),
+                'openid' => Yii::t('app', 'Openid'),
+                'unionid' => Yii::t('app', 'Unionid'),
                 'email' => Yii::t('app', 'Email'),
                 'mobile' => Yii::t('app', 'Mobile'),
                 'auth_role' => Yii::t('app', 'Auth Role'),

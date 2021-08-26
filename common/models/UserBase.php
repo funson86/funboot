@@ -101,6 +101,8 @@ class UserBase extends BaseModel implements IdentityInterface
             'password_hash' => Yii::t('app', 'Password Hash'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'verification_token' => Yii::t('app', 'Verification Token'),
+            'openid' => Yii::t('app', 'Openid'),
+            'unionid' => Yii::t('app', 'Unionid'),
             'email' => Yii::t('app', 'Email'),
             'mobile' => Yii::t('app', 'Mobile'),
             'auth_role' => Yii::t('app', 'Auth Role'),
@@ -285,6 +287,18 @@ class UserBase extends BaseModel implements IdentityInterface
             'verification_token' => $token,
             // 'status' => self::STATUS_INACTIVE
         ]);
+    }
+
+    /**
+     * Finds user by username
+     *
+     * @param string $username
+     * @param null $storeId
+     * @return static|null
+     */
+    public static function findByOpenid($openid, $storeId = null)
+    {
+        return static::find()->where(['openid' => $openid])->andFilterWhere(['store_id' => $storeId])->one();
     }
 
     /**

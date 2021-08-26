@@ -11,9 +11,19 @@ use yii\web\UnprocessableEntityHttpException;
  * Class WechatSystem
  * @package common\components\wechat
  * @author funson86 <funson86@gmail.com>
+ *
+ * @property \EasyWeChat\OfficialAccount\Application $app 微信SDK实例
+ * @property \EasyWeChat\Payment\Application $payment 微信支付SDK实例
+ * @property \EasyWeChat\MiniProgram\Application $miniProgram 微信小程序实例
+ * @property \EasyWeChat\OpenPlatform\Application $openPlatform 微信开放平台(第三方平台)实例
+ * @property \EasyWeChat\Work\Application $work 企业微信实例
+ * @property \EasyWeChat\OpenWork\Application $openWork 企业微信开放平台实例
+ * @property \EasyWeChat\MicroMerchant\Application $microMerchant 小微商户实例
  */
 class WechatSystem extends Wechat
 {
+    public $debug = false;
+
     public function init()
     {
         parent::init();
@@ -27,6 +37,10 @@ class WechatSystem extends Wechat
         }
 
         Yii::$app->params['wechat']['wechatConfig'] = ArrayHelper::merge([
+            // debug 模式会打印日志
+            'debug' => $this->debug,
+
+            // 基本信息
             'app_id' => $settings['wechat_appid'] ?? '',
             'secret' => $settings['wechat_appsecret'] ?? '',
             'token'     => $settings['wechat_token'] ?? '',
@@ -76,6 +90,20 @@ class WechatSystem extends Wechat
                 'callback' => $callbackUrl,
             ]
         ], Yii::$app->params['wechat']['wechatConfig']);
+
+        //微信支付
+        Yii::$app->params['wechatPaymentConfig'] = ArrayHelper::merge([
+            'app_id' => $settings['wechat_appid'] ?? '',
+            'secret' => $settings['wechat_appsecret'] ?? '',
+            'mch_id' => $settings['pay_wechat_mchid'] ?? '',
+            'key' => $settings['pay_wechat_api_key'] ?? '',
+            // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
+            'cert_path' => $settings['pay_wechat_cert_path'] ?? '', // XXX: 绝对路径！！！！
+            'key_path' => $settings['pay_wechat_key_path'] ?? '', // XXX: 绝对路径！！！！
+            // 支付回调地址
+            'notify_url' => $notifyUrl,
+            'sandbox' => false, // 测试沙箱模式
+        ], Yii::$app->params['wechat']['wechatPaymentConfig']);
     }
 
     /**
@@ -111,5 +139,10 @@ class WechatSystem extends Wechat
         }
 
         return false;
+    }
+
+    public function getUserBySession()
+    {
+        return Yii::$app->session->get($this->sessionParam);
     }
 }

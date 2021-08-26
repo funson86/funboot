@@ -188,8 +188,14 @@ return [
         // 是否直接报错显示微信返回错误数据
         'wechat_error_exception' => true,
 
+        // 用户信息
+        'userInfo' => [],
+
         // 微信公众号 参考EasyWechat
         'wechatConfig' => [],
+
+        // 微信公众号 参考EasyWechat
+        'wechatPaymentConfig' => [],
     ]
 
 

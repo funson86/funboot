@@ -61,7 +61,9 @@ class BaseController extends Controller
             }
         }
         $this->store = $model;
-        Yii::$app->session->set('currentStore', $model);
+        if ($model->parent_id > 0) { // 为子店的情况下存储
+            Yii::$app->session->set('currentStore', $model);
+        }
 
         // 先赋值再去计算，然后再次对$model赋值
         $model->settings = Yii::$app->settingSystem->getSettings($model->id);

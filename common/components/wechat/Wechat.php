@@ -162,6 +162,21 @@ class Wechat extends Component
     }
 
     /**
+     * 获取 EasyWeChat 微信支付实例
+     *
+     * @return Factory|\EasyWeChat\Payment\Application
+     */
+    public function getPayment()
+    {
+        if (!self::$_payment instanceof \EasyWeChat\Payment\Application) {
+            self::$_payment = Factory::payment(Yii::$app->params['wechatPaymentConfig']);
+            !empty($this->rebinds) && self::$_payment = $this->rebind(self::$_payment);
+        }
+
+        return self::$_payment;
+    }
+
+    /**
      * $app
      *
      * @param $app
