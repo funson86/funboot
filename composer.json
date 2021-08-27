@@ -21,8 +21,6 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "yiisoft/yii2-queue": "^2.3",
         "yiisoft/yii2-redis": "^2.0",
-        "yiisoft/yii2-mongodb": "^2.1",
-        "yiisoft/yii2-elasticsearch": "~2.1.0",
         "hisune/echarts-php": "^1.0",
         "unclead/yii2-multiple-input": "~2.0",
         "kartik-v/yii2-widget-datepicker": "@dev",

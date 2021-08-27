@@ -10,6 +10,13 @@
 - 全文索引使用ElasticSearch
 
 
+使用Mongodb或者需要在composer.json中加入组件，同时服务器php需要对应的
+
+```php
+        "yiisoft/yii2-mongodb": "^2.1",
+        "yiisoft/yii2-elasticsearch": "~2.1.0",
+```
+
 ### Id生成器
 
 高并发一个重要的部分是系统生成唯一主键ID，在分布式系统中不依赖于mysql主键ID自动生成。Funboot使用雪花算法SlowFlake辅以redis的自增id作为参数结合datacenter、worker支持每秒生成10w+不同ID。
