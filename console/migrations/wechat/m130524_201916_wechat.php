@@ -238,6 +238,12 @@ INSERT INTO `fb_base_setting_type` VALUES ('3814', '1', '38', 'backend', '微信
 INSERT INTO `fb_base_setting_type` VALUES ('3815', '1', '38', 'backend', '微信支付App ID', 'pay_wechat_open_appid', '主要用于 app 支付，微信开放平台的 appid，如果只需要微信公众号支付，只配置微信公众号那边即可', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('3816', '1', '38', 'backend', '微信支付App ID', 'pay_wechat_rsa_public_key_path', '企业付款需要用到双向证书，请参考：https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=4_3', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
 
+INSERT INTO `fb_base_setting_type` VALUES ('3831', '1', '38', 'backend', '支付宝合作者身份', 'pay_alipay_appid', '填写支付宝分配给您的合作者身份', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3833', '1', '38', 'backend', '支付宝收款账号', 'pay_alipay_account', '如果开启兑换或交易功能，请填写真实有效的支付宝账号', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3833', '1', '38', 'backend', '支付宝应用公钥', 'pay_alipay_cert_path', 如需使用敏感接口(如退款等)需要配置 API 证书路径(请用支付宝生成工具生成公钥并上传),注意路径为绝对路径，支持@common指代', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3833', '1', '38', 'backend', '支付宝应用私钥', 'pay_alipay_key_path', '如需使用敏感接口(如退款等)需要配置 API 证书路径(请用支付宝生成工具生成公钥并上传),注意路径为绝对路径，支持@common指代', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('3833', '1', '38', 'backend', '支付宝公钥', 'pay_alipay_notification_cert_path', '回调验证签名必须有', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+
 
         ";
 

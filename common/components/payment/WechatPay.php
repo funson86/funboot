@@ -11,7 +11,7 @@ use yii\helpers\ArrayHelper;
  * @package common\components\payment
  * @author funson86 <funson86@gmail.com>
  */
-class Wechat extends BasePayment
+class WechatPay extends BasePayment
 {
     const TYPE_DEFAULT = 'WechatPay';
     const TYPE_APP = 'WechatPay_App';

@@ -63,12 +63,11 @@ console如果不活跃的情况下访问数据库容易出现 “Mysql go away�
 
 使用console\components\Connection 代替yii\db\Connection，在查询前先会判断是否连接是否可用
 
-在console\config\main.php中配置指定类和长连接
+在console\config\main.php中配置指定类和长连接，在Connection中$attributes = [PDO::ATTR_PERSISTENT => true];指定长连接。
 
 ```php
         'db' => [
             'class' => 'console\components\Connection',
-            'attributes' => [PDO::ATTR_PERSISTENT => true], // 长连接
         ],
 ```
 

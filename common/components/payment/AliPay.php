@@ -24,9 +24,9 @@ class AliPay extends BasePayment
     {
         $this->config = ArrayHelper::merge([
             'app_id' => $config['pay_alipay_appid'],
-            'notify_url' => '',
-            'return_url' => '',
-            'ali_public_key' => $config['pay_alipay_cert_path'],
+            'notify_url' => $config['notify_url'] ?? '',
+            'return_url' => $config['return_url'] ?? '',
+            'ali_public_key' => $config['ali_public_key'] ?? $config['pay_alipay_cert_path'],
             // 加密方式： ** RSA2 **
             'ali_private_key' => $config['pay_alipay_key_path'],
             ], $config);
