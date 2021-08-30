@@ -230,6 +230,7 @@ class SettingController extends BaseController
                 return $this->redirectError($e->getMessage(), null, true);
             }
 
+            Yii::$app->cacheSystem->clearStoreSetting();
             return $this->redirectSuccess();
         }
 
@@ -257,6 +258,7 @@ class SettingController extends BaseController
             Setting::updateAll(['name' => ($mapCodeName[$model->code] ?? '')], ['id' => $model->id]);
         }
 
+        Yii::$app->cacheSystem->clearStoreSetting();
         return $this->redirectSuccess(Yii::$app->request->referrer);
     }
 
