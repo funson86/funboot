@@ -47,7 +47,7 @@ class SettingController extends BaseController
      * @var int
      */
     protected $exportFields = [
-        'id' => 'text',
+        // 'id' => 'text',
         'code' => 'text',
         'value' => 'text',
     ];
