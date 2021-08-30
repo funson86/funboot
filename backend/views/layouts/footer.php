@@ -185,7 +185,7 @@ function fbStatus(obj) {
         },
         success: function (data) {
             if (parseInt(data.code) === 200) {
-                fbSuccess(data.msg)
+                toastSuccess(data.msg)
                 self.data('status', data.data.status)
                 if (parseInt(data.data.status) === 1) {
                     self.html('<span class="btn btn-success btn-xs">' + fbT('Enable') + '</span><span class="btn btn-default btn-xs">&nbsp;</span>');
@@ -255,7 +255,7 @@ function fbField(obj) {
         },
         success: function (data) {
             if (parseInt(data.code) === 200) {
-                fbSuccess(data.msg)
+                toastSuccess(data.msg)
             } else {
                 fbError(data.msg);
             }
