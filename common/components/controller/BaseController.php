@@ -67,12 +67,15 @@ class BaseController extends Controller
 
         // 先赋值再去计算，然后再次对$model赋值
         $model->settings = Yii::$app->settingSystem->getSettings($model->id);
-        $model->commonData = $this->commonData($model);
-        $this->store = $model;
-        Yii::$app->storeSystem->set($this->store);
 
         // 设置语言
         Yii::$app->language = CommonHelper::getLanguage($model);
+
+        // 计算通用数据，有些和语言相关
+        $model->commonData = $this->commonData($model);
+
+        $this->store = $model;
+        Yii::$app->storeSystem->set($this->store);
 
         // frontend 需要设置在AccessControl前设置loginUrl，所以要在parent::beforeAction之前
         if (Yii::$app->defaultRoute != 'site') {
