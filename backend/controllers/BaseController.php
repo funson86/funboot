@@ -142,7 +142,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         // 每页数量
-        $this->pageSize = Yii::$app->request->get('page_size', 10);
+        Yii::$app->request->get('page_size') && $this->pageSize = Yii::$app->request->get('page_size');
         if ($this->pageSize > 100) {
             $this->pageSize = 100;
         }
