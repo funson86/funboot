@@ -3,6 +3,10 @@ WebSocket - 带历史消息的聊天室
 
 以一个带历史消息的简单聊天室演示如何结合Yii2和Workerman使用Websocket以及和数据库交互。主体代码参考[Workerman 官方聊天室](https://www.workerman.net/workerman-chat)
 
+### 演示地址
+
+- https://chat.funboot.net/
+
 ### 启动
 
 Windows下双击console\modules\chat\chat.bat
@@ -85,6 +89,39 @@ console如果不活跃的情况下访问数据库容易出现 “Mysql go away�
         'db' => [
             'class' => 'console\components\Connection',
         ],
+```
+
+### WSS安全连接
+
+如果前端网站是https，会要求使用安全的wss。提示：
+
+修改nginx的https配置，将/wss指向
+```
+server
+    {
+        listen 443 ssl http2;
+
+        ...
+
+        location /wss {
+             #access_log /usr/share/nginx/logs/https-websocket.log;
+             proxy_pass http://127.0.0.1:7272/; # 代理到上面              
+             proxy_set_header X-Real-IP $remote_addr;
+             proxy_set_header Host $host;
+             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+             proxy_http_version 1.1;
+             proxy_set_header Upgrade $http_upgrade;
+             proxy_set_header Connection "upgrade";
+             rewrite /wss/(.*) /$1 break;
+             proxy_redirect off;
+        }
+    }
+```
+
+修改前端链接地址如web/resources/chat/default/views/default/index.php
+
+```js
+ws = new WebSocket("wss://"+document.domain+"/wss");
 ```
 
 ### 参考

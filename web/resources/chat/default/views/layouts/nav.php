@@ -39,9 +39,9 @@ echo Nav::widget([
 
 $menuItems = [
     ['label' => Yii::t('app', 'Home'), 'url' => Url::to(['/', ])],
-    ['label' => Yii::t('app', 'Online Pay'), 'url' => Url::to(['/pay/default/pay', ])],
-    ['label' => Yii::t('app', 'Donate List'), 'url' => Url::to(['/pay/default/list', ])],
-    ['label' => Yii::t('app', 'Funboot Platform'), 'url' => 'https://github.com/funson86/funboot/'],
+    ['label' => Yii::t('app', 'Chat Room'), 'url' => 'https://chat.funboot.net'],
+    ['label' => Yii::t('app', 'yii2-websocket'), 'url' => 'https://github.com/funson86/yii2-websocket/'],
+    ['label' => Yii::t('app', 'Funboot'), 'url' => 'https://github.com/funson86/funboot/'],
 ];
 
 echo Nav::widget([
@@ -81,16 +81,12 @@ NavBar::end();
 
 </script>
 
-
-<?php if ($style == 'other') { ?>
-
-    <header class="masthead" style="height: 8rem; min-height: 8rem">
-        <div class="container h-100">
-            <div class="row h-100">
-                <div class="col-lg-12 text-center my-auto">
-                    <h5 class="mt-3">基于Workerman和Yii2有历史消息的聊天室</h5>
-                </div>
+<header class="masthead" style="height: 8rem; min-height: 8rem">
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-lg-12 text-center my-auto">
+                <h5 class="mt-3">基于Workerman和Yii2有历史消息的聊天室</h5>
             </div>
         </div>
-    </header>
-<?php } ?>
+    </div>
+</header>

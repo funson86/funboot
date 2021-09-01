@@ -31,7 +31,7 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => ChatAsset:
 <body>
 <?php $this->beginBody() ?>
 
-    <?= $this->render('nav', ['style' => Yii::$app->request->getUrl() == '/' ? 'index' : 'other']) ?>
+    <?= $this->render('nav') ?>
 
     <main class="container">
         <?= Alert::widget() ?>

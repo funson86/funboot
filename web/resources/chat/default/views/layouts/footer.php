@@ -1,9 +1,9 @@
 
-<section class="page-section bg-dark text-light">
+<section class="page-section bg-dark text-light py-5">
     <footer class="container">
         <div class="row align-items-center text-center">
             <div class="col-lg-12 mb-12">
-                © FunPay <?= date('Y') ?>. All Rights Reserved.
+                © Funchat <?= date('Y') ?>. All Rights Reserved.
             </div>
         </div>
     </footer>

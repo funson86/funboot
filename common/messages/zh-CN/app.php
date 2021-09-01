@@ -119,6 +119,10 @@ return [
     'Create User Role' => '创建前端角色',
     'Black List' => '黑名单',
 
+    'Lang Backends' => '后端支持语言',
+    'Lang Frontends' => '前端支持语言',
+    'Lang Apis' => 'Api支持语言',
+
     'Log' => '日志',
     'Logs' => '日志',
     'Schedule' => '定时任务',
@@ -490,6 +494,8 @@ return [
     'Order Sn' => '订单编号',
     'Origin Balance' => '原金额',
     'Change' => '变动值',
+
+    'Chat Room' => '聊天室',
 
     'Download Template' => '下载模板',
 

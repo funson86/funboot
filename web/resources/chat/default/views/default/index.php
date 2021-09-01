@@ -233,7 +233,7 @@ $context = $this->context;
             &nbsp;&nbsp;&nbsp;&nbsp;<a href="/?room_id=1">房间1</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/?room_id=2">房间2</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/?room_id=3">房间3</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/?room_id=4">房间4</a>
             <br><br>
         </div>
-        <p class="cp">PHP多进程+Websocket(HTML5/Flash)+PHP Socket实时推送技术&nbsp;&nbsp;&nbsp;&nbsp;Powered by <a href="http://www.workerman.net/workerman-chat" target="_blank">workerman-chat</a></p>
+        <p class="cp">PHP多进程+Websocket(HTML5/Flash)+PHP Socket实时推送技术&nbsp;&nbsp;&nbsp;&nbsp;Powered by <a href="https://github.com/funson86/yii2-websocket" target="_blank">Funboot yii2-websocket</a> & <a href="http://www.workerman.net/workerman-chat" target="_blank">workerman-chat</a></p>
     </div>
     <div class="col-md-3 column">
         <div class="thumbnail">

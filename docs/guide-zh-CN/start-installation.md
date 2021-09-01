@@ -46,8 +46,20 @@ php init // 然后输入0选择开发模式回车,再输入yes回车
 
 5、配置数据库信息（Mysql5.7.x，需要先创建好数据库）
 
-``` 
 common/config/main-local.php 修改数据库相关信息
+
+``` 
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=funboot',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8mb4',
+            'tablePrefix' => 'fb_',
+            // 'enableSchemaCache' => true, // 是否开启缓存, 请了解其中机制在开启，不了解谨慎
+            // 'schemaCacheDuration' => 3600, // 缓存时间
+            // 'schemaCache' => 'cache', // 缓存名称
+        ],
 ```
 
 6、导入数据库数据
@@ -107,9 +119,24 @@ http://www.funboot.com/api api
 ```
 
 > http://www.funboot.com/ 默认页面是和Yii2原本类似的页面，在系统后台》系统管理》店铺管理，对域名www.funboot.com编辑，修改子系统为支付
-> 刷新前端页面，系统会默认显示成FunPay个人收款支付系统https://funpay.mayicun.com/
+> 刷新前端页面，系统会默认显示成FunPay个人收款支付系统https://funpay.funboot.net/
 
 ![](images/installation-09.png)
+
+### Crontab Shell脚本 & 定时任务
+
+系统内置的shell脚本在 console/shell/ 目录中
+
+- queue.sh 监控队列
+- mysqlbackup.sh 备份数据库
+
+建议拷贝queue.sh为queue-local.sh，写入到crontab中。
+
+定时任务：
+
+```
+/usr/bin/php /www/funboot/yii schedule/run --scheduleFile=/www/funboot/console/runtime/schedule/schedule.php  1>> /dev/null 2>&1
+```
 
 ### 常见问题
 
