@@ -17,6 +17,40 @@ use Yii;
  */
 class ServerController extends Controller
 {
+    public $commands = [
+        'start',
+        'stop',
+        'restart',
+        'reload',
+        'status',
+        'connections',
+    ];
+    public $command = 'start';
+    public $daemon;
+    public $gracefully;
+    public $query; // windows下查询状态
+
+    public function options($actionID)
+    {
+        return ['daemon', 'gracefully', 'query'];
+    }
+
+    public function optionAliases()
+    {
+        return [
+            'd' => 'daemon',
+            'g' => 'gracefully',
+            'q' => 'query',
+        ];
+    }
+
+    public function init()
+    {
+        global $argv;
+        foreach ($argv as $value) {
+            in_array($value, $this->commands) && $this->command = $value;
+        }
+    }
 
     // linux 下直接执行 php yii chat/websocket
     public function actionIndex()
@@ -24,6 +58,8 @@ class ServerController extends Controller
         $this->actionRegister(true);
         $this->actionGateway(true);
         $this->actionBusinessworker(true);
+
+        Worker::runAll();
     }
 
     public function actionGateway($global = false)
@@ -44,7 +80,10 @@ class ServerController extends Controller
         $gateway->pingData = '{"type":"ping"}';
         // 服务注册地址
         $gateway->registerAddress = (Yii::$app->params['chat']['register']['server'] ?? '127.0.0.1') . ':' . (Yii::$app->params['chat']['register']['port'] ?? '1236');
-        Worker::runAll();
+
+        if (!$global) {
+            Worker::runAll();
+        }
     }
 
     public function actionBusinessworker($global = false)
@@ -60,13 +99,17 @@ class ServerController extends Controller
         // 事件处理函数，需要实现onMessage onClose函数
         $worker->eventHandler = Events::class;
 
-        Worker::runAll();
-
+        if (!$global) {
+            Worker::runAll();
+        }
     }
 
     public function actionRegister($global = false)
     {
         $register = new Register('text://' . (Yii::$app->params['chat']['register']['server'] ?? '127.0.0.1') . ':' . (Yii::$app->params['chat']['register']['port'] ?? '1236'));
-        Worker::runAll();
+
+        if (!$global) {
+            Worker::runAll();
+        }
     }
 }

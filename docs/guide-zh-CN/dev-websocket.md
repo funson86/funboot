@@ -1,7 +1,7 @@
-WebSocket
+WebSocket - 带历史消息的聊天室
 ------
 
-以一个带历史消息的简单聊天室演示如何结合Yii2和Workerman使用Websocket。主体代码参考[Workerman 官方聊天室](https://www.workerman.net/workerman-chat)
+以一个带历史消息的简单聊天室演示如何结合Yii2和Workerman使用Websocket以及和数据库交互。主体代码参考[Workerman 官方聊天室](https://www.workerman.net/workerman-chat)
 
 ### 启动
 
@@ -10,11 +10,27 @@ Windows下双击console\modules\chat\chat.bat
 Linux 下执行
 
 ```
-php yii chat/server start -d  //启动
+# php yii chat/server start -d
+Workerman[yii] start in DAEMON mode
+----------------------------------------------- WORKERMAN -----------------------------------------------
+Workerman version:4.0.19          PHP version:7.3.23
+------------------------------------------------ WORKERS ------------------------------------------------
+proto   user            worker                listen                       processes    status           
+tcp     root            Register              text://127.0.0.1:1236        1             [OK]            
+tcp     root            ChatGateway           websocket://0.0.0.0:7272)    4             [OK]            
+tcp     root            ChatBusinessWorker    none                         4             [OK]            
+---------------------------------------------------------------------------------------------------------
+Input "php yii chat/server stop" to stop. Start success.
 
-php yii chat/server status  //查询状态
+# php yii chat/server stop // 停止
+# php yii chat/server stop -g  //优雅停止 
 
-php yii chat/server -g  //停止 
+# php yii chat/server restart -d //重启 
+# php yii chat/server reload -d //重启（重新加载执行代码，不加载配置） 
+
+# php yii chat/server status  //查询状态
+# php yii chat/server connections  //连接
+
 ```
 
 前端启动创建一个store route 为chat，浏览器直接访问网站
