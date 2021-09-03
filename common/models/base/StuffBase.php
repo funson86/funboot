@@ -66,6 +66,12 @@ class StuffBase extends BaseModel
             self::POSITION_BOTTOM => Yii::t('cons', 'POSITION_BOTTOM'),
         ];
 
+        if (isset(Yii::$app->params['stuffPosition']) && is_array(Yii::$app->params['stuffPosition']) && count(Yii::$app->params['stuffPosition']) > 0) {
+            foreach (Yii::$app->params['stuffPosition'] as $k => $v) {
+                $data[$k] = Yii::t('app', $v);
+            }
+        }
+
         $all && $data += [];
 
         $flip && $data = array_flip($data);

@@ -163,6 +163,10 @@ return [
     'smtpHosts' => [
     ],
 
+    'stuffPosition' => [
+        110 => 'test',
+    ],
+
     'map_baidu_ak' => '',
 
     'baiduTranslate' => [
