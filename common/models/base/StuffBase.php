@@ -2,6 +2,7 @@
 
 namespace common\models\base;
 
+use common\helpers\ArrayHelper;
 use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
@@ -55,7 +56,7 @@ class StuffBase extends BaseModel
         return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
-    public static function getPositionLabels($id = null, $all = false, $flip = false)
+    public static function getPositionLabels($id = null, $all = false, $flip = false, $start = null, $end = null)
     {
         $data = [
             self::POSITION_DEFAULT => Yii::t('cons', 'POSITION_DEFAULT'),
@@ -76,7 +77,7 @@ class StuffBase extends BaseModel
 
         $flip && $data = array_flip($data);
 
-        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+        return !is_null($id) ? ($data[$id] ?? $id) : ArrayHelper::sliceByKey($data, $start, $end);
     }
 
     /**

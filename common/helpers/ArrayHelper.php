@@ -361,6 +361,30 @@ class ArrayHelper extends BaseArrayHelper
         return $key ? $arrMap : array_values($arrMap);
     }
 
+    /** 根据Key来获取指定key范围的数组 sliceByKey($arr, 30, 50)表示key大于等于30小于等于50
+     * @param $array
+     * @param null $start
+     * @param null $end
+     * @return array
+     */
+    public static function sliceByKey($array, $start = null, $end = null)
+    {
+        $arr = [];
+        foreach ($array as $k => $v) {
+            if (is_null($start) && is_null($end)) {
+                $arr[$k] = $v;
+            } elseif (is_null($start)) {
+                $k <= $end && $arr[$k] = $v;
+            } elseif (is_null($end)) {
+                $start <= $k && $arr[$k] = $v;
+            } else {
+                $start <= $k && $k <= $end && $arr[$k] = $v;
+            }
+        }
+
+        return $arr;
+    }
+
     /**
      * 数组转xml
      *
