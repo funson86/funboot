@@ -6,7 +6,6 @@ use common\helpers\ArrayHelper;
 use common\helpers\IdHelper;
 use common\helpers\OfficeHelper;
 use common\models\base\SettingType;
-use common\models\food\Product;
 use Yii;
 use common\models\base\Setting;
 use common\models\ModelSearch;
@@ -125,19 +124,7 @@ class SettingController extends BaseController
      */
     protected function afterEditAjaxSave($setting)
     {
-        foreach ($setting as $code => $value) {
-            // 如果是整站打折
-            if ($code == 'promotion_all_product_discount') {
-                $discount = intval(str_replace('%', '', $value));
-                if (!is_int($discount)) {
-                    $discount = 0;
-                }
-                $discount = (100 + $discount) / 100;
-                Product::updateAll(['price' => new Expression('market_price * ' . $discount)], ['store_id' => $this->getStoreId()]);
-                if ($discount == 1) {
-                    Product::updateAll(['type' => new Expression('type & ' . 0x7ffffffB)], ['store_id' => $this->getStoreId()]);
-                }
-            }
+        foreach ($setting as $code => $value) { // 根据code自定义规则
         }
     }
 

@@ -68,8 +68,8 @@ $this->title = Yii::t('app', '确认订单');
                         <div class="pay-type">
                             <div class="pay-title">支付方式</div>
                             <div class="pay-items">
-                                <div class="pay-item active" id="wechat" onclick="changeType('wechat')"><img alt="" src="/resources/pay/bank/wechat.png"></div>
-                                <div class="pay-item " id="alipay" onclick="changeType('alipay')"><img alt="" src="/resources/pay/bank/alipay.png"></div>
+                                <div class="pay-item active" id="wechat" onclick="changeType('wechat')"><img alt="" src="<?= $this->context->getImage('bank/wechat.png') ?>"></div>
+                                <div class="pay-item " id="alipay" onclick="changeType('alipay')"><img alt="" src="<?= $this->context->getImage('bank/alipay.png') ?>"></div>
                             </div>
                         </div>
                     </div>

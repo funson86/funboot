@@ -41,7 +41,7 @@ $menuItems = [
     ['label' => Yii::t('app', 'Home'), 'url' => Url::to(['/', ])],
     ['label' => Yii::t('app', 'Online Pay'), 'url' => Url::to(['/pay/default/pay', ])],
     ['label' => Yii::t('app', 'Donate List'), 'url' => Url::to(['/pay/default/list', ])],
-    ['label' => Yii::t('app', 'Funboot Platform'), 'url' => 'https://github.com/funson86/funboot/'],
+    ['label' => Yii::t('app', 'Funboot'), 'url' => 'https://github.com/funson86/funboot/'],
 ];
 
 echo Nav::widget([

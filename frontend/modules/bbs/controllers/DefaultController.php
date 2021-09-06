@@ -11,7 +11,7 @@ use frontend\models\bbs\SignupEmailForm;
 use common\models\LoginForm;
 use common\models\ModelSearch;
 use frontend\models\PasswordResetRequestForm;
-use frontend\models\food\ResendVerificationEmailForm;
+use frontend\models\bbs\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\VerifyEmailForm;

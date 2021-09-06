@@ -4,7 +4,7 @@ namespace common\components\payment;
 
 /**
  * Class PrinterFactory
- * @package common\components\food\printer
+ * @package common\components\payment
  * @author funson86 <funson86@gmail.com>
  */
 class PaymentFactory
