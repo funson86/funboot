@@ -82,8 +82,27 @@ CREATE TABLE `fb_chat_log` (
 -- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='私信';
 
 SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO `fb_store` VALUES ('8', '0', '8', 'Funchat', 'Funchat', 'www.funchat.com', '', '', 'chat', '1634684399', 'Funchat', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
 INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('8', '8', '0', 'funchat', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', '', '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
+
+INSERT INTO `fb_base_permission` VALUES ('59', '1', '5', '聊天室', 'backend', '', '', 'fas fa-comments', '', '2', '0', '1', '50', '1', '1599358315', '1599358315', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('597', '1', '59', '聊天记录', 'backend', '', '/chat/log/index', 'fas fa-chart-area', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5971', '1', '597', '查看', 'backend', '', '/chat/log/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5972', '1', '597', '编辑', 'backend', '', '/chat/log/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5973', '1', '597', '删除', 'backend', '', '/chat/log/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5974', '1', '597', '启禁', 'backend', '', '/chat/log/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5975', '1', '597', '导出', 'backend', '', '/chat/log/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('5976', '1', '597', '导入', 'backend', '', '/chat/log/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+
+INSERT INTO `fb_base_role_permission` VALUES ('5971', '1', '', '50', '59', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('5972', '1', '', '50', '597', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('5973', '1', '', '50', '5971', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('5974', '1', '', '50', '5972', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('5975', '1', '', '50', '5973', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('5976', '1', '', '50', '5974', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('5977', '1', '', '50', '5975', '1', '50', '1', '1608030276', '1608030276', '1', '1');
+INSERT INTO `fb_base_role_permission` VALUES ('5978', '1', '', '50', '5976', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 
         ";
 
