@@ -18,7 +18,7 @@ $mapAttributeIdLabel = Attribute::getIdLabel()
 
 <?php $form = ActiveForm::begin([
     'fieldConfig' => [
-        'template' => "<div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
+        'template' => "<div class='col-sm-2 text-sm-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
         'options' => ['class' => 'form-group row'],
     ],
 ]); ?>

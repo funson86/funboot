@@ -12,7 +12,7 @@ $form = ActiveForm::begin([
     'validationUrl' => Url::to(['import-ajax']),
     'options' => ['enctype' => 'multipart/form-data'],
     'fieldConfig' => [
-        'template' => "<div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
+        'template' => "<div class='col-sm-2 text-sm-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
     ]
 ]);
 ?>
