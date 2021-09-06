@@ -33,13 +33,10 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => PayAsset::
 
     <?= $this->render('nav', ['style' => Yii::$app->request->getUrl() == '/' ? 'index' : 'other']) ?>
 
-    <main class="container">
-        <?= Alert::widget() ?>
-    </main>
-
     <?= $content ?>
 
     <?= $this->render('footer') ?>
+
     <?= \common\widgets\alert\SweetAlert2::widget() ?>
 
     <!-- Scroll to Top -->

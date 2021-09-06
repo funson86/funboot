@@ -10,7 +10,7 @@ use common\helpers\CommonHelper;
 /* @var $model common\models\pay\Payment */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = Yii::t('app', 'FunPay收银台 收款方: Funson');
+$this->title = Yii::t('app', 'FunPay收银台 收款方: ') . (Yii::$app->params['funPay']['adminName'] ?? 'Funpay');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Addresses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -20,7 +20,6 @@ $context = $this->context;
 <div class="row content-row pt-5 pb-5">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
         <div class="card">
-            <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
                 <div class="col-sm-12 text-center checkout">
                     <img class="bank-code-img" src="<?= $context->getImage('bank/' . $model->bank_code . '.png') ?>">
@@ -48,7 +47,7 @@ $context = $this->context;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">请在备注中输入支付标识号</h4>
+                <h5 class="modal-title">请在备注中输入支付标识号</h5>
                 <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
             </div>
             <div class="modal-body reamrk text-center">
@@ -56,7 +55,7 @@ $context = $this->context;
                     支付时请在备注中输入您的订单标识号：<b class="payNum" style="color: #d44d44;"><?= $model->sn ?></b><br />
                     若忘记输入或输入错误可能会造成您支付失败！
                 </p>
-                <img src="/resources/pay/bank/wechat/wxremark.png" style="margin:0 auto;max-width:300px !important;" />
+                <img src="<?= $context->getImage('bank/wechat/wxremark.png') ?>" style="margin:0 auto;max-width:300px !important;" />
             </div>
             <div class="modal-footer">
                 <button class="btn btn-warning" data-dismiss="modal" type="button">知道了</button>
@@ -69,7 +68,7 @@ $context = $this->context;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">提示</h4>
+                <h5 class="modal-title">提示</h5>
             </div>
             <div class="modal-body" id="msgBody">
             </div>
@@ -115,7 +114,7 @@ function showMsg(m) {
 }
 
 $(document).ready(function () {
-    //$("#remarkModal").modal('show');
+    $("#remarkModal").modal('show');
     getPaymentQuery();
     countTime();
 });

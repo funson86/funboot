@@ -603,6 +603,10 @@ return [
     'Order Report' => '订单报表',
     'User Register Count' => '用户注册数',
 
+    /* pay */
+    'Online Pay' => '在线支付',
+    'Donate List' => '捐赠名单',
+
     /* cms */
     'Pages' => '页面',
     'Page' => '页面',

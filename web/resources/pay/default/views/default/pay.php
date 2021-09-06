@@ -14,7 +14,7 @@ $this->title = Yii::t('app', '确认订单');
 
 <?php $form = ActiveForm::begin([
     'fieldConfig' => [
-        'template' => "<div class='col-sm-3 pay-label text-right'>{label}</div><div class='col-sm-9'>{input}\n{hint}\n{error}</div>",
+        'template' => "<div class='col-sm-3 pay-label text-sm-right'>{label}</div><div class='col-sm-9'>{input}\n{hint}\n{error}</div>",
         'options' => ['class' => 'form-group row'],
     ],
 ]); ?>
@@ -32,7 +32,7 @@ $this->title = Yii::t('app', '确认订单');
     <div class="row content-row">
         <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
             <div class="card">
-                <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
+                <div class="card-header"><?= $this->title ?></div>
                 <div class="card-body">
                     <div class="col-sm-12">
                         <div class="order-info text-center">

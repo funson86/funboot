@@ -22,6 +22,14 @@ $statusLabel = ActiveModel::getStatusLabels($status);
     .nav-tabs .active {
         border-top: 3px solid #007bff !important;
     }
+    .grid-view .summary {
+        padding: 0 0 0.5rem 0.5rem;
+    }
+    td .btn-xs {
+        padding: 0.2rem;
+        border-radius: .2rem;
+        font-size: .9rem;
+    }
 </style>
 <div class="content-wrapper">
     <div class="row content-row pb-5 pt-5">
@@ -34,10 +42,9 @@ $statusLabel = ActiveModel::getStatusLabels($status);
                         <li class="nav-item"><a class="nav-link <?= $status == Payment::STATUS_INACTIVE ? 'active' : '' ?>" href="<?= Url::to(['list', 'status' => Payment::STATUS_INACTIVE], false, false) ?>">等待系统审核</a></li>
                     </ul>
                 </div>
-                <div class="card-body">
+                <div class="card-body px-0">
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
-                        'filterModel' => $searchModel,
                         'tableOptions' => ['class' => 'table table-hover'],
                         'columns' => [
                             [
@@ -49,7 +56,7 @@ $statusLabel = ActiveModel::getStatusLabels($status);
                             'bank_code',
                             'money',
                             'remark',
-                            ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::color($model->status, Payment::getStatusLabels($model->status), [Payment::STATUS_PAID], [Payment::STATUS_EXPIRED], [Payment::STATUS_INACTIVE]); }, 'filter' => Html::activeDropDownList($searchModel, 'status', [$statusLabel], ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]), ],
+                            ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::color($model->status, Payment::getStatusLabels($model->status), [Payment::STATUS_PAID], [Payment::STATUS_EXPIRED], [Payment::STATUS_INACTIVE]); }, ],
                             ['attribute' => 'created_at', 'format' => 'raw', 'value' => function ($model) { return date('Y-m-d H:i', $model->created_at); }, 'filter' => false, ],
                         ]
                     ]); ?>

@@ -130,8 +130,8 @@ $context = $this->context;
                 <h2 class="section-heading">如何开发使用FunPay</h2>
                 <p>FunPay是开源免费的个人收款支付系统。系统源代码在github和gitee上均做了开源，有详细的教程和源码供参考，详情请点击下方链接。</p>
                 <div class="badges">
-                    <a class="badge-link" href="https://github.com/funson86/funpay/"><img src="/resources/pay/images/github.png" alt=""></a>
-                    <a class="badge-link" href="https://gitee.com/funson86/funpay/"><img src="/resources/pay/images/gitee.png" alt=""></a>
+                    <a class="badge-link" href="https://github.com/funson86/funpay/"><img src="<?= $context->getImage('github.png') ?>" alt=""></a>
+                    <a class="badge-link" href="https://gitee.com/funson86/funpay/"><img src="<?= $context->getImage('gitee.png') ?>" alt=""></a>
                 </div>
             </div>
         </div>

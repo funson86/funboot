@@ -177,6 +177,7 @@ return [
 
     'funPay' => [
         'adminEmail' => '3375074@qq.com',
+        'adminName' => 'Funson',
     ],
 
     'bbs' => [

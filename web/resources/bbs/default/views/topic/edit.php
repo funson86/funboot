@@ -13,7 +13,7 @@ $changeFormat = (Yii::$app->request->get('format', ActiveModel::FORMAT_HTML) == 
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title"><?= $this->title ?></h2>
+                <div class="card-title"><?= $this->title ?></div>
                 <div class="card-tools">
                     <?= Html::a(Yii::t('app', 'Choose Node'), ['/bbs/topic/edit-node'], ['class' => 'btn btn-sm btn-success mr-2']) ?>
                     <?php
