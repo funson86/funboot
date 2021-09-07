@@ -239,6 +239,8 @@ return [
     'Stores' => '店铺',
     'First ID' => '微信一级分类',
     'Second ID' => '微信二级分类',
+    'Renew' => '续期',
+    'Renew ' => '续期',
 
     'IS_NEW' => '新品',
     'IS_HOT' => '热销',

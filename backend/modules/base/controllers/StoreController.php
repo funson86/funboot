@@ -130,6 +130,34 @@ class StoreController extends BaseController
     }
 
     /**
+     * @return mixed|string|\yii\web\Response
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function actionEditRenew()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = $this->findModel($id, true);
+        if (!$model) {
+            return $this->goBack();
+        }
+
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
+            if (!$model->save()) {
+                Yii::$app->logSystem->db($model->errors);
+                return $this->redirectError($this->getError($model));
+            } else {
+                return $this->redirectSuccess();
+            }
+        }
+        $model->expiredTime = date('Y-m-d', ($model->expired_at > 0 ? $model->expired_at : time() + 365 * 86400));
+        return $this->renderAjax($this->action->id, [
+            'model' => $model,
+        ]);
+    }
+
+    /**
      * 跳转登录
      *
      * @param $id
