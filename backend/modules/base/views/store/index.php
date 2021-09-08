@@ -40,7 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
 
                         'id',
-                        'host_name',
+                        ['attribute' => 'parent_id', 'value' => function ($model) { return $model->parent ? $model->parent->host_name : '-'; }, ],
+                        // 'host_name',
+                        ['attribute' => 'host_name', 'format' => 'raw', 'value' => function ($model) { return $model->parent_id > 0 ? '<i class="fa fa-star"></i>' . $model->parent->host_name . '<br>' . $model->host_name : $model->host_name; }, 'filter' => true],
                         'code',
                         ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username; }, 'filter' => true],
                         'name',
@@ -65,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'header' => Yii::t('app', 'Actions'),
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{login} {go} {renew} {edit} {delete}',
+                            'template' => '{login} {go} {renew} {sub} {edit} {delete}',
                             'buttons' => [
                                 'login' => function ($url, $model, $key) {
                                     return Html::buttonModal(['login', 'id' => $model->id], Yii::t('app', 'Login'), ['class' => 'btn btn-sm btn-success'], false, true);
@@ -75,6 +77,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                                 'renew' => function ($url, $model, $key) {
                                     return Html::editModal(['edit-renew', 'id' => $model->id], Yii::t('app', 'Renew'), ['class' => 'btn btn-sm btn-success']);
+                                },
+                                'sub' => function ($url, $model, $key) {
+                                    return $model->parent_id == 0 ? Html::editModal(['edit-ajax', 'parent_id' => $model->id], Yii::t('app', 'Sub'), ['size' => 'Large', 'class' => 'btn btn-sm btn-info']) : '';
                                 },
                                 'edit' => function ($url, $model, $key) {
                                     return Html::editModal(['edit-ajax', 'id' => $model->id], null, ['size' => 'Large']);

@@ -37,7 +37,7 @@ class StoreController extends BaseController
     *
     * @var int
     */
-   protected $editAjaxFields = ['name', 'sort'];
+   protected $editAjaxFields = ['name', 'sort', 'host_name', 'brief'];
 
    /**
     * 可编辑字段
@@ -82,6 +82,7 @@ class StoreController extends BaseController
             $model->lang_api = ArrayHelper::arrayToInt($post['Store']['langApis'] ?? []);
             $model->type = ArrayHelper::arrayToInt($post['Store']['types'] ?? []);
             $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
+            $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
 
             if ($model->save()) {
                 $user->store_id = $model->id;
@@ -123,6 +124,7 @@ class StoreController extends BaseController
         $model->langFrontends = ArrayHelper::intToArray($model->lang_frontend, $this->modelClass::getLanguageLabels());
         $model->langApis = ArrayHelper::intToArray($model->lang_api, $this->modelClass::getLanguageLabels());
         $model->types = ArrayHelper::intToArray($model->type, $this->modelClass::getTypeLabels());
+        $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
         return $this->renderAjax($this->action->id, [
             'model' => $model,
             'user' => $user,

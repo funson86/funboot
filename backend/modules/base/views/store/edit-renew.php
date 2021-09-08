@@ -39,6 +39,7 @@ $form = ActiveForm::begin([
                 'class' => 'form-control no_bor',
             ]
         ]) ?>
+        <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
