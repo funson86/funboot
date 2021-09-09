@@ -196,7 +196,7 @@ class StoreController extends BaseController
      */
     public function actionGo($id)
     {
-        $model = $this->findModelAction($id);
+        $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
