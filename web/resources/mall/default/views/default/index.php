@@ -1,5 +1,6 @@
 <?php
 $this->title = 'index';
+var_dump($this->context->store->id);
 ?>
 <div class="mall-default-index">
     <h1><?= $this->context->action->uniqueId ?></h1>

@@ -68,6 +68,18 @@ common/config/main-local.php 修改数据库相关信息
 php yii migrate/up
 ```
 
+以上导入的为基础版的funboot开发平台
+
+其他子系统的执行脚本
+
+```
+php yii migrate-pay/up  // 支付
+php yii migrate-cms/up  // CMS网站
+php yii migrate-bbs/up  // 论坛
+php yii migrate-mall/up  // 商城
+php yii migrate-chat/up  // 聊天室
+```
+
 ### 系统配置
 
 > 以下为Nginx下的配置，Apache的伪静态已经在系统.htaccess中配置好

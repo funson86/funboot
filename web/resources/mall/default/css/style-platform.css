@@ -1,0 +1,188 @@
+﻿a {
+    color: #555;
+}
+a:hover {
+    color: #000;
+}
+
+body {
+    padding-top: 56px;
+    font-size: 0.9em;
+}
+
+header .navbar, .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+    background: #FFF;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11);
+}
+
+header .navbar .nav li a.active {
+    font-weight: bold;
+    background-color: #FFF;
+    color: #5CB85C !important;
+}
+
+main {
+    margin-top: 1em;
+}
+
+footer {
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    padding-top: 3em;
+    padding-bottom: 2em;
+}
+
+/* float right */
+#floatButton {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    z-index: 9999999;
+}
+
+#floatButton .btn {
+    background-color: #FFF;
+    border: 1px solid #CCC;
+}
+
+#floatButton .btn:focus {
+    outline: 0
+}
+
+@media screen and (max-width: 767px) {
+    #floatButton {
+        display: none;
+    }
+}
+
+#pageQrcode img.qrcode {
+    position: absolute;
+    right: 50px;
+    bottom: -34px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: none
+}
+
+#pageQrcode:hover img.qrcode {
+    display: block
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card .nav .nav-item a {
+    padding: 0.5em;
+}
+
+.card .nav .nav-item a.active {
+    background-color: #5CB85C;
+    color: #fff;
+}
+
+.card-sort {
+    padding: 10px;
+}
+
+.topic-title {
+    font-size: 1.4em;
+}
+
+.list-group-item {
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.topic-node {
+    background-color: #f8f9fa;
+}
+
+.topic-info {
+    padding-top: 0.3em;
+}
+
+.topic-pagination {
+    padding: 1em;
+    background-color: #f7f7f7;
+    margin-bottom: 0;
+}
+
+.control-label-full {
+    display: block;
+    width: 100%;
+}
+
+.sidebar-fixed {
+    display: block;
+}
+.bbs-sidebar .list {
+    padding-inline-start: 1em;
+}
+
+.empty {
+    padding: .75rem 1.25rem;
+    background-color: #FFFFFF;
+}
+
+.card-footer a {
+    margin-right: 1em;
+}
+
+.icon-active {
+    color:#e0a800;
+}
+
+.user-menu .active {
+    border-radius: 4px;
+}
+
+.user-menu .active a {
+    color: #FFF;
+}
+
+.card-header>.card-title {
+    float: left;
+    font-size: 1.4em;
+    line-height: 1.9;
+    margin-bottom: 0;
+}
+
+.card-header>.card-tools {
+    float: right;
+    margin-right: -.625rem;
+}
+
+.fade-info {
+    color: #aaa;
+    font-size: 0.9em;
+}
+
+.flex-row-space {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.login-page {
+    padding: 8em 0;
+}
+
+.topic-view img {
+    max-width: 100%;
+}
+
+iframe {
+    width: 100%;
+    min-height: 400px;
+}
+
+.top-ads span {
+    margin-right: 0.3em;
+    background: #DDD;
+    padding: 0 .3em;
+    border-radius: .3em;
+}
+

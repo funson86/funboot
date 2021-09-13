@@ -11,12 +11,14 @@ Saas
 
 在后台添加store时，需要指定域名host_name，支持|分隔多个域名，即aaa.funboot.com bbb.funboot.com可以是同一个域名
 
-### 系统支持多个子系统，每个自定义域名可以
+### 系统支持多个子系统，每个可以自定义域名
+
+每个子系统都可以使用自定义的域名
 
 
 ### 系统支持平台形式
 
-支持平台 https://www.funboot.com/mayicun 和 https://www.funboot.com/123，需要在添加code的时候，将code设置为mayicun
+支持平台 https://www.funboot.com/store-mayicun 和 https://www.funboot.com/123，需要在添加code的时候，将code设置为mayicun
 
 这两种情况下，也可以既是平台也可以是独立域名；
 

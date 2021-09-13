@@ -48,7 +48,7 @@ class BaseController extends Controller
         } elseif (Yii::$app->request->get('store_id')) {
             $model = CommonHelper::getStoreById(intval(Yii::$app->request->get('store_id')));
             Yii::$app->session->set('currentStore', $model);
-        } elseif (!is_null(Yii::$app->session->get('currentStore')) && Yii::$app->request->getUrl() != '/') {
+        } elseif (!is_null(Yii::$app->session->get('currentStore')) && Yii::$app->request->getUrl() != '/' && strpos(Yii::$app->request->getUrl(), '/platform') !== 0) {
             $model = Yii::$app->session->get('currentStore');
         } elseif (!Yii::$app->user->isGuest) {
             $model = CommonHelper::getStoreById(Yii::$app->user->identity->store_id);
@@ -63,6 +63,8 @@ class BaseController extends Controller
         $this->store = $model;
         if ($model->parent_id > 0) { // 为子店的情况下存储
             Yii::$app->session->set('currentStore', $model);
+        } else {
+            Yii::$app->session->remove('currentStore');
         }
 
         // 先赋值再去计算，然后再次对$model赋值

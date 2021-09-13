@@ -41,7 +41,7 @@ class ProductController extends BaseController
 
         // 同类商品  和 同大类商品
         $sameCategoryProducts = Product::find()->where(['category_id' => $model->category_id])->orderBy(['sales' => SORT_DESC])->limit(3)->all();
-        $sameRootCategoryProducts = Product::find()->where(['category_id' => $arraySameRootCategory])->orderBy(['sales' => SORT_DESC])->limit(Yii::$app->params['productHotCount'])->all();
+        $sameRootCategoryProducts = Product::find()->where(['category_id' => $arraySameRootCategory])->orderBy(['sales' => SORT_DESC])->limit(Yii::$app->params['productHotCount'] ?? 8)->all();
 
         // 记录浏览日志
         $historyProducts = [];
@@ -58,7 +58,7 @@ class ProductController extends BaseController
 
             array_unshift($arrHistory, $id);
             $arrHistory = array_unique($arrHistory);
-            while (count($arrHistory) > Yii::$app->params['productHistoryCount']) {
+            while (count($arrHistory) > (Yii::$app->params['productHistoryCount'] ?? 8)) {
                 array_pop($arrHistory);
             }
             Yii::$app->response->cookies->remove('productHistory');
@@ -115,7 +115,7 @@ class ProductController extends BaseController
         $allParams = [];
         $mapProductParamIdContent = $arrProductParamIds = [];
         if ($model->param_id > 0) {
-            $allParams = ArrayHelper::mapIdData(Param::find()->where(['store_id' => $this->getStoreId(), 'parent_id' => $product->param_id, 'status' => Param::STATUS_ACTIVE])->with('children')->all());
+            $allParams = ArrayHelper::mapIdData(Param::find()->where(['store_id' => $this->getStoreId(), 'parent_id' => $model->param_id, 'status' => Param::STATUS_ACTIVE])->with('children')->all());
             $productParams = ProductParam::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $id])->all();
             $mapProductParamIdContent = ArrayHelper::map($productParams, 'param_id', 'content');
             $arrProductParamIds = ArrayHelper::getColumn($productParams, 'param_id');
