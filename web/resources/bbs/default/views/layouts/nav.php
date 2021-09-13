@@ -71,7 +71,7 @@ if (Yii::$app->user->isGuest) {
             ['label' => Yii::t('app', 'Profile'), 'url' => ['/bbs/user/profile']],
             ['label' => Yii::t('app', 'Avatar'), 'url' => ['/bbs/user/avatar']],
             ['label' => Yii::t('app', 'Change Password'), 'url' => ['/bbs/user/change-password']],
-            ['label' => Yii::t('app', 'Logout'), 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']]
+            ['label' => Yii::t('app', 'Logout'), 'url' => ['/bbs/default/logout'], 'linkOptions' => ['data-method' => 'post']]
         ]
     ];
 }
