@@ -25,19 +25,21 @@ class SmtpMailer
                 $count = count(Yii::$app->params['smtpHosts']);
                 $i = rand(0, $count - 1);
                 $this->setConfig([
-                    'host' => Yii::$app->params['smtpHosts'][$i]['smtp_host'] ?? Yii::$app->params['smtp_host'],
-                    'username' => Yii::$app->params['smtpHosts'][$i]['smtp_username'] ?? Yii::$app->params['smtp_username'],
-                    'password' => Yii::$app->params['smtpHosts'][$i]['smtp_password'] ?? Yii::$app->params['smtp_password'],
-                    'port' => Yii::$app->params['smtpHosts'][$i]['smtp_port'] ?? Yii::$app->params['smtp_port'],
-                    'encryption' => Yii::$app->params['smtpHosts'][$i]['smtp_encryption'] ?? Yii::$app->params['smtp_encryption'],
+                    'host' => Yii::$app->params['smtpHosts'][$i]['smtp_host'] ?? Yii::$app->params['smtp_host'] ?? '',
+                    'username' => Yii::$app->params['smtpHosts'][$i]['smtp_username'] ?? Yii::$app->params['smtp_username'] ?? '',
+                    'password' => Yii::$app->params['smtpHosts'][$i]['smtp_password'] ?? Yii::$app->params['smtp_password'] ?? '',
+                    'port' => Yii::$app->params['smtpHosts'][$i]['smtp_port'] ?? Yii::$app->params['smtp_port'] ?? '',
+                    'encryption' => Yii::$app->params['smtpHosts'][$i]['smtp_encryption'] ?? Yii::$app->params['smtp_encryption'] ?? '',
+                    'from' => Yii::$app->params['smtpHosts'][$i]['smtp_from'] ?? Yii::$app->params['smtp_from'] ?? '',
                 ]);
             } else {
                 $this->setConfig([
-                    'host' => Yii::$app->params['smtp_host'],
-                    'username' => Yii::$app->params['smtp_username'],
-                    'password' => Yii::$app->params['smtp_password'],
-                    'port' => Yii::$app->params['smtp_port'],
-                    'encryption' => Yii::$app->params['smtp_encryption'],
+                    'host' => Yii::$app->params['smtp_host'] ?? '',
+                    'username' => Yii::$app->params['smtp_username'] ?? '',
+                    'password' => Yii::$app->params['smtp_password'] ?? '',
+                    'port' => Yii::$app->params['smtp_port'] ?? '',
+                    'encryption' => Yii::$app->params['smtp_encryption'] ?? '',
+                    'from' => Yii::$app->params['smtp_from'] ?? '',
                 ]);
             }
         }
@@ -93,6 +95,8 @@ class SmtpMailer
             $mailer = Yii::$app->mailer->compose();
             if ($from) {
                 $mailer->setFrom($from);
+            } elseif ($this->config['from']) {
+                $mailer->setFrom($this->config['from']);
             } else {
                 $mailer->setFrom($this->config['username']);
             }
