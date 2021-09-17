@@ -158,6 +158,7 @@ return [
     'smtp_password' => '',
     'smtp_port' => '587',
     'smtp_encryption' => 'tls',
+    'smtp_from' => '',
 
     // multiple smtp host send mailer
     'smtpHosts' => [
