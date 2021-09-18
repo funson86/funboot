@@ -871,7 +871,7 @@ INSERT INTO `fb_base_setting_type` VALUES ('5010', '1', '50', 'backend', 'SEO关
 INSERT INTO `fb_base_setting_type` VALUES ('5011', '1', '50', 'backend', 'SEO描述', 'website_seo_description', '便于搜索引擎收录', 7, 1, 'text', '', '', '50', '1', '1601008916', '1601008916', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('5013', '1', '50', 'backend', '主题模板', 'website_theme', '', 7, 1, 'dropDownList', 'green:green,black:black', '', '50', '1', '1600948430', '1600948430', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('5015', '1', '50', 'backend', '网站通告', 'website_brief', '', 7, 1, 'text', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('5017', '1', '50', 'backend', '版权标识', 'website_copyright', '', 7, 1, 'text', '', '@2020 - 版权所有', '50', '1', '1601003987', '1601003987', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5017', '1', '50', 'backend', '版权标识', 'website_copyright', '', 7, 1, 'text', '', '版权所有', '50', '1', '1601003987', '1601003987', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('5021', '1', '50', 'backend', '统计代码', 'website_stat', '加载在底部，支持百度统计cnzz等', 7, 1, 'textarea', '', '', '50', '1', '1601008532', '1601008544', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('5023', '1', '50', 'backend', '地图代码', 'website_map', 'iframe方式', 7, 1, 'text', '', '', '50', '1', '1601008532', '1601008544', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('5031', '1', '50', 'backend', '注册用户需要验证邮箱才能登录', 'website_user_login_need_verify', '', 7, 1, 'radioList', '0:否,1:是', '0', '50', '1', '1601008532', '1601008544', '1', '1');
