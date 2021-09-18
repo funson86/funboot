@@ -38,15 +38,15 @@ echo Nav::widget([
     'encodeLabels' => false
 ]);
 
-echo '<ul class="navbar-nav mr-auto ml-3"><li class="nav-item"><form class="navbar-form navbar-left" role="search" action="/platform/default/index" method="get">
+echo '<ul class="navbar-nav mr-auto ml-3"><li class="nav-item"><form class="navbar-form navbar-left" role="search" action="/mall/default/index" method="get">
         <div class="form-group mb-0">
             <input type="text" value="' . $keyword . '" name="ModelSearch[name]" class="form-control search_input" id="navbar-search" placeholder="' . Yii::t('app', 'Search') . '..." data-placement="bottom" />
         </div>
     </form></li></ul>';
 
 if (Yii::$app->user->isGuest) {
-    $menuItems[] = ['label' => Yii::t('app', 'Sign up'), 'url' => ['/platform/default/signup']];
-    $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/platform/default/login']];
+    $menuItems[] = ['label' => Yii::t('app', 'Sign up'), 'url' => ['/mall/default/signup']];
+    $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/mall/default/login']];
 } else {
     // 通知
     /*$menuItems[] = [
@@ -59,10 +59,11 @@ if (Yii::$app->user->isGuest) {
     $menuItems[] = [
         'label' => Html::tag('i', '', ['class' => 'fa fa-user']) . ' ' . Yii::$app->user->identity->email ?: Yii::$app->user->identity->username,
         'items' => [
-            ['label' => Yii::t('app', 'Profile'), 'url' => ['/platform/user/profile']],
-            ['label' => Yii::t('app', 'Avatar'), 'url' => ['/platform/user/avatar']],
-            ['label' => Yii::t('app', 'Change Password'), 'url' => ['/platform/user/change-password']],
-            ['label' => Yii::t('app', 'Logout'), 'url' => ['/platform/default/logout'], 'linkOptions' => ['data-method' => 'post']]
+            ['label' => Yii::t('app', 'Profile'), 'url' => ['/mall/user/index']],
+            ['label' => Yii::t('app', 'Orders'), 'url' => ['/mall/user/order']],
+            ['label' => Yii::t('app', 'Coupon'), 'url' => ['/mall/user/coupon']],
+            ['label' => Yii::t('app', 'Setting'), 'url' => ['/mall/user/setting']],
+            ['label' => Yii::t('app', 'Logout'), 'url' => ['/mall/default/logout'], 'linkOptions' => ['data-method' => 'post']]
         ]
     ];
 }
