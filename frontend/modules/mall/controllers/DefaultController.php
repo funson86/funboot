@@ -26,7 +26,7 @@ class DefaultController extends BaseController
         return $this->render($this->action->id);
     }
 
-    protected function actionIndexPlatform()
+    public function actionIndexPlatform()
     {
         $this->layout = 'main-platform';
         $searchModel = new ModelSearch([

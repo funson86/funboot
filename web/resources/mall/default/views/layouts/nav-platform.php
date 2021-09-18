@@ -18,7 +18,7 @@ NavBar::begin([
 ]);
 
 $rootMenu = [];
-$nodes = Yii::$app->cacheSystemBbs->getStoreNode(Yii::$app->storeSystem->getId(), 0);
+$nodes = [];
 $items = [];
 foreach ($nodes as $node) {
     $item = [];
