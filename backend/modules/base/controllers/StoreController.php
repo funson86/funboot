@@ -30,7 +30,7 @@ class StoreController extends BaseController
       * 模糊查询字段
       * @var string[]
       */
-    public $likeAttributes = ['name'];
+    public $likeAttributes = ['name', 'host_name', 'brief'];
 
    /**
     * 可编辑字段
