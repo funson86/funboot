@@ -147,6 +147,7 @@ class StoreController extends BaseController
             $post = Yii::$app->request->post();
             $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
             if (!$model->save()) {
+                Yii::$app->cacheSystem->clearAllStore();
                 Yii::$app->logSystem->db($model->errors);
                 return $this->redirectError($this->getError($model));
             } else {

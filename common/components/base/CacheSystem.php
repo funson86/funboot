@@ -60,7 +60,7 @@ class CacheSystem extends \yii\base\Component
     public function clearAllPermission()
     {
         Yii::$app->cache->delete('allPermission');
-        $users = User::find()->all();
+        $users = User::find()->select(['id'])->all();
         foreach ($users as $user) {
             Yii::$app->cache->delete('userPermissionIds:' . $user->id);
         }
