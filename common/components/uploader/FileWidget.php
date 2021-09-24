@@ -40,6 +40,8 @@ class FileWidget extends InputWidget
 
     public $uploadType = Attachment::UPLOAD_TYPE_IMAGE;
 
+    // ajax upload-box-immediately 监听和 funboot.widget.js中的冲突，
+    public $ajax = false;
 
     public function init()
     {
@@ -146,6 +148,7 @@ class FileWidget extends InputWidget
             'uploadType' => $this->uploadType,
             'config' => $this->config,
             'themeConfig' => $this->themeConfig,
+            'ajax' => $this->ajax,
         ]);
 
     }

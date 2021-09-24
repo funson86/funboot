@@ -260,4 +260,12 @@ use common\helpers\StringHelper;
         return $('#' + boxId);
     }
 
+    <?php if ($ajax) { ?>
+    // 触发上传
+    $('.upload-box-immediately').click(function () {
+        let boxId = $(this).parent().parent().parent().attr('data-boxId');
+
+        $('#upload-' + boxId + ' .webuploader-container input').trigger('click');
+    });
+    <?php } ?>
 </script>
