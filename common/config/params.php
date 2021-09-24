@@ -8,6 +8,8 @@ return [
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 13600,
 
+    'user.loginBackendTime' => 30 * 86400, // 后台切换登录时间
+
     'sqlCommentLanguage' => 'zh-CN', //sql的字段注释语言
     'httpProtocol' => 'https://', //网站域名使用https开头
 

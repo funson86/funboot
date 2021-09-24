@@ -133,7 +133,7 @@ class BaseController extends Controller
             throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
         }
 
-        if (Yii::$app->user->login($user, 4 * 3600)) {
+        if (Yii::$app->user->login($user, intval(Yii::$app->params['user.loginBackendTime'] ?? 30 * 86400))) {
             $user->token = '';
             if ($user->save()) {
                 return $this->goHome();
