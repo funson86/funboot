@@ -291,3 +291,6 @@ img {
 }
 /** search **/
 
+.list-product-card-title {
+    padding-top: 0.5rem;
+}

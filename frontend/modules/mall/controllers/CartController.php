@@ -74,7 +74,7 @@ class CartController extends BaseController
     public function actionCheckout()
     {
         $userId = Yii::$app->user->id;
-        $addresses = Address::find()->where(['user_id' => $userId])->all();
+        $addresses = Address::find()->where(['user_id' => $userId, 'status' => Address::STATUS_ACTIVE])->all();
 
         $model = new Order();
 

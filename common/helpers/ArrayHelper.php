@@ -200,7 +200,7 @@ class ArrayHelper extends BaseArrayHelper
         $list = [];
         if (count($needIds)) {
             foreach ($needIds as $k) {
-                $list[] = $items[$k];
+                isset($items[$k]) && $list[] = $items[$k];
             }
         }
 
