@@ -11,18 +11,19 @@ use common\helpers\ArrayHelper;
 
 $store = $this->context->store;
 
-$this->title = 'Login';
+$this->title = Yii::t('app', 'Feedback');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="page-section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-5">
+            <div class="col-lg-6 col-lg-offset-3">
 
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                <?= $form->field($model, 'name')->textInput(['class' => 'form-control ', 'placeholder' => Yii::t('app', 'Name')])->label(false) ?>
-                <?= $form->field($model, 'mobile')->textInput(['class' => 'form-control ', 'placeholder' => Yii::t('app', 'Mobile')])->label(false) ?>
-                <?= $form->field($model, 'email')->textInput(['class' => 'form-control ', 'placeholder' => Yii::t('app', 'Email')])->label(false) ?>
+                <?= $form->field($model, 'name', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['autofocus' => true, 'placeholder' => Yii::t('app', ' ')]) ?>
+                <?= $form->field($model, 'mobile', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['placeholder' => Yii::t('app', ' ')]) ?>
+                <?= $form->field($model, 'email', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['placeholder' => Yii::t('app', ' ')]) ?>
                 <?= $form->field($model, 'content')->textarea(['class' => 'form-control ', 'placeholder' => Yii::t('app', 'Content')])->label(false) ?>
 
                 <?php if ($model->scenario == 'captchaRequired') { ?>
@@ -48,3 +49,4 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+</div>

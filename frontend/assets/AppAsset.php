@@ -17,9 +17,13 @@ class AppAsset extends AssetBundle
     public $js = [
     ];
     public $depends = [
-        'common\widgets\adminlte\HeadJsAsset',
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'common\widgets\adminlte\BootstrapAsset',
+        'common\components\assets\JqueryAsset',
+        'common\components\assets\LazyloadAsset',
+        'common\components\assets\Bootstrap4Asset',
+        'common\widgets\funboot\assets\FunbootBootstrapFixAsset',
+        'common\components\assets\FontAwesomeAsset',
+        'common\components\assets\AnimateAsset',
+        'common\components\assets\FancyBoxAsset',
+        'common\components\assets\WowAsset',
     ];
 }

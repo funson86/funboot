@@ -118,3 +118,86 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+header.masthead {
+    position: relative;
+    width: 100%;
+    padding-top: 150px;
+    padding-bottom: 100px;
+    color: white;
+    background: url("../images/bg-pattern.png"), #7b4397;
+    background: url("../images/bg-pattern.png"), linear-gradient(to left, #57aef6, #045790);
+}
+
+header.masthead .header-content {
+    max-width: 500px;
+    margin-bottom: 100px;
+    text-align: center;
+}
+
+header.masthead .header-content h1 {
+    font-size: 30px;
+}
+
+header.masthead .device-container {
+    max-width: 325px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+header.masthead .device-container .screen img {
+    border-radius: 3px;
+}
+
+@media (min-width: 992px) {
+    header.masthead {
+        height: 100vh;
+        min-height: 775px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    header.masthead .header-content {
+        margin-bottom: 0;
+        text-align: left;
+    }
+    header.masthead .header-content h1 {
+        font-size: 50px;
+    }
+    header.masthead .device-container {
+        max-width: 325px;
+    }
+}
+
+.page-section {
+    padding: 6em 0;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.img-square {
+    border-radius: 5px;
+}
+
+.img-rounded {
+    border-radius: 50%;
+}
+
+.contact-info .bg-white {
+    min-height: 17rem;
+}
+
+.contact-info .fa {
+    color: #2A68C9;
+    font-size: 4rem;
+    line-height: 6rem;
+}
+
+.contact_description {
+    color: #888;
+    font-size: .9rem;
+    text-align: left;
+}
+

@@ -4,13 +4,14 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
+use yii\bootstrap4\Nav;
+use yii\bootstrap4\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+$url = Yii::$app->request->getUrl();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -26,55 +27,93 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-        ['label' => 'Feedback', 'url' => ['/site/feedback']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
+<?php
+NavBar::begin([
+    'brandLabel' => $this->context->store->settings['website_name'] ?: $this->context->store->name ?: Yii::$app->name,
+    'brandUrl' => Yii::$app->homeUrl,
+    'options' => [
+        'class' => 'navbar navbar-expand-lg navbar-dark nav-white fixed-top',
+    ],
+]);
+$menuItems = [
+    ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
+    ['label' => Yii::t('app', 'Funpay'), 'url' => 'https://funpay.funboot.net/', 'linkOptions' => ['target' => '_blank']],
+    ['label' => Yii::t('app', 'Funcms'), 'url' => 'https://funpay.funboot.net/', 'linkOptions' => ['target' => '_blank']],
+    ['label' => Yii::t('app', 'Chat Room'), 'url' => 'https://chat.funboot.net/', 'linkOptions' => ['target' => '_blank']],
+    ['label' => Yii::t('app', 'Feedback'), 'url' => ['/site/feedback']],
+];
+/*if (Yii::$app->user->isGuest) {
+    $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+    $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+} else {
+    $menuItems[] = '<li>'
+        . Html::beginForm(['/site/logout'], 'post')
+        . Html::submitButton(
+            'Logout (' . Yii::$app->user->identity->username . ')',
+            ['class' => 'btn btn-link logout']
+        )
+        . Html::endForm()
+        . '</li>';
+}*/
+echo Nav::widget([
+    'options' => ['class' => 'navbar-nav ml-auto'],
+    'items' => $menuItems,
+]);
+NavBar::end();
+?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+<header class="masthead" style="height: <?= $url == '/' ? 50 : 20 ?>vh; min-height: <?= $url == '/' ? 50 : 20 ?>vh">
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-lg-12 text-center my-auto">
+                <h3 class="">基于Yii2 Advanced模板的Saas快速开发平台</h3>
+                <?php if ($url == '/') { ?>
+                    <p class="pt-3">
+                        <?= Html::a('系统源码', 'https://github.com/funson86/funboot', ['class' => 'btn btn-success wow bounceInLeft', 'target' => '_blank', 'data-wow-duration' => '2s']) ?>
+                        <?= Html::a('开发文档', 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN/README.md', ['class' => 'btn btn-info ml-3 wow bounceInRight', 'target' => '_blank', 'data-wow-duration' => '5s']) ?>
+                    </p>
+                <?php } ?>
+            </div>
+        </div>
     </div>
-</div>
+</header>
+
+<script>
+    function _scroll(){
+        var scrollTop = $(window).scrollTop();
+        if (scrollTop < 10){
+            $('.navbar').removeClass('bg-dark');
+            $('.navbar').css('opacity', 1);
+        } else {
+            $('.navbar').addClass('bg-dark');
+            $('.navbar').css('opacity', 0.95);
+        }
+    }
+    $(window).on('scroll',function() {
+        _scroll()
+    });
+
+    // 解决手机点击下拉部分透明，下拉后有背景
+    $('.navbar-toggler').click(function () {
+        if ($('#navbarCollapse').hasClass('show')) {
+            $('.navbar').removeClass('bg-dark');
+            $('.navbar').css('opacity', 1);
+        } else {
+            $('.navbar').addClass('bg-dark');
+            $('.navbar').css('opacity', 0.95);
+        }
+    })
+
+</script>
+
+
+<?= $content ?>
 
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"><?= Yii::t('yii', 'Powered by {funboot}', ['funboot' => '<a href="http://github.com/funson86/funboot" rel="external">' . Yii::t('yii','Funboot') . '</a>',]) ?></p>
     </div>
 </footer>
 

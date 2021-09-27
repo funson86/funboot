@@ -41,28 +41,13 @@ https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md
 - [x] 数据字典、定时任务、邮件、验证码、Echart图表等
 
 
+### 系统快照
 
-### 框架使用的技术栈
-- [Yii 2](http://www.yiiframework.com/): 2.0系列最新版
-- [Adminlte 3.x](https://adminlte.io/): Adminlte 3.x [文档](https://adminlte.io/docs/3.0/components/main-header.html)
-- [PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet): 导入导出数据
-- [File System](https://github.com/thephpleague/flysystem): 文件系统
-- [OAuth 2.0](https://github.com/thephpleague/oauth2-server): OAuth 2.0授权
-- [IP地址](https://github.com/zhuzhichao/ip-location-zh): 根据IP获取地址相关信息
-- [Uuid](https://github.com/ramsey/uuid):分布式ID
-- [SnowFlake](https://github.com/godruoyi/php-snowflake): 分布式ID
-- [Easy Wechat](https://github.com/jianyan74/yii2-treegrid): Easy Wechat微信公众号小程序开发
-- [php-simple-html-dom-parser](https://github.com/Kub-AT/php-simple-html-dom-parser): 简单Html Dom分析器，适用要求不高的采集
-- [Workerman](https://github.com/walkor/Workerman): 基于Workerman的Websocket开发，系统提供一个带历史消息的聊天室
-- [Qrcode](https://github.com/2amigos/qrcode-library): 二维码
-- [Pinyin](https://github.com/overtrue/pinyin): 拼音
-- [Treegrid](https://github.com/jianyan74/yii2-treegrid): Yii树状表
-- [yii2-scheduling](https://github.com/omnilight/yii2-scheduling): 定时任务
-- [Swagger](https://github.com/zircote/swagger-php): Api文档生成
-- [Qrcode](https://github.com/2amigos/qrcode-library): 二维码  [文档](https://qrcode-library.readthedocs.io/en/latest/)
-- [IconPicker](https://github.com/itsjavi/fontawesome-iconpicker): fontawesome图标选择器
-- [Toastr](https://github.com/CodeSeven/toastr): 通知提示框
-- [Sweetalert2](https://github.com/sweetalert2/sweetalert2): 弹窗
-- [Kartik Widgets](https://github.com/kartik-v/yii2-widget-datetimepicker): Kartik 各种组件
-- [jsTree](https://www.jstree.com/): 树状选择框
-
+![funboot-01.png](https://i.loli.net/2021/09/27/65SqdB71gAuWtPU.png)
+![funboot-03.png](https://i.loli.net/2021/09/27/gxWGJzbOXLK7y4V.png)
+![funboot-05.png](https://i.loli.net/2021/09/27/5YJzOGb9vHQEreh.png)
+![funboot-07.png](https://i.loli.net/2021/09/27/OPW1XlALSK3tVNe.png)
+![funboot-09.png](https://i.loli.net/2021/09/27/gSUQn5rt4zCNZIE.png)
+![funboot-31.png](https://i.loli.net/2021/09/27/AndQEaqCb3PsKFp.png)
+![funboot-33.png](https://i.loli.net/2021/09/27/UXwekmHFM8ATsnW.png)
+![funboot-35.png](https://i.loli.net/2021/09/27/1gEOw6idfTL9e87.png)

@@ -85,6 +85,7 @@ return [
     'Advanced' => '高级设置',
     'Active' => '启动',
     'Inactive' => '禁用',
+    'Feedback' => '在线反馈',
 
     'System' => '系统',
     'Settings' => '设置',
