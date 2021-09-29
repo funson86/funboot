@@ -111,6 +111,7 @@ class StoreController extends BaseController
                 }
 
                 Yii::$app->cacheSystem->clearAllStore();
+                Yii::$app->cacheSystem->clearStoreSetting();
                 $this->generateHostFile();
                 return $this->redirectSuccess();
             } else {
@@ -148,6 +149,7 @@ class StoreController extends BaseController
             $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
             if (!$model->save()) {
                 Yii::$app->cacheSystem->clearAllStore();
+                Yii::$app->cacheSystem->clearStoreSetting();
                 Yii::$app->logSystem->db($model->errors);
                 return $this->redirectError($this->getError($model));
             } else {
@@ -158,6 +160,13 @@ class StoreController extends BaseController
         return $this->renderAjax($this->action->id, [
             'model' => $model,
         ]);
+    }
+
+    protected function afterEditAjaxStatus($id, $model = null)
+    {
+        Yii::$app->cacheSystem->clearAllStore();
+        Yii::$app->cacheSystem->clearStoreSetting();
+        return true;
     }
 
     /**
