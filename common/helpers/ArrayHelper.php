@@ -333,6 +333,9 @@ class ArrayHelper extends BaseArrayHelper
     {
         $min = $max = null;
         foreach ($array as $v) {
+            $v = intval($v);
+            !$min && $min = $v;
+            !$max && $max = $v;
             intval($min) > $v && $min = $v;
             intval($max) < $v && $max = $v;
         }
