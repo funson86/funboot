@@ -5,7 +5,7 @@ Funboot是一个一站式Saas快速开发平台，基于Yii 2.0框架，提供�
 
 ### 问题反馈
 
-在使用中有任何问题，欢迎在QQ群众反馈 QQ群：[798843502](https://jq.qq.com/?_wv=1027&k=4BeVA2r)
+在使用中有任何问题，欢迎在QQ群众反馈 QQ群：[798843502](https://jq.qq.com/?_wv=1027&k=OZ8X3qjK)
 
 
 ### 在线Demo
