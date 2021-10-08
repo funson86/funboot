@@ -383,6 +383,7 @@ class BaseController extends \common\components\controller\BaseController
             }
         }
 
+        $this->beforeEditAjaxFieldSave($id, Yii::$app->request->post('name'), Yii::$app->request->post('value'), $model);
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
             return $this->error(500, $this->getError($model));
@@ -393,6 +394,11 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     protected function beforeEditAjaxField($id, $name = null, $value = null, $model = null)
+    {
+        return true;
+    }
+
+    protected function beforeEditAjaxFieldSave($id, $name = null, $value = null, $model = null)
     {
         return true;
     }
