@@ -153,7 +153,8 @@ $urlSetLanguage = Url::to(['site/set-language'], false, false);
 $urlMessageList = Url::to(['message/list'], false, false);
 $urlSiteLog = Url::to(['site/log'], false, false);
 $js = <<<JS
-$(document).ready(function(){
+$(document).ready(function() {
+    $('.J_iframe').attr('src', $('.J_iframe').data('src'));
     getMessageList();
 });
 $('.funboot-lang').click(function() {
