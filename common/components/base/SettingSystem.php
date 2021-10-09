@@ -56,12 +56,14 @@ class SettingSystem extends \yii\base\Component
             $model->code = $code;
         }
         $model->value = is_array($value) ? Json::encode($value) : trim($value);
-        if ($model->save()) {
-            Yii::$app->cacheSystem->clearStoreSetting($storeId);
-            return true;
+
+        if (!$model->save()) {
+            Yii::$app->logSystem->db($model->errors);
+            return false;
         }
 
-        return false;
+        Yii::$app->cacheSystem->clearStoreSetting($storeId);
+        return true;
     }
 
     public function getSettings($storeId = null)
