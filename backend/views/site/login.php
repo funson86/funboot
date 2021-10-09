@@ -31,7 +31,7 @@ $store = $this->context->store;
             <div class="login-logo">
                 <img src="<?= $store->settings['website_logo'] ?: ImageHelper::getLogo() ?>" width="100" height="100" style="border-radius: 50%" />
             </div>
-            <div class="login-logo">
+            <div class="login-logo" id="login-name">
                 <a href="#"><?= $store->settings['website_name'] ?: 'Funboot' ?></a>
             </div>
             <!--p class="login-box-msg"><?= Yii::t('app', 'Sign in to start your session') ?></p-->
@@ -105,3 +105,12 @@ $store = $this->context->store;
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
+
+<script>
+    $(document).ready(function () {
+        if (window.location.host == 'www.funboot.net') {
+            $('#login-name').after('<p class="text-center">演示帐号：test 密码：123456</p>');
+        }
+    });
+
+</script>
