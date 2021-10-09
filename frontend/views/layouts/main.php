@@ -41,6 +41,7 @@ $menuItems = [
     ['label' => Yii::t('app', 'Funcms'), 'url' => 'https://funpay.funboot.net/', 'linkOptions' => ['target' => '_blank']],
     ['label' => Yii::t('app', 'Chat Room'), 'url' => 'https://chat.funboot.net/', 'linkOptions' => ['target' => '_blank']],
     ['label' => Yii::t('app', 'Feedback'), 'url' => ['/site/feedback']],
+    ['label' => Yii::t('app', 'Funboot Demo(test/123456)'), 'url' => 'https://www.funboot.net/backend/'],
 ];
 /*if (Yii::$app->user->isGuest) {
     $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
