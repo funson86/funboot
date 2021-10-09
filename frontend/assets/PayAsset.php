@@ -20,6 +20,7 @@ class PayAsset extends AssetBundle
 
     public $depends = [
         'common\components\assets\JqueryAsset',
+        'common\widgets\funboot\assets\FunbootBootstrapFixAsset',
         'common\components\assets\Bootstrap4Asset',
         'common\components\assets\CookieBarAsset',
         'common\components\assets\LazyloadAsset',
