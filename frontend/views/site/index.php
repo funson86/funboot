@@ -16,7 +16,7 @@ $this->title = 'Funboot';
             解决自由开发者开发单项目多客户&多个项目的代码重用以及多次部署的痛点，也可以作为平台创业公司首选快速开发平台并提供基础高性能优化方式。
         </p>
 
-        <p>
+        <p class="mb-5">
             <?= Html::a('源码安装文档', 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN/start-installation.md', ['class' => 'btn btn-lg btn-primary wow bounceInUp', 'target' => '_blank', 'data-wow-duration' => '3s']) ?>
             <?= Html::a('安装视频', 'https://www.bilibili.com/video/BV1kP4y1t7ky/', ['class' => 'btn btn-lg btn-info wow bounceInUp', 'target' => '_blank', 'data-wow-duration' => '3s']) ?>
         </p>
