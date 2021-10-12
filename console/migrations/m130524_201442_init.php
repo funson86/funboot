@@ -686,10 +686,8 @@ INSERT INTO `fb_base_role` VALUES ('100', '1', 'user frontend', '1', 'Frontend U
 
 
 INSERT INTO `fb_base_permission` VALUES ('5', '1', '0', '管理系统', 'backend', '', '', 'fas fa-cog', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
--- INSERT INTO `fb_base_permission` VALUES ('6', '1', '0', '学校管理', 'backend', '', '', 'fas fa-laptop-house', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('56', '1', '5', '系统管理', 'backend', '', '', 'fas fa-cogs', '', '2', '0', '1', '50', '1', '1599358163', '1599358163', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('58', '1', '5', '系统监控', 'backend', '', '', 'fas fa-chart-bar', '', '2', '0', '1', '50', '1', '1599358315', '1599358315', '1', '1');
--- INSERT INTO `fb_base_permission` VALUES ('61', '1', '6', '学生', 'backend', '', '', 'fas fa-users', '', '2', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('560', '1', '56', '用户管理', 'backend', '', '/base/user/index', 'fas fa-user', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('561', '1', '56', '店铺管理', 'backend', '', '/base/store/index', 'fab fa-internet-explorer', '', '3', '0', '1', '50', '1', '1', '1602322615', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('562', '1', '56', '部门管理', 'backend', '', '/base/department/index', 'fas fa-code-branch', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
@@ -703,7 +701,6 @@ INSERT INTO `fb_base_permission` VALUES ('569', '1', '56', '数据字典', 'back
 INSERT INTO `fb_base_permission` VALUES ('581', '1', '58', '日志管理', 'backend', '', '/base/log/index', 'fas fa-copy', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('583', '1', '58', '定时任务', 'backend', '', '/base/schedule/index', 'fas fa-clock', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('589', '1', '58', '系统信息', 'backend', '', '/system/index', 'fas fa-chart-area', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
--- INSERT INTO `fb_base_permission` VALUES ('611', '1', '61', '学生管理', 'backend', '', '/school/student/index', 'fas fa-users', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5601', '1', '560', '查看', 'backend', '', '/base/user/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5602', '1', '560', '编辑', 'backend', '', '/base/user/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5603', '1', '560', '删除', 'backend', '', '/base/user/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
@@ -777,6 +774,11 @@ INSERT INTO `fb_base_permission` VALUES ('5833', '1', '583', '删除', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('5834', '1', '583', '启禁', 'backend', '', '/base/schedule/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5835', '1', '583', '导出', 'backend', '', '/base/schedule/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('5836', '1', '583', '导入', 'backend', '', '/base/schedule/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+
+
+-- INSERT INTO `fb_base_permission` VALUES ('6', '1', '0', '学校管理', 'backend', '', '', 'fas fa-laptop-house', '', '1', '0', '1', '50', '1', '1', '1599358085', '1', '1');
+-- INSERT INTO `fb_base_permission` VALUES ('61', '1', '6', '学生', 'backend', '', '', 'fas fa-users', '', '2', '0', '1', '50', '1', '1', '1', '1', '1');
+-- INSERT INTO `fb_base_permission` VALUES ('611', '1', '61', '学生管理', 'backend', '', '/school/student/index', 'fas fa-users', '', '3', '0', '1', '50', '1', '1', '1', '1', '1');
 -- INSERT INTO `fb_base_permission` VALUES ('6111', '1', '611', '查看', 'backend', '', '/base/student/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 -- INSERT INTO `fb_base_permission` VALUES ('6112', '1', '611', '编辑', 'backend', '', '/base/student/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 -- INSERT INTO `fb_base_permission` VALUES ('6113', '1', '611', '删除', 'backend', '', '/base/student/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');

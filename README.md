@@ -31,9 +31,10 @@ https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md  [安
 
 - [安装视频](https://www.bilibili.com/video/BV1kP4y1t7ky)
 - [Gii使用](https://www.bilibili.com/video/BV1vq4y1d7WU)
-- [Gii代码解析](https://www.bilibili.com/video/BV18P4y1t7ub) 
+- [Gii代码解析](https://www.bilibili.com/video/BV18P4y1t7ub)
 - [后台功能介绍](https://www.bilibili.com/video/BV1BP4y1t7q2)
 - [后台代码解析](https://www.bilibili.com/video/BV1j34y1S7Bn)
+- [Saas开发管理](https://www.bilibili.com/video/BV1eQ4y1B7LK)
 
 
 ### Funboot开发平台特色
