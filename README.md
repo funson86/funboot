@@ -10,7 +10,7 @@ Funboot是一个一站式Saas快速开发平台，基于Yii 2.0框架，提供�
 
 ### 在线Demo
 
-* [Funboot开发平台](https://github.com/funson86/funboot) 演示地址：[https://funpay.funboot.net/backend/](https://https://funpay.funboot.net/backend/) test 123456
+* [Funboot开发平台](https://github.com/funson86/funboot) 演示地址：[https://www.funboot.net/backend/](https://www.funboot.net/backend/) test 123456
 * [FunPay个人收款系统](https://github.com/funson86/funpay) 演示地址：[https://funpay.funboot.net/](https://funpay.funboot.net/)
 * [FunCms建站系统](https://github.com/funson86/funcms) 演示地址：[https://funcms.funboot.net/](https://funcms.funboot.net/)  [网站模板](https://github.com/funson86/funcms)
 * [FunBBS论坛系统](https://github.com/funson86/funbbs) 演示地址：[https://funbbs.funboot.net/](https://funbbs.funboot.net/)  [说明](https://github.com/funson86/funbbs)
@@ -25,7 +25,16 @@ https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/start-installat
 
 ### 在线开发文档
 
-https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md
+https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md  [安装视频](https://www.bilibili.com/video/BV1kP4y1t7ky/)
+
+### 系列视频
+
+- [安装视频](https://www.bilibili.com/video/BV1kP4y1t7ky)
+- [Gii使用](https://www.bilibili.com/video/BV1vq4y1d7WU)
+- [Gii代码解析](https://www.bilibili.com/video/BV18P4y1t7ub) 
+- [后台功能介绍](https://www.bilibili.com/video/BV1BP4y1t7q2)
+- [后台代码解析](https://www.bilibili.com/video/BV1j34y1S7Bn)
+
 
 ### Funboot开发平台特色
 

@@ -16,7 +16,12 @@ $this->title = 'Funboot';
             解决自由开发者开发单项目多客户&多个项目的代码重用以及多次部署的痛点，也可以作为平台创业公司首选快速开发平台并提供基础高性能优化方式。
         </p>
 
-        <p><?= Html::a('源码安装文档', 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN/start-installation.md', ['class' => 'btn btn-lg btn-primary wow bounceInUp', 'target' => '_blank', 'data-wow-duration' => '3s']) ?></p>
+        <p>
+            <?= Html::a('源码安装文档', 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN/start-installation.md', ['class' => 'btn btn-lg btn-primary wow bounceInUp', 'target' => '_blank', 'data-wow-duration' => '3s']) ?>
+            <?= Html::a('安装视频', 'https://www.bilibili.com/video/BV1kP4y1t7ky/', ['class' => 'btn btn-lg btn-info wow bounceInUp', 'target' => '_blank', 'data-wow-duration' => '3s']) ?>
+        </p>
+
+        <iframe src="//player.bilibili.com/player.html?aid=891114186&bvid=BV1kP4y1t7ky&cid=423484033&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="600"> </iframe>
     </div>
 </section>
 
@@ -99,13 +104,21 @@ $this->title = 'Funboot';
 
         <p class="lead mb-5">欢迎各位大牛改进Funboot代码，点击Star支持我们持续改进</p>
 
-        <p><?= Html::a('去Star支持一下作者', 'https://github.com/funson86/funboot/', ['class' => 'btn btn-lg btn-info wow tada', 'target' => '_blank']) ?></p>
+        <p><?= Html::a('去Star支持一下作者', 'https://github.com/funson86/funboot/', ['class' => 'btn btn-lg btn-success wow tada', 'target' => '_blank']) ?></p>
     </div>
 </section>
 
 <section class="page-section bg-white">
     <div class="container-fluid">
-        <h1 class="text-center pb-5"><?= Yii::t('app', '系统快照') ?></h1>
+        <h1 class="text-center pb-5"><?= Yii::t('app', '视频 & 快照') ?></h1>
+
+        <div class="row featurette text-center">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4 wow pulse"><iframe src="//player.bilibili.com/player.html?aid=591040230&bvid=BV1vq4y1d7WU&cid=423573264&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="300"> </iframe> <?= Html::a('大屏观看', 'https://www.bilibili.com/video/BV1vq4y1d7WU', ['class' => '', 'target' => '_blank']) ?></div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4 wow pulse"><iframe src="//player.bilibili.com/player.html?aid=891041225&bvid=BV18P4y1t7ub&cid=423573859&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="300"> </iframe> <?= Html::a('大屏观看', 'https://www.bilibili.com/video/BV18P4y1t7ub', ['class' => '', 'target' => '_blank']) ?></div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4 wow pulse"><iframe src="//player.bilibili.com/player.html?aid=891069626&bvid=BV1BP4y1t7q2&cid=423574298&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="300"> </iframe> <?= Html::a('大屏观看', 'https://www.bilibili.com/video/BV1BP4y1t7q2', ['class' => '', 'target' => '_blank']) ?></div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4 wow pulse"><iframe src="//player.bilibili.com/player.html?aid=806050205&bvid=BV1j34y1S7Bn&cid=423576156&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="300"> </iframe> <?= Html::a('大屏观看', 'https://www.bilibili.com/video/BV1j34y1S7Bn', ['class' => '', 'target' => '_blank']) ?></div>
+        </div>
+
 
         <div class="row featurette">
             <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4 wow pulse"><a data-fancybox="gallery" href="https://i.loli.net/2021/09/27/65SqdB71gAuWtPU.png"><img class="img-fluid lazyload" data-src="https://i.loli.net/2021/09/27/65SqdB71gAuWtPU.png" src="https://i.loli.net/2021/09/27/65SqdB71gAuWtPU.png" /></a></div>

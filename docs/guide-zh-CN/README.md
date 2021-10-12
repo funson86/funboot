@@ -39,7 +39,7 @@ Funboot开发文档
 
 ### 子系统
 
-* [Funboot开发平台](https://github.com/funson86/funboot) 演示地址：[https://funpay.funboot.net/backend/](https://https://funpay.funboot.net/backend/) test 123456
+* [Funboot开发平台](https://github.com/funson86/funboot) 演示地址：[https://www.funboot.net/backend/](https://www.funboot.net/backend/) test 123456
 * [FunPay个人收款系统](https://github.com/funson86/funpay) 演示地址：[https://funpay.funboot.net/](https://funpay.funboot.net/)
 * [FunCms建站系统](https://github.com/funson86/funcms) 演示地址：[https://funcms.funboot.net/](https://funcms.funboot.net/)  [网站模板](https://github.com/funson86/funcms)
 * [FunBBS论坛系统](https://github.com/funson86/funbbs) 演示地址：[https://funbbs.funboot.net/](https://funbbs.funboot.net/)  [说明](https://github.com/funson86/funbbs)

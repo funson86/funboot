@@ -12,7 +12,7 @@
 
 ### 系统环境要求
 
-> 详细请查看[系统环境](start.env)，快速运行环境推荐[宝塔面板](https://www.bt.cn/)
+> 详细请查看[系统环境](start-env.md)，快速运行环境推荐[宝塔面板](https://www.bt.cn/)
 
 - PHP >= 7.3
 - Mysql建议5.7.x
