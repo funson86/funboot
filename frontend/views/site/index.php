@@ -147,3 +147,12 @@ $this->title = 'Funboot';
         }
     });
 </script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?db110fd3a3c950c3f2b4076d68674383";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
