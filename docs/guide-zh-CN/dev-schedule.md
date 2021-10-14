@@ -1,7 +1,8 @@
 定时任务
 -----------
 
-> 注意需要在Linux环境下运行，且让PHP的system函数取消禁用
+> 注意需要在Linux环境下运行，且让PHP的exec函数取消禁用，修改php.ini文件
+> disable_functions = passthru,system,chroot,chgrp,chown,shell_exec,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server
 
 
 Funboot可以在后台管理定时任务，默认有一条数据库备份的定时任务每天凌晨三点执行
