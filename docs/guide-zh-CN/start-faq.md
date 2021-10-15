@@ -24,7 +24,7 @@ chmod 777 -R runtime
 
 ### 安装或迁移出现 Specified key was too long; max key length is 767 bytes
 
-Funboot默认使用utf8mb4，对出现问题的表修改编码为utf8
+Funboot默认使用utf8mb4，对出现问题的表修改编码为utf8，或者降低表的varchar(255)到varchar(190)
 
 
 ### 样式修改后访问没有变化
