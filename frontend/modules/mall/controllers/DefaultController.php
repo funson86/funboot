@@ -19,13 +19,18 @@ class DefaultController extends BaseController
      */
     public function actionIndex()
     {
-        if ($this->store->parent_id == 0) {
+        /*if ($this->store->parent_id == 0) {
             return $this->actionIndexPlatform();
-        }
+        }*/
 
         return $this->render($this->action->id);
     }
 
+    /**
+     * 支持平台类型  www.funmall.com/mall-yongchang
+     * @return string
+     * @throws \yii\web\NotFoundHttpException
+     */
     public function actionIndexPlatform()
     {
         $this->layout = 'main-platform';
