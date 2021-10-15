@@ -86,6 +86,7 @@ return [
     'Active' => '启动',
     'Inactive' => '禁用',
     'Feedback' => '在线反馈',
+    'Please contact us if you think this is a server error. Thank you.' => '如果这是一个服务器错误，请和我们联系，谢谢',
 
     'System' => '系统',
     'Settings' => '设置',
