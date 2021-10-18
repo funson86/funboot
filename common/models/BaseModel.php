@@ -182,7 +182,7 @@ class BaseModel extends ActiveRecord
             }
 
             // 如果是默认的store id，弄成当前ID
-            if (!($this instanceof Store) && (!$this->store_id || $this->store_id <= 0 || $this->store_id == Yii::$app->params['defaultStoreId'])) {
+            if (!($this instanceof Store) && (!$this->store_id || $this->store_id <= 0/* || $this->store_id == Yii::$app->params['defaultStoreId']*/)) {
                 $this->store_id = Yii::$app->storeSystem->getId();
             }
 

@@ -2,11 +2,14 @@
 namespace backend\controllers;
 
 use common\helpers\ArrayHelper;
+use common\helpers\CommonHelper;
 use common\helpers\DateHelper;
 use common\helpers\EchartsHelper;
+use common\helpers\IdHelper;
 use common\models\base\Log;
 use common\models\forms\ChangePasswordForm;
 use common\models\pay\Payment;
+use common\models\Store;
 use common\models\User;
 use Da\QrCode\QrCode;
 use Yii;
@@ -93,6 +96,27 @@ class SiteController extends BaseController
             return $this->redirect('/');
         }
 
+        // 同一个入口不同帐号，跳转到他自己的域名后台
+        $user = Yii::$app->user->identity;
+        $store = CommonHelper::getStoreByHostName();
+        if ($user->store_id != $store->id) {
+            $user->token = substr(IdHelper::snowFlakeId(), 0, 8);
+            if ($user->save(false)) {
+                $store = Store::findOne($user->store_id);
+                // 如果客户登录，Store已经非激活，用户无法登录。如果是super admin从后台登录允许
+                if (!Yii::$app->authSystem->isSuperAdmin() && $store->status != Store::STATUS_ACTIVE) {
+                    Yii::$app->user->logout();
+                    return $this->redirect(['site/login']);
+                } else {
+                    return $this->redirect(CommonHelper::getHostPrefix($store->host_name) . '/backend/site/login-backend?token=' . $user->token);
+                }
+            } else {
+                Yii::$app->logSystem->db($user->errors);
+                Yii::$app->user->logout();
+                return $this->redirect(['site/login']);
+            }
+        }
+
         return $this->renderPartial('index');
     }
 
@@ -130,21 +154,47 @@ class SiteController extends BaseController
 
         $model = new LoginForm();
         $model->loginCaptchaRequired();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Yii::$app->logSystem->login();
 
-            // 非管理员不能登录后台
-            if (!Yii::$app->authSystem->isBackend()) {
-                Yii::$app->logSystem->login(Yii::$app->user->identity->username ?? '' . ' ' . Yii::$app->user->id . ' with no auth to backend', null, true);
-                Yii::$app->user->logout();
-                return $this->redirect('/');
+        // 如果是POST提交
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post()) && $model->login()) {
+                Yii::$app->logSystem->login();
+
+                // 如果Store已经非激活，用户无法登录
+                if ($this->store->status != Store::STATUS_ACTIVE) {
+                    $model->addError('password', Yii::t('app', 'Website is not active'));
+                    Yii::$app->user->logout();
+                } else {
+                    // 非管理员不能登录后台
+                    if (!Yii::$app->authSystem->isBackend()) {
+                        Yii::$app->logSystem->login(Yii::$app->user->identity->username ?? '' . ' ' . Yii::$app->user->id . ' with no auth to backend', null, true);
+                        Yii::$app->user->logout();
+                        // 跳转到前台
+                        return $this->redirect('/');
+                    } else { // 同一个入口不同帐号，跳转到他自己的域名后台
+                        $user = Yii::$app->user->identity;
+                        $store = CommonHelper::getStoreByHostName();
+                        if ($user->store_id != $store->id) {
+                            $user->token = substr(IdHelper::snowFlakeId(), 0, 8);
+                            if ($user->save(false)) {
+                                $store = Store::findOne($user->store_id);
+                                // 如果客户登录，Store已经非激活，用户无法登录。如果是super admin从后台登录允许
+                                if (!Yii::$app->authSystem->isSuperAdmin() && $store->status != Store::STATUS_ACTIVE) {
+                                    Yii::$app->user->logout();
+                                    $model->addError('password', Yii::t('app', 'Website is not active'));
+                                } else {
+                                    return $this->redirect(CommonHelper::getHostPrefix($store->host_name) . '/backend/site/login-backend?token=' . $user->token);
+                                }
+                            } else {
+                                Yii::$app->logSystem->db($user->errors);
+                                Yii::$app->user->logout();
+                                return $this->redirect(['/']);
+                            }
+                        }
+                    }
+                }
             }
 
-            return $this->goBack();
-        }
-
-        // 如果是提交
-        if (Yii::$app->request->isPost) {
             Yii::$app->logSystem->login($model->attributes, null, true);
         }
 
@@ -312,7 +362,7 @@ class SiteController extends BaseController
         $width = intval(Yii::$app->request->get('width', 300));
         $width > 700 && $width = 700;
 
-        $text = Yii::$app->request->get('text', Yii::$app->params['httpProtocol'] . $this->store->host_name);
+        $text = Yii::$app->request->get('text', CommonHelper::getHostPrefix($this->store->host_name));
         $qrCode = (new QrCode($text))
             ->useEncoding('UTF-8')
             ->setSize($width);

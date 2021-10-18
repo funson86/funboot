@@ -3,6 +3,7 @@
 namespace backend\modules\base\controllers;
 
 use common\helpers\ArrayHelper;
+use common\helpers\CommonHelper;
 use common\helpers\IdHelper;
 use common\models\base\Role;
 use common\models\User;
@@ -188,8 +189,7 @@ class StoreController extends BaseController
         if ($user) {
             $user->token = substr(IdHelper::snowFlakeId(), 0, 8);
             if ($user->save()) {
-                $hostNames = explode('|', $model->host_name);
-                return $this->redirect(Yii::$app->params['httpProtocol'] . ($hostNames[0] ?? $model->host_name) . '/backend/site/login-backend?token=' . $user->token);
+                return $this->redirect(CommonHelper::getHostPrefix($model->host_name) . '/backend/site/login-backend?token=' . $user->token);
             }
         }
 
@@ -211,8 +211,7 @@ class StoreController extends BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $hostNames = explode('|', $model->host_name);
-        return $this->redirect(Yii::$app->params['httpProtocol'] . ($hostNames[0] ?? $model->host_name) . '/');
+        return $this->redirect(CommonHelper::getHostPrefix($model->host_name));
     }
 
     /**
@@ -283,7 +282,7 @@ class StoreController extends BaseController
 
     protected function generateQrcode($model)
     {
-        $url = Yii::$app->params['httpProtocol'] . $model->host_name . ($model->parent_id > 0 ? '?store_id=' . $model->id : '');
+        $url = CommonHelper::getHostPrefix($model->host_name) . ($model->parent_id > 0 ? '?store_id=' . $model->id : '');
         $qrCode = (new QrCode($url))
             ->useEncoding('UTF-8')
             ->setSize(700);
@@ -293,6 +292,6 @@ class StoreController extends BaseController
             return false;
         }
 
-        return Yii::$app->params['httpProtocol'] . $model->host_name . '/resources/qrcode/' . $model->id . '.png';
+        return CommonHelper::getHostPrefix($model->host_name) . '/resources/qrcode/' . $model->id . '.png';
     }
 }

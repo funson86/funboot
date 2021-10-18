@@ -61,6 +61,35 @@ class CommonHelper
         return $storeId ? $mapIdStore[$storeId] : ($mapIdStore[Yii::$app->params['defaultStoreId']] ?? null);
     }
 
+    /** 获取类似 http(s)://www.host_name.com 域名前缀
+     * @param null $hostName
+     * @return string
+     */
+    public static function getHostPrefix($hostName = null)
+    {
+        if (!$hostName) {
+            $store = Yii::$app->storeSystem->get();
+            $store && $hostName = $store->host_name;
+        }
+
+        if (!$hostName) {
+            return '';
+        }
+
+        $hostNames = explode('|', $hostName);
+        return self::getHttpPrefix() . ($hostNames[0] ?? $hostName);
+    }
+
+    /**
+     * 获取当前访问为http还是https
+     * @param bool $suffix
+     * @return string
+     */
+    public static function getHttpPrefix($suffix = true)
+    {
+        return (Yii::$app->request->getIsSecureConnection() ? 'https' : 'http') . ($suffix ? '://' : '');
+    }
+
     public static function getLanguage($store)
     {
         // url指定lang字段

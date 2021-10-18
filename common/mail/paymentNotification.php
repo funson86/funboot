@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use common\models\pay\Payment;
+use common\helpers\CommonHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\pay\Payment */
@@ -45,7 +46,7 @@ use common\models\pay\Payment;
                                         <!-- logo -->
                                         <tr>
                                             <td align="center" style="line-height:0px;">
-                                                <img style="display:block;font-size:0px; border:0px; line-height:0px;" src="<?= $store->settings['website_logo'] ?: Yii::$app->params['httpProtocol'] . $store->host_name . Yii::$app->params['defaultLogo'] ?>" height="60" alt="logo" />
+                                                <img style="display:block;font-size:0px; border:0px; line-height:0px;" src="<?= $store->settings['website_logo'] ?: CommonHelper::getHostPrefix($store->host_name) . Yii::$app->params['defaultLogo'] ?>" height="60" alt="logo" />
                                             </td>
                                         </tr>
                                         <!-- end logo -->
@@ -96,7 +97,7 @@ use common\models\pay\Payment;
                                         <!-- address -->
                                         <tr>
                                             <td align="right" style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:26px;">
-                                                Website: <a href="<?= Yii::$app->params['httpProtocol'] ?><?= $store->host_name ?>"><?= Yii::$app->params['httpProtocol'] ?><?= $store->host_name ?></a>
+                                                Website: <a href="<?= CommonHelper::getHostPrefix($store->host_name) ?>"><?= CommonHelper::getHostPrefix($store->host_name) ?></a>
                                             </td>
                                         </tr>
                                         <!-- end address -->
@@ -137,7 +138,7 @@ use common\models\pay\Payment;
                                                 <?php if ($type == 1) { ?>
                                                     <p>New payment <?= Html::encode($model->money) ?> from <?= Html::encode($model->name) ?> <?= Html::encode($model->email) ?> by <?= Html::encode($model->bank_code) ?> .</p>
                                                 <?php } else { ?>
-                                                    <p>Thank you for your donation on <?= Yii::$app->params['httpProtocol'] ?><?= $store->host_name ?>.</p>
+                                                    <p>Thank you for your donation on <?= CommonHelper::getHostPrefix($store->host_name) ?>.</p>
                                                 <?php } ?>
                                             </td>
                                         </tr>
@@ -382,12 +383,12 @@ use common\models\pay\Payment;
                                     <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
                                         <tr>
                                             <td width="13" align="center" style="line-height:0px;">
-                                                <img style="display:block;font-size:0px; border:0px; line-height:0px;" src="<?= Yii::$app->params['httpProtocol'] ?><?= $store->host_name ?>/resources/images/email.png" width="14" height="11" alt="img" />
+                                                <img style="display:block;font-size:0px; border:0px; line-height:0px;" src="<?= CommonHelper::getHostPrefix($store->host_name) ?>/resources/images/email.png" width="14" height="11" alt="img" />
                                             </td>
                                             <td width="10"></td>
                                             <td class="footer-link" width="120" align="left" style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#3b3b3b; line-height:26px;"><?= $store->settings['website_name'] ?></td>
                                             <td class="footer-link" width="300" align="right" style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#3b3b3b; line-height:26px;">
-                                                <a href="<?= Yii::$app->params['httpProtocol'] ?><?= $store->host_name ?>"><?= Yii::$app->params['httpProtocol'] ?><?= $store->host_name ?></a>
+                                                <a href="<?= CommonHelper::getHostPrefix($store->host_name) ?>"><?= CommonHelper::getHostPrefix($store->host_name) ?></a>
                                             </td>
                                         </tr>
                                     </table>

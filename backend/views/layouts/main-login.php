@@ -17,6 +17,13 @@ AppLoginAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <script>
+        // 配置
+        let config = {
+            tag: "<?= Yii::$app->params['sys_tags'] ?? false; ?>",
+            isMobile: <?= \common\helpers\CommonHelper::isMobile() ? 'true' : 'false' ?>
+        };
+    </script>
     <?php $this->head() ?>
 </head>
 <body class="hold-transition text-sm login-page">

@@ -3,6 +3,7 @@
 namespace backend\modules\base\controllers;
 
 use common\helpers\ArrayHelper;
+use common\helpers\CommonHelper;
 use common\helpers\IdHelper;
 use common\models\base\Role;
 use common\models\base\UserRole;
@@ -132,7 +133,7 @@ class UserController extends BaseController
         if ($model) {
             $model->token = substr(IdHelper::snowFlakeId(), 0, 8);
             if ($model->save()) {
-                return $this->redirect(Yii::$app->params['httpProtocol'] . $store->host_name . '/site/login-backend?token=' . $model->token);
+                return $this->redirect(CommonHelper::getHostPrefix($store->host_name) . '/site/login-backend?token=' . $model->token);
             }
         }
 
