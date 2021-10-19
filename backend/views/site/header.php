@@ -162,7 +162,7 @@ $('.funboot-lang').click(function() {
     let param = {
         lang: lang
     }
-    $.post("{$urlSetLanguage}", param, function(data) {
+    $.get("{$urlSetLanguage}", param, function(data) {
         if (parseInt(data.code) === 200) {
             window.location.reload();
         }
