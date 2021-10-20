@@ -666,6 +666,12 @@ return [
     'Sync All' => '同步全部',
     'Qrcodes' => '二维码',
     'Qrcode' => '二维码',
+    'All Brands' => '品牌大全',
+    'All Products' => '商品大全',
+    'All Categories' => '商品大全',
+    'Recommended Brands' => '推荐品牌',
+    'Shopping Cart' => '去购物车结算',
+    'Global' => '国际站',
 
     // food
     'Name Local' => '第二语言',
