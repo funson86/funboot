@@ -147,6 +147,7 @@ class StoreController extends BaseController
 
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
+            $model->loadDefaultValues($post);
             $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
             if (!$model->save()) {
                 Yii::$app->cacheSystem->clearAllStore();
