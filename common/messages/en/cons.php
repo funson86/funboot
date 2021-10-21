@@ -167,6 +167,11 @@ return [
     'ATTRIBUTE_TYPE_COLOR' => 'Color',
     'ATTRIBUTE_TYPE_IMAGE' => 'Image',
 
+    'TYPE_HOT' => 'Hot',
+    'TYPE_NEW' => 'New',
+    'TYPE_PROMOTION' => 'Promotion',
+
+
     // bbs
     'FORMAT_HTML' => 'Html',
     'FORMAT_MARKDOWN' => 'Markdown',

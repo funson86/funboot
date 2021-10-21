@@ -168,6 +168,10 @@ return [
     'ATTRIBUTE_TYPE_COLOR' => '颜色',
     'ATTRIBUTE_TYPE_IMAGE' => '图片',
 
+    'TYPE_HOT' => '热门',
+    'TYPE_NEW' => '新品',
+    'TYPE_PROMOTION' => '促销',
+
     // bbs
     'FORMAT_HTML' => 'Html',
     'FORMAT_MARKDOWN' => 'Markdown',
