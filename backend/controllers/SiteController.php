@@ -190,6 +190,8 @@ class SiteController extends BaseController
                                 Yii::$app->user->logout();
                                 return $this->redirect(['/']);
                             }
+                        } else {
+                            return $this->redirect(['/']);
                         }
                     }
                 }
