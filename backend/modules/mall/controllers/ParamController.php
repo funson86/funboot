@@ -15,6 +15,12 @@ use backend\controllers\BaseController;
  */
 class ParamController extends BaseController
 {
+    /**
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
     public $style = 11;
 
     /**

@@ -16,6 +16,12 @@ use backend\controllers\BaseController;
 class TagController extends BaseController
 {
     /**
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
+    /**
       * @var Tag
       */
     public $modelClass = Tag::class;

@@ -53,7 +53,7 @@ foreach($products as $product) {
                 <p class="no1">
                     <a id="del-all" href="<?= Yii::$app->urlManager->createUrl(['cart/destroy']) ?>">清空购物车</a>
                 </p>
-                <p><a class="graybtn" href="<?= Yii::$app->urlManager->createUrl(['product/search']) ?>">继续购物</a></p>
+                <p><a class="graybtn" href="<?= Yii::$app->urlManager->createUrl(['/mall/product/search']) ?>">继续购物</a></p>
             </div>
             <div id="price-total" class="fr">
                 <p><?= $totalNumber ?>件商品，总价：<span class="red">¥<strong><?= $totalPrice ?></strong></span></p>

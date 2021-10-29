@@ -16,6 +16,13 @@ use Yii;
  */
 class AttributeSetAttributeBase extends BaseModel
 {
+    static $tableCode = 2510;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'textarea',
+    ];
+
     /**
      * @return array|array[]
      */

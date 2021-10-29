@@ -14,7 +14,7 @@ $this->registerCssFile('@web/css/cod.css', ['depends' => \frontend\assets\MallAs
         <ul>
             <li><a title="购买的商品不满意怎么办" target="_blank" href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => 13, 'surname' => 'point']) ?>"><img width="324" height="67" src="/images/order_shuo_01.jpg" alt="购买的商品不满意怎么办" title="购买的商品不满意怎么办"></a></li>
             <li><a title="积分使用办法" target="_blank" href="<?= Yii::$app->urlManager->createUrl(['cms/default/page', 'id' => 13, 'surname' => 'point']) ?>"><img width="324" height="67" src="/images/order_shuo_02.jpg" alt="积分使用办法" title="积分使用办法"></a></li>
-            <li style="margin: 0;"><a title="分享购买的商品" href="<?= Yii::$app->urlManager->createUrl(['product/search']) ?>"><img width="324" height="67" src="/images/order_shuo_03.jpg" alt="分享购买的商品" title="分享购买的商品"></a></li>
+            <li style="margin: 0;"><a title="分享购买的商品" href="<?= Yii::$app->urlManager->createUrl(['/mall/product/search']) ?>"><img width="324" height="67" src="/images/order_shuo_03.jpg" alt="分享购买的商品" title="分享购买的商品"></a></li>
         </ul>
         <div class="clear"></div>
     </div>

@@ -6,6 +6,7 @@ use common\components\enums\YesNo;
 use common\models\mall\Product as ActiveModel;
 use common\helpers\Url;
 use common\helpers\ImageHelper;
+use common\models\base\Lang;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\mall\Product */
@@ -44,6 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     <li class="nav-item">
                         <a class="nav-link" id="tab-4" data-toggle="pill" href="#tab-content-4"><?= Yii::t('app', 'Param') ?></a>
                     </li>
+                    <?php if ($this->context->isMultiLang) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-lang" data-toggle="pill" href="#tab-content-lang"><?= Yii::t('app', 'Multi Language') ?></a>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
             <div class="card-body">
@@ -96,15 +102,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <tr>
                                                 <td><?= $attribute->name ?></td>
                                                 <td id="attribute-<?= $attribute->id; ?>">
-                                                    <?php foreach ($attribute->attributeValues as $value) { ?>
-                                                        <span id="attribute-value-<?= $value['id']; ?>" data-type="<?= $attribute['type']; ?>" class="btn btn-default btn-sm btn-attribute" data-id="<?= $value['id']; ?>" data-name="<?= $value['name']; ?>" data-attribute-id="<?= $attribute->id; ?>" data-attribute-name="<?= $attribute->name; ?>" data-sort="<?= $value['sort']; ?>"><?= $value['name']; ?></span>
+                                                    <?php foreach ($attribute->attributeItems as $attributeItem) { ?>
+                                                        <span id="attribute-value-<?= $attributeItem['id']; ?>" data-type="<?= $attribute['type']; ?>" class="btn btn-default btn-sm btn-attribute" data-id="<?= $attributeItem['id']; ?>" data-name="<?= $attributeItem['name']; ?>" data-attribute-id="<?= $attribute->id; ?>" data-attribute-name="<?= $attribute->name; ?>" data-sort="<?= $attributeItem['sort']; ?>"><?= $attributeItem['name']; ?></span>
 
                                                         <?php if ($attribute['type'] == 2) { ?>
-                                                            <span class="btn btn-sm selectColor" style="background:<?= strlen($value['label']) > 0 ? '#' . $value['label'] : '#000000'; ?>;padding: 10px" data-href="<?= Url::to(['/site/color', 'value' => $value['label']])?>"></span>
-                                                            <?= Html::hiddenInput('productAttributeValueLabels[' . $value['id'] .']', '#' . $value['label'])?>
+                                                            <span class="btn btn-sm selectColor" style="background:<?= strlen($mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] ?? '') > 0 ? '#' . $mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] : '#000000'; ?>;padding: 10px" data-href="<?= Url::to(['/site/color', 'value' => ($mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] ?? '')])?>"></span>
+                                                            <?= Html::hiddenInput('productAttributeItemLabels[' . $attributeItem['id'] .']', '#' . ($mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] ?? ''))?>
                                                         <?php } elseif ($attribute['type'] == 3) { ?>
-                                                            <img src="<?= strlen($value['label']) > 0 ? $value['label'] : ImageHelper::get('/resources/images/add-sku.png'); ?>" class="selectImage" href="<?= Url::to(['/file/index', 'boxId' => 'mall', 'upload_type' => 'image'])?>" data-toggle='modal' data-target='#ajaxModalMax'>
-                                                            <?= Html::hiddenInput('productAttributeValueLabels[' . $value['id'] .']', $value['label'])?>
+                                                            <img src="<?= $mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] ?? ImageHelper::get('/resources/images/add-sku.png'); ?>" class="selectImage" href="<?= Url::to(['/file/index', 'boxId' => 'mall', 'upload_type' => 'image'])?>" data-toggle='modal' data-target='#ajaxModalMax'>
+                                                            <?= Html::hiddenInput('productAttributeItemLabels[' . $attributeItem['id'] .']', $mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] ?? '')?>
                                                         <?php } ?>
 
                                                     <?php } ?>
@@ -191,6 +197,96 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     </div>
 
+                    <?php if ($this->context->isMultiLang) { ?>
+                        <div class="tab-pane fade" id="tab-content-lang">
+                            <?= $form->field($model, 'translating')->radioList(YesNo::getLabels())->hint(Yii::t('app', 'Auto translating while selecting yes and field is empty'), ['class' => 'ml-3']) ?>
+                            <div class="row">
+                                <div class="col-2 col-sm-2">
+                                    <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                                        <?php $i = 0; foreach ($lang as $field => $item) { ?>
+                                            <a class="nav-link <?= $i == 0 ? 'active' : '' ?>" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-<?= $field ?>" role="tab" aria-controls="vert-tabs-home" aria-selected="true"><?= $model->getAttributeLabel($field) ?></a>
+                                            <?php $i++; } ?>
+                                    </div>
+                                </div>
+                                <div class="col-10 col-sm-10">
+                                    <div class="tab-content" id="vert-tabs-tabContent">
+                                        <?php $i = 0; foreach ($lang as $field => $item) { ?>
+                                            <div class="tab-pane <?= $i == 0 ? 'active' : 'fade' ?>" id="vert-tabs-<?= $field ?>" role="tabpanel" aria-labelledby="vert-tabs-<?= $field ?>-tab">
+                                                <?php foreach ($item as $language => $v) { ?>
+                                                    <div class="form-group row field-catalog-redirect_url has-success">
+                                                        <label class="control-label control-label-full"><?= Lang::getLanguageLabels(intval(Lang::getLanguageCode($language, false, true))) ?></label>
+                                                        <?php
+                                                        if (ActiveModel::getLangFieldType($field) == 'textarea') {
+                                                            echo Html::textarea("Lang[$field][$language]", $v, ['class' => 'form-control', 'rows' => 6]);
+                                                        } elseif (ActiveModel::getLangFieldType($field) == 'Ueditor') {
+                                                            echo \common\components\ueditor\Ueditor::widget([
+                                                                'id' => 'Ueditor-' . $field . '-' . $language,
+                                                                'attribute' => $field,
+                                                                'name' => 'Lang[' . $field . '][' . $language . ']',
+                                                                'value' => $v,
+                                                                'formData' => [
+                                                                    'drive' => 'local',
+                                                                    'writeTable' => false, // 不写表
+                                                                ],
+                                                                'config' => [
+                                                                    'toolbars' => [
+                                                                        [
+                                                                            'fullscreen', 'source', 'undo', 'redo', '|',
+                                                                            'customstyle', 'paragraph', 'fontfamily', 'fontsize'
+                                                                        ],
+                                                                        [
+                                                                            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat',
+                                                                            'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|',
+                                                                            'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|',
+                                                                            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+                                                                            'directionalityltr', 'directionalityrtl', 'indent', '|'
+                                                                        ],
+                                                                        [
+                                                                            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
+                                                                            'link', 'unlink', '|','simpleupload',
+                                                                            'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'insertcode', 'pagebreak', '|',
+                                                                            'horizontal', 'inserttable', '|',
+                                                                            'print', 'preview', 'searchreplace', 'help'
+                                                                        ]
+                                                                    ],
+                                                                ]
+                                                            ]) ;
+                                                        } elseif (ActiveModel::getLangFieldType($field) == 'markdown') {
+                                                            echo \common\widgets\markdown\Markdown::widget([
+                                                                'id' => 'markdown-' . $field . '-' . $language,
+                                                                'attribute' => $field,
+                                                                'name' => 'Lang[' . $field . '][' . $language . ']',
+                                                                'value' => $v,
+                                                                'options' => [
+                                                                    'width' => "100%",
+                                                                    'height' => 500,
+                                                                    'emoji' => false,
+                                                                    'taskList' => true,
+                                                                    'flowChart' => true, // 流程图
+                                                                    'sequenceDiagram' => true, // 序列图
+                                                                    'tex' => true, // 科学公式
+                                                                    'imageUpload' => true,
+                                                                    'imageUploadURL' => Url::toRoute([
+                                                                        '/file/image-markdown',
+                                                                        'driver' => Yii::$app->params['uploaderConfig']['image']['driver'],
+                                                                    ]),
+                                                                ]
+                                                            ]) ;
+                                                        } else {
+                                                            echo Html::textInput("Lang[$field][$language]", $v, ['class' => 'form-control']);
+                                                        }
+
+                                                        ?>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <?php $i++; } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+
                 </div>
             </div>
             <div class="card-footer">
@@ -209,14 +305,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <tr>
         <td>{{attribute.name}}</td>
         <td>
-            {{each attribute.attributeValues as item i}}
+            {{each attribute.attributeItems as item i}}
             <span id="option-{{item.id}}" data-type="{{attribute.type}}" class="btn btn-default btn-sm btn-attribute" data-id="{{item.id}}" data-name="{{item.name}}" data-attribute-id="{{attribute.id}}" data-attribute-name="{{attribute.name}}" data-sort="{{item.sort}}">{{item.name}}</span>
             {{if attribute.type == 2 }}
             <span class="btn btn-sm selectColor" style="background:#000000;padding: 10px" data-href="<?= Url::to(['/site/color'])?>"></span>
-            <?= Html::hiddenInput('productAttributeValueLabels[{{item.id}}]', '')?>
+            <?= Html::hiddenInput('productAttributeItemLabels[{{item.id}}]', '')?>
             {{else if attribute.type == 3}}
             <img src="<?= ImageHelper::get('/resources/images/add-sku.png'); ?>" class="selectImage" href="<?= Url::to(['/file/index', 'boxId' => 'mall', 'upload_type' => 'image'])?>" data-toggle='modal' data-target='#ajaxModalMax'>
-            <?= Html::hiddenInput('productAttributeValueLabels[{{item.id}}]', '')?>
+            <?= Html::hiddenInput('productAttributeItemLabels[{{item.id}}]', '')?>
             {{/if}}
             {{/each}}
         </td>

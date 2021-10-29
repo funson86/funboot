@@ -5,9 +5,9 @@ namespace backend\modules\mall\controllers;
 use common\helpers\ArrayHelper;
 use common\models\mall\Attribute;
 use common\models\mall\AttributeSet;
-use common\models\mall\AttributeValue;
+use common\models\mall\AttributeItem;
 use common\models\mall\Param;
-use common\models\mall\ProductAttributeValueLabel;
+use common\models\mall\ProductAttributeItemLabel;
 use common\models\mall\ProductParam;
 use common\models\mall\ProductSku;
 use common\models\mall\ProductTag;
@@ -26,6 +26,12 @@ use yii\web\NotFoundHttpException;
  */
 class ProductController extends BaseController
 {
+    /**
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
     /**
       * @var Product
       */
@@ -59,12 +65,16 @@ class ProductController extends BaseController
     {
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
+        $this->beforeEdit($id, $model);
+        $lang = $this->isMultiLang ? $this->beforeLang($id, $model) : [];
 
         $allParams = ArrayHelper::mapIdData(Param::find()->where(['store_id' => $this->getStoreId(), 'status' => Tag::STATUS_ACTIVE])->all());
         $mapAllParamIdName = ArrayHelper::map($allParams, 'id', 'name');
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
+                $model->translating = Yii::$app->request->post($model->formName())['translating'] ?? 0;
+
                 $post = Yii::$app->request->post();
 
                 $model->type = ArrayHelper::arrayToInt($post['Product']['types'] ?? []);
@@ -75,19 +85,23 @@ class ProductController extends BaseController
                         Yii::$app->logSystem->db($model->errors);
                         throw new NotFoundHttpException($this->getError($model));
                     }
+                    $this->afterEdit($id, $model);
+                    $this->isMultiLang && $this->afterLang($id, $model);
 
                     // 标签
                     $tags = $post['Product']['tags'];
                     ProductTag::updateAll(['status' => ProductSku::STATUS_DELETED], ['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
-                    foreach ($tags as $tagId) {
-                        $modelTemp = ProductTag::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'tag_id' => $tagId])->one();
-                        !$modelTemp && $modelTemp = new ProductTag();
-                        $modelTemp->product_id = $model->id;
-                        $modelTemp->tag_id = $tagId;
-                        $modelTemp->status = Tag::STATUS_ACTIVE;
-                        if (!$modelTemp->save()) {
-                            Yii::$app->logSystem->db($modelTemp->errors);
-                            throw new NotFoundHttpException($this->getError($modelTemp));
+                    if (is_array($tags)) {
+                        foreach ($tags as $tagId) {
+                            $modelTemp = ProductTag::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'tag_id' => $tagId])->one();
+                            !$modelTemp && $modelTemp = new ProductTag();
+                            $modelTemp->product_id = $model->id;
+                            $modelTemp->tag_id = $tagId;
+                            $modelTemp->status = Tag::STATUS_ACTIVE;
+                            if (!$modelTemp->save()) {
+                                Yii::$app->logSystem->db($modelTemp->errors);
+                                throw new NotFoundHttpException($this->getError($modelTemp));
+                            }
                         }
                     }
                     ProductTag::deleteAll(['status' => ProductSku::STATUS_DELETED, 'store_id' => $this->getStoreId(), 'product_id' => $model->id]);
@@ -102,8 +116,8 @@ class ProductController extends BaseController
                             $modelTemp = ProductSku::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'attribute_value' => $attributeValue])->one();
                             !$modelTemp && $modelTemp = new ProductSku();
                             // 按照id顺序用逗号分隔存储
-                            $arrAttributeValue = explode(',', $attributeValue);
-                            $modelTemp->attribute_value = implode(',', ArrayHelper::intValue($arrAttributeValue, true));
+                            $arrAttributeItem = explode(',', $attributeValue);
+                            $modelTemp->attribute_value = implode(',', ArrayHelper::intValue($arrAttributeItem, true));
                             $modelTemp->product_id = $model->id;
                             $modelTemp->sku = $item['sku'];
                             $modelTemp->thumb = $item['thumb'];
@@ -126,27 +140,25 @@ class ProductController extends BaseController
                     }
 
                     // 计算多属性标签
-                    if ($model->attribute_set_id > 0 && isset($post['productAttributeValueLabels'])) {
-                        $attributeValues = AttributeValue::find()->where(['store_id' => $this->getStoreId()])->all();
-                        $mapAttributeValueIdName = ArrayHelper::map($attributeValues, 'id', 'name');
-                        $mapAttributeValueIdTye = [];
-                        foreach ($attributeValues as $item) {
-                            $mapAttributeValueIdTye[$item->id] = $item->attribute0->type;
+                    if ($model->attribute_set_id > 0 && isset($post['productAttributeItemLabels'])) {
+                        $attributeItems = AttributeItem::find()->where(['store_id' => $this->getStoreId()])->all();
+                        $mapAttributeItemIdName = ArrayHelper::map($attributeItems, 'id', 'name');
+                        $mapAttributeItemIdTye = [];
+                        foreach ($attributeItems as $item) {
+                            $mapAttributeItemIdTye[$item->id] = $item->attribute0->type;
                         }
 
-                        $productAttributeValueLabels = $post['productAttributeValueLabels'];
-
-                        ProductAttributeValueLabel::updateAll(['status' => ProductSku::STATUS_DELETED], ['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
-
-                        foreach ($productAttributeValueLabels as $attributeValueId => $label) {
-                            $modelTemp = ProductAttributeValueLabel::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'attribute_value_id' => $attributeValueId])->one();
-                            !$modelTemp && $modelTemp = new ProductAttributeValueLabel();
+                        $productAttributeItemLabels = $post['productAttributeItemLabels'];
+                        ProductAttributeItemLabel::updateAll(['status' => ProductSku::STATUS_DELETED], ['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
+                        foreach ($productAttributeItemLabels as $attributeValueId => $label) {
+                            $modelTemp = ProductAttributeItemLabel::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'attribute_item_id' => $attributeValueId])->one();
+                            !$modelTemp && $modelTemp = new ProductAttributeItemLabel();
                             $modelTemp->product_id = $model->id;
-                            $modelTemp->attribute_value_id = $attributeValueId;
-                            $modelTemp->name = $mapAttributeValueIdName[$attributeValueId] ?? '-';
-                            $modelTemp->type = $mapAttributeValueIdTye[$attributeValueId] ?? Attribute::TYPE_TEXT;
+                            $modelTemp->attribute_item_id = $attributeValueId;
+                            $modelTemp->name = $mapAttributeItemIdName[$attributeValueId] ?? '-';
+                            $modelTemp->type = $mapAttributeItemIdTye[$attributeValueId] ?? Attribute::TYPE_TEXT;
                             $modelTemp->label = $modelTemp->type == Attribute::TYPE_COLOR ? str_replace('#', '', $label) : $label;
-                            $modelTemp->status = ProductAttributeValueLabel::STATUS_ACTIVE;
+                            $modelTemp->status = ProductAttributeItemLabel::STATUS_ACTIVE;
 
                             if (!$modelTemp->save()) {
                                 Yii::$app->logSystem->db($modelTemp->errors);
@@ -154,9 +166,9 @@ class ProductController extends BaseController
                             }
                         }
 
-                        ProductAttributeValueLabel::deleteAll(['status' => ProductSku::STATUS_DELETED, 'store_id' => $this->getStoreId(), 'product_id' => $model->id]);
+                        ProductAttributeItemLabel::deleteAll(['status' => ProductSku::STATUS_DELETED, 'store_id' => $this->getStoreId(), 'product_id' => $model->id]);
                     } else { // 否则删除所有多属性数据
-                        ProductAttributeValueLabel::deleteAll(['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
+                        ProductAttributeItemLabel::deleteAll(['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
                     }
 
                     // 计算参数
@@ -166,7 +178,6 @@ class ProductController extends BaseController
                         ProductParam::updateAll(['status' => ProductParam::STATUS_DELETED], ['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
 
                         foreach ($params as $id => $content) {
-                            var_dump($id);
                             $modelTemp = ProductParam::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id, 'param_id' => $id])->one();
                             !$modelTemp && $modelTemp = new ProductParam();
                             $modelTemp->product_id = $model->id;
@@ -197,14 +208,15 @@ class ProductController extends BaseController
         }
 
         $model->isAttribute = $model->attribute_set_id > 0 ? 1 : 0;
-        $attributes = $attributeValues = [];
+        $attributes = $attributeItems = [];
 
         $mapAttributeIdName = ArrayHelper::map($attributes, 'id', 'name');
-        $mapProductAttributeValueIdLabel = [];
+        $mapProductAttributeItemIdLabel = [];
+        $mapProductAttributeItemAttributeItemIdLabel = [];
         if ($id > 0) {
-            $productAttributeValueLabels = ProductAttributeValueLabel::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $id])->all();
-            $mapProductAttributeValueIdLabel = ArrayHelper::map($productAttributeValueLabels, 'id', 'label');
-            $mapProductAttributeValueAttributeValueIdLabel = ArrayHelper::map($productAttributeValueLabels, 'attribute_value_id', 'label');
+            $productAttributeItemLabels = ProductAttributeItemLabel::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $id])->all();
+            $mapProductAttributeItemIdLabel = ArrayHelper::map($productAttributeItemLabels, 'id', 'label');
+            $mapProductAttributeItemAttributeItemIdLabel = ArrayHelper::map($productAttributeItemLabels, 'attribute_item_id', 'label');
         }
 
         if ($model->isAttribute > 0) {
@@ -213,35 +225,35 @@ class ProductController extends BaseController
                 $attributes = Attribute::find()
                     ->where(['store_id' => $this->getStoreId(), 'id' => ArrayHelper::getColumn($attributeSet->attributeSetAttributes, 'attribute_id')])
                     ->orderBy(['sort' => SORT_ASC])
-                    ->with('attributeValues')
+                    ->with('attributeItems')
                     ->all();
 
-                if ($id > 0) {
+                /*if ($id > 0) {
                     foreach ($attributes as &$attribute) {
-                        foreach ($attribute->attributeValues as &$attributeValue) {
-                            $attributeValue->label = $mapProductAttributeValueAttributeValueIdLabel[$attributeValue->id] ?? '';
+                        foreach ($attribute->attributeItems as &$attributeValue) {
+                            $attributeValue->label = $mapProductAttributeItemAttributeItemIdLabel[$attributeValue->id] ?? '';
                         }
                         unset($attributeValue);
                     }
                     unset($attribute);
-                }
+                }*/
             }
         }
 
         // 计算已经启用的属性值
         $enableValueIds = [];
         $productSkus = [];
+        $enableValues = [];
         if ($model->attribute_set_id > 0) {
             $productSkus = ProductSku::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id])->asArray()->all();
             if ($productSkus) {
                 $enableValueIds = array_unique(explode(',', implode(',', ArrayHelper::getColumn($productSkus, 'attribute_value'))));
             }
-            $enableValues = [];
-            $attributeValues = AttributeValue::find()->where(['store_id' => $this->getStoreId(), 'id' => $enableValueIds])->all();
-            foreach ($attributeValues as $attributeValue) {
-                $item = $attributeValue->attributes;
-                $item['attribute_name'] = $mapAttributeIdName[$attributeValue->attribute_id] ?? '';
-                $item['label'] = $mapProductAttributeValueIdLabel[$attributeValue->id] ?? '';
+            $attributeItems = AttributeItem::find()->where(['store_id' => $this->getStoreId(), 'id' => $enableValueIds])->all();
+            foreach ($attributeItems as $attributeItem) {
+                $item = $attributeItem->attributes;
+                $item['attribute_name'] = $mapAttributeIdName[$attributeItem->attribute_id] ?? '';
+                $item['label'] = $mapProductAttributeItemIdLabel[$attributeItem->id] ?? '';
 
                 $enableValues[] = $item;
             }
@@ -253,17 +265,20 @@ class ProductController extends BaseController
             $productParams = ArrayHelper::map(ProductParam::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $id])->all(), 'param_id', 'content');
         }
 
+        $this->beforeEditRender($id, $model);
         $model->types = ArrayHelper::intToArray($model->type, $this->modelClass::getTypeLabels());
         $allTags = ArrayHelper::map(Tag::find()->where(['store_id' => $this->getStoreId(), 'status' => Tag::STATUS_ACTIVE])->asArray()->all(), 'id', 'name');
         $model->tags = ArrayHelper::getColumn(ProductTag::find()->filterWhere(['product_id' => $id])->asArray()->all(), 'tag_id');
         return $this->render($this->action->id, [
             'model' => $model,
             'attributes' => $attributes,
+            'mapProductAttributeItemAttributeItemIdLabel' => $mapProductAttributeItemAttributeItemIdLabel,
             'enableValues' => $enableValues,
             'productSkus' => $productSkus,
             'allParams' => $allParams,
             'productParams' => $productParams,
             'allTags' => $allTags,
+            'lang' => $lang,
         ]);
     }
 }

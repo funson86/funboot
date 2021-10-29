@@ -16,6 +16,12 @@ use backend\controllers\BaseController;
 class CategoryController extends BaseController
 {
     /**
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
+    /**
      * 1带搜索列表 2树形(不分页) 3非常规表格
      * @var array[]
      */

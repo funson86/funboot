@@ -8,14 +8,21 @@ use common\models\User;
 use Yii;
 
 /**
- * This is the model base class for table "{{%mall_product_attribute_value_label}}" to add your code.
+ * This is the model base class for table "{{%mall_attribute_item}}" to add your code.
  *
- * @property Product $product
+ * @property Attribute $attribute0
  * @property Store $store
- * @property AttributeValue $attributeValue
+ * @property ProductAttributeItemLabel[] $productAttributeItemLabels
  */
-class ProductAttributeValueLabelBase extends BaseModel
+class AttributeItemBase extends BaseModel
 {
+    static $tableCode = 2530;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'textarea',
+    ];
+
     /**
      * @return array|array[]
      */
@@ -23,9 +30,8 @@ class ProductAttributeValueLabelBase extends BaseModel
     {
         return [
             [['id'], 'safe'],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['attribute_id'], 'exist', 'skipOnError' => true, 'targetClass' => Attribute::className(), 'targetAttribute' => ['attribute_id' => 'id']],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
-            [['attribute_value_id'], 'exist', 'skipOnError' => true, 'targetClass' => AttributeValue::className(), 'targetAttribute' => ['attribute_value_id' => 'id']],
         ];
     }
 
@@ -39,11 +45,9 @@ class ProductAttributeValueLabelBase extends BaseModel
         return array_merge(parent::attributeLabels(), [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
-            'name' => Yii::t('app', 'Name'),
-            'product_id' => Yii::t('app', 'Product ID'),
             'attribute_id' => Yii::t('app', 'Attribute ID'),
-            'attribute_value_id' => Yii::t('app', 'Attribute Value ID'),
-            'label' => Yii::t('app', 'Label'),
+            'name' => Yii::t('app', 'Name'),
+            'brief' => Yii::t('app', 'Brief'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
@@ -57,17 +61,17 @@ class ProductAttributeValueLabelBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProduct()
+    public function getAttribute0()
     {
-        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+        return $this->hasOne(Attribute::className(), ['id' => 'attribute_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAttributeValue()
+    public function getMallProductAttributeItemLabels()
     {
-        return $this->hasOne(AttributeValue::className(), ['id' => 'attribute_value_id']);
+        return $this->hasMany(ProductAttributeItemLabel::className(), ['attribute_item_id' => 'id']);
     }
 
 }

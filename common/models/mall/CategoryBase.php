@@ -14,6 +14,14 @@ use Yii;
  */
 class CategoryBase extends BaseModel
 {
+    static $tableCode = 2480;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'textarea',
+        'redirect_url' => 'text',
+    ];
+
     /**
      * @return array|array[]
      */

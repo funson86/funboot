@@ -3,22 +3,28 @@
 namespace backend\modules\mall\controllers;
 
 use Yii;
-use common\models\mall\AttributeValue;
+use common\models\mall\AttributeItem;
 use common\models\ModelSearch;
 use backend\controllers\BaseController;
 
 /**
- * AttributeValue
+ * AttributeItem
  *
- * Class AttributeValueController
+ * Class AttributeItemController
  * @package backend\modules\mall\controllers
  */
-class AttributeValueController extends BaseController
+class AttributeItemController extends BaseController
 {
     /**
-      * @var AttributeValue
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
+    /**
+      * @var AttributeItem
       */
-    public $modelClass = AttributeValue::class;
+    public $modelClass = AttributeItem::class;
 
     /**
       * 模糊查询字段
@@ -43,5 +49,15 @@ class AttributeValueController extends BaseController
         'name' => 'text',
         'type' => 'select',
     ];
+
+    /**
+     * @param null $id
+     * @param AttributeItem $model
+     * @return bool|void
+     */
+    protected function beforeEditRender($id = null, $model = null)
+    {
+        $model->attribute_id = Yii::$app->request->get('attribute_id', 0);
+    }
 
 }

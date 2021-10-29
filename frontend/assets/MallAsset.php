@@ -19,6 +19,8 @@ class MallAsset extends AssetBundle
 
     public $depends = [
         'common\widgets\adminlte\HeadJsAsset',
+        'common\widgets\adminlte\FlagIconAsset',
+        'common\components\assets\FontAwesomeAsset',
 //        'yii\bootstrap\BootstrapAsset',
     ];
 }

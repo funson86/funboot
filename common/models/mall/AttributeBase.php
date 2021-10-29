@@ -11,10 +11,17 @@ use Yii;
  * This is the model base class for table "{{%mall_attribute}}" to add your code.
  *
  * @property Store $store
- * @property AttributeValue[] $attributeValues
+ * @property AttributeItem[] $attributeItems
  */
 class AttributeBase extends BaseModel
 {
+    static $tableCode = 2520;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'textarea',
+    ];
+
     const TYPE_TEXT = 1;
     const TYPE_COLOR = 2;
     const TYPE_IMAGE = 3;
@@ -61,6 +68,7 @@ class AttributeBase extends BaseModel
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'name' => Yii::t('app', 'Name'),
+            'brief' => Yii::t('app', 'Brief'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
@@ -75,9 +83,9 @@ class AttributeBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAttributeValues()
+    public function getAttributeItems()
     {
-        return $this->hasMany(AttributeValue::className(), ['attribute_id' => 'id']);
+        return $this->hasMany(AttributeItem::className(), ['attribute_id' => 'id']);
     }
 
 }

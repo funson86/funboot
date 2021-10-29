@@ -18,6 +18,12 @@ use backend\controllers\BaseController;
 class AttributeSetController extends BaseController
 {
     /**
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
+    /**
       * @var AttributeSet
       */
     public $modelClass = AttributeSet::class;
@@ -94,10 +100,10 @@ class AttributeSetController extends BaseController
             if ($attribute) {
                 $item = $attribute->attributes;
                 $values = [];
-                foreach ($attribute->attributeValues as $value) {
+                foreach ($attribute->attributeItems as $value) {
                     $values[] = $value->attributes;
                 }
-                $item['attributeValues'] = $values;
+                $item['attributeItems'] = $values;
             }
 
             $list[] = $item;

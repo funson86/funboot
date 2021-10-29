@@ -3,21 +3,21 @@
 use common\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
-use common\models\mall\Category as ActiveModel;
+use common\models\mall\AttributeItem as ActiveModel;
 use common\models\base\Lang;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\Category */
+/* @var $model common\models\mall\AttributeItem */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Category');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['index']];
+$this->title = ($model->id ? Yii::t('app', 'Edit ') : Yii::t('app', 'Create ')) . Yii::t('app', 'Attribute Item');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Attribute Items'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php $form = ActiveForm::begin([
     'fieldConfig' => [
-        // 'template' => "<div class='col-sm-2 text-sm-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
+        'template' => "<div class='col-sm-2 text-sm-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div>",
         'options' => ['class' => 'form-group row'],
     ],
 ]); ?>
@@ -40,25 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body">
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="tab-content-1">
-                        <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getTreeIdLabel()) ?>
+                        <?= $form->field($model, 'attribute_id')->dropDownList(\common\models\mall\Attribute::getIdLabel()) ?>
                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                         <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'is_nav')->radioList(YesNo::getLabels()) ?>
-                        <?= $form->field($model, 'banner')->widget(\common\components\uploader\FileWidget::class, [
-                            'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
-                            'theme' => 'default',
-                            'themeConfig' => [],
-                            'config' => [
-                                // 可设置自己的上传地址, 不设置则默认地址
-                                // 'server' => '',
-                                'pick' => [
-                                    'multiple' => false,
-                                ],
-                            ]
-                        ]); ?>
-                        <!--<?= $form->field($model, 'seo_title')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?>
-                        <?= $form->field($model, 'seo_description')->textarea(['rows' => 6]) ?>-->
+                        <?= $form->field($model, 'sort')->textInput() ?>
                         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                     </div>
 

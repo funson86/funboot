@@ -15,6 +15,14 @@ use Yii;
  */
 class ProductBase extends BaseModel
 {
+    static $tableCode = 2400;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'text',
+        'content' => 'Ueditor',
+    ];
+
     public $isAttribute = 1;
     public $types = [];
     public $tags = [];
@@ -111,6 +119,14 @@ class ProductBase extends BaseModel
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAttributeSet()
+    {
+        return $this->hasOne(AttributeSet::className(), ['id' => 'attribute_set_id']);
     }
 
     /**

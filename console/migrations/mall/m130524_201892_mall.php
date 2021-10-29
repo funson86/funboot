@@ -135,6 +135,7 @@ CREATE TABLE `fb_mall_attribute` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) NOT NULL COMMENT '名称',
+  `brief` varchar(255) NOT NULL DEFAULT '' COMMENT '简介',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -147,8 +148,8 @@ CREATE TABLE `fb_mall_attribute` (
   CONSTRAINT `mall_attribute_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='属性';
 
-DROP TABLE IF EXISTS `fb_mall_attribute_value`;
-CREATE TABLE `fb_mall_attribute_value` (
+DROP TABLE IF EXISTS `fb_mall_attribute_item`;
+CREATE TABLE `fb_mall_attribute_item` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `attribute_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '属性',
@@ -162,11 +163,11 @@ CREATE TABLE `fb_mall_attribute_value` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `mall_attribute_value_k1` (`attribute_id`),
-  KEY `mall_attribute_value_k2` (`store_id`),
-  CONSTRAINT `mall_attribute_value_fk1` FOREIGN KEY (`attribute_id`) REFERENCES `fb_mall_attribute` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `mall_attribute_value_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='属性值';
+  KEY `mall_attribute_item_k0` (`store_id`),
+  KEY `mall_attribute_item_k2` (`attribute_id`),
+  CONSTRAINT `mall_attribute_item_fk1` FOREIGN KEY (`attribute_id`) REFERENCES `fb_mall_attribute` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mall_attribute_item_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='属性项';
 
 DROP TABLE IF EXISTS `fb_mall_attribute_set`;
 CREATE TABLE `fb_mall_attribute_set` (
@@ -286,13 +287,13 @@ CREATE TABLE `fb_mall_product_sku` (
   CONSTRAINT `mall_product_sku_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品属性SKU';
 
-DROP TABLE IF EXISTS `fb_mall_product_attribute_value_label`;
-CREATE TABLE `fb_mall_product_attribute_value_label` (
+DROP TABLE IF EXISTS `fb_mall_product_attribute_item_label`;
+CREATE TABLE `fb_mall_product_attribute_item_label` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) NOT NULL COMMENT '名称',
   `product_id` bigint(20) unsigned NOT NULL COMMENT '商品',
-  `attribute_value_id` bigint(20) unsigned NOT NULL COMMENT '属性值',
+  `attribute_item_id` bigint(20) unsigned NOT NULL COMMENT '属性项',
   `label` varchar(255) NOT NULL DEFAULT '' COMMENT '标签',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
@@ -302,13 +303,13 @@ CREATE TABLE `fb_mall_product_attribute_value_label` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `mall_product_attribute_value_label_fk2` (`store_id`),
-  KEY `mall_product_attribute_value_label_fk0` (`product_id`),
-  KEY `mall_product_attribute_value_label_fk3` (`attribute_value_id`),
-  CONSTRAINT `mall_product_attribute_value_label_fk0` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `mall_product_attribute_value_label_fk3` FOREIGN KEY (`attribute_value_id`) REFERENCES `fb_mall_attribute_value` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `mall_product_attribute_value_label_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品属性标签';
+  KEY `mall_product_attribute_item_label_fk0` (`store_id`),
+  KEY `mall_product_attribute_item_label_fk1` (`product_id`),
+  KEY `mall_product_attribute_item_label_fk3` (`attribute_item_id`),
+  CONSTRAINT `mall_product_attribute_item_label_fk0` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mall_product_attribute_item_label_fk3` FOREIGN KEY (`attribute_item_id`) REFERENCES `fb_mall_attribute_item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mall_product_attribute_item_label_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品属性项标签';
 
 DROP TABLE IF EXISTS `fb_mall_product_tag`;
 CREATE TABLE `fb_mall_product_tag` (
@@ -696,7 +697,7 @@ CREATE TABLE `fb_mall_invoice` (
 
 -- ALTER TABLE `fb_mall_brand` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_vendor` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
--- ALTER TABLE `fb_mall_attribute_value` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_mall_attribute_item` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_attribute_set` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_param` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_refund` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
@@ -733,7 +734,7 @@ INSERT INTO `fb_base_permission` VALUES ('248', '1', '24', '分类管理', 'back
 
 INSERT INTO `fb_base_permission` VALUES ('251', '1', '25', '商品属性集', 'backend', '', '/mall/attribute-set/index', 'fas fa-list', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('252', '1', '25', '商品属性', 'backend', '', '/mall/attribute/index', 'fas fa-list-alt', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('253', '1', '25', '商品属性值', 'backend', '', '/mall/attribute-value/index', 'far fa-list-alt', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('253', '1', '25', '商品属性项', 'backend', '', '/mall/attribute-item/index', 'far fa-list-alt', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('255', '1', '25', '商品参数', 'backend', '', '/mall/param/index', 'fas fa-list-ol', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
 
 INSERT INTO `fb_base_permission` VALUES ('256', '1', '25', '标签管理', 'backend', '', '/mall/tag/index', 'fas fa-tags', '', '3', '0', '1', '50', '1', '1599358315', '1603847833', '1', '1');
@@ -825,12 +826,12 @@ INSERT INTO `fb_base_permission` VALUES ('2523', '1', '252', '删除', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('2524', '1', '252', '启禁', 'backend', '', '/mall/attribute/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2525', '1', '252', '导出', 'backend', '', '/mall/attribute/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2526', '1', '252', '导入', 'backend', '', '/mall/attribute/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2531', '1', '253', '查看', 'backend', '', '/mall/attribute-value/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2532', '1', '253', '编辑', 'backend', '', '/mall/attribute-value/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2533', '1', '253', '删除', 'backend', '', '/mall/attribute-value/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2534', '1', '253', '启禁', 'backend', '', '/mall/attribute-value/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2535', '1', '253', '导出', 'backend', '', '/mall/attribute-value/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2536', '1', '253', '导入', 'backend', '', '/mall/attribute-value/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2531', '1', '253', '查看', 'backend', '', '/mall/attribute-item/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2532', '1', '253', '编辑', 'backend', '', '/mall/attribute-item/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2533', '1', '253', '删除', 'backend', '', '/mall/attribute-item/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2534', '1', '253', '启禁', 'backend', '', '/mall/attribute-item/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2535', '1', '253', '导出', 'backend', '', '/mall/attribute-item/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2536', '1', '253', '导入', 'backend', '', '/mall/attribute-item/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2551', '1', '255', '查看', 'backend', '', '/mall/param/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2552', '1', '255', '编辑', 'backend', '', '/mall/param/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2553', '1', '255', '删除', 'backend', '', '/mall/param/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
@@ -871,7 +872,11 @@ INSERT INTO `fb_base_permission` VALUES ('2735', '1', '273', '导出', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('2736', '1', '273', '导入', 'backend', '', '/mall/coupon/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 
 
-INSERT INTO `fb_base_setting_type` VALUES (70, 1, 0, 'backend', 'Cms网站', 'cms', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (21, 1, 0, 'backend', '商城基础', 'mall', '', 7, 1, 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+
+INSERT INTO `fb_base_setting_type` VALUES (2150, 1, 21, 'backend', '默认货币', 'mall_currency_default', '默认货币', 7, 1, 'radioList', 'USD:USD,CNY:CNY,EUR:EUR,GBP:GBP', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (2151, 1, 21, 'backend', '货币', 'mall_currencies', '货币，商品价格乘以汇率为显示价格', 7, 1, 'multipleInputRow', 'code:货币代码,symbol:货币符号,rate:汇率', '[{\"code\":\"USD\",\"symbol\":\"$\",\"rate\":\"1\"},{\"code\":\"CNY\",\"symbol\":\"￥\",\"rate\":\"6.5\"},{\"code\":\"EUR\",\"symbol\":\"€\",\"rate\":\"0.93\"},{\"code\":\"GBP\",\"symbol\":\"£\",\"rate\":\"0.8\"}]', 50, 1, 1600948360, 1600948360, 1, 1);
+
 INSERT INTO `fb_base_setting_type` VALUES (7011, 1, 70, 'backend', '主题', 'cms_theme', '', 'text', '', 'default', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (7012, 1, 70, 'backend', '模板', 'cms_template', '', 'text', '', 'index', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (7013, 1, 70, 'backend', '横幅', 'cms_banner', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);

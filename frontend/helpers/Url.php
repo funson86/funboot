@@ -42,12 +42,13 @@ class Url extends \yii\helpers\Url
      * 附加lang参数
      * @param null $lang
      * @param null $url
+     * @param string $field
      * @return string
      * @throws \yii\base\InvalidConfigException
      */
-    public static function attachLang($lang = null, $url = null)
+    public static function attachLang($lang = null, $url = null, $field = 'lang')
     {
-        !$lang && $lang = Yii::$app->request->get('lang');
+        !$lang && $lang = Yii::$app->request->get($field);
         !$url && $url = Yii::$app->request->getUrl();
 
         $items = parse_url($url);
@@ -55,13 +56,13 @@ class Url extends \yii\helpers\Url
         if (isset($items['query'])) {
             $queryList = explode('&', $items['query']);
             foreach ($queryList as $q) {
-                if (strpos($q, 'lang=') === false) {
+                if (strpos($q, $field . '=') === false) {
                     array_push($queries, $q);
                 }
             }
         }
 
-        array_push($queries, 'lang=' . $lang);
+        array_push($queries, $field . '=' . $lang);
         return $items['path'] . (isset($queries) ? '?' . implode('&', $queries) : '');
     }
 }

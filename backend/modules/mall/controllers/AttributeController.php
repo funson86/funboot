@@ -16,6 +16,12 @@ use backend\controllers\BaseController;
 class AttributeController extends BaseController
 {
     /**
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
+    /**
       * @var Attribute
       */
     public $modelClass = Attribute::class;

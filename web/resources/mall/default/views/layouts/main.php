@@ -1,8 +1,5 @@
 <?php
 use yii\helpers\Html;
-use frontend\components\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use frontend\assets\MallAsset;
 
 /* @var $this \yii\web\View */
@@ -28,9 +25,8 @@ $store = $this->context->store;
 <div class="container" id="page">
     <?php $this->beginBody() ?>
     <div id="header" class="new_header">
-        <?= $this->render('headerBar') ?>
-        <?= $this->render('headerSearch') ?>
-        <?= $this->render('headerNav') ?>
+        <?= $this->render('bar') ?>
+        <?= $this->render('nav') ?>
     </div>
 
     <?= $content ?>

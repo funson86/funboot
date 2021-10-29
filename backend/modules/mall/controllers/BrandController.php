@@ -16,6 +16,12 @@ use backend\controllers\BaseController;
 class BrandController extends BaseController
 {
     /**
+     * @var bool
+     */
+    public $isMultiLang = true;
+    public $isAutoTranslation = true;
+
+    /**
       * @var Brand
       */
     public $modelClass = Brand::class;

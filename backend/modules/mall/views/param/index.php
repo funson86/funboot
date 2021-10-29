@@ -41,7 +41,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         // 'parent_id',
-                        ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        [
+                            'attribute' => 'name',
+                            'format' => 'raw',
+                            'value' => function ($model, $key, $index, $column) {
+                                $str = Html::tag('span', $model->name, ['class' => 'm-l-sm']);
+                                $str .= Html::a(' <i class="fa fa-plus"></i>', ['edit', 'parent_id' => $model['id']]);
+                                return Html::tag('span', $str);
+                            }
+                        ],
                         'brief',
                         [
                             'label' => Yii::t('app', 'Children'),
@@ -71,7 +80,23 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'created_by',
                         // 'updated_by',
 
-                        Html::actionsEditDelete(),
+                        [
+                            'header' => Yii::t('app', 'Actions'),
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{edit-sub} {edit} {delete}',
+                            'buttons' => [
+                                'edit-sub' => function ($url, $model, $key) {
+                                    return Html::edit(['edit', 'parent_id' => $model->id], Yii::t('app', 'Add Child'));
+                                },
+                                'edit' => function ($url, $model, $key) {
+                                    return Html::edit(['edit', 'id' => $model->id]);
+                                },
+                                'delete' => function ($url, $model, $key) {
+                                    return Html::delete(['delete', 'id' => $model->id, 'soft' => true, 'tree' => true]);
+                                },
+                            ],
+                            'headerOptions' => ['class' => 'action-column'],
+                        ]
                     ]
                 ]); ?>
             </div>

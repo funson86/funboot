@@ -14,7 +14,7 @@ foreach($products as $product) {
         <p>去首页逛逛<a href="<?= Yii::$app->homeUrl ?>" class="btn">商城首页</a></p>
         <div class="txt">OR，嗖～一下</div>
         <div class="search_box_cart">
-            <form action="<?= Yii::$app->urlManager->createUrl('/mall/product/search') ?>" method="get" id="search_fm" name="search_fm">
+            <form action="<?= Yii::$app->urlManager->createUrl('/mall/product/search') ?>" method="get" id="searchForm" name="searchForm">
                 <input class="sea_input" type="text" name="keyword" id="searchText" placeholder="请输入商品">
                 <button type="submit" class="sea_submit"><i class="iconfont glyphicon glyphicon-search"></i></button>
             </form>
@@ -32,7 +32,7 @@ jQuery("#searchText").blur(function(){
     if (jQuery("#searchText").val() == '')
         jQuery("#searchText").val('请输入商品');
 });
-jQuery("#search_fm").submit(function(){
+jQuery("#searchForm").submit(function(){
     if (jQuery("#searchText").val() == '请输入商品' || jQuery("#searchText").val() == '')
         return false;
 });

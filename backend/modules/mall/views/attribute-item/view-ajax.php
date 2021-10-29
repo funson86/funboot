@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\enums\YesNo;
-use common\models\mall\AttributeValue as ActiveModel;
+use common\models\mall\AttributeItem as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\AttributeValue */
+/* @var $model common\models\mall\AttributeItem */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Attribute Values'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Attribute Items'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -19,15 +19,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 </div>
 
-<div class="modal-body attribute-value-view">
+<div class="modal-body attribute-item-view">
 
     <?= DetailView::widget([
         'model' => $model,
         'options' => ['class' => 'table table-bordered table-hover box', 'style' => 'table-layout:fixed; width:100%;'],
         'attributes' => [
             'id',
-            'store_id',
-            'attribute_id',
+            ['attribute' => 'store_id', 'value' => function ($model) { return ActiveModel::getStoreIdLabels($model->store_id); }, ],
+            ['attribute' => 'attribute_id', 'value' => function ($model) { return ActiveModel::getAttributeIdLabels($model->attribute_id); }, ],
             'name',
             'brief',
             'type',

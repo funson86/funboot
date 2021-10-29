@@ -1913,7 +1913,13 @@
 }
 
 .btn-attribute {
-    background-color: #FFF !important;
-    color: #000 !important;
+    background-color: #FFF;
+    color: #000;
     border-color: #C9C5C5 !important;
 }
+
+.btn-attribute-white {
+    color: #FFF;
+    border-color: #C9C5C5 !important;
+}
+

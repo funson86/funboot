@@ -50,7 +50,7 @@ use yii\bootstrap\Widget;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @since 2.0
  */
-class Nav extends Widget
+class MallNav extends Widget
 {
     /**
      * @var array list of items in the nav widget. Each array element represents a single
@@ -137,8 +137,8 @@ class Nav extends Widget
         }
 
         $items[] = '<li class="last">
-                        <a target="_blank" href="' . Url::to(['/mall/brand']) . '">品牌大全</a>
-                        <a class="no2" target="_blank" href="' . Url::to(['/mall/product/search']) . '">商品大全</a>
+                        <a target="_blank" href="' . Url::to(['/mall/brand']) . '">' . Yii::t('app', 'All Brands') . '</a>
+                        <a class="no2" target="_blank" href="' . Url::to(['/mall/product/search']) . '">' . Yii::t('app', 'All Products') . '</a>
                     </li>';
         
         return Html::tag('ul', implode("\n", $items), $this->options);

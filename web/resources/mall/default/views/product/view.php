@@ -3,17 +3,20 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use common\helpers\ImageHelper;
-
 use common\models\mall\Category;
+use common\models\mall\Product;
+use common\models\mall\Attribute;
+use common\models\mall\AttributeItem;
+
 $this->registerCssFile($this->context->prefixStatic . '/css/product.css', ['depends' => \frontend\assets\MallAsset::className()]);
 
 
 $arrayPath = Category::getCatalogPath($model->category_id, $allCategory);
 foreach ($arrayPath as $path) {
     $category = Category::findOne($path);
-    $this->params['breadcrumbs'][] = ['label' => $category->name, 'url' => ['/category/view', 'id' => $category->id]];
+    $this->params['breadcrumbs'][] = ['label' => fbt(Category::getTableCode(), $category->id, 'name', $category->name), 'url' => ['/category/view', 'id' => $category->id]];
 }
-$this->params['breadcrumbs'][] = $model->name;
+$this->params['breadcrumbs'][] = fbt(Product::getTableCode(), $model->id, 'name', $model->name);
 
 $countRanksPassed = count($model->ranksPassed);
 $starGoodPercent = $starNormalPercent = $starBadPercent = 0;
@@ -63,9 +66,9 @@ $defaultSelected = [];
     <div class="item-info" id="item-info">
         <dl>
             <dt class="product_name">
-                <h1><?= mb_substr($model->name, 0, 36, 'utf-8') ?></h1>
-                <p> <span class="gray"><?= $model->name ?></span> </p>
-                <p class="desc"> <span class="gray"><?= $model->brief ?></span> </p>
+                <h1><?= mb_substr(fbt(Product::getTableCode(), $model->id, 'name', $model->name), 0, 36, 'utf-8') ?></h1>
+                <!--p> <span class="gray"><?= $model->name ?></span> </p-->
+                <p class="desc"> <span class="gray"><?= fbt(Product::getTableCode(), $model->id, 'brief', $model->brief) ?></span> </p>
             </dt>
             <dd class="property">
                 <ul>
@@ -87,17 +90,17 @@ $defaultSelected = [];
                     <tbody>
                     <?php foreach ($attributes as $attribute) { ?>
                         <tr>
-                            <td><?= $attribute->name ?></td>
+                            <td><?= fbt(Attribute::getTableCode(), $attribute->id, 'name', $attribute->name) ?></td>
                             <td id="attribute-<?= $attribute->id; ?>">
-                                <?php foreach ($attribute->attributeValues as $value) { ?>
-                                    <span id="attribute-value-<?= $value['id']; ?>" data-type="<?= $attribute['type']; ?>" class="btn btn-default btn-sm btn-attribute <?php if (count($attribute->attributeValues) == 1) { array_push($defaultSelected, intval($value->id)); echo 'selected'; } ?>" data-id="<?= $value['id']; ?>" data-name="<?= $value['name']; ?>" data-attribute-id="<?= $attribute->id; ?>" data-attribute-name="<?= $attribute->name; ?>" data-sort="<?= $value['sort']; ?>"><?= $value['name']; ?></span>
+                                <?php foreach ($attribute->attributeItems as $attributeItem) { ?>
 
                                     <?php if ($attribute['type'] == 2) { ?>
-                                        <span class="btn btn-sm selectColor" style="background:<?= strlen($value['label']) > 0 ? '#' . $value['label'] : '#000000'; ?>;padding: 10px" data-href="<?= Url::to(['/site/color', 'value' => $value['label']])?>"></span>
+                                        <span class="btn btn-sm btn-attribute  btn-attribute-white <?php if (count($attribute->attributeItems) == 1) { array_push($defaultSelected, intval($attributeItem->id)); echo 'selected'; } ?>" style="background:<?= strlen($mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] ?? '') > 0 ? '#' . $mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] : '#000000'; ?>;padding: 10px" data-href="<?= Url::to(['/site/color', 'value' => ($mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] ?? '')])?>"><?= $attributeItem['name'] ?></span>
                                     <?php } elseif ($attribute['type'] == 3) { ?>
-                                        <img src="<?= strlen($value['label']) > 0 ? $value['label'] : ImageHelper::get('/resources/images/add-sku.png'); ?>" class="selectImage" href="<?= Url::to(['/file/index', 'boxId' => 'mall', 'upload_type' => 'image'])?>" data-toggle='modal' data-target='#ajaxModalMax'>
+                                        <img src="<?= $mapProductAttributeItemAttributeItemIdLabel[$attributeItem['id']] ?? ImageHelper::get('/resources/images/add-sku.png'); ?>" class="btn btn-default btn-sm btn-attribute <?php if (count($attribute->attributeItems) == 1) { array_push($defaultSelected, intval($attributeItem->id)); echo 'selected'; } ?>" title="<?= fbt(AttributeItem::getTableCode(), $attributeItem['id'], 'name', $attributeItem['name']) ?>">
+                                    <?php } else { ?>
+                                        <span id="attribute-value-<?= $attributeItem['id']; ?>" data-type="<?= $attribute['type']; ?>" class="btn btn-default btn-sm btn-attribute <?php if (count($attribute->attributeItems) == 1) { array_push($defaultSelected, intval($attributeItem->id)); echo 'selected'; } ?>" data-id="<?= $attributeItem['id']; ?>" data-name="<?= $attributeItem['name']; ?>" data-attribute-id="<?= $attribute->id; ?>" data-attribute-name="<?= $attribute->name; ?>" data-sort="<?= $attributeItem['sort']; ?>"><?= fbt(AttributeItem::getTableCode(), $attributeItem['id'], 'name', $attributeItem['name']) ?></span>
                                     <?php } ?>
-
                                 <?php } ?>
                             </td>
                         </tr>

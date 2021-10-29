@@ -8,15 +8,14 @@ use common\models\User;
 use Yii;
 
 /**
- * This is the model base class for table "{{%mall_attribute_value}}" to add your code.
+ * This is the model base class for table "{{%mall_product_attribute_item_label}}" to add your code.
  *
- * @property Attribute $attribute0
+ * @property Product $product
  * @property Store $store
+ * @property AttributeItem $attributeItem
  */
-class AttributeValueBase extends BaseModel
+class ProductAttributeItemLabelBase extends BaseModel
 {
-    public $label;
-
     /**
      * @return array|array[]
      */
@@ -24,8 +23,9 @@ class AttributeValueBase extends BaseModel
     {
         return [
             [['id'], 'safe'],
-            [['attribute_id'], 'exist', 'skipOnError' => true, 'targetClass' => Attribute::className(), 'targetAttribute' => ['attribute_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
+            [['attribute_item_id'], 'exist', 'skipOnError' => true, 'targetClass' => AttributeItem::className(), 'targetAttribute' => ['attribute_item_id' => 'id']],
         ];
     }
 
@@ -39,9 +39,10 @@ class AttributeValueBase extends BaseModel
         return array_merge(parent::attributeLabels(), [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
-            'attribute_id' => Yii::t('app', 'Attribute ID'),
             'name' => Yii::t('app', 'Name'),
-            'brief' => Yii::t('app', 'Brief'),
+            'product_id' => Yii::t('app', 'Product ID'),
+            'attribute_item_id' => Yii::t('app', 'Attribute Item ID'),
+            'label' => Yii::t('app', 'Label'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
@@ -55,9 +56,17 @@ class AttributeValueBase extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAttribute0()
+    public function getProduct()
     {
-        return $this->hasOne(Attribute::className(), ['id' => 'attribute_id']);
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAttributeItem()
+    {
+        return $this->hasOne(AttributeItem::className(), ['id' => 'attribute_item_id']);
     }
 
 }

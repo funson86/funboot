@@ -19,7 +19,7 @@ $this->registerCssFile('@web/css/search.css', ['depends' => \frontend\assets\App
     <div id="search-arrow" class="search-arrow"></div>
 </div>
 <?php } else { ?>
-    <div class="search-selected"> <span class="search-min-nav"> <a href="<?= Yii::$app->urlManager->createUrl(['product/search']) ?>">全部</a> &gt; <a href="<?= Yii::$app->urlManager->createUrl(['product/search', 'keyword' => Yii::$app->request->get('keyword')]) ?>"><?= Yii::$app->request->get('keyword') ?></a> </span> </div>
+    <div class="search-selected"> <span class="search-min-nav"> <a href="<?= Yii::$app->urlManager->createUrl(['/mall/product/search']) ?>">全部</a> &gt; <a href="<?= Yii::$app->urlManager->createUrl(['/mall/product/search', 'keyword' => Yii::$app->request->get('keyword')]) ?>"><?= Yii::$app->request->get('keyword') ?></a> </span> </div>
     <div class="search_items">
         <ul class="cle">
             <?php if (count($products)) { foreach ($products as $item) { ?>

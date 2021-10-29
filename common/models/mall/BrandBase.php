@@ -14,6 +14,13 @@ use Yii;
  */
 class BrandBase extends BaseModel
 {
+    static $tableCode = 2570;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'textarea',
+    ];
+
     /**
      * @return array|array[]
      */

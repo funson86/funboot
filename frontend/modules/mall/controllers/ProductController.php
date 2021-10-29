@@ -4,11 +4,10 @@ namespace frontend\modules\mall\controllers;
 
 use common\models\mall\Attribute;
 use common\models\mall\AttributeSet;
-use common\models\mall\Comment;
 use common\models\mall\Consultation;
 use common\models\mall\Favorite;
 use common\models\mall\Param;
-use common\models\mall\ProductAttributeValueLabel;
+use common\models\mall\ProductAttributeItemLabel;
 use common\models\mall\ProductParam;
 use common\models\mall\ProductSku;
 use common\models\mall\SearchLog;
@@ -86,10 +85,11 @@ class ProductController extends BaseController
             $productSku['attribute_value'] = ArrayHelper::intValue($attributeValueIds, true);
         }
 
-        $productAttributeValueLabels = ProductAttributeValueLabel::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $id])->all();
-        $mapProductAttributeValueIdLabel = ArrayHelper::map($productAttributeValueLabels, 'id', 'label');
-        $mapProductAttributeValueAttributeValueIdLabel = ArrayHelper::map($productAttributeValueLabels, 'attribute_value_id', 'label');
+        $productAttributeItemLabels = ProductAttributeItemLabel::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $id])->all();
+        $mapProductAttributeItemIdLabel = ArrayHelper::map($productAttributeItemLabels, 'id', 'label');
+        $mapProductAttributeItemAttributeItemIdLabel = ArrayHelper::map($productAttributeItemLabels, 'attribute_item_id', 'label');
 
+        // 计算属性
         $attributes = [];
         if ($model->attribute_set_id > 0) {
             $attributeSet = AttributeSet::findOne($model->attribute_set_id);
@@ -97,17 +97,17 @@ class ProductController extends BaseController
                 $attributes = Attribute::find()
                     ->where(['store_id' => $this->getStoreId(), 'id' => ArrayHelper::getColumn($attributeSet->attributeSetAttributes, 'attribute_id')])
                     ->orderBy(['sort' => SORT_ASC])
-                    ->with(['attributeValues' => function ($query) use ($enableValueIds) {
+                    ->with(['attributeItems' => function ($query) use ($enableValueIds) {
                         $query->andWhere(['id' => $enableValueIds]);
                     }])
                     ->all();
-                foreach ($attributes as &$attribute) {
-                    foreach ($attribute->attributeValues as &$attributeValue) {
-                        $attributeValue->label = $mapProductAttributeValueAttributeValueIdLabel[$attributeValue->id] ?? '';
+                /*foreach ($attributes as &$attribute) {
+                    foreach ($attribute->attributeItems as &$attributeValue) {
+                        $attributeValue->label = $mapProductAttributeItemAttributeItemIdLabel[$attributeValue->id] ?? $attributeValue->name;
                     }
                     unset($attributeValue);
                 }
-                unset($attribute);
+                unset($attribute);*/
             }
         }
 
@@ -129,6 +129,7 @@ class ProductController extends BaseController
             'sameRootCategoryProducts' => $sameRootCategoryProducts,
             'historyProducts' => $historyProducts,
             'attributes' => $attributes,
+            'mapProductAttributeItemAttributeItemIdLabel' => $mapProductAttributeItemAttributeItemIdLabel,
             'productSkus' => $productSkus,
             'allParams' => $allParams,
             'mapProductParamIdContent' => $mapProductParamIdContent,

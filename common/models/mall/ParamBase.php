@@ -14,6 +14,13 @@ use Yii;
  */
 class ParamBase extends BaseModel
 {
+    static $tableCode = 2550;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+        'brief' => 'text',
+    ];
+
     /**
      * @return array|array[]
      */

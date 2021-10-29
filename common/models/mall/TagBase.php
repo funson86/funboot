@@ -14,6 +14,12 @@ use Yii;
  */
 class TagBase extends BaseModel
 {
+    static $tableCode = 2560;
+
+    static $mapLangFieldType = [
+        'name' => 'text',
+    ];
+
     /**
      * @return array|array[]
      */

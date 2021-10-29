@@ -4,11 +4,11 @@ use common\helpers\Html;
 use common\helpers\Url;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
-use common\models\mall\AttributeValue as ActiveModel;
+use common\models\mall\AttributeItem as ActiveModel;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\AttributeValue */
+/* @var $model common\models\mall\AttributeItem */
 /* @var $form yii\widgets\ActiveForm */
 
 $form = ActiveForm::begin([
@@ -25,6 +25,7 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
+        <?= $form->field($model, 'store_id')->dropDownList(ActiveModel::getStoreIdLabels()) ?>
         <?= $form->field($model, 'attribute_id')->dropDownList(\common\models\mall\Attribute::getIdLabel()) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>

@@ -8,7 +8,7 @@ $this->title = "所有品牌-家家优品代购海淘商城";
 <div id="wrapper">
 
 <div class="main cle">
-    <div class="search-selected"> <span class="search-min-nav"> <a href="<?= Yii::$app->urlManager->createUrl(['brand/search']) ?>">所有品牌</a> &gt; <a href="<?= Yii::$app->urlManager->createUrl(['product/search', 'keyword' => Yii::$app->request->get('keyword')]) ?>"><?= Yii::$app->request->get('keyword') ?></a> </span> </div>
+    <div class="search-selected"> <span class="search-min-nav"> <a href="<?= Yii::$app->urlManager->createUrl(['brand/search']) ?>">所有品牌</a> &gt; <a href="<?= Yii::$app->urlManager->createUrl(['/mall/product/search', 'keyword' => Yii::$app->request->get('keyword')]) ?>"><?= Yii::$app->request->get('keyword') ?></a> </span> </div>
     <br/>
     <div class="brands_items">
         <ul class="cle">
