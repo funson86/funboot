@@ -85,6 +85,7 @@ class SettingController extends BaseController
       */
     public function actionEditAjaxSave()
     {
+        $storeId = Yii::$app->request->get('store_id', $this->getStoreId());
         $settingTypes = SettingType::find()->all();
         $mapSettingTypeCodeName = ArrayHelper::map($settingTypes, 'code', 'name');
         $mapSettingTypeCodeId = ArrayHelper::map($settingTypes, 'code', 'id');
@@ -99,7 +100,7 @@ class SettingController extends BaseController
                 }
 
                 $model = $this->findModelByField($code, 'code');
-                $model->store_id = Yii::$app->request->get('store_id', $this->getStoreId());
+                $model->store_id = $storeId;
                 $model->app_id = Yii::$app->id;
                 $model->name = $mapSettingTypeCodeName[$code] ?? '';
                 $model->setting_type_id = $mapSettingTypeCodeId[$code] ?? '';
@@ -113,7 +114,7 @@ class SettingController extends BaseController
             }
             $this->afterEditAjaxSave($setting);
 
-            Yii::$app->cacheSystem->clearStoreSetting($this->getStoreId());
+            Yii::$app->cacheSystem->clearStoreSetting($storeId);
             return $this->success();
         }
 
