@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
         let values = $("#form-tab-" + id).serializeObject();
         $.ajax({
             type: "post",
-            url: "<?= Url::to(['edit-ajax-save'])?>",
+            url: "<?= Url::to(['edit-ajax-save', 'store_id' => Yii::$app->request->get('store_id')])?>",
             dataType: "json",
             data: values,
             success: function (data) {

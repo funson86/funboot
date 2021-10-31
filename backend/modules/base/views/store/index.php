@@ -67,13 +67,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'header' => Yii::t('app', 'Actions'),
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{login} {go} {renew} {sub} {edit} {delete}',
+                            'template' => '{login} {go} {setting} {renew} {sub} {edit} {delete}',
                             'buttons' => [
                                 'login' => function ($url, $model, $key) {
                                     return Html::buttonModal(['login', 'id' => $model->id], Yii::t('app', 'Login'), ['class' => 'btn btn-sm btn-success'], false, true);
                                 },
                                 'go' => function ($url, $model, $key) {
                                     return Html::buttonModal(['go', 'id' => $model->id], Yii::t('app', 'Go'), ['class' => 'btn btn-sm btn-info'], false, true);
+                                },
+                                'setting' => function ($url, $model, $key) {
+                                    return Html::edit(['setting/edit-all', 'store_id' => $model->id], Yii::t('app', 'Setting'), ['class' => 'btn btn-sm btn-primary']);
                                 },
                                 'renew' => function ($url, $model, $key) {
                                     return Html::editModal(['edit-renew', 'id' => $model->id], Yii::t('app', 'Renew'), ['class' => 'btn btn-sm btn-success']);

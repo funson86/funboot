@@ -61,11 +61,12 @@ class SettingController extends BaseController
       */
     public function actionEditAll()
     {
+        $storeId = Yii::$app->request->get('store_id', $this->getStoreId());
         $settingTypes = SettingType::find()->where(['status' => SettingType::STATUS_ACTIVE])
             ->andWhere('support_role & ' . Yii::$app->authSystem->getRoleCode() . ' = ' . Yii::$app->authSystem->getRoleCode())
             ->andWhere(['or', 'support_system & 1 = 1', 'support_system & ' . Yii::$app->storeSystem->getRouteCode() . ' = ' .Yii::$app->storeSystem->getRouteCode()])
-            ->with(['setting' => function ($query) {
-                $query->andWhere(['store_id' => $this->getStoreId()]);
+            ->with(['setting' => function ($query) use ($storeId) {
+                $query->andWhere(['store_id' => $storeId]);
             }])
             ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
             ->asArray()
@@ -98,6 +99,7 @@ class SettingController extends BaseController
                 }
 
                 $model = $this->findModelByField($code, 'code');
+                $model->store_id = Yii::$app->request->get('store_id', $this->getStoreId());
                 $model->app_id = Yii::$app->id;
                 $model->name = $mapSettingTypeCodeName[$code] ?? '';
                 $model->setting_type_id = $mapSettingTypeCodeId[$code] ?? '';
