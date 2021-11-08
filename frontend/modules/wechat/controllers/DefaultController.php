@@ -3,6 +3,7 @@
 namespace frontend\modules\wechat\controllers;
 
 use common\helpers\IdHelper;
+use common\models\User;
 use Yii;
 
 /**
@@ -80,5 +81,32 @@ class DefaultController extends BaseController
             'jssdk' => $payment->jssdk, // $app通过上面的获取实例来获取
             'config' => $config
         ]);
+    }
+
+    /**
+     * 测试发送模板消息
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function actionMessage()
+    {
+        $user = User::findOne(7);
+        try {
+            Yii::$app->wechat->app->template_message->send([
+                'touser' => $user->openid,
+                'template_id' => '7VLLGucrV4kfDCbsJdUr2ju7Zl-', // 在公众号后台 / 模板消息 / 我的模板 中找模板ID
+                'url' => 'https://www.funboot.net',
+                'data' => [
+                    'first' => '您好，您已下单成功',
+                    'keyword1' => $user->name,
+                    'keyword2' => '12342',
+                    'keyword3' => date('Y-m-d H:i:s'),
+                    'keyword4' => '商品',
+                    'keyword5' => '12',
+                    'remark' => '感谢您的使用',
+                ],
+            ]);
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+        }
     }
 }
