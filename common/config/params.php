@@ -170,8 +170,13 @@ return [
         // 110 => 'test',
     ],
 
+    // 百度地图 https://lbsyun.baidu.com/apiconsole/key#/home 应用管理 / 我的应用
     'map_baidu_ak' => '',
 
+    // 腾讯地图key https://lbs.qq.com/ 应用管理 / 我的应用
+    'map_qq_key' => '',
+
+    // http://api.fanyi.baidu.com/manage/developer 开发者中心 / 申请信息
     'baiduTranslate' => [
         'appId' => '',
         'appSecret' => '',
