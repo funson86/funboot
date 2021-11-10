@@ -11,7 +11,7 @@ use Yii;
  */
 class DefaultController extends BaseController
 {
-    public $optionalAuth = ['index'];
+    public $optionalAuth = ['index', 'message', 'menu'];
 
     /**
      * Renders the index view for the module
@@ -105,6 +105,26 @@ class DefaultController extends BaseController
                     'remark' => '感谢您的使用',
                 ],
             ]);
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+        }
+    }
+
+    /**
+     * 测试更改公众号菜单
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function actionMenu()
+    {
+        $buttons = [
+            [
+                "type" => "view",
+                "name" => "Funboot",
+                "url"  => "https://www.funboot.net/"
+            ],
+        ];
+        try {
+            Yii::$app->wechat->app->menu->create($buttons);
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
         }
