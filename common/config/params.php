@@ -19,7 +19,10 @@ return [
     'defaultSort' => 50, //默认排序ID
     'defaultFeedbackMessageTypeId' => 7, //默认在线反馈消息ID
     'defaultWebsiteLogo' => '/resources/images/default-logo.png', //默认在线反馈消息ID
-    'defaultWebsiteBanner' => '/resources/images/default-banner.png', //默认在线反馈消息ID
+    'defaultWebsiteBanner' => '/resources/images/default-banner.jpg', //默认banner
+    'defaultWebsiteBannerH5' => '/resources/images/default-banner-h5.jpg', //默认banner h5
+    'defaultAvatar' => '/resources/images/default-avatar.png', //默认商品图
+    'defaultProductImage' => '/resources/images/default-product-image.png', //默认商品图
     'defaultContactAddress' => '7 Wardour St, London W1D 6PE', //默认在线反馈消息ID
     'defaultContactMobile' => '0796 7888 883', //默认在线反馈消息ID
     'defaultLogo' => '/resources/images/default-logo.png', //默认在线反馈消息ID
