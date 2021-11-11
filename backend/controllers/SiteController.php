@@ -369,7 +369,7 @@ class SiteController extends BaseController
         $width = intval(Yii::$app->request->get('width', 300));
         $width > 700 && $width = 700;
 
-        $text = Yii::$app->request->get('text', CommonHelper::getHostPrefix($this->store->host_name));
+        $text = Yii::$app->request->get('text', CommonHelper::getStoreUrl($this->store, Yii::$app->params['storePlatformUrlPrefix']));
         $qrCode = (new QrCode($text))
             ->useEncoding('UTF-8')
             ->setSize($width);
