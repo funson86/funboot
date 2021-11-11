@@ -23,16 +23,27 @@ class StoreSystem extends \yii\base\Component
 {
     public $store;
 
+    /**
+     * @param $store
+     * @return mixed
+     */
     public function set($store)
     {
-        $this->store = $store;
+        return $this->store = $store;
     }
 
+    /**
+     * @return Store
+     */
     public function get()
     {
         return $this->store;
     }
 
+    /**
+     * @param null $storeId
+     * @return Store
+     */
     public function getById($storeId = null)
     {
         if (!$storeId) {
@@ -44,17 +55,25 @@ class StoreSystem extends \yii\base\Component
         return $data[$storeId] ?? $this->store;
     }
 
-
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->store->id ?? Yii::$app->params['defaultStoreId'];
     }
 
+    /**
+     * @return mixed
+     */
     public function getUserId()
     {
         return $this->store->user_id ?? Yii::$app->params['defaultUserId'];
     }
 
+    /**
+     * @return int|mixed
+     */
     public function getRouteCode()
     {
         $data = Yii::$app->params['routeCode'];
