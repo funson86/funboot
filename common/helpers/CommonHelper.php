@@ -91,7 +91,7 @@ class CommonHelper
         !$store && $store = Yii::$app->storeSystem->get();
 
         if ($store->parent_id > 0) {
-            $platformStore = Yii::$app->storeSystem->getById($store->id);
+            $platformStore = Yii::$app->storeSystem->getById($store->parent_id);
             return self::getHostPrefix($platformStore->host_name) . DIRECTORY_SEPARATOR . $urlPrefix . $store->code;
         }
 
