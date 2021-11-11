@@ -158,6 +158,9 @@ return [
         ],
     ],
 
+    // 平台url店名前缀 http://www.funboot/store-aaa
+    'storePlatformUrlPrefix' => 'store-',
+
     'smtp_host' => 'smtp.office365.com',
     'smtp_username' => 'xxx@outlook.com',
     'smtp_password' => '',
