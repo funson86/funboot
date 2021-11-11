@@ -88,7 +88,7 @@ class BaseController extends Controller
         // frontend 需要设置在AccessControl前设置loginUrl，所以要在parent::beforeAction之前
         if (Yii::$app->defaultRoute != 'site') {
             // 设置bbs或其他模块登录地址
-            Yii::$app->user->loginUrl = ['/' . $this->store->route. '/default/login'];
+            Yii::$app->user->loginUrl = ['/' . $this->store->route . '/default/login'];
         }
 
         if (!parent::beforeAction($action)) {
