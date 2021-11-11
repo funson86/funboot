@@ -83,15 +83,16 @@ class CommonHelper
     /**
      * 获取store url，http(s)://www.host_name.com 或者 http(s)://www.host_name.com/mall-aaa
      * @param null $store
+     * @param string $urlPrefix
      * @return string
      */
-    public static function getStoreUrl($store = null)
+    public static function getStoreUrl($store = null, $urlPrefix = 'store-')
     {
         !$store && $store = Yii::$app->storeSystem->get();
 
         if ($store->parent_id > 0) {
             $platformStore = Yii::$app->storeSystem->getById($store->id);
-            return self::getHostPrefix($platformStore->host_name) . DIRECTORY_SEPARATOR . $store->code;
+            return self::getHostPrefix($platformStore->host_name) . DIRECTORY_SEPARATOR . $urlPrefix . $store->code;
         }
 
         return self::getHostPrefix($store->host_name);
