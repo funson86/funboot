@@ -4,6 +4,7 @@ namespace common\helpers;
 
 use common\models\base\Lang;
 use common\models\Store;
+use yii\console\Request;
 use yii\helpers\HtmlPurifier;
 use yii\web\View;
 use Yii;
@@ -105,6 +106,9 @@ class CommonHelper
      */
     public static function getHttpPrefix($suffix = true)
     {
+        if (Yii::$app->request instanceof Request) {
+            return !$suffix ? (str_replace('://', '', Yii::$app->params['httpProtocol'])) : Yii::$app->params['httpProtocol'];
+        }
         return (Yii::$app->request->getIsSecureConnection() ? 'https' : 'http') . ($suffix ? '://' : '');
     }
 
