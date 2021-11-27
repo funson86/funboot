@@ -76,7 +76,6 @@ Funboot开发文档
 - [Easy Wechat](https://github.com/jianyan74/yii2-treegrid): Easy Wechat微信公众号小程序开发
 - [php-simple-html-dom-parser](https://github.com/Kub-AT/php-simple-html-dom-parser): 简单Html Dom分析器，适用要求不高的采集
 - [Workerman](https://github.com/walkor/Workerman): 基于Workerman的Websocket开发，系统提供一个带历史消息的聊天室
-- [Qrcode](https://github.com/2amigos/qrcode-library): 二维码
 - [Pinyin](https://github.com/overtrue/pinyin): 拼音
 - [Treegrid](https://github.com/jianyan74/yii2-treegrid): Yii树状表
 - [yii2-scheduling](https://github.com/omnilight/yii2-scheduling): 定时任务
