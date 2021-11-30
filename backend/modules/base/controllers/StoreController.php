@@ -150,14 +150,15 @@ class StoreController extends BaseController
             $model->loadDefaultValues($post);
             $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
             if (!$model->save()) {
-                Yii::$app->cacheSystem->clearAllStore();
-                Yii::$app->cacheSystem->clearStoreSetting();
                 Yii::$app->logSystem->db($model->errors);
                 return $this->redirectError($this->getError($model));
             } else {
+                Yii::$app->cacheSystem->clearAllStore();
+                Yii::$app->cacheSystem->clearStoreSetting();
                 return $this->redirectSuccess();
             }
         }
+
         $model->expiredTime = date('Y-m-d', ($model->expired_at > 0 ? $model->expired_at : time() + 365 * 86400));
         return $this->renderAjax($this->action->id, [
             'model' => $model,
