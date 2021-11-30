@@ -1,27 +1,27 @@
-系统消息
+Message Component
 -----------
 
-目录
-- 系统日志
-- 使用MongoDb存储日志
+Table of contents
 
-### 简介
+- Description
+- Feedback
 
-系统消息分为公告、提醒、点对点私信、在线反馈，同时可以支持新用户注册时是否发送提醒给新用户。
+### Description
 
-也可以自定义类型，根据需求。
+System Message contains board, notice, private message, feedback. suport weather sending message to new user or not while signup.
 
+You can define new message type.
 
-### 在线反馈
+### Feedback
 
-在线反馈的内容会发送到店铺管理员的消息内容当中。
+Feedback will be sent to store admin message list.
 
-自定义表单，可以参考在线反馈表单
+Define form, refer to feedback form.
 
-- common\models\forms\base\FeedbackForm 注意修改字段和翻译，并重定义KEY_FAILED
-- frontend/views/site/feedback.php 显示表单
+- common\models\forms\base\FeedbackForm Modify field and translation, re-define KEY_FAILED
+- frontend/views/site/feedback.php Show form
 
-在控制器中添加如下代码，即可显示出对应的在线反馈表单
+Add code below in the controller, the feedback will be shown in the browser.
 
 ```php
 

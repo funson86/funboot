@@ -1,9 +1,9 @@
-系统环境
+FAQ
 -------
 
-目录
+Table of contents
 
-- linux下提示无访问权限
+- No write permission in linux
 - 安装或迁移出现 Specified key was too long; max key length is 767 bytes
 - 样式修改后访问没有变化
 - Class 'COM' not found
@@ -11,54 +11,51 @@
 - 网站访问500错误，index.php无法require根目录其他文件
 - Curl访问https://开头的地址错误
 
-### linux下提示无访问权限
+### No write permission in linux
 
-- linux下提示无访问权限
-
-linux默认用www帐号运行，没有权限网runtime目录写文件，修改runtime目录权限
+linux run with www account, no write permission in runtime directory, modify runtime directory permission
 
 ```
 chmod 777 -R runtime
 ```
 
 
-### 安装或迁移出现 Specified key was too long; max key length is 767 bytes
+### Warning: Specified key was too long; max key length is 767 bytes
 
-Funboot默认使用utf8mb4，对出现问题的表修改编码为utf8
+Funboot database use utf8mb4 by default, modify the table to utf8 or change varchar(255) to varchar(192) instead while using the field for indexs.
 
 
-### 样式修改后访问没有变化
+### No change in the frontend after modify the css file
 
-系统会将样式文件发布到assets目录下，删除/web/assets/和/web/backend/assets/下所有文件
-
+The css file will be published in assets directory. Delete all files in /web/assets/ and /web/backend/assets/ after edit.
 
 
 ### Class 'COM' not found
 
-- Windows下才出现，检查php目录ext文件夹下面php_com_dotnet.dll是否存在
+- Only shown in Windows, check the php_com_dotnet.dll file existing in php ext directory.
 
-- 在php.ini结尾添加如下代码，重启php-fpm
+- Add the code below in php.ini, then restart php-fpm
 
 ```
 extension=php_com_dotnet.dll
 ```
 
-- 开始 > 运行 > services.msc 回车 > 确保 COM+ Event System 的服务开启
+- Start > Run > services.msc > Confirm COM+ Event System service running
 
 ### com() has been disabled for security reasons
 
-在php.ini中注释掉disable_classes，重启php-fpm
+Comment the disable_classes in php.ini, then restart php-fpm
 
 ```
 ; disable_classes = COM
 ```
 
 
-### 网站访问500错误，index.php无法require根目录其他文件
+### Access website return 500, index.php cannot require root directory and other file
 
-由于指定/www/funboot/web目录，/www/funboot/web/.user.ini的路径默认为当前路径，对于项目根路径其他文件无法require
+While index.php is in /www/funboot/web directory, config /www/funboot/web/.user.ini is current directory by default. so index.php cannot require other php file in the root directory. 
 
-修改.user.ini，将另/www/funboot/web修改为/www/funboot
+Edit .user.ini file, change /www/funboot/web to /www/funboot
 
 ```
 # chattr -i .user.ini
@@ -69,11 +66,11 @@ open_basedir=/www/funboot:/tmp/:/proc/
 # chattr +i .user.ini
 ```
 
-### Curl访问https://开头的地址错误
+### curl url started with https:// error
 
-下载证书https://curl.haxx.se/ca/cacert.pem，下载后比如放到c:\路径下
+download CA file of https://curl.haxx.se/ca/cacert.pem to c:\ directory
 
-在php.ini中开启ca
+Enabel ca in php.ini 
 
 ```
 [curl]
@@ -82,4 +79,4 @@ open_basedir=/www/funboot:/tmp/:/proc/
 curl.cainfo =c:\cacert.pem
 ```
 
-重启php-fpm或者面板
+Restart php-fpm or admin panel.

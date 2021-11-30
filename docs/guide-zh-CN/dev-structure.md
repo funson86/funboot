@@ -9,7 +9,7 @@
 │   │   ├── BaseController.php
 │   │   └── SiteController.php
 │   ├── models 模型，一般继承common/models下的模型
-│   ├── modules 依赖如工具类
+│   ├── modules 模块
 │   │   ├── base Funboot基础功能模块
 │   │   │   ├── controllers 控制器目录
 │   │   │   ├── views 视图目录
@@ -58,9 +58,8 @@
 │   ├── config 配置目录
 │   ├── helpers 工具类，类似Yii的Helpper，一般都为static静态函数
 │   ├── mails 邮件相关
-│   ├── helpers 工具类
 │   ├── job 队列任务
-│   ├── models 工具类
+│   ├── models 模型类
 │   │   ├── BaseModel.php 基本模型类，所有的Funboot模型类均继承该类
 │   │   ├── base 基础模块
 │   │   │   ├── UserModel Gii生成，数据库有变动时可直接覆盖
@@ -81,6 +80,34 @@
 │   │   ├── cache 缓存文件，清除缓存可以直接删除该目录下的文件和目录
 │   │   └── logs 日志
 │
+├── backend 前台目录
+│   ├── assets 资源类目录
+│   ├── config 配置目录
+│   ├── controllers 控制器目录
+│   │   ├── BaseController.php 基础控制器，提供通用的控制方法
+│   │   └── SiteController.php 登录控制相关
+│   ├── models 模型，一般继承common/models下的模型
+│   ├── modules 依赖如工具类
+│   │   ├── base Funboot基础功能模块
+│   │   │   ├── controllers 控制器目录
+│   │   │   ├── views 视图目录
+│   │   │   └── Module.php 模块入口文件
+│   │   ├── pay ** Funpay 个人收款支付系统 **
+│   │   │   ├── controllers
+│   │   │   ├── views
+│   │   │   └── Module.php
+│   │   └── school 其他目录属于自定义功能模块
+│   │       ├── controllers 控制器目录
+│   │       ├── views 视图目录
+│   │       └── Module.php 模块入口文件
+│   ├── runtime 运行相关目录，存储程序运行时的日志、缓存等
+│   │   ├── cache 缓存文件，清除缓存可以直接删除该目录下的文件和目录
+│   │   └── logs 日志
+│   ├── tests 测试目录
+│   └── views 视图目录
+│       ├── layout 布局文件
+│       └── site SiteController默认视图文件
+│
 ├── web 网站可访问目录
 │   ├── attachment 上传文件
 │   ├── backend
@@ -95,9 +122,9 @@
 - modules/base/controller 基本功能类在这个模块目录下
 - modules/your/controller 自定义模块，可以用[Gii](gii.md)生成
 
-如果是开发小型项目可以直接写在backend/controllers中，如果是大型项目则使用
+使用模块，如果是开发小型项目也可以直接写在backend/controllers中，不推荐
 
 - /common/components 组件目录，集成到代码中，可以提供Controller直接访问
 - /common/helpers 公共方法目录，函数都是static，helper一般不与数据库交互
-- /common/services 服务，一般有缓存或者队列操作，需要在启动时加载一些数据
+- /common/services 服务，model升级版，多个表的查询
 - /common/widgets 可重用的小部件，一般会渲染html嵌入到其他代码中，一般不提供Controller访问

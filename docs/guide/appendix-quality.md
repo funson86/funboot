@@ -4,18 +4,18 @@
 
 ### Codesniffer
 
-PHP代码嗅探器
+PHP Code sniffer
 
 
 
 ### phpcpd
 
-重复代码检测器
+Prompt duplicate code.
 
 
 ### phing
 
-构建工具
+Project build system or build tool
 
 ### jenkins
 

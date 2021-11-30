@@ -1,5 +1,6 @@
-约定优先配置
+Convention priority over config
 -----------
+
 目录
 
 - 子系统关键字约定

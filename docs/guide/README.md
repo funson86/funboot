@@ -26,7 +26,7 @@ Documents
 * [I18n & Auto translation](dev-lang.md)：Multiple language & automatically translation
 * [Common Code](dev-view.md)
 * [Acceptance test](dev-test.md)：Optimize system without full testing 
-* [Schedule](dev-schedule.md)
+* [Schedule Task](dev-schedule.md)
 * [Websocket](dev-websocket.md)
 
 
@@ -43,7 +43,7 @@ Documents
 * [FunPay Personal Pay System](https://github.com/funson86/funpay) Demo：[https://funpay.funboot.net/](https://funpay.funboot.net/)
 * [FunCms Cms System](https://github.com/funson86/funcms) Demo：[https://funcms.funboot.net/](https://funcms.funboot.net/)  [Templates](https://github.com/funson86/funcms)
 * [FunBBS BBS System](https://github.com/funson86/funbbs) Demo：[https://funbbs.funboot.net/](https://funbbs.funboot.net/)  [Docs](https://github.com/funson86/funbbs)
-* [FunMall Mall System](https://github.com/funson86/funbbs) Demo：[https://funmall.funboot.net/](https://funmall.funboot.net/)  [Docs&Templates](https://github.com/funson86/funmall)
+* [FunMall Mall System](https://github.com/funson86/funmall) Demo：[https://funmall.funboot.net/](https://funmall.funboot.net/)  [Docs&Templates](https://github.com/funson86/funmall)
 * [FunChat Chat Room](https://github.com/funson86/yii2-websocket) Demo：[https://chat.funboot.net/](https://chat.funboot.net/)  [Docs](https://github.com/funson86/yii2-websocket)
 
 
@@ -78,7 +78,7 @@ Appendix
 - [Workerman](https://github.com/walkor/Workerman): Websocket based on Workerman, provide a chat room with history message
 - [Pinyin](https://github.com/overtrue/pinyin): Chinese pinyin
 - [Treegrid](https://github.com/jianyan74/yii2-treegrid): Yii Tree grid
-- [yii2-scheduling](https://github.com/omnilight/yii2-scheduling): Scheduling
+- [yii2-scheduling](https://github.com/omnilight/yii2-scheduling): Schedule Task
 - [Swagger](https://github.com/zircote/swagger-php): Api Swagger
 - [Qrcode](https://github.com/2amigos/qrcode-library): [Docs](https://qrcode-library.readthedocs.io/en/latest/)
 - [IconPicker](https://github.com/itsjavi/fontawesome-iconpicker): fontawesome icon picker

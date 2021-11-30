@@ -1,10 +1,10 @@
-安全
+Security
 ---
 
 
-### SQL注入
+### SQL Injection
 
-### CSRF攻击
+### CSRF
 
 ### XSS
 

@@ -13,9 +13,7 @@
 
 ### linux下提示无访问权限
 
-- linux下提示无访问权限
-
-linux默认用www帐号运行，没有权限网runtime目录写文件，修改runtime目录权限
+linux默认用www帐号运行，没有权限往runtime目录写文件，修改runtime目录权限
 
 ```
 chmod 777 -R runtime
@@ -56,9 +54,9 @@ extension=php_com_dotnet.dll
 
 ### 网站访问500错误，index.php无法require根目录其他文件
 
-由于指定/www/funboot/web目录，/www/funboot/web/.user.ini的路径默认为当前路径，对于项目根路径其他文件无法require
+由于index.php在/www/funboot/web目录下，/www/funboot/web/.user.ini的路径默认为当前路径，对于项目根路径其他文件无法require
 
-修改.user.ini，将另/www/funboot/web修改为/www/funboot
+修改.user.ini，将/www/funboot/web修改为/www/funboot
 
 ```
 # chattr -i .user.ini

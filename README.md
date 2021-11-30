@@ -1,71 +1,74 @@
 
-# Funboot——基于Yii2的Saas快速开发平台
+# Funboot —— An agile SaaS develop platform based on Yii
 
-Funboot是一个一站式Saas快速开发平台，基于Yii 2.0框架，提供代码生成器，提供通用组件帮助开发者聚焦业务，并提供多域名、多商户支持。
+Funboot is an agile Saas develop platform based on Yii 2.x, provides common component to help developer focusing on business, support multiple domain, multiple subsystem, multiple store.
 
-### 问题反馈
+[EN Docs](https://github.com/funson86/funboot/blob/master/README.md) &nbsp;&nbsp;&nbsp;&nbsp;
+[中文文档](https://github.com/funson86/funboot/blob/master/README_zh-CN.md)
 
-在使用中有任何问题，欢迎在QQ群众反馈 QQ群：[798843502](https://jq.qq.com/?_wv=1027&k=OZ8X3qjK)
+### Feedback
 
-
-### 在线Demo
-
-* [Funboot开发平台](https://github.com/funson86/funboot) 演示地址：[https://www.funboot.net/backend/](https://www.funboot.net/backend/) test 123456
-* [FunPay个人收款系统](https://github.com/funson86/funpay) 演示地址：[https://funpay.funboot.net/](https://funpay.funboot.net/)
-* [FunCms建站系统](https://github.com/funson86/funcms) 演示地址：[https://funcms.funboot.net/](https://funcms.funboot.net/)  [网站模板](https://github.com/funson86/funcms)
-* [FunBBS论坛系统](https://github.com/funson86/funbbs) 演示地址：[https://funbbs.funboot.net/](https://funbbs.funboot.net/)  [说明](https://github.com/funson86/funbbs)
-* [FunMall商城系统](https://github.com/funson86/funbbs) 演示地址：[https://funmall.funboot.net/](https://funmall.funboot.net/)  [说明&模板](https://github.com/funson86/funmall)
-* [FunChat聊天室](https://github.com/funson86/yii2-websocket) 演示地址：[https://chat.funboot.net/](https://chat.funboot.net/)  [说明&模板](https://github.com/funson86/yii2-websocket)
+Any question pls add issue on github：[Funboot Issues](https://github.com/funson86/funboot/issues)
 
 
-### 快速安装
+### Demo
 
-https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/start-installation.md
-
-
-### 在线开发文档
-
-https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md  [安装视频](https://www.bilibili.com/video/BV1kP4y1t7ky/)
-
-### 系列视频
-
-- [安装视频](https://www.bilibili.com/video/BV1kP4y1t7ky)
-- [Gii使用](https://www.bilibili.com/video/BV1vq4y1d7WU)
-- [Gii代码解析](https://www.bilibili.com/video/BV18P4y1t7ub)
-- [后台功能介绍](https://www.bilibili.com/video/BV1BP4y1t7q2)
-- [后台代码解析](https://www.bilibili.com/video/BV1j34y1S7Bn)
-- [Saas开发管理](https://www.bilibili.com/video/BV1eQ4y1B7LK)
+* [Funboot](https://github.com/funson86/funboot) Demo：[https://funpay.funboot.net/backend/](https://https://funpay.funboot.net/backend/) test 123456
+* [FunPay Personal Pay System](https://github.com/funson86/funpay) Demo：[https://funpay.funboot.net/](https://funpay.funboot.net/)
+* [FunCms Cms System](https://github.com/funson86/funcms) Demo：[https://funcms.funboot.net/](https://funcms.funboot.net/)  [Templates](https://github.com/funson86/funcms)
+* [FunBBS BBS System](https://github.com/funson86/funbbs) Demo：[https://funbbs.funboot.net/](https://funbbs.funboot.net/)  [Docs](https://github.com/funson86/funbbs)
+* [FunMall Mall System](https://github.com/funson86/funmall) Demo：[https://funmall.funboot.net/](https://funmall.funboot.net/)  [Docs&Templates](https://github.com/funson86/funmall)
+* [FunChat Chat Room](https://github.com/funson86/yii2-websocket) Demo：[https://chat.funboot.net/](https://chat.funboot.net/)  [Docs](https://github.com/funson86/yii2-websocket)
 
 
-### Funboot开发平台特色
+### Installation
 
-> 除了传统的开发平台常用功能外，内置不同域名的store，通过指定不同的子系统完成不同类型的项目都可以在Funboot中兼容的情况。
-> 也可以对不同的域名使用相同类型的项目，那么就变成了普通的Saas系统。
+https://github.com/funson86/funboot/blob/master/docs/guide/start-installation.md
 
-- [x] Saas系统：内置多个子系统，支持自定义域名，单域名代码切换店铺
 
-- [x] 快速开发：功能强大简洁易懂的代码和目录结构，后台集中控制
+### Docs
 
-- [x] 代码生成器：提供Funboot Gii代码生成器，快速生成后台页面 [文档](docs/guide-zh-CN/dev-gii.md)
+https://github.com/funson86/funboot/blob/master/docs/guide/README.md  [Installation Video](https://www.bilibili.com/video/BV1kP4y1t7ky/)
 
-- [x] RBAC权限管理：多维度动态权限管理，多角色以及部门，支持菜单、数据动态管理 [文档](docs/guide-zh-CN/dev-rbac.md)
+### Video
 
-- [x] 多语言 & 自动翻译：单张翻译表轻松支持多语言，配置key即可完成自动翻译 [文档](docs/guide-zh-CN/dev-lang.md)
+- [Installation Video](https://www.bilibili.com/video/BV1kP4y1t7ky)
+- [Gii Usage](https://www.bilibili.com/video/BV1vq4y1d7WU)
+- [Gii Code Rule](https://www.bilibili.com/video/BV18P4y1t7ub)
+- [Backend Introduction](https://www.bilibili.com/video/BV1BP4y1t7q2)
+- [Backend Code Explain](https://www.bilibili.com/video/BV1j34y1S7Bn)
+- [Saas Developing](https://www.bilibili.com/video/BV1eQ4y1B7LK)
 
-- [x] 丰富系统组件：一站式开发平台，提供通用业务组件
 
-- [x] Api: Restful Api， Oauth2等
+### Funboot Feature
+
+> Expect as a normal platform, Funboot support developing as a Saas system with build-in stores and subsystems.
+> If same subsystem with different domain names, it becomes an ordinary SaaS system
+
+- [x] Saas： Build-in multiple subsystem, support multiple domain, or as a platform in one domain
+
+- [x] Rapid Development：Powerful, concise and easy to understand directory structure.
+
+- [x] Code Generator：Provide Funboot Gii code generator, generate backend page quickly [Docs](docs/guide/dev-gii.md)
+
+- [x] RBAC Role ： Multiple dimension auth management, multiple role and department, support permission and data management dynamically [Docs](docs/guide/dev-rbac.md)
+
+- [x] I18n & Auto translation： Support multiple language. automatically translate after config the key. [Docs](docs/guide/dev-lang.md)
+
+- [x] Abundant Component
+
+- [x] Api: Restful Api, Oauth2, etc
 
 - [x] 日志管理：操作日志、登录日志、错误日志、数据库自定义日志、控制台日志、邮件日志等
 
-- [x] 定时任务：后台可视化管理定时任务
+- [x] Schedule Task：Manage on time executing task in the backend
 
-- [x] 数据字典、Echart图表等
+- [x] Dict Data, Echart, etc
 
-- [x] 验收测试：优化系统代码变更无需一个个检查
+- [x] Acceptance test
 
 
-### 系统快照
+### Snapshot
 
 ![funboot-01.png](https://i.loli.net/2021/09/27/65SqdB71gAuWtPU.png)
 ![funboot-03.png](https://i.loli.net/2021/09/27/gxWGJzbOXLK7y4V.png)

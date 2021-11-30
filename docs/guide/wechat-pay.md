@@ -1,12 +1,12 @@
-微信支付
+Wechat Pay
 ------
 
 微信支付的发起是使用EasyWechat组件，接收通知使用Onmipay组件
 
 
-### 控制器和视图
+### Controller & View
 
-参考frontend\modules\wechat\controllers\DefaultController.php的actionPay，生成订单后发起
+Refer to actionPay in frontend\modules\wechat\controllers\DefaultController.php, after order generated
 
 ```php
         $orderData = [

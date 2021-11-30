@@ -1,24 +1,24 @@
-定时任务
+Schedule Task
 -----------
 
-> 注意需要在Linux环境下运行，且让PHP的system函数取消禁用
+> Note: In linux, the system function must be enable in php.ini
 
 
-Funboot可以在后台管理定时任务，默认有一条数据库备份的定时任务每天凌晨三点执行
+Funboot support add scheduling task in the backend. There is a database backup task executing at 3:00 am every day by default.
 
 ![](images/schedule-01.png)
 
 
-在系统的crontab中增加一条定时程序
+Add code below in crontab
 
 ```
 * * * * * php /www/funboot/yii yii schedule/run --scheduleFile=/www/funboot/runtime/schedule/schedule.php 1>> /dev/null 2>&1
 ```
 
 
-默认路径在common/config/params.php中配置，可修改路径重新生成，crontab也需要一并修改
+The schedule file can be changed in common/config/params.php. It should be changed in crontab both.
 ```php
-    // 定时任务存储路径
+    // file path of schedule task
     'scheduleFile' => '@console/runtime/schedule/schedule.php',
 ```
 
@@ -37,6 +37,6 @@ Linux
 ```
 
 
-### 参考
+### References
 
-- [yii2-scheduling](https://github.com/omnilight/yii2-scheduling): 定时任务
+- [yii2-scheduling](https://github.com/omnilight/yii2-scheduling): Schedule Task

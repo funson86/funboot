@@ -3,7 +3,7 @@ I18n Internationalization
 
 ### Unite Language file
 
-All language file are mapping to common/messages, 应用下自定义的标签写到对应的应用文字中，如frontend应用自定义标签写到common/messages/frontend.php中，使用Yii::t('frontend', 'Your Label');
+All language file are mapping to common/messages, write labels to corresponding app file, for example frontend label write in common/messages/frontend.php, use Yii::t('frontend', 'Your Label');
 
 Constant label in cons.php, eg: STATUS_ACTIVE
 

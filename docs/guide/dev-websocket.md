@@ -1,17 +1,17 @@
-WebSocket - 带历史消息的聊天室
+WebSocket - Chat room with history message
 ------
 
-以一个带历史消息的简单聊天室演示如何结合Yii2和Workerman使用Websocket以及和数据库交互。主体代码参考[Workerman 官方聊天室](https://www.workerman.net/workerman-chat)
+A Demo of chat room with history message show how to interact with websocket and mysql by using Yii2 and Workerman. Most code refer to [Workerman official Chat Room](https://www.workerman.net/workerman-chat)
 
-### 演示地址
+### Demo
 
 - https://chat.funboot.net/
 
-### 启动
+### Running
 
-Windows下双击console\modules\chat\chat.bat
+Windows: Double click console\modules\chat\chat.bat
 
-Linux 下执行
+Linux: Run command
 
 ```
 # php yii chat/server start -d
@@ -26,28 +26,28 @@ tcp     root            ChatBusinessWorker    none                         4    
 ---------------------------------------------------------------------------------------------------------
 Input "php yii chat/server stop" to stop. Start success.
 
-# php yii chat/server stop // 停止
-# php yii chat/server stop -g  //优雅停止 
+# php yii chat/server stop // Stop
+# php yii chat/server stop -g  // Stop gracefully 
 
-# php yii chat/server restart -d //重启 
-# php yii chat/server reload -d //重启（重新加载执行代码，不加载配置） 
+# php yii chat/server restart -d // Restart 
+# php yii chat/server reload -d // Reload (Reload executing code without config) 
 
-# php yii chat/server status  //查询状态
-# php yii chat/server connections  //连接
+# php yii chat/server status  // query status
+# php yii chat/server connections  // query connnections
 
 ```
 
-前端启动创建一个store route 为chat，浏览器直接访问网站
+Creat an store with route chat in the backend. then access website by browser
 
-### 运行效果
+### Snapshot
 
 ![](https://github.com/funson86/yii2-websocket/blob/master/images/websocket-chat-room.png?raw=true)
 
-/backend/chat/log/index 在后台访问所有的聊天记录
+/backend/chat/log/index The url to access history message 
 
-### 实现说明
+### Explain
 
-composer.json中添加 workerman 和 gateway-worker，然后composer update。单独使用workerman也可以，不过要实现网关的功能比较繁琐，直接使用gateway-worker简化网关功能。
+Add workerman and gateway-worker in composer.json, then run "composer update". This use gateway-worker to complete the gateway function, you can complete the gateway yourself if you do not want use workerman gateway.
 
 ```
       "workerman/workerman": "^4.0",
@@ -55,35 +55,35 @@ composer.json中添加 workerman 和 gateway-worker，然后composer update。�
 ```
 
 
-配置在console\config\params.php中，主要是端口进程配置
+Config port and process in console\config\params.php
 
 ```php
     'chat' => [
         'gateway' => [
             'server' => '0.0.0.0',
             'port' => '7272',
-            'lanIp' => '127.0.0.1', // 分布式部署时请设置成内网ip（非127.0.0.1）
-            'count' => 4, //进程数，gateway进程数建议与cpu核数相同
+            'lanIp' => '127.0.0.1', // distributed pls config intranet iP（not 127.0.0.1）
+            'count' => 4, // process count，should be equal to cpu core count
         ],
         'register' => [
-            'server' => '127.0.0.1', // 分布式部署时请设置成内网ip（非127.0.0.1）
+            'server' => '127.0.0.1', // distributed pls config intranet iP（not 127.0.0.1）
             'port' => '1236',
         ],
         'businessworker' => [
-            'count' => 4, //进程数，gateway进程数建议与cpu核数相同
+            'count' => 4, // process count，should be equal to cpu core count
         ],
     ]
 ```
 
-业务代码实现在console\modules\chat\services\Events.php中，主要完成onMessage和onClose函数。将用户聊天消息插入表中，登录时返回最近5条历史消息
+Business code is in console\modules\chat\services\Events.php, complete onMessage and onClose function. Insert use message to database, return the lastest 5 message after use login.
 
-### Mysql长连接
+### Mysql persistent connection
 
-console如果不活跃的情况下访问数据库容易出现 “Mysql go away”，连接长时间没交互可能会断掉
+"Mysql go away" will be returned by Mysql to the client of console for a long time without interaction, for Msyql server will disconnect the client. 
 
-使用console\components\Connection 代替yii\db\Connection，在查询前先会判断是否连接是否可用
+Use console\components\Connection instead of yii\db\Connection, it will check the connection active or not before operation.
 
-在console\config\main.php中配置指定类和长连接，在Connection中$attributes = [PDO::ATTR_PERSISTENT => true];指定长连接。
+Config in console\config\main.php, The code $attributes = [PDO::ATTR_PERSISTENT => true] specify persistent connection in Connection
 
 ```php
         'db' => [
@@ -91,11 +91,12 @@ console如果不活跃的情况下访问数据库容易出现 “Mysql go away�
         ],
 ```
 
-### WSS安全连接
+### WSS Security Connection
 
-如果前端网站是https，会要求使用安全的wss。提示：
+If the frontend website use https, it requires wss.
 
-修改nginx的https配置，将/wss指向
+Modify config in nginx, let /wss to proxy
+
 ```
 server
     {
@@ -105,7 +106,7 @@ server
 
         location /wss {
              #access_log /usr/share/nginx/logs/https-websocket.log;
-             proxy_pass http://127.0.0.1:7272/; # 代理到上面              
+             proxy_pass http://127.0.0.1:7272/; # proxy              
              proxy_set_header X-Real-IP $remote_addr;
              proxy_set_header Host $host;
              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -118,13 +119,13 @@ server
     }
 ```
 
-修改前端链接地址如web/resources/chat/default/views/default/index.php
+Modify the address in web/resources/chat/default/views/default/index.php of frontend.
 
 ```js
 ws = new WebSocket("wss://"+document.domain+"/wss");
 ```
 
-### 参考
+### References
 
-- [Workerman 官方聊天室](https://www.workerman.net/workerman-chat)
-- [简单的Yii Websocket](https://github.com/funson86/yii2-websocket)
+- [Workerman official Chat Room](https://www.workerman.net/workerman-chat)
+- [Simple Yii Websocket](https://github.com/funson86/yii2-websocket)

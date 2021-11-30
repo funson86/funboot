@@ -14,10 +14,6 @@
 
 > 详细请查看[系统环境](start-env.md)，快速运行环境推荐[宝塔面板](https://www.bt.cn/)
 
-- PHP >= 7.3
-- Mysql建议5.7.x
-- [Composer](https://getcomposer.org/download/)
-
 ### 系统安装
 
 1、Git克隆代码，或者直接下载[Funboot代码Zip包](https://github.com/funson86/funboot/archive/master.zip)

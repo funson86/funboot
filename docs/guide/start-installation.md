@@ -1,52 +1,48 @@
-系统安装
+Installation
 -------
 
-目录
+Table of contents
 
-- 系统环境要求
-- 系统安装
-- 系统配置
-- 系统运行 & 体验
-- 常见问题
+- Requirement
+- Installation
+- System Setting
+- System running
+- FAQ
 
 
-### 系统环境要求
+### Requirement
 
-> 详细请查看[系统环境](start.env)，快速运行环境推荐[宝塔面板](https://www.bt.cn/)
+> Please view [Environment](start-env.md), Recomend [BT](https://www.bt.cn/) for startup quickly.
 
-- PHP >= 7.3
-- Mysql建议5.7.x
-- [Composer](https://getcomposer.org/download/)
+### Installation
 
-### 系统安装
-
-1、Git克隆代码，或者直接下载[Funboot代码Zip包](https://github.com/funson86/funboot/archive/master.zip)
+1、Git clone repository, or download [Funboot Zip](https://github.com/funson86/funboot/archive/master.zip)
 
 ```
 git clone https://github.com/funson86/funboot funboot
 ```
 
-2、进入funboot目录，如果直接下载代码包改名字并从控制台进入目录
+2、Change directory to funboot, change directory if downloaded zip file. 
 
 ```
 cd funboot
 ```
 
-3、安装系统依赖
+3、Composer to install vendors.
 
 ```
 composer install 
 ```
 
-4、初始化项目
+4、Init the project
 
 ``` 
-php init // 然后输入0选择开发模式回车,再输入yes回车
+php init // Enter 0 for develop mode, then enter yes and press enter again
 ```
 
-5、配置数据库信息（Mysql5.7.x，需要先创建好数据库）
+5、Config database information (Mysql5.7.x, need create database first with utf8mb4 and utf8mb4_unicode_ci)
 
-common/config/main-local.php 修改数据库相关信息
+Edit in common/config/main-local.php 
 
 ``` 
         'db' => [
@@ -62,31 +58,31 @@ common/config/main-local.php 修改数据库相关信息
         ],
 ```
 
-6、导入数据库数据
+6、Migrate data to database
 
 ``` 
 php yii migrate/up
 ```
 
-以上导入的为基础版的funboot开发平台
+The command above migrate basic funboot data.
 
-其他子系统的执行脚本
+Other subsytem command below
 
 ```
-php yii migrate-pay/up  // 支付
-php yii migrate-cms/up  // CMS网站
-php yii migrate-bbs/up  // 论坛
-php yii migrate-mall/up  // 商城
-php yii migrate-chat/up  // 聊天室
+php yii migrate-pay/up  // pay
+php yii migrate-cms/up  // CMS
+php yii migrate-bbs/up  // bbs
+php yii migrate-mall/up  // mall
+php yii migrate-chat/up  // chat room
 ```
 
-### 系统配置
+### System Setting
 
-> 以下为Nginx下的配置，Apache的伪静态已经在系统.htaccess中配置好
+> The config is in .htaccess file for Apache, The code below is for Nginx
 
-Nginx在配置文件中将目录指向 /path/to/funboot/web ，然后设置好伪静态
+Config the root directory to /path/to/funboot/web in Nginx, then config the rewrite
 
-以下为主要配置供参考
+Refer to the config below
 
 ```
 server
@@ -96,7 +92,7 @@ server
         index index.html index.htm index.php default.html default.htm default.php;
         root  /path/to/funboot/web;
     
-        # 伪静态配置
+        # rewrite
         location / {
             # Redirect everything that isn't a real file to index.php
             try_files $uri $uri/ /index.php$is_args$args;
@@ -118,40 +114,40 @@ server
     }
 ```
 
-### 系统运行
+### System running
 
-在hosts文件中的www.funboot.com指向127.0.0.1
+Edit the hosts file adding www.funboot.com to 127.0.0.1
 
-使用浏览器通过如下 URL 访问刚安装完的 Yii 应用了：
+Access the URL below in a browser(Chrome) to view the funboot website：
 
 ```
-http://www.funboot.com/  前端
-http://www.funboot.com/backend  后台  默认帐号：admin 密码：123456
+http://www.funboot.com/  frontend
+http://www.funboot.com/backend  backend  username: admin pwd：123456
 http://www.funboot.com/api api
 ```
 
-> http://www.funboot.com/ 默认页面是和Yii2原本类似的页面，在系统后台》系统管理》店铺管理，对域名www.funboot.com编辑，修改子系统为支付
-> 刷新前端页面，系统会默认显示成FunPay个人收款支付系统https://funpay.funboot.net/
+> http://www.funboot.com/ default page is like yii2 default page. test Management -> System Setting -> Store to edit www.funboot.com subsystem to funpay in the backend. 
+> Refresh the frontend then it chage to funpay like https://funpay.funboot.net/
 
 ![](images/installation-09.png)
 
-### Crontab Shell脚本 & 定时任务
+### Crontab Shell & Scheduling
 
-系统内置的shell脚本在 console/shell/ 目录中
+Some shell in script console/shell/ directory
 
-- queue.sh 监控队列
-- mysqlbackup.sh 备份数据库
+- queue.sh  // listening queue
+- mysqlbackup.sh // backup mysql database
 
-建议拷贝queue.sh为queue-local.sh，写入到crontab中。
+Copy queue.sh to queue-local.sh then write queue-local.sh in crontab.
 
-定时任务：
+Scheduling:
 
 ```
 /usr/bin/php /www/funboot/yii schedule/run --scheduleFile=/www/funboot/console/runtime/schedule/schedule.php  1>> /dev/null 2>&1
 ```
 
-### 常见问题
+### FAQ
 
-请参考[常见问题](start-faq.md)
+[FAQ](start-faq.md)
 
 

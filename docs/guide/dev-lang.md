@@ -1,13 +1,13 @@
-多语言 & 自动翻译
+I18n & Auto translation
 -----------
 
-Funboot将多语言数据存储在fb_base_lang表中，通过对每个需要加多语言的表进行编号，放在一个表中也有利于数据自动翻译。
+Funboot save all language translation in fb_base_lang table, and complete auto-translate to this table。
 
-开启自动翻译默认会将源语言翻译成指定的多国语音，默认使用百度翻译，需要修改翻译方式覆盖autoTranslate函数即可。
+Enable Auto Translation in the  backend will translate source language to specified language, use Baidu Translator by default. If use other translator need to modify autoTranslate function.
 
-### Model部分
+### Model
 
-指定tableCode，必须整个项目唯一，建议与fb_base_permission中的ID前缀保持一致
+Specify tableCode, must be unique in project, you can use fb_base_permission ID for project table code
 
 ```php
     static $tableCode = 5001;
@@ -19,18 +19,18 @@ Funboot将多语言数据存储在fb_base_lang表中，通过对每个需要加�
     ];
 ```
 
-### 控制器
+### Controller
 
-指定$isMultiLang为真
+Edit $isMultiLang as true
 
 ```php
     public $isMultiLang = true;
 ```
 
 
-### 后台添加view
+### View file
 
-在view的edit.php中加入如下代码，支持text、textarea、Ueditor、markdown格式，需要支持其他格式实现这一段代码即可
+Add code below to edit.php in view directory, support text、textarea、Ueditor、markdown, other format need to change code here.
 
 ```
                     <?php if ($this->context->isMultiLang) { ?>
@@ -130,29 +130,30 @@ Funboot将多语言数据存储在fb_base_lang表中，通过对每个需要加�
                     <?php } ?>
 ```
 
-### 前端使用多语言
+### Frontend
 
-在controller中可以使用
+In controller
+
 ```php
 fbt(Catalog::getTableCode(), $model->id, 'name', $model->name);
 
-// 也可以使用
+// or use this function
 $this->getLang(Catalog::getTableCode(), $model->id, 'name', $model->name, Yii::$app->language);
 ```
 
-在view中可以使用
+In view
 
 ```php
 fbt(Catalog::getTableCode(), $model->id, 'name', $model->name, Yii::$app->language);
 
-// 也可以使用
+// or use this function
 $this->context->getLang(Catalog::getTableCode(), $model->id, 'name', $model->name, Yii::$app->language);
 ```
 
 
-### 自动翻译
+### Auto translation
 
-在common/config/params-local.php文件中增加百度翻译的key，请到https://fanyi-api.baidu.com/ 注册并获取key。
+Add Baidu Translator key in common/config/params-local.php file, you can apply in https://fanyi-api.baidu.com/ adn get key
 
 ```
     'baiduTranslate' => [
