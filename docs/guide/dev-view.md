@@ -1,16 +1,18 @@
 快速开发常用代码
 -------
 
-目录
+Table of contents
 
-- 列表中增加一个可编辑字段
-- 树状表格开发
-- 多选字段开发
-- Echarts图表
+- Add an editable field in the list grid in backend
+- Tree grid
+- Multiple selection
+- Echarts Chart
+- Float label in form
+- Simple code of nav
 
-### 列表中增加一个可编辑字段
+### Add an editable field in the list grid in backend
 
-增加一个新的可以编辑字段，在对应的Controller的 protected $editAjaxFields = ['name', 'sort'];中增加想要编辑的字段，再参考下面的name字段修改字段。
+Add the field to array of protected $editAjaxFields = ['name', 'sort']; in the corresponding Controller. Modify the code like 'name' below in correspond view file.
 ```php
             [
                 'attribute' => 'name', 
@@ -38,10 +40,11 @@
             ],
 ```
 
-### 树状表格开发
-如部门分类等树状表格
+### Tree Grid
 
-Controller中index()
+Example: Department Management
+
+Controller index()
 ```
     public function actionIndex()
     {
@@ -60,7 +63,7 @@ Controller中index()
     }
 ```
 
-view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜索，所有字段的filter都要去掉
+In index.php file of view, use TreeGrid, then modify name field, and delete the filter field.
 ```php
                 <?= \jianyan\treegrid\TreeGrid::widget([
                     'dataProvider' => $dataProvider,
@@ -103,18 +106,18 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
 
 ```
 
-编辑数据，edit.php或者edit-ajax.php
+In edit.php or edit-ajax.php of view file.
 ```php
         <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getTreeIdLabel()) ?>
 ```
 
-在Controller的actionEditAjax或者actionEdit中加入parent_id计算
+Add parent_id code in actionEditAjax or actionEdit or beforeEditRender in Controller
 ```php
         $this->activeFormValidate($model);
         $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
 ```
 
-删除需要删除子节点的数据，在Controller中使用如下代码
+If you want delete model, refer to code below in controller
 ```php
 
     /**
@@ -145,11 +148,11 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
     }
 ```
 
-### 多选字段开发（适用于小规模，checkbox）
+### Multiple selection (checkbox, less than 8)
 
-比如支持的多语言，可选语言
+Example: Multiple Language by checkbox
 
-修改StoreBase.php，增加languages字段
+Add languages field in StoreBase.php
 
 ```php
     public $languages;
@@ -161,7 +164,7 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
 ```
 
 
-在StoreController的actionEdit()或者actionEdit()中增加
+Add code in actionEdit() or actionEdit() in StoreController
 
 ```php
     public function actionEditAjax()
@@ -178,17 +181,18 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
         ]);
     }
 ```
-在edit.php或者edit-ajax.php中增加
+
+Add code in edit.php or edit-ajax.php
 
 ```php
         <?= $form->field($model, 'languages')->checkboxList(ActiveModel::getLanguageLabels()) ?>
 ```
 
-### 多选字段开发（适用于大规模，select2）
+### Multiple (select2, may more than 8)
 
-比如用户可以设置多个角色
+Example use has multiple roles.
 
-首先修改UserBase.php，增加roles字段，以及在attributeLabels增加标签
+add roles filed in UserBase.php, add label in attributeLabels
 ```php
     public $roles = [];
 
@@ -203,9 +207,9 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
     }
 ```
 
-展示用户所有角色，在UserController的actionEdit()或者actionEdit()中增加
+Show all roles, add code below actionEdit() or actionEdit() in UserController
 
-显示和保存用户角色，如果是通过新建表的方式
+If Save the relationship of use and role in a new table UserRole.
 ```php
         $allRoles = ArrayHelper::map(Role::find()->where(['status' => Role::STATUS_ACTIVE])->asArray()->all(), 'id', 'name');
 
@@ -230,7 +234,7 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
         ]);
 ```
 
-显示和保存用户角色，如果是通过|分隔的方式, 在UserController的actionEdit()或者actionEdit()中增加
+If save the relationship of use and role with | to split, add code below actionEdit() or actionEdit() in UserController
 ```php
         $allUsers = ArrayHelper::map(User::find()->where(['status' => User::STATUS_ACTIVE])->asArray()->all(), 'id', 'username');
 
@@ -246,7 +250,7 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
         ]);
 ```
 
-在edit.php或者edit-ajax.php中增加
+Add code in edit.php or edit-ajax.php
 ```php
                     <?= $form->field($model, 'roles')->widget(kartik\select2\Select2::classname(), [
                         'data' => $allRoles,
@@ -255,9 +259,9 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
 ```
 
 
-### Echarts图表
+### Echarts Chart
 
-在视图php文件中，server表示后台控制器路径，height表示高度，defaultType表示默认显示时间类型，chartConfig表示显示的图表按钮
+In php view file, param server for data url, height for chart height，defaultType for default time type displayed. chartConfig for the buttons on chart.
 ```php
     <?= \common\widgets\echarts\Echarts::widget([
         'config' => ['server' => Url::to(['stat']), 'height' => '400px', 'defaultType' => 'yesterday'],
@@ -265,15 +269,16 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
     ]) ?>
 ```
 
--  暂时在弹出Modal层的图表中chartConfig不能用custom。
+-  cunstom in chartConfig is not supported in Modal popup.
 
-在控制器中
+In controller
+
 ```php
     public function actionStat($type = 'today')
     {
         $fields = [
-            'count' => '数量',
-            'price' => '价格',
+            'count' => 'Count',
+            'price' => 'Amount',
         ];
 
         list($time, $format) = EchartsHelper::getFormatTime($type);
@@ -288,15 +293,15 @@ view的index.php中，使用TreeGrid，以及修改name字段。因为无法搜�
     }
 ```
 
-### 表单支持浮动标签
+### Float label in form
 
-需要修改template让label在input后面，并添加 form-label-group 样式， place
+Modify the label behind the input in template, add css form-label-group
 
 ```
 <?= $form->field($model, 'email', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['autofocus' => true, 'placeholder' => Yii::t('app', ' ')]) ?>
 ```
 
-css需要添加 .form-label-group
+add style of .form-label-group in css file
 
 ```
 /*** floating label ***/
@@ -392,7 +397,7 @@ css需要添加 .form-label-group
 ```
 
 
-### 精简代码 导航
+### Simple code of nav
 ```
         <div class="card card-primary card-outline card-outline-tabs">
             <div class="card-header p-0 border-bottom-0">

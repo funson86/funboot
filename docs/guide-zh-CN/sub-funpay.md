@@ -1,4 +1,4 @@
-Funpay 个人收款支付系统
+Funpay 个人收款支付子系统
 -------
 
 > 代码作为样例已集成在[Funboot](https://github.com/funson86/)开发平台中。直接clone Funboot项目即可。

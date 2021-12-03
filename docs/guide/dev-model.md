@@ -1,46 +1,46 @@
 BaseModel & XxxBase
 -----------
 
-目录
+Table of contents
 - BaseModel
 - XxxBase
 - Model
 
 
-> 为了实现定义一些公共的字段和方法，在model中插入BaseModel这一层级
+> In order to define some common fields and methods, add a layer of BaseModel
 
-> 为了实现多语言和字段修改可以再次gii生成代码，在model中插入了XxxBase这一层级。
+> For multiple language and model re-generation after table field modification, and the layer of xxxBase is inserted between model and BaseModel.
 
-> 为了支持注释语言作为标签同时支持i18n用英语作为翻译,优化了生成的Model
+> Support to use the database table field comment as field label, and support i18n translation in Model.
 
 
 ### BaseModel
 
-在Yii2生成的Model默认继承yii\db\ActiveRecord，Funboot在中间首先定义了common\models\BaseModel，后续生成Model和XxxBase继承BaseModel
+Model inherit yii\db\ActiveRecord in Yii by default，Funboot defines common\models\BaseModel，The generated Model and XxxBase inherit BaseModel
 
-BaseModel定义了一些status和type两个字段的常量和标签，子类可以参考这种方式进行。
+BaseModel defined some common constant and label, eg: status and type, you can define your constant referring to the code.
 
-还定义了行为，默认自动更新store_id，对于数据变更记录到日志表中，参见[Funboot日志组件](dev-log.md)
+Base Model will assign store_id to current store id, and add log while table data modification, refer to [Funboot Log Component](dev-log.md)
 
 
 ### XxxBase
 
-在Funboot的Gii中会有生成XxxBase类，在原本的Model中又加入了一层XxxBase，可以将自定义的常量、标签和一些自定义的方法写到该类中，这样字段变更的时候，只需要重新Gii生成Model文件直接覆盖。
+Funboot Gii genente XxxBase class, A layer of XxxBase is added to the original model, which can write custom constants, labels and some custom methods into this class. In this way, when the table fields change, you only need to regenerate the Gii model file and directly overwrite it.
 
-具体可以参考common/base/LogBase等文件中定义的常量和方法
+For details, refer to constants and methods defined in common/base/LogBase file
 
 ### Model
 
-Model支持Funboot Gii无限次的覆盖，因为自定义代码都写到XxxBase中
+Funboot Gii support re-genrate Model after table field modified, for the code related to model is added in XxxBase
 
-在数据表sql中加入注释，会自动生成为字段标签
+If you add comments to the data table SQL, they will be automatically generated as field labels
 
-系统有指定注释的语言版本，可以使用任意语言作为注释语言快速生成代码，同时支持使用英语作为i18n其他翻译的基础语言。
+The system has the language of the specified annotation, and can use any language as the annotation language to quickly generate code. At the same time, it supports the use of English as i18n other basic languages for translation.
 
-配置位于common/config/params.php中
+Config is in common/config/params.php
 
 ```php
-    'sqlCommentLanguage' => 'zh-CN', //sql的字段注释语言
+    'sqlCommentLanguage' => 'zh-CN', //sql comment language code
 ```
 
 

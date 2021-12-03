@@ -1,20 +1,20 @@
-Funpay 个人收款支付系统
+Funpay Payment Subsystem
 -------
 
-> 代码作为样例已集成在[Funboot](https://github.com/funson86/)开发平台中。直接clone Funboot项目即可。
+> The code is integrated in [Funboot](https://github.com/funson86/funboot), clone Funboot to get the code.
 
-### 在线体验
+### Demo
 
-在线体验网址： https://funpay.funboot.net
+Demo: https://funpay.funboot.net
 
-### 快速安装
+### Installation
 
-代码作为样例已集成在[Funboot](https://github.com/funson86/)开发平台中。直接clone Funboot项目即可。请参考 Funboot安装文档 https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/start-installation.md
+Refer to Funboot Installation https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/start-installation.md
 
 
-### 基本配置
+### Config
 
-在common/config/param.php中配置接收邮件
+Config admin email in common/config/param.php to receive note email
 
 ```php
     'funPay' => [
@@ -23,7 +23,7 @@ Funpay 个人收款支付系统
     ],
 ```
 
-在common/config/param-local.php文件中配置邮件相关信息
+Config smtp info in common/config/param-local.php
 
 ```php
 return [
@@ -35,17 +35,17 @@ return [
 ];
 ```
 
-这样才能在支付订单时，给管理员邮箱发邮件
+If some order paid in system, the admin will receive an notificaiton email.
 
 
-### 定时任务
+### Schedule
 
-每日凌晨将待支付的订单变成忘了支付的。在系统的定时任务中默认已有，手动执行如下：
+Change the unpaid order to forgotten order in the monring every day in Schedule Admin in the backend. Or run command manually 
 
 ```
 php yii funpay/order-expire
 ```
 
-### 参考
+### References
 
 - http://github.com/funson86/funpay

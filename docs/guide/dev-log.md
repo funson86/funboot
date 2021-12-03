@@ -5,7 +5,7 @@ Table of contents
 - System Log
 - Saving log to MongoDb
 
-### 系统日志 
+### System Log
 
 System log includes Operation Log, Error Log, Login Log, Database Log, Console Log, Mail Log 
 

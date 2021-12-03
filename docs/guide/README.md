@@ -60,13 +60,13 @@ Appendix
 * [Security](appendix-security.md)
 * [PHP Code Style](appendix-code-style.md)
 * [Code Quality](appendix-quality.md)
-* [High Concurrency & Performance（SnowFlake/Redis/Mongodb/ElasticSearch）](appendix-high.md)
+* [High Concurrency & Performance(SnowFlake/Redis/Mongodb/ElasticSearch)](appendix-high.md)
 * [Phpstorm Plugins](appendix-phpstorm.md)
 
 
 ### Related Component
 - [Yii 2](http://www.yiiframework.com/): Yii 2.x latest
-- [Adminlte 3.x](https://adminlte.io/): Adminlte 3.x [文档](https://adminlte.io/docs/3.0/components/main-header.html)
+- [Adminlte 3.x](https://adminlte.io/): Adminlte 3.x [Docs](https://adminlte.io/docs/3.0/components/main-header.html)
 - [PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet): xls for import and output
 - [File System](https://github.com/thephpleague/flysystem): File system
 - [OAuth 2.0](https://github.com/thephpleague/oauth2-server): OAuth 2.0 Server

@@ -1,17 +1,17 @@
 Gii
 -------
 
-目录
+Table of contents
 
-- Gii配置
+- Gii Config
 - model
-- 修改表结构后无限制生成model
+- Re-generate model after table field modified
 - crud
 - module
 
-### Gii配置
+### Gii Config
 
-在backend/config/main-local中添加以下代码启动funboot代码模版
+Add funboot gii template in backend/config/main-local
 
 ```php
     $config['bootstrap'][] = 'gii';
@@ -42,23 +42,22 @@ Table Name: fb_school_student
 Model Class Name: Student
 Namespace: common\models\school
 Base Class: common\models\BaseModel
-勾选 Use Table Prefix
-不勾选 Generate Labels from DB Comments【在ModelBase中会生成带英文版，在Model生成中文注释的，如果需要英文版，则去掉Model中的attributeLabels()方法】
-勾选 Generate Relations from Current Schema
-勾选 Enable I18N
+Select Use Table Prefix
+Not select Generate Labels from DB Comments // If the English is required, the attributelabels() method in the model should be removed
+Select Generate Relations from Current Schema
+Select Enable I18N
 ```
 ![](images/gii-model-03.png)
 ![](images/gii-model-05.png)
 
 
-### 修改表结构后无限制生成model
+### Re-generate model after table field modified
 
-- 有外键时生成外键相关代码移到modelBase中，包括rules和getRelation函数
-- 删除数据库外键
-- 生成时选择no relation
-- 线上数据库删除外键限制
+- During development, the database foreign key shall be defined in the data table to generate the relationship. The online database deletes the foreign key relationship to improve the performance.
+- When generating foreign keys, the relevant codes of foreign keys move to ModelBase, including rules and getRelation functions
+- Generate Relations select No relation at last.
 
-- 或者先选择no relation方式，再选择All relations将生成的model中多出的代码拷贝到modelBase中
+- Or select no relation generate model, then select All relations to preview relation code and copy to ModelBase.
 
 
 ### crud
@@ -84,5 +83,5 @@ Code Template: funboot
 
 ![](images/gii-module-03.png)
 
-api下
+api
 ![](images/gii-module-05.png)

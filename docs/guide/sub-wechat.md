@@ -1,12 +1,9 @@
-微信公众号
+Wechat Subsystem
 -------
 
-目录
+Table of contents
 
-- 列表中增加一个可编辑字段
+> Test https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
 
-> 测试帐号 https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
+> Api debug: https://mp.weixin.qq.com/debug/cgi-bin/apiinfo
 
-> 在线接口调试：https://mp.weixin.qq.com/debug/cgi-bin/apiinfo
-
-### 列表中增加一个可编辑字段

@@ -68,7 +68,7 @@ Add code below to edit.php in view directory, support text、textarea、Ueditor�
                                                             'value' => $v,
                                                             'formData' => [
                                                                 'drive' => 'local',
-                                                                'writeTable' => false, // 不写表
+                                                                'writeTable' => false, // Not write to table
                                                             ],
                                                             'config' => [
                                                                 'toolbars' => [
@@ -104,8 +104,8 @@ Add code below to edit.php in view directory, support text、textarea、Ueditor�
                                                                 'height' => 500,
                                                                 'emoji' => false,
                                                                 'taskList' => true,
-                                                                'flowChart' => true, // 流程图
-                                                                'sequenceDiagram' => true, // 序列图
+                                                                'flowChart' => true, // flow chart
+                                                                'sequenceDiagram' => true, // squence Diagram
                                                                 'tex' => true, // 科学公式
                                                                 'imageUpload' => true,
                                                                 'imageUploadURL' => Url::toRoute([

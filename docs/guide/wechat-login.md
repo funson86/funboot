@@ -1,9 +1,9 @@
-微信公众号网页授权
+Webpage authorization 
 ------
 
 wechat模块主要是演示微信中打开的网页发起登录授权，
 
-### 前提
+### Prepare
 
 在后台中设置相关wechat公众号相关参数
 
@@ -40,7 +40,7 @@ wechat模块主要是演示微信中打开的网页发起登录授权，
 
 ### 授权后动作
 
-覆盖frontend\modules\wechat\controllers\BaseController.php的afterLogin()函数，比如插入到user表中。后续用户下单可以追溯是哪个用户下单。
+Override frontend\modules\wechat\controllers\BaseController.php的afterLogin()函数，比如插入到user表中。后续用户下单可以追溯是哪个用户下单。
 
 
 ### 集成到微信网页商城

@@ -4,12 +4,12 @@ FAQ
 Table of contents
 
 - No write permission in linux
-- 安装或迁移出现 Specified key was too long; max key length is 767 bytes
-- 样式修改后访问没有变化
+- Warning: Specified key was too long; max key length is 767 bytes
+- No change in the frontend after modify the css file
 - Class 'COM' not found
 - com() has been disabled for security reasons
-- 网站访问500错误，index.php无法require根目录其他文件
-- Curl访问https://开头的地址错误
+- Access website return 500, index.php cannot require root directory and other file
+- curl url started with https:// error
 
 ### No write permission in linux
 
@@ -22,7 +22,7 @@ chmod 777 -R runtime
 
 ### Warning: Specified key was too long; max key length is 767 bytes
 
-Funboot database use utf8mb4 by default, modify the table to utf8 or change varchar(255) to varchar(192) instead while using the field for indexs.
+Funboot database use utf8mb4 by default, modify the table to utf8 or change varchar(255) to varchar(190) instead while using the field for indexs.
 
 
 ### No change in the frontend after modify the css file

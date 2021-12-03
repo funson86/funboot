@@ -1,54 +1,53 @@
-RBAC权限角色
+RBAC Role-based access control
 -----------
 
-目录
-- 菜单权限 & 数据权限 & 部门权限
-- 菜单权限 
-- 角色 
-- 用户角色 
+Table of contents
+- Menu Permission & Data Permission & Department Permission
+- Menu Permission
+- Role
+- User Role
 
 
-### 菜单权限 & 数据权限 & 部门权限
+### Menu Permission & Data Permission & Department Permission
 
-权限分为菜单权限、数据权限、部门权限，目前菜单权限通过角色控制，数据权限通过角色种类来控制，部门权限暂时没有整入。
+Permissions include menu permissions, data permissions and department permissions. At present, menu permissions are controlled by roles, data permissions are controlled by role types, and department permissions are not integrated temporarily.
 
-- 菜单权限：顶部和左侧可见的菜单栏目，分配有权限则显示
-- 数据权限：点击菜单栏目，只能看到指定店铺的所有数据
-- 部门权限：点击菜单栏目，只能看到指定店铺下部门的数据（开发中）
+- Menu Permission：The menu on the top and left displays if the permission is assigned
+- Data Permission：Click the menu, you can only see the data of the specified store
+- Department Permission：Click the menu, you can only see the data of the Department under the specified store(Developing0
 
-### 菜单权限
+### Menu Permission
 
-权限采用4级方式。
+Menu Permission has 4 level
 
-- 第一级显示在顶部，为子系统
-- 第二级显示在左侧栏目
-- 第三级显示在左侧栏目
-- 第四级为按钮权限
+- Level 1 on the top, subsystem usually
+- Level 2 on the left
+- Level 3 on the left for sub menu
+- Level 4 is for button permission
 
-支持通配符权限控制，比如角色编辑权限可以在path中输入 /base/role/edit*，那么对应的新窗口编辑、列表页快速编辑都受到改权限控制，
-自定义的方法命名也需要按照该方式命名
+Permission control support wildcard. For example, input /base/role/edit* in the path of role edit permission, the corresponding new window editing and list page quick editing will be controlled by the change permission, custom method naming also needs to be named in this way 
 
-### 角色
+### Role
 
-系统默认分为超级管理员、管理员、店铺管理员、前端权限， 对应同一个菜单权限分配给不同级别的
+Funboot contains super admin, admin, store admin, frontend user by default.
 
-- 超级管理员有所有菜单权限，且能查看所有店铺的数据
-- 管理员有指定菜单权限，但他可以查看所有店铺的数据，比如他有用户管理权限，则数据内容则是所有店铺的管理权限
-- 店铺管理员只能查看本店铺的数据，且菜单项目只有一部分
-- 前端用户无法登录后台系统
+- Super admin own all menu permissions and all store data permissions.
+- Admin menu permission need to be assigned, and can view all store data. For example, if he has user menu permission, then he can view all store users.
+- Store admin can only view the data of store owned, and menu permission need to be assigned.
+- Frontend user cannot login in backend
 
 ```php
         'authSystem' => [
             'class' => 'common\components\base\AuthSystem',
-            'superAdminUsernames' => ['admin', 'superadmin'], //拥有所有权限的用户名
-            'maxAdminRoleId' => 49, //管理员最大角色ID
-            'maxStoreRoleId' => 99, //能进入后台用户最大角色ID
+            'superAdminUsernames' => ['admin', 'superadmin'], //super admin username
+            'maxAdminRoleId' => 49, //Admin max role ID
+            'maxStoreRoleId' => 99, //Max role ID that can login in backend
         ],
 ```
 
-后台创建不同类型角色是通过ID区段来控制，超级管理员ID为1，管理员到49，店铺管理员到99，其他角色从100起。
+Different role type is controlled by ID range, Super admin ID is 1, Admin ID is 2 to 49, Store Admin ID is 50 to 99, Frontend User ID is greater than 100.
 
-### 用户角色
+### User Role
 
-在后台编辑用户，可以设定用户的角色。
+Edit user in the backend to set user role.
 

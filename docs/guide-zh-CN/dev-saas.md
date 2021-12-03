@@ -2,35 +2,39 @@ Saas
 -----------
 
 目录
-- 系统支持自定义域名
-- 系统支持多个子系统，每个自定义域名可以
-- 系统支持平台形式
-- 系统支持多语言 & 多货币
+- 多域名
+- 多子系统
+- 平台形式
+- Saas下的配置权限控制
+- 多语言 & 自动翻译
+- 多货币
 
-### 系统支持自定义域名
+### 多域名
 
-在后台添加store时，需要指定域名host_name，支持|分隔多个域名，即aaa.funboot.com bbb.funboot.com可以是同一个域名
+在后台添加store时，需要指定域名host_name，支持|分隔多个域名，即aaa.funboot.com|bbb.funboot.com可以是指向同一个店铺
 
-### 系统支持多个子系统，每个可以自定义域名
+### 多子系统
 
-每个子系统都可以使用自定义的域名
+每个店铺可以切换到不同的子系统
 
 
-### 系统支持平台形式
+### 平台形式
 
-支持平台 https://www.funboot.com/store-mayicun 和 https://www.funboot.com/123，需要在添加code的时候，将code设置为mayicun
+支持平台 https://www.funboot.com/store-mayicun 和 https://www.funboot.com/123，需要在添加store的时候，将code设置为mayicun
 
-这两种情况下，也可以既是平台也可以是独立域名；
-
-手动修改fb_store表将host_name的默认字段修改为平台的域名比如 www.funboot.com
+平台形式下，host_name可以是其他相同的二级域名如www1.funboot.com，这样superadmin从后台登录的时候不会引发从www.funboot/backend/登出。
 
 
 ### Saas下的配置权限控制
 
-store管理员可以管理，超级管理员登录到用户的系统后台，需要设置
+超级管理员登录到用户的系统后台，可以配置管理、店铺管理员的权限
  
-### 系统支持多语言 & 多货币
+### 多语言 & 自动翻译
 
-- 多语言参考 lang
+- 参考 [多语言 & 自动翻译](dev-lang.md)
+
+### 多货币
+
+开发中
 
 

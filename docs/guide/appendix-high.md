@@ -1,35 +1,35 @@
-高并发高性能
+High Concurrency & Performance
 -----------
 
-目录
+Table of contents
 
-- Id生成器
-- 缓存使用Redis
-- 日志存储到Mongodb中
-- Queue使用redis/RabbitMq/Kafka
-- 全文索引使用ElasticSearch
+- Id Generator
+- Cache use Redis
+- Save log in Mongodb
+- Queue use redis/RabbitMq/Kafka
+- Full text index use ElasticSearch
 
 
-使用Mongodb或者需要在composer.json中加入组件，同时服务器php需要对应的
+If use Mongodb or elasticsearch, add code below in composer.json and composer update. And the mongodb and elasticsearch should be installed.
 
 ```php
         "yiisoft/yii2-mongodb": "^2.1",
         "yiisoft/yii2-elasticsearch": "~2.1.0",
 ```
 
-### Id生成器
+### Id Generator
 
-高并发一个重要的部分是系统生成唯一主键ID，在分布式系统中不依赖于mysql主键ID自动生成。Funboot使用雪花算法SlowFlake辅以redis的自增id作为参数结合datacenter、worker支持每秒生成10w+不同ID。
+While High Concurrency, It may id conflict in mysql, while distributed system Funboot use SlowFlake with redis auto increasing id, datacenter and worker, It can support 10w+ unique id every second.
 
-> common/config/params.php中配置如下
+> config in common/config/params.php
 
 ```php
 
-    // Snowflake唯一ID
-    'snowFlakeUniqueId' => false, // 修改此处不会影响ID顺序，如ID按照15261***开头，修改还是15261***开头，并且按照先后顺序
+    // Snowflake unique ID
+    'snowFlakeUniqueId' => false, // whether use unique id or not
     'snowFlakeDataCenterId' => 0,
     'snowFlakeWorkerId' => 0,
-    'snowFlakeStartAt' => '', //推荐不设置，设置会增加id长度，修改此处会影响ID顺序
+    'snowFlakeStartAt' => '', // Recommend blank, will increase id length. modify will affect id sequence
     'snowFlakeRedis' => [
         'hostname' => 'localhost',
         'port' => 6379,
@@ -37,17 +37,17 @@
     ],
 ```
 
-- 安装Redis扩展
-- 配置snowFlakeUniqueId为true
-- 启动redis，且设置snowFlakeRedis
-- 多台机器，酌情在params-local中设置dataId和workerId
-- 新创建一个model的时候，下一行设置ID，如果不设置，主键虽然设置自增ID，但是冲突的概率理论上是存在的
+- Install Redis extension
+- config snowFlakeUniqueId to true
+- Start redis, and config snowFlakeRedis
+- If multiple server, config dataId and workerId in params-local.php
+- When a new model is created, the ID is set in the next row. If it is not set, the primary key is set with the self increasing ID, but the probability of conflict exists in theory.
 
-在系统中的XxxBase如SettingBase.php中将$highConcurrency设置为true，BaseModel的构造函数会自动变更id
+Set $highConcurrency to true in XxxBase, eg: SettingBase.php, the id will change in construct in BaseModel
 
 ```
     /**
-     * 是否启用高并发，需要启用的在XxxBase中设置
+     * Enable or not, in model file XxxBase.php
      * @var bool
      */
     protected $highConcurrency = true;
@@ -56,16 +56,18 @@
 ```php
     $model = new $this->modelClass();
 
-    // BaseModel的构造函数会自动变更id
+    // change id in BaseModel construct 
     public function __construct($config = [])
     {
         parent::__construct($config);
 
-        // 高性能
+        // high concurrency
         $this->highConcurrency && $this->id = IdHelper::snowFlakeId();
 
-        // 设置store_id
-        (isset($this->store_id) && intval($this->store_id) <= 0) && $this->store_id = Yii::$app->storeSystem->getId();
+        // set store_id without table store
+        if (!$this instanceof Store) {
+            $this->store_id = Yii::$app->storeSystem->getId();
+        }
 
         $this->on(self::EVENT_AFTER_INSERT, [get_class($this), 'afterInsert']);
         $this->on(self::EVENT_AFTER_UPDATE, [get_class($this), 'afterUpdate']);
@@ -74,13 +76,11 @@
 ```
 
 
-### 缓存使用Redis
+### Cache Redis
 
-系统默认使用File Cache，单台机器是可行的，多台机器需要做NFS，使用mysql会加重数据库的负担
+Funboot use File Cache as cache driver by default on a single server. Multiple servers can use NFS/Mysql/Redis. Recommend redis.
 
-推荐多台机器的时候需要切换成redis。
-
-修改common/config/main.php
+Edit common/config/main.php
 
 ```php
       'components' => [
@@ -95,9 +95,9 @@
       ],
 ```
 
-### 日志存储到Mongodb中
+### Save log in Mongodb
 
-系统支持将日志存储到MongoDb中提升性能，修改common/config/main.php，添加mongodb组件，并将logSystem中的driver改成mongodb。
+The system supports storing logs in mongodb to improve performance by modifying common/config/main.php, adding mongodb components, and changing the driver in logSystem to mongodb.
 
 ```php
     'components' => [
@@ -108,25 +108,25 @@
         ],
         'logSystem' => [
             'class' => 'common\components\base\LogSystem',
-            'queue' => false,//true, // 是否通过队列方式存数据库
-            'driver' => 'mongodb', //'mongodb', // 存储方式，mysql数据库或mongodb数据库
-            'levels' => ['error', 'warning'], // 记录日志等级error warning info trace
-            'ignoreCodes' => [404], // 忽略错误码
+            'queue' => false,//true, // use queue or not
+            'driver' => 'mongodb', //'mongodb', // driver, mysql or mongodb
+            'levels' => ['error', 'warning'], // log level: error warning info trace
+            'ignoreCodes' => [404], // ignore codes
         ],
         ...
     ],
 ```
 
-> MongoDb 参考文档请查看 https://www.yiiframework.com/extension/yiisoft/yii2-mongodb/doc/guide/2.1/en
+> MongoDb Document refer to https://www.yiiframework.com/extension/yiisoft/yii2-mongodb/doc/guide/2.1/en
 
-> MongoDb 需要独立安装，PHP需要安装MongoDb组件
+> MongoDb and php mongodb extension need to be installed. 
 
 
-### Queue使用redis/RabbitMq/Kafka
+### Queue use redis/RabbitMq/Kafka
 
-系统默认使用File Cache，单台机器是可行的，多台机器需要做NFS，使用mysql会加重数据库的负担
+Funboot use File Cache as cache driver by default on a single server. Multiple servers can use NFS/Mysql/Redis. 
 
-推荐多台机器的时候需要切换成redis/RabbitMq/Kafka，根据系统要求和容量选择。
+Recommend redis redis/RabbitMq/Kafka in Multiple Servers based on requirements.
 
 ```php
     'bootstrap' => [
@@ -135,7 +135,7 @@
     'components' => [
         'queue'  => [
             'class'   => \yii\queue\redis\Queue::class,
-             // 连接组件或它的配置
+             // component and setting
             'redis'   => 'redis',
            // Queue channel key
             'channel' => 'queue',
@@ -150,11 +150,11 @@
     ]
 ```
 
-### 全文索引使用ElasticSearch
+### Full text index use ElasticSearch
 
-修改common/config/main.php，添加mongodb组件，
+Add mongodb Component in common/config/main.php.
 
-启动Elasticsearch，默认会监听9200端口
+Start Elasticsearch, it listens to port 9200 by default.
 
 ```php
         'elasticsearch' => [
@@ -166,6 +166,3 @@
             'dslVersion' => 7, // default is 5
         ],
 ```
-
-
-

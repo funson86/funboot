@@ -1,78 +1,79 @@
 Convention priority over config
 -----------
 
-目录
+Table of contents
 
-- 子系统关键字约定
-- 数据表sql设计约定
-- RBAC权限控制约定
-- 配置约定
-
-
-Yii一大特性是约定优先配置，比如yii的路由site/index映射SiteController的actionIndex方法，如果要特殊指定也可以在配置文件中指定，不像其他框架每个router都指定，当团队成员不遵循规范时项目维护难度很大。
-
-Funboot框架也遵循约定优先配置原则，遵循以下约定可以极大的提升开发速度和降低维护成本。
+- Subsystem keyword Convention
+- Sql design Convention
+- RBAC Convention
+- Setting Convention
 
 
-### 子系统关键字约定
+Convention priority over config is a feature of Yii framework. For example yii route site/index specify to actionIndex in SiteController
+You can config the urlManager with self route rule. 
 
-Funboot包含一些子系统，可以在这些子系统上直接进行二次开发提交官方，也可以使用其他关键字重新开发。
-
-因为这些关键字对应的router已经被funboot占用，尽可能避免和这些关键字冲突。
-
-- pay：FunPay使用router：/pay/default/*
-- cms：FunPay使用router:/cms/default/*
+Funboot also follows the principle which can greatly improve the development speed and reduce the maintenance cost.
 
 
-### 数据表sql设计约定
+### Subsystem keyword Convention
 
-- int统一使用int(11), varchar使用255/32/64/128/1022长度，一般无特别之处用255，时间统一用int(11);
-- id统一使用bigint(20)，也便于添加删除外键，关联其他表的外键id一般使用 表_id方式，如关联user表，则命名为user_id，批量替换时候也可以根据 _id` 批量替换类型。
-- 如果项目分布式，可以使用雪花算法，数据表无需任何修改，只需要BaseController中的findModel中new之后添加字符串$model->id;
-- 框架默认的使用如下表结构，建议在此表结构上添加自定义的字段、索引和外键。推荐开发阶段和测试环境添加外键，线上环境去掉外键。
-- 数据表增加COMMENT描述，使用[Funboot的Gii](gii.md)会在Model文件中生成中英双语标签，无需编写众多的i18n翻译文件。
-- 模板表中字段请尽量保留，暂时用不上的，随着系统功能叠加某天会用上时就无需修改数据表，对于关系表中name可以修改为  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称', 以兼容后台生成代码的展现。
+Funboot contains some subsystem, you can override the subsystem or use another keyword to develop. 
+
+For the router of keyword is used in funboot, It may conflict.
+
+- pay：FunPay use router：/pay/default/*
+- cms：FunPay use router: /cms/default/*
+
+
+### Sql design Convention
+
+- int use int(11), varchar use 255/32/64/128/190/1022 length, always use 255，timestamp use int(11);
+- id use bigint(20) unsigned uniformly, which is also convenient for adding and deleting foreign keys. The field use table_id if related to other table with a foregin key. For example, the user_id field in table fb_mall_address is relate to table fb_user.
+- If the project is distributed, the Snowlake algorithm can be used. Specify the $highConcurrency to true in modelBase .
+- Funboot use the table structure below. Recommend to add your field/index/foreign keys based on it. It is recommended to add foreign keys in development stage, and remove it in the online environment.
+- The field of table definition below should be keep in your table definition. If not required like `name`, change it to  `name` varchar(255) NOT NULL DEFAULT '' COMMENT 'Name' for view in the backend.
+- Add COMMENT for every field in table definition, use [Funboot Gii](dev-gii.md) create label of comment and support i18n.
 
 ```sql
 DROP TABLE IF EXISTS `fb_template`;
 CREATE TABLE `fb_template` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
-  `name` varchar(255) NOT NULL COMMENT '名称',
-  `type` int(11) NOT NULL DEFAULT 1 COMMENT '类型',
-  `sort` int(11) NOT NULL DEFAULT 50 COMMENT '排序',
-  `status` int(11) NOT NULL DEFAULT 1 COMMENT '状态',
-  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
-  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
-  `created_by` int(11) NOT NULL DEFAULT '1' COMMENT '创建用户',
-  `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT 'Store',
+  `name` varchar(255) NOT NULL COMMENT 'Name',
+  `type` int(11) NOT NULL DEFAULT 1 COMMENT 'Type',
+  `sort` int(11) NOT NULL DEFAULT 50 COMMENT 'Sort',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT 'Status',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT 'Created At',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT 'Updated At',
+  `created_by` int(11) NOT NULL DEFAULT '1' COMMENT 'Created By',
+  `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT 'Updated By',
   PRIMARY KEY (`id`),
-  KEY `school_student_fk2` (`store_id`),
-  CONSTRAINT `pay_payment_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '模板';
+  KEY `template_k0` (`store_id`),
+  CONSTRAINT `template_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT 'Template';
 ```
 
-### RBAC权限控制约定
+### RBAC Convention
 
-参见[RBAC权限控制组件](dev-rbac.md)：每个用户对应一个角色，不同角色包含不同权限
+Refer to [RBAC Role-based access control](dev-rbac.md)
 
 
-### 配置约定
+### Setting Convention
 
-- 推荐使用数据表插入的方式，可以清晰的通过ID查看相关度，每次使用两位代码如10，子ID为1001、1003等。
+- Recommend insert setting types to fb_base_setting_type. You can view the relation by ID. For example, 50, 5001 and 5003 is the children of 10.
 
-- Code也使用父code做前缀的方式，10的code为website，1001为website_name，1003为website_logo。
+- Code use parent code as the prefix. For example 10 code is website, the 5001 code is website_name the 5003 code is website_logo.
 
-- 一般而言4位代码足够用了
+- The length of ID is 4 usually
 
 
 ```
-INSERT INTO `fb_base_setting_type` VALUES ('10', '1', '0', 'backend', '网站设置', 'website', '', 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1001', '1', '10', 'backend', '网站标题', 'website_name', '', 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
-INSERT INTO `fb_base_setting_type` VALUES ('1003', '1', '10', 'backend', '网站Logo', 'website_logo', '', 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('50', '1', '0', 'backend', 'Website', 'website', '', 7, 1, 'text', '', '', '50', '1', '1600948343', '1600948343', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5001', '1', '50', 'backend', 'Website Name', 'website_name', '', 7, 1, 'text', '', '', '50', '1', '1600948383', '1600948392', '1', '1');
+INSERT INTO `fb_base_setting_type` VALUES ('5003', '1', '50', 'backend', 'Website Logo', 'website_logo', '', 7, 1, 'image', '', '', '50', '1', '1600948430', '1600948430', '1', '1');
 
 ```
 
 
-- 如果最终移交给用户，也可以在后台通过界面创建，不过ID变为自增。
+- If add setting type in the backend, the id wil auto increase in mysql.
 
