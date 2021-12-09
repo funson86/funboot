@@ -22,6 +22,7 @@ use yii\helpers\FileHelper;
  */
 class StoreController extends BaseController
 {
+    protected $pageSize = 25;
     /**
       * @var Store
       */
