@@ -440,7 +440,16 @@ CREATE TABLE `fb_store` (
   `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言',
   `lang_backend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '后端默认语言',
   `lang_api` int(11) NOT NULL DEFAULT '3' COMMENT 'API支持语言',
-  `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言',  
+  `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言',
+  `consume_count` int(11) NOT NULL DEFAULT '0' COMMENT '消费次数',
+  `consume_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '消费金额',
+  `history_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '历史金额',
+  `param1` varchar(255) NOT NULL DEFAULT '' COMMENT '参数1',
+  `param2` varchar(255) NOT NULL DEFAULT '' COMMENT '参数2',
+  `param3` varchar(255) NOT NULL DEFAULT '' COMMENT '参数3',
+  `param4` int(11) NOT NULL DEFAULT '0' COMMENT '参数4',
+  `param5` int(11) NOT NULL DEFAULT '0' COMMENT '参数5',
+  `param6` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '参数6',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -638,6 +647,15 @@ CREATE TABLE `fb_base_stuff` (
 -- ALTER TABLE `fb_base_role` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_user` ADD `openid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '微信Id' after `verification_token`;
 -- ALTER TABLE `fb_user` ADD `unionid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '微信唯一Id' after `openid`;
+-- ALTER TABLE `fb_store` ADD `consume_count` int(11) NOT NULL DEFAULT '0' COMMENT '消费次数' after `lang_api_default`;
+-- ALTER TABLE `fb_store` ADD `consume_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '消费金额' after `consume_count`;
+-- ALTER TABLE `fb_store` ADD `history_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '历史金额' after `consume_amount`;
+-- ALTER TABLE `fb_store` ADD `param1` varchar(255) NOT NULL DEFAULT '' COMMENT '参数1' after `history_amount`;
+-- ALTER TABLE `fb_store` ADD `param2` varchar(255) NOT NULL DEFAULT '' COMMENT '参数2' after `param1`;
+-- ALTER TABLE `fb_store` ADD `param3` varchar(255) NOT NULL DEFAULT '' COMMENT '参数3' after `param2`;
+-- ALTER TABLE `fb_store` ADD `param4` int(11) NOT NULL DEFAULT '0' COMMENT '参数4' after `param3`;
+-- ALTER TABLE `fb_store` ADD `param5` int(11) NOT NULL DEFAULT '0' COMMENT '参数5' after `param4`;
+-- ALTER TABLE `fb_store` ADD `param6` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '参数6' after `param5`;
 
 
 
@@ -651,11 +669,11 @@ SET FOREIGN_KEY_CHECKS=1;
         $sql = "
 SET FOREIGN_KEY_CHECKS=0;
 
-INSERT INTO `fb_store` VALUES ('1', '0', '1', 'Funboot', '默认网站', 'www.funboot.com', '', '', 'site', '1634684399', '默认网站', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
-INSERT INTO `fb_store` VALUES ('2', '0', '2', 'Funpay', 'Funpay', 'www.funpay.com', '', '', 'pay', '1634684399', 'Funpay', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
-INSERT INTO `fb_store` VALUES ('4', '0', '4', 'Funcms', 'Funcms', 'www.funcms.com', '', '', 'cms', '1634684399', 'Funcms', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
-INSERT INTO `fb_store` VALUES ('5', '0', '5', 'Funmall', 'Funmall', 'www.funmall.com', '', '', 'mall', '1634684399', 'Funmall', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
-INSERT INTO `fb_store` VALUES ('6', '0', '6', 'Funbbs', 'Funbbs', 'www.funbbs.com', '', '', 'bbs', '1634684399', 'Funbbs', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
+INSERT INTO `fb_store`(`id`, `parent_id`, `user_id`, `name`, `brief`, `host_name`, `code`, `qrcode`, `route`, `expired_at`, `remark`, `language`, `lang_source`, `lang_frontend`, `lang_frontend_default`, `lang_backend`, `lang_backend_default`, `lang_api`, `lang_api_default`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('1', '0', '1', 'Funboot', '默认网站', 'www.funboot.com', '', '', 'site', '1634684399', '默认网站', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
+INSERT INTO `fb_store`(`id`, `parent_id`, `user_id`, `name`, `brief`, `host_name`, `code`, `qrcode`, `route`, `expired_at`, `remark`, `language`, `lang_source`, `lang_frontend`, `lang_frontend_default`, `lang_backend`, `lang_backend_default`, `lang_api`, `lang_api_default`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('2', '0', '2', 'Funpay', 'Funpay', 'www.funpay.com', '', '', 'pay', '1634684399', 'Funpay', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
+INSERT INTO `fb_store`(`id`, `parent_id`, `user_id`, `name`, `brief`, `host_name`, `code`, `qrcode`, `route`, `expired_at`, `remark`, `language`, `lang_source`, `lang_frontend`, `lang_frontend_default`, `lang_backend`, `lang_backend_default`, `lang_api`, `lang_api_default`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('4', '0', '4', 'Funcms', 'Funcms', 'www.funcms.com', '', '', 'cms', '1634684399', 'Funcms', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
+INSERT INTO `fb_store`(`id`, `parent_id`, `user_id`, `name`, `brief`, `host_name`, `code`, `qrcode`, `route`, `expired_at`, `remark`, `language`, `lang_source`, `lang_frontend`, `lang_frontend_default`, `lang_backend`, `lang_backend_default`, `lang_api`, `lang_api_default`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('5', '0', '5', 'Funmall', 'Funmall', 'www.funmall.com', '', '', 'mall', '1634684399', 'Funmall', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
+INSERT INTO `fb_store`(`id`, `parent_id`, `user_id`, `name`, `brief`, `host_name`, `code`, `qrcode`, `route`, `expired_at`, `remark`, `language`, `lang_source`, `lang_frontend`, `lang_frontend_default`, `lang_backend`, `lang_backend_default`, `lang_api`, `lang_api_default`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('6', '0', '6', 'Funbbs', 'Funbbs', 'www.funbbs.com', '', '', 'bbs', '1634684399', 'Funbbs', 32767, 'zh-CN', 32767, '', 32767, '', 32767, '', 0, 50, 1, 1, 1619169177, 1, 1);
 
 INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('1', '1', '0', 'admin', '', '', '', '$2y$13\$ZsldxLQuw/jaCSDQ76sRO.bISkCtjnniC2ijiV/wakkGaL4hmZhiK', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', '', '', '1605143153', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1', '1606792873', '1', '2');
 INSERT INTO `fb_user`(`id`, `store_id`, `parent_id`, `username`, `auth_key`, `token`, `access_token`, `password_hash`, `password_reset_token`, `verification_token`, `email`, `mobile`, `auth_role`, `name`, `avatar`, `brief`, `sex`, `area`, `address`, `birthday`, `remark`, `last_login_at`, `last_login_ip`, `last_paid_at`, `last_paid_ip`, `consume_count`, `consume_amount`, `type`, `sort`, `status`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES ('2', '2', '0', 'funpay', '', '', '', '$2y$13\$L58QDefrbiUjyxVXy6P/r.Mz9eeTjJpQEnk/hEN3pqZZRDiw4q7LC', '', '', 'funson86@gmail.com', '', '1', '', '', '', '0', '', '', '', '', '1607395941', '127.0.0.1', '0', '', '0', '0.00', '1', '50', '1', '1599808929', '1607395941', '1', '2');
