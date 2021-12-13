@@ -59,7 +59,7 @@ https://github.com/funson86/funboot/blob/master/docs/guide/README.md  [Installat
 
 - [x] Api: Restful Api, Oauth2, etc
 
-- [x] 日志管理：操作日志、登录日志、错误日志、数据库自定义日志、控制台日志、邮件日志等
+- [x] System Log: Operation/Login/Error/Db/Console/Mail logs displayed in the backend
 
 - [x] Schedule Task：Manage on time executing task in the backend
 
