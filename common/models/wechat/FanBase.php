@@ -92,8 +92,8 @@ class FanBase extends BaseModel
     /**
      * return label or labels array
      *
-     * @param null $id
-     * @param bool $flip
+     * @param array $ids
+     * @param array $data
      * @return array|mixed
      */
     public static function getTagIdListLabels($ids = [], $data = [])

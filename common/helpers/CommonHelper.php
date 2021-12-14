@@ -4,6 +4,7 @@ namespace common\helpers;
 
 use common\models\base\Lang;
 use common\models\Store;
+use yii\console\Request;
 use yii\helpers\HtmlPurifier;
 use yii\web\View;
 use Yii;
@@ -81,12 +82,33 @@ class CommonHelper
     }
 
     /**
+     * 获取store url，http(s)://www.host_name.com 或者 http(s)://www.host_name.com/mall-aaa
+     * @param null $store
+     * @param string $urlPrefix
+     * @return string
+     */
+    public static function getStoreUrl($store = null, $urlPrefix = 'store-')
+    {
+        !$store && $store = Yii::$app->storeSystem->get();
+
+        if ($store->parent_id > 0) {
+            $platformStore = Yii::$app->storeSystem->getById($store->parent_id);
+            return self::getHostPrefix($platformStore->host_name) . DIRECTORY_SEPARATOR . $urlPrefix . $store->code;
+        }
+
+        return self::getHostPrefix($store->host_name);
+    }
+
+    /**
      * 获取当前访问为http还是https
      * @param bool $suffix
      * @return string
      */
     public static function getHttpPrefix($suffix = true)
     {
+        if (Yii::$app->request instanceof Request) {
+            return !$suffix ? (str_replace('://', '', Yii::$app->params['httpProtocol'])) : Yii::$app->params['httpProtocol'];
+        }
         return (Yii::$app->request->getIsSecureConnection() ? 'https' : 'http') . ($suffix ? '://' : '');
     }
 

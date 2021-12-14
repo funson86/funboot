@@ -32,7 +32,7 @@ $store = $this->context->store;
                 <img src="<?= $store->settings['website_logo'] ?: ImageHelper::getLogo() ?>" width="100" height="100" style="border-radius: 50%" />
             </div>
             <div class="login-logo" id="login-name">
-                <a href="#"><?= $store->settings['website_name'] ?: 'Funboot' ?></a>
+                <a href="#"><?= $store->settings['website_name'] ?:$store->name ?: '' ?></a>
             </div>
             <!--p class="login-box-msg"><?= Yii::t('app', 'Sign in to start your session') ?></p-->
 

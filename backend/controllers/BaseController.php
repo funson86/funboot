@@ -507,7 +507,7 @@ class BaseController extends \common\components\controller\BaseController
             $result = $model->delete();
         }
 
-        if (!$result) {
+        if ($result === false) {
             Yii::$app->logSystem->db($model->errors);
             return $this->redirectError($this->getError($model));
         }

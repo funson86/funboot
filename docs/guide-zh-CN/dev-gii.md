@@ -53,10 +53,9 @@ Base Class: common\models\BaseModel
 
 ### 修改表结构后无限制生成model
 
-- 有外键时生成外键相关代码移到modelBase中，包括rules和getRelation函数
-- 删除数据库外键
-- 生成时选择no relation
-- 线上数据库删除外键限制
+- 开发时数据表中要定义数据库外键用来生成Relation，线上数据库删除外键关系提高性能
+- 外键时生成外键相关代码移到modelBase中，包括rules和getRelation函数
+- Generate Relations选择No Relation
 
 - 或者先选择no relation方式，再选择All relations将生成的model中多出的代码拷贝到modelBase中
 

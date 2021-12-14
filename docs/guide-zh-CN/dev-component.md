@@ -9,8 +9,8 @@
 - DictSystem 数据字典组件 
 - CacheSystem 缓存组件  
 - MailSystem 邮件组件 
-- Store 组件 
-- Message 消息组件 
+- StoreSystem 组件 
+- MessageSystem 消息组件 
 - 最佳实践：扩展组件功能或自定义组件
 
 Funboot的所有系统组件以XxxxSystem结尾，配置在common/config/main.php中。代码文件在common/components/base目录下
@@ -25,6 +25,7 @@ Funboot的所有系统组件以XxxxSystem结尾，配置在common/config/main.ph
         'logSystem' => [
             'class' => 'common\components\base\LogSystem',
             'queue' => false,//true, // 是否通过队列方式存数据库
+            'driver' => 'mysql', //'mongodb', // 存储方式，mysql数据库或mongodb数据库
             'levels' => ['error', 'warning'], // 记录日志等级error warning info trace
             'ignoreCodes' => [404], // 忽略错误码
         ],
@@ -144,7 +145,7 @@ $content = CommonHelper::render(Yii::getAlias('@common/mail/mail.php'), [
 Yii::$app->mailSystem->send('funson86@qq.com', '标题：明天有空吗？', $content);
 ```
 
-### Store 组件 
+### StoreSystem 组件 
 
 获取当前store的相关数据，主要用于不方便使用$ths->getStoreId()的地方
 
@@ -154,7 +155,7 @@ $storeId = Yii::$app->storeSystem->getId(); // 获取当前store相关信息
 ```
 
 
-### Message 消息组件 
+### MessageSystem 消息组件 
 
 主要用于发送消息
 

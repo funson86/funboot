@@ -35,7 +35,7 @@ class ImageHelper
     public static function getAvatar($path = null)
     {
         if (!$path) {
-            $path = '/resources/images/default-avatar.png';
+            $path = Yii::$app->params['defaultAvatar'] ?? '/resources/images/default-avatar.png';
         }
         if (strpos($path, '/') === 0) {
             return Yii::getAlias('@web' . $path);
@@ -52,7 +52,24 @@ class ImageHelper
     public static function getLogo($path = null)
     {
         if (!$path) {
-            $path = '/resources/images/default-logo.png';
+            $path = Yii::$app->params['defaultWebsiteLogo'] ?? '/resources/images/default-logo.png';
+        }
+        if (strpos($path, '/') === 0) {
+            return Yii::getAlias('@web' . $path);
+        }
+
+        return $path;
+    }
+
+    /**
+     * 默认商品图
+     * @param string $path
+     * @return bool|string
+     */
+    public static function getProductImage($path = null)
+    {
+        if (!$path) {
+            $path = Yii::$app->params['defaultProductImage'] ?? '/resources/images/default-product-image.png';
         }
         if (strpos($path, '/') === 0) {
             return Yii::getAlias('@web' . $path);

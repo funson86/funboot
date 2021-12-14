@@ -17,7 +17,7 @@ $this->title = Yii::t('app', 'Fans');
 $this->params['breadcrumbs'][] = $this->title;
 
 $tag = Tag::find()->where(['store_id' => $this->context->getStoreId()])->one();
-$tags = ArrayHelper::map($tag->tags, 'id', 'name');
+$tags = $tag ? ArrayHelper::map($tag->tags, 'id', 'name') : [];
 ?>
 
 <div class="row">

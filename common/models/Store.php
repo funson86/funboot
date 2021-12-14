@@ -27,6 +27,15 @@ use common\models\User;
  * @property string $lang_backend_default 后端默认语言
  * @property int $lang_api API支持语言
  * @property string $lang_api_default API默认语言
+ * @property int $consume_count 消费次数
+ * @property float $consume_amount 消费金额
+ * @property float $history_amount 历史金额
+ * @property string $param1 参数1
+ * @property string $param2 参数2
+ * @property string $param3 参数3
+ * @property int $param4 参数4
+ * @property int $param5 参数5
+ * @property float $param6 参数6
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -51,10 +60,11 @@ class Store extends StoreBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['parent_id', 'user_id', 'expired_at', 'language', 'lang_frontend', 'lang_backend', 'lang_api', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['parent_id', 'user_id', 'expired_at', 'language', 'lang_frontend', 'lang_backend', 'lang_api', 'consume_count', 'param4', 'param5', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['remark'], 'string'],
-            [['name', 'brief', 'host_name', 'code', 'qrcode', 'route', 'lang_source', 'lang_frontend_default', 'lang_backend_default', 'lang_api_default'], 'string', 'max' => 255],
+            [['consume_amount', 'history_amount', 'param6'], 'number'],
+            [['name', 'brief', 'host_name', 'code', 'qrcode', 'route', 'lang_source', 'lang_frontend_default', 'lang_backend_default', 'lang_api_default', 'param1', 'param2', 'param3'], 'string', 'max' => 255],
         ]);
     }
 
@@ -84,6 +94,15 @@ class Store extends StoreBase
                 'lang_backend_default' => '后端默认语言',
                 'lang_api' => 'API支持语言',
                 'lang_api_default' => 'API默认语言',
+                'consume_count' => '消费次数',
+                'consume_amount' => '消费金额',
+                'history_amount' => '历史金额',
+                'param1' => '参数1',
+                'param2' => '参数2',
+                'param3' => '参数3',
+                'param4' => '参数4',
+                'param5' => '参数5',
+                'param6' => '参数6',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -113,6 +132,15 @@ class Store extends StoreBase
                 'lang_backend_default' => Yii::t('app', 'Lang Backend Default'),
                 'lang_api' => Yii::t('app', 'Lang Api'),
                 'lang_api_default' => Yii::t('app', 'Lang Api Default'),
+                'consume_count' => Yii::t('app', 'Consume Count'),
+                'consume_amount' => Yii::t('app', 'Consume Amount'),
+                'history_amount' => Yii::t('app', 'History Amount'),
+                'param1' => Yii::t('app', 'Param1'),
+                'param2' => Yii::t('app', 'Param2'),
+                'param3' => Yii::t('app', 'Param3'),
+                'param4' => Yii::t('app', 'Param4'),
+                'param5' => Yii::t('app', 'Param5'),
+                'param6' => Yii::t('app', 'Param6'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

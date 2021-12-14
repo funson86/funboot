@@ -63,14 +63,14 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'sid-<store_id:\d+>' => 'mall/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
-                'site-<store_code:\w+>' => 'site/index', // 根据项目情况进行匹配，可以自定义前缀匹配
-                'store-<store_code:\w+>' => 'mall/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
-                'mall-<store_code:\w+>' => 'mall/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
-                'cms-<store_code:\w+>' => 'cms/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
-                'bbs-<store_code:\w+>' => 'bbs/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'site-<store_code:[\w-]+>' => 'site/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'store-<store_code:[\w-]+>' => 'mall/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'mall-<store_code:[\w-]+>' => 'mall/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'cms-<store_code:[\w-]+>' => 'cms/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
+                'bbs-<store_code:[\w-]+>' => 'bbs/default/index', // 根据项目情况进行匹配，可以自定义前缀匹配
 
                 // pay url 优化
-                'pay/<action:\w+>' => 'pay/default/<action>',
+                'pay/<action:[\w-]+>' => 'pay/default/<action>',
 
                 // cms url 优化
                 'list/<id:\d+>' => 'cms/default/list',
@@ -80,8 +80,8 @@ return [
 
                 // mall url 优化
                 //'product/<id:\d+>' => 'mall/product/view', // url 优化
-                //'product/<action:\w+>/<id:\d+>' => 'mall/product/<action>',
-                //'product/<action:\w+>' => 'mall/product/<action>',
+                //'product/<action:[\w-]+>/<id:\d+>' => 'mall/product/<action>',
+                //'product/<action:[\w-]+>' => 'mall/product/<action>',
 
                 // bbs url 优化
                 'node/<id:\d+>' => 'bbs/default/index',
@@ -89,17 +89,17 @@ return [
                 'bbs/tag' => 'bbs/default/tag',
                 't/<id:\d+>' => 'bbs/topic/view',
                 'topic/<id:\d+>' => 'bbs/topic/view',
-                'topic/<action:\w+>/<id:\d+>' => 'bbs/topic/<action>',
-                'topic/<action:\w+>' => 'bbs/topic/<action>',
+                'topic/<action:[\w-]+>/<id:\d+>' => 'bbs/topic/<action>',
+                'topic/<action:[\w-]+>' => 'bbs/topic/<action>',
                 'bbs/user-action/<action:\d+>/<type:\d+>/<id:\d+>' => 'bbs/user-action/index',
                 'bbs/<alias:login|logout|signup|request-password-reset|reset-password|verify-email|resend-verification-email|tag|yellow-page>' => 'bbs/default/<alias>',
 
-                '<modules:\w+>/<controller:\w+>/<id:\d+>' => '<modules>/<controller>/view',
-                '<modules:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<modules>/<controller>/<action>',
-                '<modules:\w+>/<controller:\w+>/<action:\w+>' => '<modules>/<controller>/<action>',
-                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<modules:[\w-]+>/<controller:[\w-]+>/<id:\d+>' => '<modules>/<controller>/view',
+                '<modules:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<modules>/<controller>/<action>',
+                '<modules:[\w-]+>/<controller:[\w-]+>/<action:[\w-]+>' => '<modules>/<controller>/<action>',
+                '<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
+                '<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:[\w-]+>/<action:[\w-]+>' => '<controller>/<action>',
             ],
         ],
         'assetManager' => [

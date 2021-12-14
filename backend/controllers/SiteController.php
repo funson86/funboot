@@ -100,20 +100,25 @@ class SiteController extends BaseController
         $user = Yii::$app->user->identity;
         $store = CommonHelper::getStoreByHostName();
         if ($user->store_id != $store->id) {
-            $user->token = substr(IdHelper::snowFlakeId(), 0, 8);
-            if ($user->save(false)) {
-                $store = Store::findOne($user->store_id);
-                // 如果客户登录，Store已经非激活，用户无法登录。如果是super admin从后台登录允许
-                if (!Yii::$app->authSystem->isSuperAdmin() && $store->status != Store::STATUS_ACTIVE) {
+            $userStore = CommonHelper::getStoreById($user->store_id);
+            // 如果是子店铺，则是从总后台跳转，允许不同，临时使用。否则可能是总后台，不同帐号点跳转到对应的后台
+            if ($userStore->parent_id == 0) {
+                $user->token = substr(IdHelper::snowFlakeId(), 0, 8);
+                if ($user->save(false)) {
+                    $store = Store::findOne($user->store_id);
+                    // 如果客户登录，Store已经非激活，用户无法登录。如果是super admin从后台登录允许
+                    if (!Yii::$app->authSystem->isSuperAdmin() && $store->status != Store::STATUS_ACTIVE) {
+                        Yii::$app->user->logout();
+                        return $this->redirect(['site/login']);
+                    } else {
+                        // 同一个入口，跳转到不同的后台
+                        return $this->redirect(CommonHelper::getHostPrefix($store->host_name) . '/backend/site/login-backend?token=' . $user->token);
+                    }
+                } else {
+                    Yii::$app->logSystem->db($user->errors);
                     Yii::$app->user->logout();
                     return $this->redirect(['site/login']);
-                } else {
-                    return $this->redirect(CommonHelper::getHostPrefix($store->host_name) . '/backend/site/login-backend?token=' . $user->token);
                 }
-            } else {
-                Yii::$app->logSystem->db($user->errors);
-                Yii::$app->user->logout();
-                return $this->redirect(['site/login']);
             }
         }
 
@@ -190,6 +195,8 @@ class SiteController extends BaseController
                                 Yii::$app->user->logout();
                                 return $this->redirect(['/']);
                             }
+                        } else {
+                            return $this->redirect(['/']);
                         }
                     }
                 }
@@ -362,7 +369,7 @@ class SiteController extends BaseController
         $width = intval(Yii::$app->request->get('width', 300));
         $width > 700 && $width = 700;
 
-        $text = Yii::$app->request->get('text', CommonHelper::getHostPrefix($this->store->host_name));
+        $text = Yii::$app->request->get('text', CommonHelper::getStoreUrl($this->store, Yii::$app->params['storePlatformUrlPrefix']));
         $qrCode = (new QrCode($text))
             ->useEncoding('UTF-8')
             ->setSize($width);

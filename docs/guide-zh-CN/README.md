@@ -43,7 +43,7 @@ Funboot开发文档
 * [FunPay个人收款系统](https://github.com/funson86/funpay) 演示地址：[https://funpay.funboot.net/](https://funpay.funboot.net/)
 * [FunCms建站系统](https://github.com/funson86/funcms) 演示地址：[https://funcms.funboot.net/](https://funcms.funboot.net/)  [网站模板](https://github.com/funson86/funcms)
 * [FunBBS论坛系统](https://github.com/funson86/funbbs) 演示地址：[https://funbbs.funboot.net/](https://funbbs.funboot.net/)  [说明](https://github.com/funson86/funbbs)
-* [FunMall商城系统](https://github.com/funson86/funbbs) 演示地址：[https://funmall.funboot.net/](https://funmall.funboot.net/)  [说明&模板](https://github.com/funson86/funmall)
+* [FunMall商城系统](https://github.com/funson86/funmall) 演示地址：[https://funmall.funboot.net/](https://funmall.funboot.net/)  [说明&模板](https://github.com/funson86/funmall)
 * [FunChat聊天室](https://github.com/funson86/yii2-websocket) 演示地址：[https://chat.funboot.net/](https://chat.funboot.net/)  [说明&模板](https://github.com/funson86/yii2-websocket)
 
 
@@ -76,7 +76,6 @@ Funboot开发文档
 - [Easy Wechat](https://github.com/jianyan74/yii2-treegrid): Easy Wechat微信公众号小程序开发
 - [php-simple-html-dom-parser](https://github.com/Kub-AT/php-simple-html-dom-parser): 简单Html Dom分析器，适用要求不高的采集
 - [Workerman](https://github.com/walkor/Workerman): 基于Workerman的Websocket开发，系统提供一个带历史消息的聊天室
-- [Qrcode](https://github.com/2amigos/qrcode-library): 二维码
 - [Pinyin](https://github.com/overtrue/pinyin): 拼音
 - [Treegrid](https://github.com/jianyan74/yii2-treegrid): Yii树状表
 - [yii2-scheduling](https://github.com/omnilight/yii2-scheduling): 定时任务

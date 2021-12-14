@@ -28,7 +28,7 @@ class NotifyController extends BaseController
     }
 
     /**
-     * 微信回调
+     * 微信支付回调
      * @return bool|string
      */
     public function actionWechat()

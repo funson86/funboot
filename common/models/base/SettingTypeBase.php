@@ -115,7 +115,7 @@ class SettingTypeBase extends BaseModel
     {
         $data = [];
         foreach (Yii::$app->params['routeCode'] as $k => $v) {
-            $data[$k] = Yii::t('cons', Yii::$app->params['routes'][$v]);
+            $data[$k] = Yii::t('cons', Yii::$app->params['routes'][$k]);
         }
 
         $all && $data += [];

@@ -5,6 +5,7 @@ namespace common\components\wechat;
 use common\helpers\ArrayHelper;
 use common\helpers\FileHelper;
 use Yii;
+use yii\web\Request;
 use yii\web\UnprocessableEntityHttpException;
 
 /**
@@ -32,8 +33,13 @@ class WechatSystem extends Wechat
 
         $callbackUrl = $notifyUrl = '';
         if (!empty(Yii::$app->id)) {
-            $callbackUrl = Yii::$app->request->hostInfo . Yii::$app->request->getUrl();
-            $notifyUrl = Yii::$app->request->hostInfo . Yii::$app->urlManager->createUrl(['wechat/notify/index']);
+            if (Yii::$app->request instanceof Request) {
+                $callbackUrl = Yii::$app->request->hostInfo . Yii::$app->request->getUrl();
+                $notifyUrl = Yii::$app->request->hostInfo . Yii::$app->urlManager->createUrl(['wechat/notify/index']);
+            } else { // 控制台
+                $callbackUrl = '';
+                $notifyUrl = '';
+            }
         }
 
         Yii::$app->params['wechat']['wechatConfig'] = ArrayHelper::merge([

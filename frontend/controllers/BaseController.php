@@ -8,6 +8,7 @@ use yii\base\Model;
 use common\models\Store;
 use Yii;
 use yii\helpers\Json;
+use yii\web\Response;
 
 /**
  * Class BaseController
@@ -32,6 +33,11 @@ class BaseController extends \common\components\controller\BaseController
     {
         if (!parent::beforeAction($action)) {
             return false;
+        }
+
+        // 不允许跨子系统访问，比如在mall中访问 /site/index不允许
+        if (Yii::$app->defaultRoute != $this->module->getUniqueId()) {
+            return $this->goHome()->send();
         }
 
         $store = $this->store;
@@ -59,7 +65,7 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
-     * 处理通用数据
+     * 处理通用数据，子系统覆盖
      * @param $model
      * @return array
      */
@@ -70,6 +76,21 @@ class BaseController extends \common\components\controller\BaseController
         $commonData = [];
 
         return $commonData;
+    }
+
+    /**
+     * 平台跳转，子店铺跳转到自己的地址
+     * @param null $store
+     * @return Response
+     */
+    public function goHome()
+    {
+        $store = Yii::$app->storeSystem->get();
+        if ($store->parent_id > 0) {
+            return $this->response->redirect(CommonHelper::getStoreUrl($store, Yii::$app->params['storePlatformUrlPrefix']));
+        }
+
+        return parent::goHome();
     }
 
     /**

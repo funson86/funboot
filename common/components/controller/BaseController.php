@@ -39,6 +39,12 @@ class BaseController extends Controller
      */
     protected $pageSize = 10;
 
+    /**
+     * @param \yii\base\Action $action
+     * @return bool
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function beforeAction($action)
     {
         // 优先级从先到后：指定store_code, store_id，用户store_id，host_name，其中指定store_id放到session中，后续其他url无需再指定store_id也能匹配
@@ -81,8 +87,8 @@ class BaseController extends Controller
 
         // frontend 需要设置在AccessControl前设置loginUrl，所以要在parent::beforeAction之前
         if (Yii::$app->defaultRoute != 'site') {
-            // 设置bbs登录地址
-            Yii::$app->user->loginUrl = ['/' . $this->store->route. '/default/login'];
+            // 设置bbs或其他模块登录地址
+            Yii::$app->user->loginUrl = ['/' . $this->store->route . '/default/login'];
         }
 
         if (!parent::beforeAction($action)) {
@@ -102,15 +108,19 @@ class BaseController extends Controller
      */
     protected function findModel($id, $action = false)
     {
-        /* @var $model \yii\db\ActiveRecord */
-        $storeId = ($this->modelClass === Store::class) ? null : $this->getStoreId();
-        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
-            if ($action) {
-                return null;
-            }
+        try {
+            /* @var $model \yii\db\ActiveRecord */
+            $storeId = ($this->modelClass === Store::class) ? null : $this->getStoreId();
+            if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
+                if ($action) {
+                    return null;
+                }
 
-            $model = new $this->modelClass();
-            $model->loadDefaultValues();
+                $model = new $this->modelClass();
+                $model->loadDefaultValues();
+            }
+        } catch (\Exception $e) {
+            Yii:$this->error($e->getMessage());
         }
 
         return $model;
@@ -271,16 +281,19 @@ class BaseController extends Controller
      * @param string $url 跳转链接
      * @param bool $logDb
      * @return mixed
-     * @throws \yii\base\InvalidConfigException
      */
     protected function redirectError($msg = null, $url = null, $logDb = false)
     {
-        !$url && $url = Yii::$app->request->referrer;
-        if ($msg instanceof Model) {
-            Yii::$app->logSystem->db($msg->errors);
-            $msg = $this->getError($msg);
-        } elseif ($logDb) {
-            Yii::$app->logSystem->db($msg->errors);
+        try {
+            !$url && $url = Yii::$app->request->referrer;
+            if ($msg instanceof Model) {
+                Yii::$app->logSystem->db($msg->errors);
+                $msg = $this->getError($msg);
+            } elseif ($logDb) {
+                Yii::$app->logSystem->db($msg->errors);
+            }
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
         }
         $this->flashError($msg);
         return $this->redirect($url);
