@@ -230,6 +230,14 @@ class CommonHelper
             if (preg_match("/(" . implode('|', $clientKeywords) . ")/i", strtolower($_SERVER['HTTP_USER_AGENT']))) {
                 return true;
             }
+
+            // 如果是爬虫，返回移动版
+            $spiders = ['bot', 'crawl', 'spider' ,'slurp', 'sohu-search', 'lycos'];
+            foreach ($spiders as $spider) {
+                if (strpos($_SERVER['HTTP_USER_AGENT'], $spider) !== false) {
+                    return true;
+                }
+            }
         }
         // 协议法，因为有可能不准确，放到最后判断
         if (isset ($_SERVER['HTTP_ACCEPT'])) {
