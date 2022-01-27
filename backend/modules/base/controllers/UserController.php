@@ -54,6 +54,18 @@ class UserController extends BaseController
     ];
 
     /**
+     * 不显示管理员帐号
+     * @param $params
+     * @return bool|void
+     */
+    protected function filterParams(&$params)
+    {
+        if (!$this->isAdmin()) {
+            $params['ModelSearch']['id'] = '<>' . $this->store->user_id;
+        }
+    }
+
+    /**
      * 编辑/创建
      *
      * @return mixed
