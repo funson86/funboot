@@ -44,14 +44,6 @@ use yii\db\ActiveRecord;
  */
 class StoreBase extends BaseModel
 {
-    const SUPPORT_SHIPMENT_DELIVERY = 1;
-    const SUPPORT_SHIPMENT_COLLECTION = 2;
-    const SUPPORT_SHIPMENT_BOTH = 3;
-
-    const SUPPORT_PAYMENT_CARD = 1;
-    const SUPPORT_PAYMENT_CASH = 2;
-    const SUPPORT_PAYMENT_BOTH = 3;
-
     const STATUS_MAINTENANCE = -5;
 
     public $expiredTime;
