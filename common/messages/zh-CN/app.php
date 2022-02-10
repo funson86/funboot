@@ -245,6 +245,8 @@ return [
     'Renew ' => '续期',
     'Sub' => '创建子店铺',
     'Sub ' => '创建子店铺',
+    'Maintain All' => '维护所有',
+    'Cancel Maintenance' => '取消维护',
 
     'IS_NEW' => '新品',
     'IS_HOT' => '热销',

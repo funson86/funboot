@@ -281,6 +281,16 @@ class BaseModel extends ActiveRecord
     }
 
     /**
+     *
+     * @param $status
+     * @return bool
+     */
+    public static function isStatusActiveInactive($status)
+    {
+        return in_array($status, [self::STATUS_INACTIVE, self::STATUS_ACTIVE]);
+    }
+
+    /**
      * @param bool $pleaseFilter
      * @param string $label
      * @param string $id

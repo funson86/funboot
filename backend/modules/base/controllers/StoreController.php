@@ -54,7 +54,7 @@ class StoreController extends BaseController
 
    protected function filterParams(&$params)
    {
-       $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
+       $params['ModelSearch']['status'] = '>=' . $this->modelClass::STATUS_DELETED;
    }
 
     /**
@@ -296,5 +296,28 @@ class StoreController extends BaseController
         }
 
         return CommonHelper::getHostPrefix($model->host_name) . '/resources/qrcode/' . $model->id . '.png';
+    }
+
+    /**
+     * 状态正常的变成维护状态
+     * @return mixed
+     */
+    public function actionEditMaintainAll()
+    {
+        Store::updateAll(['status' => $this->modelClass::STATUS_MAINTENANCE], ['status' => $this->modelClass::STATUS_ACTIVE]);
+        Yii::$app->cacheSystem->clearAllStore();
+
+        return $this->redirectSuccess();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionEditMaintainCancel()
+    {
+        Store::updateAll(['status' => $this->modelClass::STATUS_ACTIVE], ['status' => $this->modelClass::STATUS_MAINTENANCE]);
+        Yii::$app->cacheSystem->clearAllStore();
+
+        return $this->redirectSuccess();
     }
 }

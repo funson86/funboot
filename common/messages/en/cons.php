@@ -13,6 +13,7 @@ return [
     'STATUS_ARCHIVE' => 'Archive',
     'STATUS_EXPIRED' => 'Expired',
     'STATUS_USED' => 'Used',
+    'STATUS_MAINTENANCE' => 'Maintenance',
     'YES' => 'Yes',
     'NO' => 'No',
     'TYPE_A' => 'Type A',

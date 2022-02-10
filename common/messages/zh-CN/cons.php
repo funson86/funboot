@@ -13,6 +13,7 @@ return [
     'STATUS_ARCHIVE' => '归档',
     'STATUS_EXPIRED' => '过期',
     'STATUS_USED' => '已用',
+    'STATUS_MAINTENANCE' => '维护',
     'YES' => '是',
     'NO' => '否',
     'TYPE_A' => '类型一',

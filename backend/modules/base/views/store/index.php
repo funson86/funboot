@@ -21,6 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Stores'] ?? null) ?></h2>
                 <div class="card-tools">
+                    <?= Html::buttonModal(['edit-maintain-all'], Yii::t('app', 'Maintain All'), ['class' => 'btn btn-sm btn-danger'], false) ?>
+                    <?= Html::buttonModal(['edit-maintain-cancel'], Yii::t('app', 'Cancel Maintenance'), ['class' => 'btn btn-sm btn-success'], false) ?>
                     <?= Html::createModal(['edit-ajax'], null, ['size' => 'Large']) ?>
                     <?= Html::buttonModal(['edit-config'], Yii::t('app', 'Refresh Config File'), ['class' => 'btn btn-sm btn-warning'], false) ?>
                     <?= Html::buttonModal(['edit-qrcode'], Yii::t('app', 'Refresh Qrcode'), ['class' => 'btn btn-sm btn-info'], false) ?>
@@ -60,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'history_amount',
                         // ['attribute' => 'type', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => false,],
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
-                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::status($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'expired_at:datetime',
                         'created_at:datetime',
                         // 'updated_at:datetime',

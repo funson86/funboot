@@ -52,6 +52,8 @@ class StoreBase extends BaseModel
     const SUPPORT_PAYMENT_CASH = 2;
     const SUPPORT_PAYMENT_BOTH = 3;
 
+    const STATUS_MAINTENANCE = -5;
+
     public $expiredTime;
     public $types;
     public $languages;
@@ -100,6 +102,21 @@ class StoreBase extends BaseModel
                 'value' => $userId,
             ],
         ];
+    }
+
+    public static function getStatusLabels($id = null, $all = false, $flip = false)
+    {
+        $data = parent::getStatusLabels(null, true);
+        $data += [
+            self::STATUS_MAINTENANCE => Yii::t('cons', 'STATUS_MAINTENANCE'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+
     }
 
     /**
