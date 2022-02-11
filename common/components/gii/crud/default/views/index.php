@@ -67,7 +67,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         // 如果是下拉或者单选
         if ($column->name == 'status') {
             $filter = "'filter' => Html::activeDropDownList(\$searchModel, '" . $column->name . "', ActiveModel::get" . Inflector::camelize($column->name) . "Labels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),";
-            echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'format' => 'raw', 'value' => function (\$model) { return Html::status(\$model->status); }, " . $filter . "],\n";
+            echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'format' => 'raw', 'value' => function (\$model) { return ActiveModel::isStatusActiveInactive(\$model->status) ? Html::status(\$model->status) : ActiveModel::getStatusLabels(\$model->status); }, " . $filter . "],\n";
         } elseif ($column->name == 'store_id') {
             $filter = "'filter' => Html::activeDropDownList(\$searchModel, 'store_id', ArrayHelper::map(\$this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),";
             echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'visible' => \$this->context->isAdmin(), 'value' => function (\$model) { return \$model->store->name; }, " . $filter . "],\n";
