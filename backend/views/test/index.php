@@ -103,7 +103,7 @@ use common\helpers\Html;
                             'template' => '{status} {edit} {delete}',
                             'buttons' => [
                                 'status' => function ($url, $model, $key) {
-                                    return Html::status($model->status);
+                                    return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status);
                                 },
                                 'permission' => function ($url, $model, $key) {
                                     return Html::buttonModal(['edit-ajax-permission', 'id' => $model->id], '菜单权限', ['class' => 'btn btn-primary btn-sm']);

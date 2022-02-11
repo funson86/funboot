@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'tree',
                         // 'type',
                         ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
-                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::status($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'created_at:datetime',
                         // 'updated_at:datetime',
                         // 'created_by',
@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'template' => '{permission} {department} {edit} {delete}',
                             'buttons' => [
                                 'status' => function ($url, $model, $key) {
-                                    return Html::status($model->status);
+                                    return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status);
                                 },
                                 'permission' => function ($url, $model, $key) {
                                     return Html::buttonModal(['edit-ajax-permission', 'id' => $model->id], Yii::t('app', 'Menu Permission'), ['class' => 'btn btn-primary btn-sm']);
