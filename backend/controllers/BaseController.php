@@ -247,8 +247,13 @@ class BaseController extends \common\components\controller\BaseController
      *
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
@@ -264,8 +269,13 @@ class BaseController extends \common\components\controller\BaseController
      *
      * @return mixed
      */
-    public function actionViewAjax($id)
+    public function actionViewAjax()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
@@ -366,11 +376,15 @@ class BaseController extends \common\components\controller\BaseController
      * ajax更新字段
      * 在继承的controller中重新定义$editAjaxFields 即可支持指定的字段，默认支持name sort
      *
-     * @param $id
      * @return array
      */
-    public function actionEditAjaxField($id)
+    public function actionEditAjaxField()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->error(404);
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->error(404);
@@ -414,8 +428,13 @@ class BaseController extends \common\components\controller\BaseController
      * @param $id
      * @return array
      */
-    public function actionEditAjaxStatus($id)
+    public function actionEditAjaxStatus()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->error(404);
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->error(404);
@@ -426,23 +445,23 @@ class BaseController extends \common\components\controller\BaseController
             return $this->error(422);
         }
 
-        $this->beforeEditAjaxStatus($id, $model);
+        $this->beforeEditAjaxStatus($id, $status, $model);
         $model->status = intval($status);
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
             return $this->error(500, $this->getError($model));
         }
-        $this->afterEditAjaxStatus($id, $model);
+        $this->afterEditAjaxStatus($id, $status, $model);
 
         return $this->success($model->attributes);
     }
 
-    protected function beforeEditAjaxStatus($id, $model = null)
+    protected function beforeEditAjaxStatus($id, $status, $model = null)
     {
         return true;
     }
 
-    protected function afterEditAjaxStatus($id, $model = null)
+    protected function afterEditAjaxStatus($id, $status, $model = null)
     {
         return true;
     }
@@ -454,8 +473,13 @@ class BaseController extends \common\components\controller\BaseController
      * @return array
      * @throws \yii\base\InvalidConfigException
      */
-    public function actionEditStatus($id)
+    public function actionEditStatus()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
@@ -466,13 +490,25 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
+        $this->beforeEditStatus($id, $status, $model);
         $model->status = intval($status);
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
             return $this->error(500, $this->getError($model));
         }
+        $this->afterEditStatus($id, $status, $model);
 
         return $this->redirectSuccess();
+    }
+
+    protected function beforeEditStatus($id, $status, $model = null)
+    {
+        return true;
+    }
+
+    protected function afterEditStatus($id, $status, $model = null)
+    {
+        return true;
     }
 
     /**
@@ -484,8 +520,13 @@ class BaseController extends \common\components\controller\BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
