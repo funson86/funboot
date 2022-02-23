@@ -167,8 +167,13 @@ class BaseController extends ActiveController
      *
      * @return ActiveDataProvider
      */
-    public function actionView($id)
+    public function actionView()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->error();
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->error();
@@ -204,8 +209,13 @@ class BaseController extends ActiveController
      * @return mixed|\yii\db\ActiveRecord
      * @throws \Exception
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->error();
+        }
+
         if (!$this->modelClass) {
             return $this->error();
         }
@@ -234,8 +244,13 @@ class BaseController extends ActiveController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->error();
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->error();
