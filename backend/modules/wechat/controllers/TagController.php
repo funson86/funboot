@@ -89,8 +89,13 @@ class TagController extends BaseController
 
     }
 
-    public function actionEditAjaxField($id)
+    public function actionEditAjaxField()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->error();
+        }
+
         if ($value = Yii::$app->request->post('value')) {
             Yii::$app->wechat->app->user_tag->update($id, $value);
         }
@@ -100,8 +105,13 @@ class TagController extends BaseController
         return $this->success(null, null, Yii::t('app', 'Edit Successfully'));
     }
 
-    public function actionDelete($id)
+    public function actionDelete()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         Yii::$app->wechat->app->user_tag->delete($id);
         TagService::syncAll();
 

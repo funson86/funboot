@@ -162,8 +162,13 @@ class DictDataController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionDeleteDict($id)
+    public function actionDeleteDict()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $model = Dict::findOne($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));;

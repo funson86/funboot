@@ -181,8 +181,13 @@ class StoreController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionLogin($id)
+    public function actionLogin()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
@@ -207,8 +212,13 @@ class StoreController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionGo($id)
+    public function actionGo()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $model = $this->findModel($id, true);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));

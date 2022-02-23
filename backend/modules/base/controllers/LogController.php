@@ -64,8 +64,13 @@ class LogController extends BaseController
      * @return string
      * @throws \yii\web\NotFoundHttpException
      */
-    public function actionIndex($type = 1)
+    public function actionIndex()
     {
+        $type = Yii::$app->request->get('type');
+        if (!$type) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         if (Yii::$app->logSystem->driver == LogSystem::DRIVER_MONGODB) {
             $query = $this->modelClass::find()->where(['type' => intval($type)]);
             $pagination = new Pagination(['totalCount' => $query->count(), 'pageSize' => $this->pageSize]);
@@ -109,8 +114,13 @@ class LogController extends BaseController
      * @param string $type
      * @return array|mixed
      */
-    public function actionStatAjaxError($type = null)
+    public function actionStatAjaxError()
     {
+        $type = Yii::$app->request->get('type');
+        if (!$type) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         // 返回Modal视图
         if (empty($type)) {
             return $this->renderAjax($this->action->id);
@@ -135,8 +145,13 @@ class LogController extends BaseController
      * @param string $type
      * @return array|mixed
      */
-    public function actionStatAjaxLogin($type = null)
+    public function actionStatAjaxLogin()
     {
+        $type = Yii::$app->request->get('type');
+        if (!$type) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         // 返回Modal视图
         if (empty($type)) {
             return $this->renderAjax($this->action->id);
