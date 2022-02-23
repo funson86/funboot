@@ -39,6 +39,13 @@ class UserActionController extends BaseController
 
     public function actionIndex($action, $type, $id)
     {
+        $action = Yii::$app->request->get('action');
+        $type = Yii::$app->request->get('type');
+        $id = Yii::$app->request->get('id');
+        if (!$action || !$type || !$id) {
+            return $this->goBack();
+        }
+
         $model = UserAction::find()->where(['user_id' => Yii::$app->user->id, 'action' => $action, 'type' => $type, 'target_id' => $id])->one();
         $counter = 1;
         if (!$model) {

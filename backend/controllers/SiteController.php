@@ -311,8 +311,10 @@ class SiteController extends BaseController
         return $this->redirectSuccess();
     }
 
-    public function actionStat($category = 'user', $type = 'last30Day')
+    public function actionStat()
     {
+        $category = Yii::$app->request->get('category', 'user');
+        $type = Yii::$app->request->get('type', 'last30Day');
         $fields = [
             'count' => Yii::t('app', 'Count'),
             'price' => Yii::t('app', 'Price'),

@@ -209,12 +209,16 @@ class SiteController extends BaseController
     /**
      * Resets password.
      *
-     * @param string $token
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    public function actionResetPassword()
     {
+        $token = Yii::$app->request->get('token');
+        if (!$token) {
+            return $this->goBack();
+        }
+
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidArgumentException $e) {
@@ -235,12 +239,16 @@ class SiteController extends BaseController
     /**
      * Verify email address
      *
-     * @param string $token
      * @throws BadRequestHttpException
      * @return yii\web\Response
      */
-    public function actionVerifyEmail($token)
+    public function actionVerifyEmail()
     {
+        $token = Yii::$app->request->get('token');
+        if (!$token) {
+            return $this->goBack();
+        }
+
         try {
             $model = new VerifyEmailForm($token);
         } catch (InvalidArgumentException $e) {

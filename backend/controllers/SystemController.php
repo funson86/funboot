@@ -64,12 +64,12 @@ class SystemController extends BaseController
 
     /**
       * 列表页
-      * @param int $type
       * @return string
       * @throws \yii\web\NotFoundHttpException
       */
-    public function actionIndex($type = '')
+    public function actionIndex()
     {
+        $type = Yii::$app->request->get('type', '');
         $provider = ProviderFactory::create();
         if (!$provider) {
             return $this->htmlFailed();

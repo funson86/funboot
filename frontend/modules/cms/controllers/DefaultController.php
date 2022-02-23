@@ -184,8 +184,13 @@ class DefaultController extends BaseController
      * @param $id
      * @return string|\yii\web\Response
      */
-    public function actionList($id)
+    public function actionList()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         if (!$this->model || $this->model->store_id != $this->store->id) {
             return $this->goHome();
         }
@@ -211,8 +216,13 @@ class DefaultController extends BaseController
         ]);
     }
 
-    public function actionMenu($id)
+    public function actionMenu()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         if (!$this->model || $this->model->store_id != $this->store->id) {
             return $this->goHome();
         }
@@ -223,8 +233,13 @@ class DefaultController extends BaseController
         ]);
     }
 
-    public function actionPage($id)
+    public function actionPage()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         if (!$this->model || $this->model->store_id != $this->store->id) {
             return $this->goHome();
         }

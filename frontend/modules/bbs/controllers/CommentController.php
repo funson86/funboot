@@ -68,8 +68,13 @@ class CommentController extends BaseController
         return  $this->goBack();
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         $model = Comment::findOne($id);
         if (!$model || $model->store_id != $this->getStoreId() || !$model->isOwner()) {
             return $this->goBack();
@@ -89,8 +94,13 @@ class CommentController extends BaseController
         ]);
     }
 
-    public function actionDelete($id)
+    public function actionDelete()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         $model = Comment::findOne($id);
         if (!$model || $model->store_id != $this->getStoreId() || !($model->isOwner() || $this->isManager())) {
             return $this->goBack();

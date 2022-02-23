@@ -43,8 +43,9 @@ class FileController extends \common\components\controller\BaseController
         $this->enableCsrfValidation = false;
     }
 
-    public function actionIndex($json = false)
+    public function actionIndex()
     {
+        $json = Yii::$app->request->get('json', false);
         $storeId = Yii::$app->authSystem->isAdmin() ? null : Yii::$app->storeSystem->getId();
 
         $uploadType = Yii::$app->request->get('upload_type', '');

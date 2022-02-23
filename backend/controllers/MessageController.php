@@ -64,8 +64,9 @@ class MessageController extends BaseController
       * @return string
       * @throws \yii\web\NotFoundHttpException
       */
-    public function actionIndex($status = 0)
+    public function actionIndex()
     {
+        $status = Yii::$app->request->get('status', 0);
         $searchModel = new ModelSearch([
             'model' => Message::class,
             'scenario' => 'default',
@@ -92,12 +93,12 @@ class MessageController extends BaseController
 
     /**
       * 列表页
-      * @param int $status
       * @return string
       * @throws \yii\web\NotFoundHttpException
       */
-    public function actionList($status = 0)
+    public function actionList()
     {
+        $status = Yii::$app->request->get('status', 0);
         $unread = Message::find()->where(['user_id' => Yii::$app->user->id, 'status' => Message::STATUS_UNREAD])->count();
 
         $models = Message::find()->where(['user_id' => Yii::$app->user->id, 'status' => Message::STATUS_UNREAD])
@@ -128,8 +129,13 @@ class MessageController extends BaseController
      *
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $model = Message::findOne($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
@@ -148,13 +154,17 @@ class MessageController extends BaseController
     /**
      * 删除
      *
-     * @param $id
      * @return mixed
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $model = Message::findOne($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));

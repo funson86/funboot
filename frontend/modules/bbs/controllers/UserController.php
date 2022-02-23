@@ -48,6 +48,11 @@ class UserController extends BaseController
 
     public function actionView($id)
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         $model = $this->findModel($id, true);
         if (!$model || $model->status != $this->modelClass::STATUS_ACTIVE) {
             return $this->goBack();

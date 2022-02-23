@@ -49,8 +49,13 @@ class TopicController extends BaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionView($id)
+    public function actionView()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         $model = Topic::find()->where(['store_id' => $this->getStoreId(), 'id' => $id])->one();
         if (!$model || (!$this->isManager() && $model->status != Topic::STATUS_ACTIVE)) {
             return $this->goBack();
@@ -166,8 +171,13 @@ class TopicController extends BaseController
 
     }
 
-    public function actionDelete($id)
+    public function actionDelete()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         if (!$model = $this->findModel($id, true)) {
             return $this->goBack();
         }
@@ -184,8 +194,13 @@ class TopicController extends BaseController
         return $this->redirectSuccess();
     }
 
-    public function actionExcellent($id)
+    public function actionExcellent()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         if (!$this->isManager() || !$model = $this->findModel($id, true)) {
             return $this->goBack();
         }
@@ -199,8 +214,13 @@ class TopicController extends BaseController
         return $this->redirectSuccess();
     }
 
-    public function actionTop($id)
+    public function actionTop()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         if (!$this->isManager() || !$model = $this->findModel($id, true)) {
             return $this->goBack();
         }
@@ -214,8 +234,13 @@ class TopicController extends BaseController
         return $this->redirectSuccess();
     }
 
-    public function actionPass($id)
+    public function actionPass()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->goBack();
+        }
+
         if (!$this->isManager() || !$model = $this->findModel($id, true)) {
             return $this->goBack();
         }
