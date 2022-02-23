@@ -46,7 +46,7 @@ class UserController extends BaseController
         ];
     }
 
-    public function actionView($id)
+    public function actionView()
     {
         $id = Yii::$app->request->get('id');
         if (!$id) {

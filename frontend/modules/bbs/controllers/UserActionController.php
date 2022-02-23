@@ -37,7 +37,7 @@ class UserActionController extends BaseController
         ];
     }
 
-    public function actionIndex($action, $type, $id)
+    public function actionIndex()
     {
         $action = Yii::$app->request->get('action');
         $type = Yii::$app->request->get('type');
