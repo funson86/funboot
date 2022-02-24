@@ -37,7 +37,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         // 不允许跨子系统访问，比如在mall中访问 /site/index不允许
-        if (Yii::$app->defaultRoute != $this->module->getUniqueId()) {
+        if (Yii::$app->defaultRoute != 'site' && Yii::$app->defaultRoute != $this->module->getUniqueId()) {
             return $this->goHome()->send();
         }
 
