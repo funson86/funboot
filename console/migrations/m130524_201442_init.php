@@ -550,7 +550,7 @@ CREATE TABLE `fb_base_lang` (
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `source` varchar(255) NOT NULL COMMENT '源语言',
   `target` varchar(255) NOT NULL COMMENT '目标语言',
-  `table_code` int(11) NOT NULL DEFAULT 0 COMMENT '表代码',
+  `table_code` int(11) NOT NULL DEFAULT 1 COMMENT '表代码',
   `target_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '目标ID',
   `content` text COMMENT '内容',
   `type` int(11) NOT NULL DEFAULT 1 COMMENT '类型',

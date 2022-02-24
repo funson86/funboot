@@ -18,9 +18,9 @@ use common\models\Store;
  * @property string|null $banner 横幅图
  * @property string|null $banner_h5 手机横幅图
  * @property string $seo_title 搜索优化标题
- * @property string $seo_keywords 搜索优化关键词
- * @property string|null $seo_description 搜索优化描述
- * @property string|null $brief 简述
+ * @property string $seo_keywords 搜索关键词
+ * @property string|null $seo_description 搜索描述
+ * @property string|null $brief 简介
  * @property string|null $content 内容
  * @property string $redirect_url 跳转链接
  * @property int $page_size 分页数量
@@ -75,9 +75,9 @@ class Catalog extends CatalogBase
                 'banner' => '横幅图',
                 'banner_h5' => '手机横幅图',
                 'seo_title' => '搜索优化标题',
-                'seo_keywords' => '搜索优化关键词',
-                'seo_description' => '搜索优化描述',
-                'brief' => '简述',
+                'seo_keywords' => '搜索关键词',
+                'seo_description' => '搜索描述',
+                'brief' => '简介',
                 'content' => '内容',
                 'redirect_url' => '跳转链接',
                 'page_size' => '分页数量',

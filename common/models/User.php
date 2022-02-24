@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\User;
 use common\models\Store;
 
 /**
@@ -33,10 +34,11 @@ use common\models\Store;
  * @property int $city_id 市
  * @property int $district_id 区
  * @property string $address 地址
- * @property string|null $birthday 生日
+ * @property string $birthday 生日
  * @property int $point 积分
  * @property float $balance 余额
  * @property string $remark 备注
+ * @property int $login_count 登录次数
  * @property int $last_login_at 最近登录时间
  * @property string $last_login_ip 最近登录IP
  * @property int $last_paid_at 最近消费时间
@@ -67,14 +69,13 @@ class User extends UserBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'parent_id', 'auth_role', 'sex', 'province_id', 'city_id', 'district_id', 'point', 'last_login_at', 'last_paid_at', 'consume_count', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'parent_id', 'auth_role', 'sex', 'province_id', 'city_id', 'district_id', 'point', 'login_count', 'last_login_at', 'last_paid_at', 'consume_count', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['username'], 'required'],
-            [['birthday'], 'safe'],
             [['balance', 'consume_amount'], 'number'],
             [['username'], 'string', 'max' => 190],
             [['auth_key'], 'string', 'max' => 32],
             [['token'], 'string', 'max' => 64],
-            [['access_token', 'refresh_token', 'password_hash', 'password_reset_token', 'verification_token', 'openid', 'unionid', 'email', 'mobile', 'name', 'brief', 'area', 'address', 'remark', 'last_login_ip', 'last_paid_ip'], 'string', 'max' => 255],
+            [['access_token', 'refresh_token', 'password_hash', 'password_reset_token', 'verification_token', 'openid', 'unionid', 'email', 'mobile', 'name', 'brief', 'area', 'address', 'birthday', 'remark', 'last_login_ip', 'last_paid_ip'], 'string', 'max' => 255],
             [['avatar'], 'string', 'max' => 1022],
             [['username'], 'unique'],
         ]);
@@ -116,6 +117,7 @@ class User extends UserBase
                 'point' => '积分',
                 'balance' => '余额',
                 'remark' => '备注',
+                'login_count' => '登录次数',
                 'last_login_at' => '最近登录时间',
                 'last_login_ip' => '最近登录IP',
                 'last_paid_at' => '最近消费时间',
@@ -161,6 +163,7 @@ class User extends UserBase
                 'point' => Yii::t('app', 'Point'),
                 'balance' => Yii::t('app', 'Balance'),
                 'remark' => Yii::t('app', 'Remark'),
+                'login_count' => Yii::t('app', 'Login Count'),
                 'last_login_at' => Yii::t('app', 'Last Login At'),
                 'last_login_ip' => Yii::t('app', 'Last Login Ip'),
                 'last_paid_at' => Yii::t('app', 'Last Paid At'),
