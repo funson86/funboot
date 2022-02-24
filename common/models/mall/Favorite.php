@@ -11,6 +11,7 @@ use common\models\Store;
  *
  * @property int $id
  * @property int $store_id 商家
+ * @property string $name 名称
  * @property int $user_id 用户
  * @property int $product_id 商品
  * @property int $type 类型
@@ -39,6 +40,7 @@ class Favorite extends FavoriteBase
         return array_merge(parent::rules(), [
             [['store_id', 'user_id', 'product_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['user_id'], 'required'],
+            [['name'], 'string', 'max' => 255],
         ]);
     }
 
@@ -51,6 +53,7 @@ class Favorite extends FavoriteBase
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
+                'name' => '名称',
                 'user_id' => '用户',
                 'product_id' => '商品',
                 'type' => '类型',
@@ -65,6 +68,7 @@ class Favorite extends FavoriteBase
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
+                'name' => Yii::t('app', 'Name'),
                 'user_id' => Yii::t('app', 'User ID'),
                 'product_id' => Yii::t('app', 'Product ID'),
                 'type' => Yii::t('app', 'Type'),

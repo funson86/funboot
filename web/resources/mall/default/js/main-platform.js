@@ -24,25 +24,3 @@ jQuery(function ($) {
     });
 
 });
-
-jQuery(function ($) {
-
-    //赞, 踩, 收藏 等操作
-    $(document).on('click', '[data-action]', function (e) {
-        var _this = $(this),
-            _id = _this.data('id'),
-            _do = _this.data('action'),
-            _type = _this.data('type');
-        if (_this.is('a')) e.preventDefault();
-        $.ajax({
-            url: '/bbs/user-action/' + [_do, _type, _id].join('/'),
-            success: function (result) {
-                if (result.code != 200) {
-                    return alert(result.msg);
-                }
-
-                window.location.reload();
-            }
-        });
-    });
-});

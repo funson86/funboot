@@ -310,7 +310,7 @@ return [
     'Total' => '총액',
     'Archive' => '분류 하여 보존 하 다.',
     'Order Log' => '주문 일지',
-    'Order Logs' => '총액',
+    'Order Logs' => '주문 일지',
     'Cart' => '카 트',
     'Carts' => '카 트',
     'Addresses' => '주소.',

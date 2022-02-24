@@ -38,6 +38,7 @@ class ConsultationBase extends BaseModel
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
             'product_id' => Yii::t('app', 'Product ID'),
+            'user_id' => Yii::t('app', 'User ID'),
             'name' => Yii::t('app', 'Name'),
             'question' => Yii::t('app', 'Question'),
             'answer' => Yii::t('app', 'Answer'),

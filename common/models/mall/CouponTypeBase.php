@@ -2,6 +2,7 @@
 
 namespace common\models\mall;
 
+use common\helpers\StringHelper;
 use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
@@ -111,5 +112,15 @@ class CouponTypeBase extends BaseModel
         } else {
             return '-' . $currency . $model['money'];
         }
+    }
+
+    public static function getMoneyValue($money, $type)
+    {
+        return $type == self::TYPE_PERCENT ? StringHelper::strToNumberOfPercent($money) : $money;
+    }
+
+    public static function getDiscountByCoupon($amount, $coupon)
+    {
+        return $coupon['type'] == self::TYPE_PERCENT ? StringHelper::strToNumberOfPercent($coupon['money']) * $amount : $coupon['money'];
     }
 }

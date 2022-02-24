@@ -115,14 +115,14 @@ return [
     'SHIPMENT_STATUS_SHIPPING' => '已出发',
     'SHIPMENT_STATUS_RECEIVED' => '已送达',
 
-    'POINT_TYPE_BOUGHT' => '购买商品',
-    'POINT_TYPE_COMMENT' => '评价商品',
-    'POINT_TYPE_BUYING' => '消费积分',
+    'TYPE_BOUGHT' => '购买商品',
+    'TYPE_COMMENT' => '评价商品',
+    'TYPE_BUYING' => '消费积分',
 
-    'COUPON_TYPE_USER' => '按用户发送',
-    'COUPON_TYPE_ORDER' => '按订单发送',
-    'COUPON_TYPE_AMOUNT' => '按金额发送',
-    'COUPON_TYPE_OFFLINE' => '生成优惠码',
+    'TYPE_USER' => '按用户发送',
+    'TYPE_ORDER' => '按订单发送',
+    'TYPE_AMOUNT' => '按金额发送',
+    'TYPE_OFFLINE' => '生成优惠码',
 
     'IS_NEW' => '新品',
     'IS_HOT' => '热销',

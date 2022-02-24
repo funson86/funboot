@@ -189,6 +189,21 @@ class StringHelper extends BaseStringHelper
     }
 
     /**
+     * 加密名称
+     * @param $str
+     * @param string $target
+     * @return mixed
+     */
+    public static function secretName($str, $secretChar = '*')
+    {
+        if (strpos($str, '@') !== false) {
+            return self::secretEmail($str, $secretChar);
+        }
+
+        return substr($str, 0, 2) . '***' . substr($str, -2);
+    }
+
+    /**
      * 百分比转数值
      * @param $str
      * @param int $decimals
@@ -228,6 +243,7 @@ class StringHelper extends BaseStringHelper
     /**
      * 判断url文件是否存在
      * @param $url
+     * @return string
      */
     public static function getAttachmentPath($url)
     {
@@ -243,5 +259,15 @@ class StringHelper extends BaseStringHelper
         }
 
         return Yii::getAlias('@attachment') . $url;
+    }
+
+    /**
+     * 判断url是否为相对路径
+     * @param $url
+     * @return bool
+     */
+    public static function urlFull($url)
+    {
+        return (strpos($url, 'http://') !== false) || (strpos($url, 'https://') !== false);
     }
 }

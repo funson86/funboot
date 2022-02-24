@@ -22,8 +22,8 @@ class CacheSystemCms extends CacheSystem
     {
         $models = Yii::$app->cacheSystem->getAllStore();
         foreach ($models as $model) {
-            $this->clearStoreCatalogs($model->id);
-            $this->clearStorePages($model->id);
+            $this->clearCatalogs($model->id);
+            $this->clearPages($model->id);
         }
     }
 
@@ -34,13 +34,13 @@ class CacheSystemCms extends CacheSystem
      * @param bool $isArray
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
-    public function getStoreCatalogs($storeId = null)
+    public function getCatalogs($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        $data = Yii::$app->cache->get('cmsStoreCatalog:' . $storeId);
+        $data = Yii::$app->cache->get('cmsCatalog:' . $storeId);
         if (!$data) {
             $data = Catalog::find()->where(['store_id' => $storeId,])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
-            Yii::$app->cache->set('cmsStoreCatalog:' . $storeId, $data);
+            Yii::$app->cache->set('cmsCatalog:' . $storeId, $data);
         }
         return ArrayHelper::mapIdData($data);
     }
@@ -48,24 +48,24 @@ class CacheSystemCms extends CacheSystem
     /**
      * @return bool
      */
-    public function clearStoreCatalogs($storeId = null)
+    public function clearCatalogs($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        return Yii::$app->cache->delete('cmsStoreCatalog:' . $storeId);
+        return Yii::$app->cache->delete('cmsCatalog:' . $storeId);
     }
 
     /**
      * @param null $storeId
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
-    public function getStorePages($storeId = null)
+    public function getPages($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
 
-        $data = Yii::$app->cache->get('cmsStorePage:' . $storeId);
+        $data = Yii::$app->cache->get('cmsPage:' . $storeId);
         if (!$data) {
             $data = Page::find()->where(['store_id' => $storeId,])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
-            Yii::$app->cache->set('cmsStorePage:' . $storeId, $data);
+            Yii::$app->cache->set('cmsPage:' . $storeId, $data);
         }
         return ArrayHelper::mapIdData($data);
     }
@@ -73,27 +73,27 @@ class CacheSystemCms extends CacheSystem
     /**
      * @return bool
      */
-    public function clearStorePages($storeId = null)
+    public function clearPages($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        return Yii::$app->cache->delete('cmsStorePage:' . $storeId);
+        return Yii::$app->cache->delete('cmsPage:' . $storeId);
     }
 
     /**
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
-    public function getStorePageById($id, $storeId = null)
+    public function getPageById($id, $storeId = null)
     {
-        $data = $this->getStorePages($storeId);
+        $data = $this->getCatalogs($storeId);
         return $data[$id] ?? null;
     }
 
     /**
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
-    public function getStorePageByCode($code, $storeId = null)
+    public function getPageByCode($code, $storeId = null)
     {
-        $data = ArrayHelper::mapIdData($this->getStorePages($storeId), 'code');
+        $data = ArrayHelper::mapIdData($this->getPages($storeId), 'code');
         return $data[$code] ?? null;
     }
 

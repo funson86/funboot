@@ -28,7 +28,7 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'question')->textarea(['rows' => 6]) ?>
         <?= $form->field($model, 'answer')->textarea(['rows' => 6]) ?>
-        <?= $form->field($model, 'status')->textInput() ?>
+        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>

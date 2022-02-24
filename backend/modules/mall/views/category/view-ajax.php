@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'brief',
             'is_nav',
             'banner',
+            'seo_url',
             'seo_title',
             'seo_keywords',
             'seo_description:ntext',

@@ -1,109 +1,73 @@
 <?php
 use yii\helpers\Url;
+
+$store = $this->context->store;
 ?>
-
-<div id="footer">
-    <div class="footer-ensure-center">
-        <img src="/resources/images/service.png" alt="家家优品服务特色">
-    </div>
-
-    <div class="shadowbar"></div>
-    <div class="ft-bg">
-        <div class="ft_main">
-            <div class="footlogo">
-                <img id='footlogo' src="/resources/images/logo.png" alt="家家优品商城"/>
-                <img src="/resources/images/family.png" alt="家家优品商城，做最快乐的家"/>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-7 mb-3">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <a href="<?= Url::to(['/']) ?>"><?= $store->settings['website_name'] ?: $store->name ?></a>
+                    </div>
+                    <p>Funmall is an open source mall system based on <a href="https://github.com/yiisoft/yii2">Yii2 with <a href="https://www.funboot.net">Funboot</a>.</p>
+                    <div class="footer-payment">
+                        <a href="#"><img src="data:image/webp;base64,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"></a>
+                        <a href="#"><img src="data:image/webp;base64,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"></a>
+                        <a href="#"><img src="data:image/webp;base64,UklGRg4FAABXRUJQVlA4TAIFAAAvJ8AJEPXI2bb9/JdehTbbtm3bdn8727Zt27Zt27jzpN/v9/1+f/9X8Mk2R2O0XZu729xUW/NnlXPbtrE9e322OiO2k862bdu2y1Su7FT5c99z/dxHgiTZpm3l5tpn/oN49nvftm3btr9UUQAIwLF9yfYHWMntmo2P4LZm27a3emhTsm3bfhMgVALVwChwBLgAPAM+7wVeAJeAY8AkUCe0B3KB+cBNgGLgLrAEKNIGSAJWAP+oHlgPJGsAtAPvqSnwFRhUBayi5sAWFcAJGhGYUgScolGBWQXAGhoZ2GUAaKXRgX49QATwx3gEEnS+0hECe4UQR+gogTwhgAWO478QwDPHAXwAgoBSarkhJ5tSsU6oIlAPTGiwppatY7zbErp3W0L1Vg2w+CbJ8qmK6bpwNjQvC6bzzaQqKRYrP3YoHSvWKQuvZvBiJxPGsnndX5U4c5TD3YMab7pifEwSmm5tDcwVqvyxyhGaUDbkjk3Lsohiu9g+TFFCEpgBrpAMakMAG5qVhdNiUiMVCVyXxHdPJyt5VDlVT/vkrJOrBukfyyfbRfq3XZKPM8L836vetkue1k8Vn7bPxafuOZutJIILOUNVMDYuzaRLLkjgDvCKZFgbYrjAmmXlyQzfOpRZPNf5NMPQnAQ0oXhq+K7f3KdifVth8nKTycsNKd/M+5g/NQmLUD0VYWyg+2II54aysbCNTVLfZQidSWgmVgkJvHtDMqQbkviOqXx35lS3nLF7ztyYwacZ0oeO78aPvBfv04L0r5eYPd8Q58sSu/u7bIp4N4PTYjIkJ/w0WtkayBGapy7NhCTf6ISz4WlUF37NVBLchgt3UvkuvAujqsSFmcT2IYINvYqq4ZZLYvxYE/3nuuTvFoyc9NK7OL57Clgtnsb1oUKqLhaKjVno/NqhZ85I4CvwmmSXXOSOjUlovrFyqsYos41NHB9GVwlgVJXE9SGR7+aG7N3QaS+1XvXA3J5v3gH65qx2WXEtlI1FZt9UTkW7XAyrsgfWoWlVFuTSlt8fgWtU+eAB19SyIWfv3r1bVZMcIsnVQIOr6v8pe/z4t79KSkIHYFHxrLrIB31FT+gjBkJNUUD0gBqiPnSHWjAVDBW6dJDpi83/wDwl6UQkUVDEEeWgC7QU/cGzCCGSi1qC2cAHPAsuTAQN1tx9XvZXGyoePnUBqFJyrJ+oIuygDLzqBbOhqjjbDRpAMdEUcsCfRlBETBL6auw5R8r6Wy/NEcBLBauA/DcWlgJ1V8BQIG+Ri0BPhSMnSWn2fEuzddeiBbBMgdYLOn8qdOkQKWXZ4yduO5EAAWQYa+TE16webyellC1X32gRQgBbjdNq1U1St8SZIy+EEAKINca03k+KnTtM6m2+9nqJjgC6NFtbQ6tVN0n9tXeePyj0Azs0GjD7qdw395L6S54++kwYBma1GDXxtVKnjpIGC1w58FUoBWZUDZn+QumTx0jDhS4d/NJz0cNQRQLYrmhR+w+dFt9T4Mp+UmGZE8cfCbXACPBD38qGvwbPeKbavrNMX2ySCs/U3nnhiFAPpF9dXfffwo6fJg980GvhI9X3nmH9aAepuOzxE/fbrrhdKzQdNfF1deuVN6ZsH+z8JxV/r3To1NVWq260Cc3LHz2R1HjjldFq+86eLnHm6Os8N/b9sn6047/F023/b1o/2v4/9809v4qdO/K2yoEz5xttujK394LHsUI5"></a>
+                        <a href="#"><img src="data:image/webp;base64,UklGRl4DAABXRUJQVlA4TFEDAAAvJ8AJEC8HN7btuM0BIO8lOHf/tTnagPcCNAE5kuQ2Ug2A1dKQ/a//LqkTwEw33EiSBCk5e//yOwD++4aICjsFsW0bQRL7L/ju/jO21bZtw4xuie4A3+/fQaHwIFAIDAaFwW4PfjAIDAqFQuEg8LsYUPiHQmEweJcFBoXBg13AqyAw+IPAIPCBg4NcQjgIDAL/EBgcFA4OCg8GB4MHgUAhcBAoLFWYOsyp1aSxBFXq1Iw8UmHSrxHseUU5eSVTpaTKySA1ybXXddaqw8RJrjo1e17/f//2ulL5+PtopSZrRVSp4ZyVzHUyVVqpKMnMnleLxlLj//eqSIWTyv69KurUMD+vP2euiio1lD0X8/f4UYPUVDm1zlx1qkSrok6VKKlVUZJcUZjUqkmtr+e3NY61eTztHs/7txEIVj/mOGY/Vj9GGyN42r/Mfnzev7ycH9pYY4w21vZ4OjwEgtHGGmO0IRiBGLOPOcbsY/QxAkjYtu380xk992zm5mXbtm3bbs7Ny7bm7clteXqy7Zb7JD/8398vov8TQA4O79mwjr+bm1/t6O7DSP34rsEwHdhprJop7Z3geOtJCgZ4QKlrX4faQXlLB6JgYZipSFgaYqINLG5qMBCW99OZ7mwdpmrawIaNiWgSbDmOqIs9WhP528N91kjYdGgPAPH3r1x9tNrUt+PZZ/cv0DtxNHkT0DkKwGu5flHOL96anICYpNlI2ryXs8/xkbmfP/zBXz65dBUQWgvAPQHkwrO7FbL9tSBWnpxhgA8fLGb++IPfAkCQD4AyeVwqG9akPJc3SRJXUj6P+UAe/17xYTfvTOOfGk9XYJ2U3bq0cW3VzRuStFJKZFs15+edrv7FBbn86RjP0bi6AqnyCsA1Wf9UlswWuYx0TgOQz8v38RfOgY438OL2FgCpVXfKSoEKicGhgu8AMrmw6NTXoh067jVhPBsAEuUB8C5rGYB/e3ZlvP+fVa0TGGlCO79SFkJt/W4OLHr4Eoo7jHDAwsHkaw+3GdTRHi2IJthjDBG1sEM0EdE0O0zWUH/repN+M6sakHGINXXJbKgV9WaaoubqGpGjfVzUOPUixye2UNFkHCkd3TbAnG+rUaR8xpCuETW83dy8gsM7D5pO5gEA"></a>
+                        <a href="#"><img src="data:image/webp;base64,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"></a>
+                    </div>
+                </div>
             </div>
-            <div class="links">
-                <div  class="linksheader"><span>关于商城</span></div>
-                <ul>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 55, 'surname' => 'about_us']) ?>" target="_blank" class="noborder" >商城协议</a>
-                    </li>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 13, 'surname' => 'about_hr']) ?>" target="_blank" >会员积分</a>
-                    </li>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 2, 'surname' => 'shipment_fee']) ?>" target="_blank" >配送政策</a>
-                    </li>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 23, 'surname' => 'sales_return_policy']) ?>" target="_blank">奶粉直邮</a>
-                    </li>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 42, 'surname' => 'sales_return_policy']) ?>" target="_blank">售后政策</a>
-                    </li>
-                </ul>
+            <div class="col-lg-2 col-md-3 col-sm-4 mb-3">
+                <div class="footer-widget">
+                    <h6><?= Yii::t('app', 'Quick Links') ?></h6>
+                    <ul>
+                        <li><a href="<?= Url::to(['mall/default/about']) ?>"><?= Yii::t('app', 'About') ?></a></li>
+                        <li><a href="<?= Url::to(['mall/default/help']) ?>"><?= Yii::t('app', 'Help') ?></a></li>
+                        <li><a href="<?= Url::to(['mall/default/feedback']) ?>"><?= Yii::t('app', 'Contact') ?></a></li>
+                        <li><a href="<?= Url::to(['mall/default/faq']) ?>"><?= Yii::t('app', 'FAQ') ?></a></li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="links">
-                <div  class="linksheader"><span>关于我们</span></div>
-                <ul>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 51, 'surname' => 'about_hr']) ?>" target="_blank" >关于我们</a>
-                    </li>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 53, 'surname' => 'about_hr']) ?>" target="_blank" >商务合作</a>
-                    </li>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 54, 'surname' => 'about_hr']) ?>" target="_blank" >加入我们</a>
-                    </li>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 41, 'surname' => 'shipment_fee']) ?>" target="_blank" >正品保障</a>
-                    </li>
-                    <li>
-                        <a href="<?= Url::to(['/cms/default/page', 'id' => 52, 'surname' => 'sales_return_policy']) ?>" target="_blank">联系我们</a>
-                    </li>
-                </ul>
+            <div class="col-lg-2 col-md-3 col-sm-4 mb-3">
+                <div class="footer-widget">
+                    <h6><?= Yii::t('app', 'Account') ?></h6>
+                    <ul>
+                        <li><a href="<?= Url::to(['mall/user/about']) ?>"><?= Yii::t('app', 'Profile') ?></a></li>
+                        <li><a href="<?= Url::to(['mall/user/order']) ?>"><?= Yii::t('app', 'Orders') ?></a></li>
+                        <li><a href="<?= Url::to(['mall/cart/index']) ?>"><?= Yii::t('app', 'Cart') ?></a></li>
+                        <li><a href="<?= Url::to(['mall/user/favorite']) ?>"><?= Yii::t('app', 'Favorite') ?></a></li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="contacts">
-                <div  class="linksheader"><span>联系我们</span></div>
-                <ul>
-                    <li class="weixin">
-                        公众号：jjypsc
-                    </li>
-                    <li class="QQ">
-                        客服QQ:2843080052
-                    </li>
-                    <li class="phone">
-                        热线：0731-85822600
-                    </li>
-                    <li class="email">
-                        kf@jiajiayoupin.com
-                    </li>
-                </ul>
+            <div class="col-lg-4 col-md-8 col-sm-8 mb-3">
+                <div class="footer-newsletter">
+                    <h6><?= Yii::t('app', 'Newsletter') ?></h6>
+                    <form action="<?= Url::to(['mall/default/subscribe']) ?>">
+                        <input type="text" placeholder="<?= Yii::t('app', 'Email') ?>">
+                        <button type="submit" class="site-btn"><?= Yii::t('app', 'Subscribe') ?></button>
+                    </form>
+                    <div class="footer-social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-pinterest"></i></a>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
 
-            <div class="bicode">
-                <div  class="linksheader"><span>扫码联系客服</span></div>
-                <div  class="weichatcode"><img src="/resources/images/wechatsupport.png" alt="家家优品微信客服"/></div>
+                <div class="footer-copyright-text">
+                    <p>Copyright © <script>document.write(new Date().getFullYear());</script> <?= Yii::t('app', 'All rights reserved') ?> | <?= Yii::t('app', 'Give a star to') ?> <i class="fa fa-heart" aria-hidden="true"></i> <a href="https://www.funboot.net" target="_blank">Funboot</a></p>
+                </div>
+
             </div>
-
-            <div class="bicode">
-                <div  class="linksheader"><span>扫码关注公众号</span></div>
-                <div  class="weichatcode"><img src="/resources/images/wechatsupport.png" alt="家家优品微信客服"/></div>
-            </div>
-
-            <div class="clear"></div>
         </div>
     </div>
-
-    <div class="shadowbar"></div>
-
-    <div class="foot_bottom">
-        <div class="leftbottom">
-            <span>Copyright <?= date('Y') ?>, 湖南晨笑贸易有限公司 备案号：<a href="http://www.miitbeian.gov.cn" target="_blank" rel="nofollow">湘ICP备15005966号-2</a></span>
-        </div>
-
-        <div clas="rightbottom">
-            <ul class="beian-logos">
-                <li><a href="javascript:;"><img alt="商城获得电商金典奖" src="/resources/images/flogo-jindian.png" /></a></li>
-                <li><a href="javascript:;"><img alt="中国人保为商城化妆品承保" src="/resources/images/flogo-picc.png" /></a></li>
-                <li><a href="javascript:;"><img alt="互联网协会A级信用认证" src="/resources/images/flogo-xinyong.png" /></a></li>
-                <li><a href="http://t.knet.cn/" target="_blank"><img alt="商城可信网站权威认证" src="/resources/images/flogo-kexin.png" class="no-border" rel="nofollow"/></a></li>
-            </ul>
-        </div>
-
-        <div class="clear"></div>
-    </div>
-</div>
+</footer>

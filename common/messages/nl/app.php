@@ -310,7 +310,7 @@ return [
     'Total' => 'totaal',
     'Archive' => 'bestand',
     'Order Log' => 'Logboek bestellen',
-    'Order Logs' => 'totaal',
+    'Order Logs' => 'Logboek bestellen',
     'Cart' => 'Winkelwagen',
     'Carts' => 'Winkelwagen',
     'Addresses' => 'adres',

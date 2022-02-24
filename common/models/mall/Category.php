@@ -15,7 +15,8 @@ use common\models\Store;
  * @property string $name 名称
  * @property string $brief 简介
  * @property int $is_nav 导航栏显示
- * @property string $banner 横幅图
+ * @property string $banner 封面图
+ * @property string $seo_url 搜索优化Url
  * @property string $seo_title 搜索优化标题
  * @property string $seo_keywords 搜索关键词
  * @property string|null $seo_description 搜索描述
@@ -47,7 +48,7 @@ class Category extends CategoryBase
             [['store_id', 'parent_id', 'is_nav', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['seo_description'], 'string'],
-            [['name', 'brief', 'banner', 'seo_title', 'seo_keywords', 'redirect_url'], 'string', 'max' => 255],
+            [['name', 'brief', 'banner', 'seo_url', 'seo_title', 'seo_keywords', 'redirect_url'], 'string', 'max' => 255],
         ]);
     }
 
@@ -64,7 +65,8 @@ class Category extends CategoryBase
                 'name' => '名称',
                 'brief' => '简介',
                 'is_nav' => '导航栏显示',
-                'banner' => '横幅图',
+                'banner' => '封面图',
+                'seo_url' => '搜索优化Url',
                 'seo_title' => '搜索优化标题',
                 'seo_keywords' => '搜索关键词',
                 'seo_description' => '搜索描述',
@@ -86,6 +88,7 @@ class Category extends CategoryBase
                 'brief' => Yii::t('app', 'Brief'),
                 'is_nav' => Yii::t('app', 'Is Nav'),
                 'banner' => Yii::t('app', 'Banner'),
+                'seo_url' => Yii::t('app', 'Seo Url'),
                 'seo_title' => Yii::t('app', 'Seo Title'),
                 'seo_keywords' => Yii::t('app', 'Seo Keywords'),
                 'seo_description' => Yii::t('app', 'Seo Description'),

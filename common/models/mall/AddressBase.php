@@ -22,13 +22,20 @@ class AddressBase extends BaseModel
     {
         return [
             [['id'], 'safe'],
+            [['first_name', 'last_name', 'country', 'province', 'city', 'distinct', 'address', 'mobile'], 'required', 'on' => ['withoutRegion']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
     }
 
     /** add function getXxxLabels here, detail in BaseModel **/
-
+    public function scenarios()
+    {
+        return [
+            'withoutRegion' => ['first_name', 'last_name', 'country', 'province', 'city', 'distinct', 'address', 'mobile'],
+            'default' => ['first_name', 'last_name', 'country', 'province', 'city', 'distinct', 'address', 'mobile'],
+        ];
+    }
     /**
      * {@inheritdoc}
      */
@@ -39,13 +46,20 @@ class AddressBase extends BaseModel
             'store_id' => Yii::t('app', 'Store ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'name' => Yii::t('app', 'Name'),
-            'consignee' => Yii::t('app', 'Consignee'),
+            'first_name' => Yii::t('app', 'First Name'),
+            'last_name' => Yii::t('app', 'Last Name'),
             'country_id' => Yii::t('app', 'Country ID'),
+            'country' => Yii::t('app', 'Country'),
             'province_id' => Yii::t('app', 'Province ID'),
+            'province' => Yii::t('app', 'Province'),
             'city_id' => Yii::t('app', 'City ID'),
+            'city' => Yii::t('app', 'City'),
             'district_id' => Yii::t('app', 'District ID'),
+            'district' => Yii::t('app', 'District'),
             'address' => Yii::t('app', 'Address'),
             'zipcode' => Yii::t('app', 'Zipcode'),
+            'address2' => Yii::t('app', 'Address2'),
+            'postcode' => Yii::t('app', 'Postcode'),
             'mobile' => Yii::t('app', 'Mobile'),
             'email' => Yii::t('app', 'Email'),
             'is_default' => Yii::t('app', 'Is Default'),
@@ -57,15 +71,6 @@ class AddressBase extends BaseModel
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
         ]);
-    }
-
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStore()
-    {
-        return $this->hasOne(Store::className(), ['id' => 'store_id']);
     }
 
 }

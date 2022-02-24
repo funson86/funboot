@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'name', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['autofocus' => true, 'placeholder' => Yii::t('app', ' ')]) ?>
                 <?= $form->field($model, 'mobile', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['placeholder' => Yii::t('app', ' ')]) ?>
                 <?= $form->field($model, 'email', ['template' => "{input}\n{label}\n{hint}\n{error}", 'options' => ['class' => 'form-group form-label-group']])->textInput(['placeholder' => Yii::t('app', ' ')]) ?>
-                <?= $form->field($model, 'content')->textarea(['class' => 'form-control ', 'placeholder' => Yii::t('app', 'Content')])->label(false) ?>
+                <?= $form->field($model, 'content')->textarea(['rows' => 4, 'class' => 'form-control ', 'placeholder' => Yii::t('app', 'Content')])->label(false) ?>
 
                 <?php if ($model->scenario == 'captchaRequired') { ?>
                     <?= $form->field($model,'verifyCode')->widget(\yii\captcha\Captcha::class, [

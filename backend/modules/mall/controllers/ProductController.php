@@ -109,6 +109,7 @@ class ProductController extends BaseController
                     // 计算多属性和sku
                     if ($model->attribute_set_id > 0 && isset($post['skus'])) {
                         $skus = $post['skus'];
+                        $minPrice = 0;
 
                         ProductSku::updateAll(['status' => ProductSku::STATUS_DELETED], ['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
 
@@ -128,6 +129,9 @@ class ProductController extends BaseController
                             $modelTemp->stock = $item['stock'];
                             $modelTemp->status = $item['status'];
 
+                            $minPrice == 0 && $minPrice = $modelTemp->price;
+                            ($modelTemp->price > 0) && (($minPrice > $modelTemp->price) && ($minPrice = $modelTemp->price));
+
                             if (!$modelTemp->save()) {
                                 Yii::$app->logSystem->db($modelTemp->errors);
                                 throw new NotFoundHttpException($this->getError($modelTemp));
@@ -135,6 +139,12 @@ class ProductController extends BaseController
                         }
 
                         ProductSku::deleteAll(['status' => ProductSku::STATUS_DELETED, 'store_id' => $this->getStoreId(), 'product_id' => $model->id]);
+
+                        // 多属性价格用大于0的最低价
+                        $model->price = $minPrice;
+                        if (!$model->save()) {
+                            Yii::$app->logSystem->db($model->errors);
+                        }
                     } else { // 否则删除所有多属性数据
                         ProductSku::deleteAll(['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
                     }

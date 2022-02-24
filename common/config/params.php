@@ -35,6 +35,8 @@ return [
         422 => 'Input Parameter Error',
         429 => 'Expired',
         500 => 'Operation Failed',
+        -1 => 'Input Param Error',
+        -2 => 'Need Login First',
     ],
     'htmlReturnFile' => '@frontend/views/site/html-return.php', // html样式返回成功失败
 

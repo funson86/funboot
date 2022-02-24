@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'question')->textarea(['rows' => 6]) ?>
                     <?= $form->field($model, 'answer')->textarea(['rows' => 6]) ?>
-                    <?= $form->field($model, 'status')->textInput() ?>
+                    <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>
             </div>
             <div class="card-footer">

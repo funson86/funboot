@@ -84,13 +84,17 @@ class ParamController extends BaseController
 
     /**
      * 获取子节点，最多往下3级，默认3级
-     * @param $id
-     * @param int $level
      * @return array|mixed
      * @throws \Exception
      */
-    public function actionViewAjaxChild($id, $level = 3)
+    public function actionViewAjaxChild()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->error();
+        }
+        $level = Yii::$app->request->get('level', 3);
+
         $model = $this->findModel($id);
         if (!$model) {
             return $this->error();

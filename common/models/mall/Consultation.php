@@ -12,6 +12,7 @@ use common\models\Store;
  * @property int $id
  * @property int $store_id 商家
  * @property int $product_id 商品
+ * @property int $user_id 用户
  * @property string $name 名称
  * @property string|null $question 咨询
  * @property string|null $answer 回答
@@ -39,8 +40,8 @@ class Consultation extends ConsultationBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'product_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['product_id', 'name'], 'required'],
+            [['store_id', 'product_id', 'user_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['product_id', 'user_id', 'name'], 'required'],
             [['question', 'answer'], 'string'],
             [['name'], 'string', 'max' => 255],
         ]);
@@ -56,6 +57,7 @@ class Consultation extends ConsultationBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
                 'product_id' => '商品',
+                'user_id' => '用户',
                 'name' => '名称',
                 'question' => '咨询',
                 'answer' => '回答',
@@ -72,6 +74,7 @@ class Consultation extends ConsultationBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
                 'product_id' => Yii::t('app', 'Product ID'),
+                'user_id' => Yii::t('app', 'User ID'),
                 'name' => Yii::t('app', 'Name'),
                 'question' => Yii::t('app', 'Question'),
                 'answer' => Yii::t('app', 'Answer'),

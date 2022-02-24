@@ -79,6 +79,8 @@ return [
                 'cms/search' => 'cms/default/search',
 
                 // mall url 优化
+                'category-<seo_url:[\w-]+>' => 'mall/category/view',
+                'product-<seo_url:[\w-]+>' => 'mall/product/view',
                 //'product/<id:\d+>' => 'mall/product/view', // url 优化
                 //'product/<action:[\w-]+>/<id:\d+>' => 'mall/product/<action>',
                 //'product/<action:[\w-]+>' => 'mall/product/<action>',

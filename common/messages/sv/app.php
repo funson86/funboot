@@ -310,7 +310,7 @@ return [
     'Total' => 'Totalt',
     'Archive' => 'fil',
     'Order Log' => 'Logg för beställning',
-    'Order Logs' => 'Totalt',
+    'Order Logs' => 'Logg för beställning',
     'Cart' => 'Kartong för inköp',
     'Carts' => 'Kartong för inköp',
     'Addresses' => 'adress',

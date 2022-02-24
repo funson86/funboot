@@ -310,7 +310,7 @@ return [
     'Total' => 'toplam',
     'Archive' => 'dosya',
     'Order Log' => 'Sıra günlüğü',
-    'Order Logs' => 'toplam',
+    'Order Logs' => 'Sıra günlüğü',
     'Cart' => 'Satış Kartı',
     'Carts' => 'Satış Kartı',
     'Addresses' => 'adres',

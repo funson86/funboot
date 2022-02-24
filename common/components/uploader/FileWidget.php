@@ -163,20 +163,20 @@ class FileWidget extends InputWidget
         $jsConfig = Json::encode($this->config);
         $disabled = $this->themeConfig['sortable'] ?? true;
 
-        $view->registerJs(<<<Js
-       
-    $(".upload-album-{$boxId}").InitUploader({$jsConfig});
-    // 兼容老IE
-    document.body.ondrop = function (event) {
-        event = event || window.event;
-        if (event.preventDefault) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            event.returnValue = false;
-            event.cancelBubble = true;
-        }
-    };
+        $view->registerJs(
+<<<Js
+$(".upload-album-{$boxId}").InitUploader({$jsConfig});
+// 兼容老IE
+document.body.ondrop = function (event) {
+    event = event || window.event;
+    if (event.preventDefault) {
+        event.preventDefault();
+        event.stopPropagation();
+    } else {
+        event.returnValue = false;
+        event.cancelBubble = true;
+    }
+};
 Js
         );
     }

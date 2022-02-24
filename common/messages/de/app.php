@@ -310,7 +310,7 @@ return [
     'Total' => 'insgesamt',
     'Archive' => 'Datei',
     'Order Log' => 'Logbuch bestellen',
-    'Order Logs' => 'insgesamt',
+    'Order Logs' => 'Logbuch bestellen',
     'Cart' => 'Warenkorb Warenkorb',
     'Carts' => 'Warenkorb Warenkorb',
     'Addresses' => 'Adresse',

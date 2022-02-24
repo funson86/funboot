@@ -310,7 +310,7 @@ return [
     'Total' => 'المجموع',
     'Archive' => 'أرشفة',
     'Order Log' => 'سجل النظام',
-    'Order Logs' => 'المجموع',
+    'Order Logs' => 'سجل النظام',
     'Cart' => 'عربة التسوق',
     'Carts' => 'عربة التسوق',
     'Addresses' => 'آدرس',

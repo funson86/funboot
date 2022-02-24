@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\helpers\CommonHelper;
 use common\helpers\IdHelper;
+use common\helpers\StringHelper;
 use yii\base\Model;
 use common\models\Store;
 use Yii;
@@ -129,6 +130,12 @@ class BaseController extends \common\components\controller\BaseController
 
     public function getImage($name, $ext = null, $version = null)
     {
+        !$name && $name = 'default';
+
+        if (StringHelper::urlFull($name)) {
+            return $name;
+        }
+
         !$ext && $ext = '.jpg';
         (strpos($name, '.') === false) && $name .= $ext;
         $version && $name .= '?v=' . $version;
@@ -165,4 +172,9 @@ class BaseController extends \common\components\controller\BaseController
         return $this->prefixStatic . '/images/' . $name;
     }
 
+    public function getStoreName()
+    {
+        $store = Yii::$app->storeSystem->get();
+        return $store->settings['website_name'] ?: $store->name;
+    }
 }

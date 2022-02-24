@@ -14,7 +14,7 @@ use common\models\Store;
  * @property int $user_id 用户
  * @property int $coupon_type_id 优惠券类型
  * @property string $name 名称
- * @property float $money 优惠金额
+ * @property string $money 优惠金额
  * @property float $min_amount 最低金额
  * @property int $started_at 开始时间
  * @property int $ended_at 结束时间
@@ -48,8 +48,8 @@ class Coupon extends CouponBase
         return array_merge(parent::rules(), [
             [['store_id', 'user_id', 'coupon_type_id', 'started_at', 'ended_at', 'order_id', 'used_at', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['user_id', 'money', 'started_at', 'ended_at'], 'required'],
-            [['money', 'min_amount', 'min_product_amount'], 'number'],
-            [['name', 'sn'], 'string', 'max' => 255],
+            [['min_amount', 'min_product_amount'], 'number'],
+            [['name', 'money', 'sn'], 'string', 'max' => 255],
         ]);
     }
 

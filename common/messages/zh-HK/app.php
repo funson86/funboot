@@ -310,7 +310,7 @@ return [
     'Total' => '總額',
     'Archive' => '歸檔',
     'Order Log' => '訂單日誌',
-    'Order Logs' => '總額',
+    'Order Logs' => '訂單日誌',
     'Cart' => '購物車',
     'Carts' => '購物車',
     'Addresses' => '地址',

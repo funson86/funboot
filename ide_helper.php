@@ -29,6 +29,7 @@ class Yii
  * @property \common\components\base\OauthSystem oauthSystem
  * @property \common\components\bbs\CacheSystemBbs cacheSystemBbs
  * @property \common\components\cms\CacheSystemCms cacheSystemCms
+ * @property \common\components\mall\CacheSystemMall cacheSystemMall
  * @property \common\components\wechat\WechatSystem wechat
  *
  * @author funson86 <funson86@gmail.com>

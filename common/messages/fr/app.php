@@ -310,7 +310,7 @@ return [
     'Total' => 'Total général',
     'Archive' => 'Archive',
     'Order Log' => 'Journal des commandes',
-    'Order Logs' => 'Total général',
+    'Order Logs' => 'Journal des commandes',
     'Cart' => 'Panier',
     'Carts' => 'Panier',
     'Addresses' => 'Adresse',

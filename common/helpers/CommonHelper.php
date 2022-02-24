@@ -117,6 +117,7 @@ class CommonHelper
         // url指定lang字段
         $lang = Yii::$app->request->get('lang');
         if ($lang && self::checkLang($lang)) {
+            Yii::$app->cacheSystem->setLanguage($lang, Yii::$app->user->id ?? 0, Yii::$app->session->id);
             return $lang;
         }
 

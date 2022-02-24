@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'images:json',
             'brief:ntext',
             'content:ntext',
+            'seo_url',
             'seo_title',
             'seo_keywords',
             'seo_description:ntext',

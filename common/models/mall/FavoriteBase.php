@@ -39,6 +39,7 @@ class FavoriteBase extends BaseModel
         return array_merge(parent::attributeLabels(), [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
+            'name' => Yii::t('app', 'Name'),
             'user_id' => Yii::t('app', 'User ID'),
             'product_id' => Yii::t('app', 'Product ID'),
             'type' => Yii::t('app', 'Type'),
@@ -51,6 +52,13 @@ class FavoriteBase extends BaseModel
         ]);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery

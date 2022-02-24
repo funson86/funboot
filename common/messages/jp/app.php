@@ -310,7 +310,7 @@ return [
     'Total' => '総額',
     'Archive' => 'アーカイブ',
     'Order Log' => '注文の日誌',
-    'Order Logs' => '総額',
+    'Order Logs' => '注文の日誌',
     'Cart' => 'ショッピング？カー',
     'Carts' => 'ショッピング？カー',
     'Addresses' => '住所',

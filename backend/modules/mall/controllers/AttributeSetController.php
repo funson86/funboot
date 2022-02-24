@@ -87,8 +87,13 @@ class AttributeSetController extends BaseController
      * @return array|mixed
      * @throws \Exception
      */
-    public function actionViewAjaxValue($id)
+    public function actionViewAjaxValue()
     {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->error();
+        }
+
         $model = $this->findModel($id);
         if (!$model) {
             return $this->error();

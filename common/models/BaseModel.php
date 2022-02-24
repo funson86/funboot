@@ -234,11 +234,7 @@ class BaseModel extends ActiveRecord
      */
     public function getUser()
     {
-        if ($this->attributes['user_id']) {
-            return $this->hasOne(User::className(), ['id' => 'user_id']);
-        }
-
-        return null;
+        return isset($this->attributes['user_id']) ? $this->hasOne(User::className(), ['id' => 'user_id']) : null;
     }
 
     /**
@@ -246,10 +242,7 @@ class BaseModel extends ActiveRecord
      */
     public function getStore()
     {
-        if ($this->attributes['store_id']) {
-            return $this->hasOne(Store::className(), ['id' => 'store_id']);
-        }
-        return null;
+        return isset($this->attributes['store_id']) ? $this->hasOne(Store::className(), ['id' => 'store_id']) : null;
     }
 
     /**

@@ -49,4 +49,18 @@ class SearchLogBase extends BaseModel
         ]);
     }
 
+    public static function create($name, $ip = null, $userId = null, $sessionId = null)
+    {
+        $model = new SearchLog();
+        $model->name = $name;
+        $model->user_id = $userId ?? (Yii::$app->user->isGuest ? 0 : Yii::$app->user->id);
+        $model->session_id = $sessionId ?? Yii::$app->session->id;
+        $model->ip = $ip ?? (Yii::$app->request->getRemoteIP() ?? '');
+        if (!$model->save()) {
+            Yii::$app->logSystem->db($model->errors);
+            return false;
+        }
+
+        return true;
+    }
 }

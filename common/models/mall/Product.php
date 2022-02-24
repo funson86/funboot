@@ -24,10 +24,12 @@ use common\models\Store;
  * @property float $cost_price 成本价
  * @property float $wholesale_price 拼团价
  * @property string $thumb 缩略图
- * @property string|null $images 图片
+ * @property string $image 图片
+ * @property string|null $images 图集
  * @property string|null $tags 标签
  * @property string|null $brief 简介
  * @property string|null $content 内容
+ * @property string $seo_url 搜索优化Url
  * @property string $seo_title 搜索优化标题
  * @property string $seo_keywords 搜索关键词
  * @property string|null $seo_description 搜索描述
@@ -36,6 +38,7 @@ use common\models\Store;
  * @property int $attribute_set_id 属性集
  * @property int $param_id 参数
  * @property float $star 星级
+ * @property int $reviews 评论数
  * @property int $sales 销量
  * @property int $click 浏览量
  * @property int $type 类型
@@ -62,12 +65,12 @@ class Product extends ProductBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'category_id', 'stock', 'stock_warning', 'brand_id', 'vendor_id', 'attribute_set_id', 'param_id', 'sales', 'click', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'category_id', 'stock', 'stock_warning', 'brand_id', 'vendor_id', 'attribute_set_id', 'param_id', 'reviews', 'sales', 'click', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['category_id', 'name', 'sku'], 'required'],
             [['weight', 'volume', 'price', 'market_price', 'cost_price', 'wholesale_price', 'star'], 'number'],
             [['images', 'tags'], 'safe'],
             [['brief', 'content', 'seo_description'], 'string'],
-            [['name', 'sku', 'stock_code', 'thumb', 'seo_title', 'seo_keywords'], 'string', 'max' => 255],
+            [['name', 'sku', 'stock_code', 'thumb', 'image', 'seo_url', 'seo_title', 'seo_keywords'], 'string', 'max' => 255],
         ]);
     }
 
@@ -93,10 +96,12 @@ class Product extends ProductBase
                 'cost_price' => '成本价',
                 'wholesale_price' => '拼团价',
                 'thumb' => '缩略图',
-                'images' => '图片',
+                'image' => '图片',
+                'images' => '图集',
                 'tags' => '标签',
                 'brief' => '简介',
                 'content' => '内容',
+                'seo_url' => '搜索优化Url',
                 'seo_title' => '搜索优化标题',
                 'seo_keywords' => '搜索关键词',
                 'seo_description' => '搜索描述',
@@ -105,6 +110,7 @@ class Product extends ProductBase
                 'attribute_set_id' => '属性集',
                 'param_id' => '参数',
                 'star' => '星级',
+                'reviews' => '评论数',
                 'sales' => '销量',
                 'click' => '浏览量',
                 'type' => '类型',
@@ -132,10 +138,12 @@ class Product extends ProductBase
                 'cost_price' => Yii::t('app', 'Cost Price'),
                 'wholesale_price' => Yii::t('app', 'Wholesale Price'),
                 'thumb' => Yii::t('app', 'Thumb'),
+                'image' => Yii::t('app', 'Image'),
                 'images' => Yii::t('app', 'Images'),
                 'tags' => Yii::t('app', 'Tags'),
                 'brief' => Yii::t('app', 'Brief'),
                 'content' => Yii::t('app', 'Content'),
+                'seo_url' => Yii::t('app', 'Seo Url'),
                 'seo_title' => Yii::t('app', 'Seo Title'),
                 'seo_keywords' => Yii::t('app', 'Seo Keywords'),
                 'seo_description' => Yii::t('app', 'Seo Description'),
@@ -144,6 +152,7 @@ class Product extends ProductBase
                 'attribute_set_id' => Yii::t('app', 'Attribute Set ID'),
                 'param_id' => Yii::t('app', 'Param ID'),
                 'star' => Yii::t('app', 'Star'),
+                'reviews' => Yii::t('app', 'Reviews'),
                 'sales' => Yii::t('app', 'Sales'),
                 'click' => Yii::t('app', 'Click'),
                 'type' => Yii::t('app', 'Type'),

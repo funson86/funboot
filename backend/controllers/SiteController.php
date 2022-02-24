@@ -296,14 +296,21 @@ class SiteController extends BaseController
             if (isset(Yii::$app->cacheSystemCms)) {
                 Yii::$app->cacheSystemCms->clearCmsAllData();
             }
+            if (isset(Yii::$app->cacheSystemMall)) {
+                Yii::$app->cacheSystemMall->clearMallAllData();
+            }
         } else {
             Yii::$app->cacheSystem->clearUserPermissionIds(Yii::$app->user->id);
             Yii::$app->cacheSystem->clearStoreSetting();
             Yii::$app->cacheSystem->refreshStoreLang();
 
             if (isset(Yii::$app->cacheSystemCms)) {
-                Yii::$app->cacheSystemCms->clearStoreCatalogs();
-                Yii::$app->cacheSystemCms->clearStorePages();
+                Yii::$app->cacheSystemCms->clearCatalogs();
+                Yii::$app->cacheSystemCms->clearPages();
+            }
+            if (isset(Yii::$app->cacheSystemMall)) {
+                Yii::$app->cacheSystemMall->clearCategories();
+                Yii::$app->cacheSystemMall->clearProducts();
             }
         }
 

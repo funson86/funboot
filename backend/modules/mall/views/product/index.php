@@ -6,6 +6,7 @@ use common\components\enums\YesNo;
 use common\models\mall\Product as ActiveModel;
 use yii\helpers\Inflector;
 use common\helpers\ArrayHelper;
+use common\helpers\ImageHelper;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -53,17 +54,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         'market_price',
                         // 'cost_price',
                         // 'wholesale_price',
-                        'thumb',
+                        ['attribute' => 'thumb', 'filter' => false, 'format' => 'raw', 'value' => function ($model) { return ImageHelper::fancyBox($model->thumb); },],
+                        // 'image',
                         // 'images:json',
                         // 'brief:ntext',
                         // 'content:ntext',
+                        'seo_url',
                         // 'seo_title',
                         // 'seo_keywords',
                         // 'seo_description:ntext',
                         // 'brand_id',
                         // 'vendor_id',
                         // 'attribute_set_id',
-                        ['attribute' => 'attribute_set_id', 'format' => 'raw', 'value' => function ($model) { return $model->attributeSet->name; }, 'filter' => Html::activeDropDownList($searchModel, 'attribute_set_id', \common\models\mall\AttributeSet::getIdLabel(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        ['attribute' => 'attribute_set_id', 'format' => 'raw', 'value' => function ($model) { return $model->attributeSet->name ?? '-'; }, 'filter' => Html::activeDropDownList($searchModel, 'attribute_set_id', \common\models\mall\AttributeSet::getIdLabel(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         // 'star',
                         // 'sales',
                         // 'click',

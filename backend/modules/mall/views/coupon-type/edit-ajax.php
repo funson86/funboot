@@ -25,11 +25,11 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'store_id')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'money')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'sn')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'money')->textInput(['maxlength' => true])->hint(Yii::t('app', 'Without currency. eg: -10% for percent off, -5 for fixed off')) ?>
         <?= $form->field($model, 'min_amount')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'started_at')->widget(kartik\date\DatePicker::class, [
+        <?= $form->field($model, 'startedTime')->widget(kartik\date\DatePicker::class, [
             'language' => 'zh-CN',
             'layout'=>'{picker}{input}',
             'pluginOptions' => [
@@ -42,7 +42,7 @@ $form = ActiveForm::begin([
                 'class' => 'form-control no_bor',
             ]
         ]) ?>
-        <?= $form->field($model, 'ended_at')->widget(kartik\date\DatePicker::class, [
+        <?= $form->field($model, 'endedTime')->widget(kartik\date\DatePicker::class, [
             'language' => 'zh-CN',
             'layout'=>'{picker}{input}',
             'pluginOptions' => [

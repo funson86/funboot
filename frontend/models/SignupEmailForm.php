@@ -1,5 +1,5 @@
 <?php
-namespace frontend\models\forms;
+namespace frontend\models;
 
 use common\helpers\CommonHelper;
 use Yii;

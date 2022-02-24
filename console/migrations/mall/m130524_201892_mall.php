@@ -20,14 +20,20 @@ CREATE TABLE `fb_mall_address` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `user_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '用户',
-  `name` varchar(255) NOT NULL COMMENT '名称',
-  `consignee` varchar(255) NOT NULL DEFAULT '' COMMENT '联系人',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `first_name` varchar(255) NOT NULL DEFAULT '' COMMENT '名字',
+  `last_name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓氏',
   `country_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '国家',
+  `country` varchar(255) NOT NULL DEFAULT '' COMMENT '国家',
   `province_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '省',
+  `province` varchar(255) NOT NULL DEFAULT '' COMMENT '省',
   `city_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '市',
+  `city` varchar(255) NOT NULL DEFAULT '' COMMENT '市',
   `district_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '区',
+  `district` varchar(255) NOT NULL DEFAULT '' COMMENT '区',
   `address` varchar(255) NOT NULL DEFAULT '' COMMENT '地址',
-  `zipcode` varchar(255) NOT NULL DEFAULT '' COMMENT '邮编',
+  `address2` varchar(255) NOT NULL DEFAULT '' COMMENT '地址2',
+  `postcode` varchar(255) NOT NULL DEFAULT '' COMMENT '邮编',
   `mobile` varchar(255) NOT NULL DEFAULT '' COMMENT '手机',
   `email` varchar(255) NOT NULL DEFAULT '' COMMENT '邮箱',
   `is_default` int(11) NOT NULL DEFAULT '0' COMMENT '默认地址',
@@ -106,6 +112,7 @@ CREATE TABLE `fb_mall_tag` (
   CONSTRAINT `mall_tag_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='标签';
 
+DROP TABLE IF EXISTS `fb_mall_category`;
 CREATE TABLE `fb_mall_category` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
@@ -114,9 +121,10 @@ CREATE TABLE `fb_mall_category` (
   `brief` varchar(255) NOT NULL DEFAULT '' COMMENT '简介',
   `is_nav` int(11) NOT NULL DEFAULT '1' COMMENT '导航栏显示',
   `banner` varchar(255) NOT NULL DEFAULT '' COMMENT '封面图',
+  `seo_url` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索优化Url',
   `seo_title` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索优化标题',
-  `seo_keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '关键词',
-  `seo_description` text COMMENT '描述',
+  `seo_keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索关键词',
+  `seo_description` text COMMENT '搜索描述',
   `redirect_url` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转链接',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
@@ -209,6 +217,7 @@ CREATE TABLE `fb_mall_attribute_set_attribute` (
   CONSTRAINT `mall_attribute_set_attribute_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='属性集属性关系';
 
+DROP TABLE IF EXISTS `fb_mall_product`;
 CREATE TABLE `fb_mall_product` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
@@ -225,9 +234,11 @@ CREATE TABLE `fb_mall_product` (
   `cost_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '成本价',
   `wholesale_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '拼团价',
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
-  `images` json DEFAULT NULL COMMENT '图片',
+  `image` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
+  `images` json DEFAULT NULL COMMENT '图集',
   `brief` text COMMENT '简介',
   `content` text COMMENT '内容',
+  `seo_url` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索优化Url',
   `seo_title` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索优化标题',
   `seo_keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索关键词',
   `seo_description` text COMMENT '搜索描述',
@@ -236,6 +247,7 @@ CREATE TABLE `fb_mall_product` (
   `attribute_set_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '属性集',
   `param_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '参数',
   `star` decimal(11,2) NOT NULL DEFAULT '5.00' COMMENT '星级',
+  `reviews` int(11) NOT NULL DEFAULT '0' COMMENT '评论量',
   `sales` int(11) NOT NULL DEFAULT '0' COMMENT '销量',
   `click` int(11) NOT NULL DEFAULT '0' COMMENT '浏览量',
   `type` int(11) NOT NULL DEFAULT '0' COMMENT '类型',
@@ -281,8 +293,8 @@ CREATE TABLE `fb_mall_product_sku` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `mall_product_sku_fk2` (`store_id`),
-  KEY `mall_product_sku_fk0` (`product_id`),
+  KEY `mall_product_sku_k2` (`store_id`),
+  KEY `mall_product_sku_k0` (`product_id`),
   CONSTRAINT `mall_product_sku_fk0` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_product_sku_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品属性SKU';
@@ -303,9 +315,9 @@ CREATE TABLE `fb_mall_product_attribute_item_label` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `mall_product_attribute_item_label_fk0` (`store_id`),
-  KEY `mall_product_attribute_item_label_fk1` (`product_id`),
-  KEY `mall_product_attribute_item_label_fk3` (`attribute_item_id`),
+  KEY `mall_product_attribute_item_label_k0` (`store_id`),
+  KEY `mall_product_attribute_item_label_k1` (`product_id`),
+  KEY `mall_product_attribute_item_label_k3` (`attribute_item_id`),
   CONSTRAINT `mall_product_attribute_item_label_fk0` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_product_attribute_item_label_fk3` FOREIGN KEY (`attribute_item_id`) REFERENCES `fb_mall_attribute_item` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_product_attribute_item_label_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -326,14 +338,15 @@ CREATE TABLE `fb_mall_product_tag` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `mall_product_tag_fk2` (`store_id`),
-  KEY `mall_product_tag_fk0` (`product_id`),
-  KEY `mall_product_tag_fk1` (`tag_id`),
+  KEY `mall_product_tag_k2` (`store_id`),
+  KEY `mall_product_tag_k0` (`product_id`),
+  KEY `mall_product_tag_k1` (`tag_id`),
   CONSTRAINT `mall_product_tag_fk0` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_product_tag_fk1` FOREIGN KEY (`tag_id`) REFERENCES `fb_mall_tag` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_product_tag_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='商品标签';
 
+DROP TABLE IF EXISTS `fb_mall_cart`;
 CREATE TABLE `fb_mall_cart` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
@@ -359,21 +372,21 @@ CREATE TABLE `fb_mall_cart` (
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
   KEY `mall_cart_k2` (`store_id`),
-  KEY `mall_cart_fk1` (`product_id`),
+  KEY `mall_cart_k1` (`product_id`),
   CONSTRAINT `mall_cart_fk1` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_cart_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='购物车';
 
 
-DROP TABLE IF EXISTS `fb_mall_rank`;
-CREATE TABLE `fb_mall_rank` (
+DROP TABLE IF EXISTS `fb_mall_review`;
+CREATE TABLE `fb_mall_review` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父节点',
   `product_id` bigint(20) unsigned NOT NULL COMMENT '商品',
   `user_id` bigint(20) unsigned NOT NULL COMMENT '用户',
   `name` varchar(255) NOT NULL COMMENT '名称',
-  `order_id` bigint(20) unsigned NOT NULL COMMENT '订单',
+  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单',
   `star` int(11) NOT NULL DEFAULT 5 COMMENT '星级',
   `content` text COMMENT '内容',
   `point` int(11) NOT NULL DEFAULT 0 COMMENT '赠送积分',
@@ -386,12 +399,12 @@ CREATE TABLE `fb_mall_rank` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `mall_rank_k2` (`store_id`),
-  KEY `mall_rank_k1` (`product_id`),
-  KEY `mall_rank_k0` (`user_id`),
-  CONSTRAINT `mall_rank_fk0` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `mall_rank_fk1` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `mall_rank_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `mall_review_k2` (`store_id`),
+  KEY `mall_review_k1` (`product_id`),
+  KEY `mall_review_k0` (`user_id`),
+  CONSTRAINT `mall_review_fk0` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mall_review_fk1` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mall_review_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='评价';
 
 
@@ -400,6 +413,7 @@ CREATE TABLE `fb_mall_consultation` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `product_id` bigint(20) unsigned NOT NULL COMMENT '商品',
+  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户',
   `name` varchar(255) NOT NULL COMMENT '名称',
   `question` text COMMENT '咨询',
   `answer` text COMMENT '回答',
@@ -412,7 +426,7 @@ CREATE TABLE `fb_mall_consultation` (
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
   KEY `mall_consultation_k2` (`store_id`),
-  KEY `mall_consultation_fk1` (`product_id`),
+  KEY `mall_consultation_k1` (`product_id`),
   CONSTRAINT `mall_consultation_fk1` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_consultation_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='购买咨询';
@@ -421,6 +435,7 @@ DROP TABLE IF EXISTS `fb_mall_favorite`;
 CREATE TABLE `fb_mall_favorite` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `user_id` bigint(20) unsigned NOT NULL COMMENT '用户',
   `product_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商品',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
@@ -432,8 +447,8 @@ CREATE TABLE `fb_mall_favorite` (
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
   KEY `mall_favorite_k2` (`store_id`),
-  KEY `mall_favorite_fk0` (`user_id`),
-  KEY `mall_favorite_fk1` (`product_id`),
+  KEY `mall_favorite_k0` (`user_id`),
+  KEY `mall_favorite_k1` (`product_id`),
   CONSTRAINT `mall_favorite_fk0` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_favorite_fk1` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_favorite_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -444,7 +459,7 @@ CREATE TABLE `fb_mall_coupon_type` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `money` decimal(10,2) NOT NULL COMMENT '优惠金额',
+  `money` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '优惠金额',
   `min_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '最低金额',
   `started_at` int(11) NOT NULL COMMENT '开始时间',
   `ended_at` int(11) NOT NULL COMMENT '结束时间',
@@ -468,7 +483,7 @@ CREATE TABLE `fb_mall_coupon` (
   `user_id` bigint(20) unsigned NOT NULL COMMENT '用户',
   `coupon_type_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '优惠券类型',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `money` decimal(10,2) NOT NULL COMMENT '优惠金额',
+  `money` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '优惠金额',
   `min_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '最低金额',
   `started_at` int(11) NOT NULL COMMENT '开始时间',
   `ended_at` int(11) NOT NULL COMMENT '结束时间',
@@ -484,9 +499,9 @@ CREATE TABLE `fb_mall_coupon` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `mall_coupon_k2` (`store_id`),
-  KEY `mall_coupon_fk0` (`user_id`),
-  KEY `mall_coupon_fk1` (`coupon_type_id`),
+  KEY `mall_coupon_k0` (`store_id`),
+  KEY `mall_coupon_k1` (`user_id`),
+  KEY `mall_coupon_k2` (`coupon_type_id`),
   CONSTRAINT `mall_coupon_fk0` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_coupon_fk1` FOREIGN KEY (`coupon_type_id`) REFERENCES `fb_mall_coupon_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_coupon_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -498,18 +513,22 @@ CREATE TABLE `fb_mall_order` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `user_id` bigint(20) unsigned NOT NULL COMMENT '用户',
+  `address_id` bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '地址ID',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `sn` varchar(255) NOT NULL COMMENT '编号',
-  `consignee` varchar(255) NOT NULL DEFAULT '' COMMENT '联系人',
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名字',
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '姓氏',
   `country_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '国家',
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '国家',
   `province_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '省',
+  `province` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '省',
   `city_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '市',
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '市',
   `district_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '区',
-  `state` varchar(255) NOT NULL DEFAULT '' COMMENT '国家',
-  `address` varchar(255) NOT NULL DEFAULT '' COMMENT '地址',
-  `address1` varchar(255) NOT NULL DEFAULT '' COMMENT '地址1',
-  `address2` varchar(255) NOT NULL DEFAULT '' COMMENT '地址2',
-  `zipcode` varchar(255) NOT NULL DEFAULT '' COMMENT '邮编',
+  `district` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '区',
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '地址',
+  `address2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '地址2',
+  `postcode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '邮编',
   `mobile` varchar(255) NOT NULL DEFAULT '' COMMENT '手机',
   `email` varchar(255) NOT NULL DEFAULT '' COMMENT '邮箱',
   `distance` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '距离',
@@ -525,6 +544,7 @@ CREATE TABLE `fb_mall_order` (
   `shipped_at` int(11) NOT NULL DEFAULT '0' COMMENT '配送时间',
   `product_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品总价',
   `amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '支付金额',
+  `number` int(11) NOT NULL DEFAULT '0' COMMENT '数量',
   `extra_fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '额外费用',
   `discount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '优惠金额',
   `tax` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '税费',
@@ -569,10 +589,10 @@ CREATE TABLE `fb_mall_order_product` (
   `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `mall_order_product_k2` (`store_id`),
-  KEY `mall_order_products_k3` (`user_id`),
-  KEY `mall_order_product_fk3` (`order_id`),
-  KEY `mall_order_product_fk4` (`product_id`),
+  KEY `mall_order_product_k0` (`store_id`),
+  KEY `mall_order_product_k3` (`user_id`),
+  KEY `mall_order_product_k3` (`order_id`),
+  KEY `mall_order_product_k4` (`product_id`),
   CONSTRAINT `mall_order_product_fk1` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_order_product_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_order_product_fk3` FOREIGN KEY (`order_id`) REFERENCES `fb_mall_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -634,8 +654,8 @@ CREATE TABLE `fb_mall_product_param` (
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
   KEY `mall_product_param_k2` (`store_id`),
-  KEY `mall_product_param_fk3` (`product_id`),
-  KEY `mall_product_param_fk4` (`param_id`),
+  KEY `mall_product_param_k3` (`product_id`),
+  KEY `mall_product_param_k4` (`param_id`),
   CONSTRAINT `mall_product_param_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_product_param_fk3` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_product_param_fk4` FOREIGN KEY (`param_id`) REFERENCES `fb_mall_param` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -695,12 +715,62 @@ CREATE TABLE `fb_mall_invoice` (
   CONSTRAINT `mall_invoice_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='发票';
 
+DROP TABLE IF EXISTS `fb_mall_order_log`;
+CREATE TABLE `fb_mall_order_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `order_id` bigint(20) unsigned NOT NULL COMMENT '订单',
+  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `mall_order_log_k0` (`store_id`),
+  KEY `mall_order_log_k1` (`order_id`),
+  CONSTRAINT `mall_order_log_fk1` FOREIGN KEY (`order_id`) REFERENCES `fb_mall_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mall_order_log_fk2` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mall_order_log_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单记录';
+
+DROP TABLE IF EXISTS `fb_mall_point_log`;
+CREATE TABLE `fb_mall_point_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
+  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `point` int(11) NOT NULL DEFAULT '0' COMMENT '积分',
+  `original` int(11) NOT NULL DEFAULT '0' COMMENT '原值',
+  `balance` int(11) NOT NULL DEFAULT '0' COMMENT '余额',
+  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
+  `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
+  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
+  `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
+  `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
+  PRIMARY KEY (`id`),
+  KEY `mall_point_log_k0` (`store_id`),
+  KEY `mall_point_log_k1` (`user_id`),
+  CONSTRAINT `mall_point_log_fk2` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `mall_point_log_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='积分记录';
+
+
 -- ALTER TABLE `fb_mall_brand` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_vendor` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_attribute_item` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_attribute_set` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_param` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_refund` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_mall_category` add `seo_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '搜索优化Url' after `banner`;
+-- ALTER TABLE `fb_mall_product` add `seo_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '搜索优化Url' after `content`;
+-- ALTER TABLE `fb_mall_product` add `reviews` int(11) NOT NULL DEFAULT '0' COMMENT '评论数' after `star`;
 
         ";
 
@@ -727,7 +797,7 @@ INSERT INTO `fb_base_permission` VALUES ('224', '1', '22', '搜索记录', 'back
 INSERT INTO `fb_base_permission` VALUES ('226', '1', '22', '用户地址', 'backend', '', '/mall/address/index', 'fas fa-map-marker-alt', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
 
 INSERT INTO `fb_base_permission` VALUES ('240', '1', '24', '商品列表', 'backend', '', '/mall/product/index', 'fas fa-box', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('243', '1', '24', '商品评价', 'backend', '', '/mall/rank/index', 'fas fa-thumbs-up', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('243', '1', '24', '商品评价', 'backend', '', '/mall/review/index', 'fas fa-thumbs-up', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('244', '1', '24', '购买咨询', 'backend', '', '/mall/consultation/index', 'fas fa-comments', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('245', '1', '24', '商品收藏', 'backend', '', '/mall/favorite/index', 'fas fa-heart', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('248', '1', '24', '分类管理', 'backend', '', '/mall/category/index', 'fas fa-bars', '', '3', '0', '1', '50', '1', '1599358315', '1603847794', '1', '1');
@@ -788,12 +858,12 @@ INSERT INTO `fb_base_permission` VALUES ('2403', '1', '240', '删除', 'backend'
 INSERT INTO `fb_base_permission` VALUES ('2404', '1', '240', '启禁', 'backend', '', '/mall/product/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2405', '1', '240', '导出', 'backend', '', '/mall/product/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2406', '1', '240', '导入', 'backend', '', '/mall/product/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2431', '1', '243', '查看', 'backend', '', '/mall/rank/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2432', '1', '243', '编辑', 'backend', '', '/mall/rank/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2433', '1', '243', '删除', 'backend', '', '/mall/rank/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2434', '1', '243', '启禁', 'backend', '', '/mall/rank/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2435', '1', '243', '导出', 'backend', '', '/mall/rank/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
-INSERT INTO `fb_base_permission` VALUES ('2436', '1', '243', '导入', 'backend', '', '/mall/rank/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2431', '1', '243', '查看', 'backend', '', '/mall/review/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2432', '1', '243', '编辑', 'backend', '', '/mall/review/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2433', '1', '243', '删除', 'backend', '', '/mall/review/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2434', '1', '243', '启禁', 'backend', '', '/mall/review/status*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2435', '1', '243', '导出', 'backend', '', '/mall/review/export*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
+INSERT INTO `fb_base_permission` VALUES ('2436', '1', '243', '导入', 'backend', '', '/mall/review/import*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2441', '1', '244', '查看', 'backend', '', '/mall/consultation/view*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2442', '1', '244', '编辑', 'backend', '', '/mall/consultation/edit*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
 INSERT INTO `fb_base_permission` VALUES ('2443', '1', '244', '删除', 'backend', '', '/mall/consultation/delete*', '', '', '4', '0', '1', '50', '1', '1', '1', '1', '1');
@@ -873,26 +943,12 @@ INSERT INTO `fb_base_permission` VALUES ('2736', '1', '273', '导入', 'backend'
 
 
 INSERT INTO `fb_base_setting_type` VALUES (21, 1, 0, 'backend', '商城基础', 'mall', '', 7, 1, 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (23, 1, 0, 'backend', '商城支付', 'mall_payment', '', 7, 1, 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
 
 INSERT INTO `fb_base_setting_type` VALUES (2150, 1, 21, 'backend', '默认货币', 'mall_currency_default', '默认货币', 7, 1, 'radioList', 'USD:USD,CNY:CNY,EUR:EUR,GBP:GBP', '', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (2151, 1, 21, 'backend', '货币', 'mall_currencies', '货币，商品价格乘以汇率为显示价格', 7, 1, 'multipleInputRow', 'code:货币代码,symbol:货币符号,rate:汇率', '[{\"code\":\"USD\",\"symbol\":\"$\",\"rate\":\"1\"},{\"code\":\"CNY\",\"symbol\":\"￥\",\"rate\":\"6.5\"},{\"code\":\"EUR\",\"symbol\":\"€\",\"rate\":\"0.93\"},{\"code\":\"GBP\",\"symbol\":\"£\",\"rate\":\"0.8\"}]', 50, 1, 1600948360, 1600948360, 1, 1);
-
-INSERT INTO `fb_base_setting_type` VALUES (7011, 1, 70, 'backend', '主题', 'cms_theme', '', 'text', '', 'default', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7012, 1, 70, 'backend', '模板', 'cms_template', '', 'text', '', 'index', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7013, 1, 70, 'backend', '横幅', 'cms_banner', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7014, 1, 70, 'backend', '横幅手机版', 'cms_banner_h5', '', 'images', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7029, 1, 70, 'backend', '列表页默认每页数量', 'cms_list_page_size', '', 'text', '', '12', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7043, 1, 70, 'backend', '关于我们', 'cms_about_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7044, 1, 70, 'backend', '联系我们', 'cms_contact_text', '', 'textarea', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7051, 1, 70, 'backend', '网站参数1', 'cms_param1', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7052, 1, 70, 'backend', '网站参数2', 'cms_param2', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7053, 1, 70, 'backend', '网站参数3', 'cms_param3', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7054, 1, 70, 'backend', '网站参数4', 'cms_param4', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7055, 1, 70, 'backend', '网站参数5', 'cms_param5', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7056, 1, 70, 'backend', '网站参数6', 'cms_param6', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7057, 1, 70, 'backend', '网站参数7', 'cms_param7', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7058, 1, 70, 'backend', '网站参数8', 'cms_param8', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
-INSERT INTO `fb_base_setting_type` VALUES (7059, 1, 70, 'backend', '网站参数9', 'cms_param9', '', 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (2321, 1, 23, 'backend', 'PayPal Client ID', 'mall_payment_paypal_client_id', '', 7, 1, 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
+INSERT INTO `fb_base_setting_type` VALUES (2322, 1, 23, 'backend', 'PayPal Secret', 'mall_payment_paypal_secret', '', 7, 1, 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
 
         ";
 
@@ -903,6 +959,38 @@ INSERT INTO `fb_base_setting_type` VALUES (7059, 1, 70, 'backend', '网站参数
 
     public function down()
     {
-        $this->dropTable('{{%user}}');
+        $sql = "
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE IF EXISTS `fb_mall_address`;
+DROP TABLE IF EXISTS `fb_mall_brand`;
+DROP TABLE IF EXISTS `fb_mall_vendor`;
+DROP TABLE IF EXISTS `fb_mall_tag`;
+DROP TABLE IF EXISTS `fb_mall_category`;
+DROP TABLE IF EXISTS `fb_mall_attribute`;
+DROP TABLE IF EXISTS `fb_mall_attribute_item`;
+DROP TABLE IF EXISTS `fb_mall_attribute_set`;
+DROP TABLE IF EXISTS `fb_mall_attribute_set_attribute`;
+DROP TABLE IF EXISTS `fb_mall_product`;
+DROP TABLE IF EXISTS `fb_mall_product_sku`;
+DROP TABLE IF EXISTS `fb_mall_product_attribute_item_label`;
+DROP TABLE IF EXISTS `fb_mall_product_tag`;
+DROP TABLE IF EXISTS `fb_mall_cart`;
+DROP TABLE IF EXISTS `fb_mall_review`;
+DROP TABLE IF EXISTS `fb_mall_consultation`;
+DROP TABLE IF EXISTS `fb_mall_favorite`;
+DROP TABLE IF EXISTS `fb_mall_coupon_type`;
+DROP TABLE IF EXISTS `fb_mall_coupon`;
+DROP TABLE IF EXISTS `fb_mall_order`;
+DROP TABLE IF EXISTS `fb_mall_order_product`;
+DROP TABLE IF EXISTS `fb_mall_search_log`;
+DROP TABLE IF EXISTS `fb_mall_param`;
+DROP TABLE IF EXISTS `fb_mall_product_param`;
+DROP TABLE IF EXISTS `fb_mall_refund`;
+DROP TABLE IF EXISTS `fb_mall_invoice`;
+
+SET FOREIGN_KEY_CHECKS=0;
+        ";
+        $this->execute($sql);
     }
 }

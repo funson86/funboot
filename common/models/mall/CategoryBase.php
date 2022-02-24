@@ -48,6 +48,7 @@ class CategoryBase extends BaseModel
             'brief' => Yii::t('app', 'Brief'),
             'is_nav' => Yii::t('app', 'Is Nav'),
             'banner' => Yii::t('app', 'Banner'),
+            'seo_url' => Yii::t('app', 'Seo Url'),
             'seo_title' => Yii::t('app', 'Seo Title'),
             'seo_keywords' => Yii::t('app', 'Seo Keywords'),
             'seo_description' => Yii::t('app', 'Seo Description'),

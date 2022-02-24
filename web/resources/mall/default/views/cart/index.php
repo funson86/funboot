@@ -1,99 +1,163 @@
 <?php
+use yii\helpers\Url;
+use common\models\mall\Product;
+use common\models\mall\AttributeItem;
+
 /* @var $this yii\web\View */
-$this->registerCssFile('@web/css/cart.css');
-$totalNumber = 0;
-$totalPrice = 0;
-foreach($products as $product) {
-    $totalNumber += $product->number;
-    $totalPrice += $product->number * $product->price;
-}
+/* @var $models \common\models\mall\Cart[] */
+/* @var $productAmount float */
+/* @var $discount float */
+/* @var $total float */
+
+$this->title = Yii::t('mall', 'Shopping Cart');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div id="main">
-    <div class="top-next cle">
-        <div class="fl"> 我有账号，现在就<a href="javascript:;" id="login-link">登录</a> </div>
-        <div class="fr"> <a href="<?= Yii::$app->homeUrl?>" class="graybtn">继续购物</a> <a href="javascript:;" class="btn" id="checkout-top">&nbsp;去下单&nbsp;</a> </div>
-    </div>
-    <div class="cart-box" id="cart-box">
-        <div class="hd">
-            <span class="no1">&nbsp;</span>
-            <span class="no2" id="itemsnum-top"><?= $totalNumber ?>件商品</span>
-            <span class="no3">单价</span>
-            <span>数量</span>
-            <span>小计</span>
-        </div>
-        <div class="goods-list">
-            <ul>
-                <?php foreach ($products as $product) { ?>
-                <li class="cle hover">
-                    <div class="check">
-                        &nbsp;<!--input type="checkbox" name="goodsId" value="728286208" checked="checked" /-->
-                    </div>
-                    <div class="pic"> <a href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $product->product_id]) ?>" target="_blank"> <img alt="<?= $product->name ?>" src="<?= $product->thumb ?>"></a> </div>
-                    <div class="name"> <a href="<?= Yii::$app->urlManager->createUrl(['product/view', 'id' => $product->product_id]) ?>" target="_blank"> <?= $product->name ?> </a>
-                        <p> </p>
-                    </div>
-                    <div class="price-one">
-                        <p>￥<em><?= $product->price ?></em></p>
-                    </div>
-                    <div class="nums">
-                        <span class="minus" title="减少1个数量" data-link="<?= Yii::$app->urlManager->createUrl(['cart/index', 'type' => 'minus', 'product_id' => $product->product_id]) ?>">-</span>
-                        <input type="text" data-limit="99"  data-link="<?= Yii::$app->urlManager->createUrl(['cart/index', 'type' => 'change', 'product_id' => $product->product_id]) ?>" value="<?= $product->number ?>">
-                        <span class="add" title="增加1个数量" data-link="<?= Yii::$app->urlManager->createUrl(['cart/index', 'type' => 'add', 'product_id' => $product->product_id]) ?>">+</span>
-                    </div>
-                    <div class="price-xj"><span>￥</span> <em><?= $product->number * $product->price ?></em> </div>
-                    <div class="del"> <a class="btn-del" href="<?= Yii::$app->urlManager->createUrl(['cart/delete', 'id' => $product->product_id]) ?>">删除</a></div>
-                </li>
-                <?php } ?>
-            </ul>
-        </div>
-        <!-- 积分换购商品 -->
-        <div class="fd cle">
-            <div class="fl">
-                <p class="no1">
-                    <a id="del-all" href="<?= Yii::$app->urlManager->createUrl(['cart/destroy']) ?>">清空购物车</a>
-                </p>
-                <p><a class="graybtn" href="<?= Yii::$app->urlManager->createUrl(['/mall/product/search']) ?>">继续购物</a></p>
+<section class="page-section shop-cart">
+    <div class="container">
+        <?php if (count($models)) { ?>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shop-cart-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th><?= Yii::t('app', 'Product') ?></th>
+                            <th><?= Yii::t('app', 'Price') ?></th>
+                            <th><?= Yii::t('app', 'Quantity') ?></th>
+                            <th><?= Yii::t('app', 'Total') ?></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($models as $model) { $product = Yii::$app->cacheSystemMall->getProductById($model->product_id); ?>
+                        <tr data-id="<?= $model->id ?>">
+                            <td class="cart-product-item">
+                                <a href="<?= $this->context->getSeoUrl($product) ?>">
+                                    <?= strlen($model->thumb) > 5 ? "<img src='{$model->thumb}'>" : '' ?>
+                                    <div class="cart-product-item-title">
+                                        <h6>
+                                            <?= fbt(Product::getTableCode(), $product->id, 'name', $model->name) ?>
+                                            <?php if (strlen($model->product_attribute_value) > 0) {
+                                                $arr = [];
+                                                $arrProductAttributeValue = explode(',', $model->product_attribute_value);
+                                                foreach ($arrProductAttributeValue as $attributeItemId) {
+                                                    $attributeItem = Yii::$app->cacheSystemMall->getAttributeItemById($attributeItemId);
+                                                    if ($attributeItem) {
+                                                        array_push($arr, fbt(AttributeItem::getTableCode(), $attributeItem->id, 'name', $attributeItem->name));
+                                                    }
+                                                }
+                                                if (count($arr) > 0) {
+                                                    echo '<span>[' . implode(', ', $arr) . ']</span>';
+                                                }
+                                            } ?>
+                                        </h6>
+                                        <div class="rating">
+                                            <?= \common\helpers\UiHelper::renderStar($product->star) ?>
+                                        </div>
+                                    </div>
+                                </a>
+                            </td>
+                            <td class="cart-price"><?= $this->context->getNumberByCurrency($model->price) ?></td>
+                            <td class="cart-quantity">
+                                <div class="pro-qty" data-id="<?= $model->id ?>">
+                                    <span class="dec qtybtn click-btn" data-type="dec">-</span>
+                                    <input type="text" value="<?= $model->number ?>" class="number-btn" data-type="mod">
+                                    <span class="inc qtybtn click-btn" data-type="inc">+</span>
+                                </div>
+                            </td>
+                            <td class="cart-total"><?= $this->context->getNumberByCurrency($model->price * $model->number) ?></td>
+                            <td class="cart-close click-btn" data-type="del"><span class="fa fa-close" data-id="<?= $model->id ?>"></span></td>
+                        </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div id="price-total" class="fr">
-                <p><?= $totalNumber ?>件商品，总价：<span class="red">¥<strong><?= $totalPrice ?></strong></span></p>
-                <p><?php if ($totalPrice >= Yii::$app->params['freeShipmentAmount']) { ?><span class="green">恭喜您，已免邮！</span><?php } else { ?><span class="red">运费<?= Yii::$app->params['defaultShipmentFee'] ?>元，满<?= Yii::$app->params['freeShipmentAmount'] ?>元包邮</span><?php } ?><a class="btn" href="javascript:;">去下单</a></p>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                <div class="cart-btn">
+                    <a href="<?= Url::to(['/']) ?>"><?= Yii::t('mall', 'Go Shopping') ?></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                <div class="cart-btn update-btn">
+                    <a href="<?= Url::to(['/mall/cart']) ?>"><span class="fa fa-refresh"></span> <?= Yii::t('app', 'Refresh') ?></a>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-6 mb-3">
+                <div class="discount-content">
+                    <h6><?= Yii::t('mall', 'Discount code') ?></h6>
+                    <dd>
+                        <input type="text" id="coupon-code" placeholder="<?= Yii::t('mall', 'Enter your coupon code') ?>">
+                        <button type="button" class="site-btn" id="coupon-apply"><?= Yii::t('app', 'Apply') ?></button>
+                    </dd>
+                </div>
+            </div>
+            <div class="col-lg-4 offset-lg-2">
+                <div class="cart-total-procced">
+                    <h6><?= Yii::t('mall', 'Cart Total') ?></h6>
+                    <ul>
+                        <li><?= Yii::t('app', 'Subtotal') ?> <span><?= $this->context->getNumberByCurrency($productAmount) ?></span></li>
+                        <?php if ($discount <> 0) { ?><li><li><?= Yii::t('app', 'Discount') ?> <span><?= $this->context->getNumberByCurrency($discount) ?></span></li><?php } ?>
+                        <li><?= Yii::t('app', 'Total') ?> <span><?= $this->context->getNumberByCurrency($total) ?></span></li>
+                    </ul>
+                    <a href="<?= Yii::$app->request->get('coupon') ? Url::to(['/mall/cart/checkout', 'coupon' => Yii::$app->request->get('coupon')]) : Url::to(['/mall/cart/checkout']) ?>" class="primary-btn"><?= Yii::t('mall', 'Proceed to checkout') ?></a>
+                </div>
+            </div>
+        </div>
+        <?php } else { ?>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="py-5">
+                    <h2><?= Yii::t('mall', 'Your cart is currently empty') ?></h2>
+                    <p><?= Yii::t('mall', 'Please add some products to your shopping cart before proceeding to checkout.') ?></p>
+                </div>
+                <div class="pb-5">
+                    <a href="<?= Url::to(['/']) ?>" class="site-btn"><?= Yii::t('mall', 'Shopping Now') ?></a>
+                </div>
+            </div>
+
+        </div>
+        <?php } ?>
     </div>
-</div>
+</section>
 
-<?php
-$urlCurrent = Yii::$app->urlManager->baseUrl;
-$urlCheckout = Yii::$app->urlManager->createUrl(['cart/checkout']);
-$js = <<<JS
-jQuery(".minus").click(function(){
-    var link = $(this).data('link');
-    $.get(link, function(data, status) {
-        if (status == "success") {
-            location.reload();
+<script>
+$('.click-btn').click(function () {
+    let param = {
+        id: $(this).parent().data('id'),
+        type: $(this).data('type'),
+        _csrf: '<?= Yii::$app->request->getCsrfToken() ?>'
+    };
+    $.post('<?= Url::to(['/mall/cart/update-ajax']) ?>', param, function(data) {
+        if (data.code !== 200) {
+            Swal.fire(data.msg);
         }
-    });
-});//end click
-jQuery(".add").click(function(){
-    var link = $(this).data('link');
-    $.get(link, function(data, status) {
-        if (status == "success") {
-            location.reload();
+        window.location.reload();
+    }, "json");
+})
+$('.number-btn').change(function () {
+    let param = {
+        id: $(this).parent().data('id'),
+        type: $(this).data('type'),
+        number: $(this).val(),
+        _csrf: '<?= Yii::$app->request->getCsrfToken() ?>'
+    };
+    $.post('<?= Url::to(['/mall/cart/update-ajax']) ?>', param, function(data) {
+        if (data.code !== 200) {
+            Swal.fire(data.msg);
         }
-    });
-});//end click
-jQuery(".nums input").change(function(){
-    var link = $(this).data('link');
-    $.get(link + "&value=" + this.value, function(data, status) {
-        if (status == "success") {
-            location.reload();
-        }
-    });
-});//end click
-jQuery(".btn").click(function(){
-    location.href = '{$urlCheckout}';
-});//end click
-JS;
-
-$this->registerJs($js);
+        window.location.reload();
+    }, "json");
+})
+$('#coupon-apply').click(function () {
+    let coupon = $('#coupon-code').val();
+    if (coupon.length > 0) {
+        window.location.href = '<?= Url::to(['/mall/cart/index']) ?>?coupon=' + coupon;
+    }
+})
+</script>

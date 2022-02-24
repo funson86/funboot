@@ -6,6 +6,7 @@ use common\components\enums\YesNo;
 use common\models\mall\Consultation as ActiveModel;
 use yii\helpers\Inflector;
 use common\helpers\ArrayHelper;
+use common\models\mall\Product;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -39,8 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         'id',
                         //['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        'product_id',
-                        ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        ['attribute' => 'product_id', 'value' => function ($model) { return $model->product->name; }, 'filter' => Html::activeDropDownList($searchModel, 'product_id', Product::getIdLabel(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        'name',
+                        // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
                         'question:ntext',
                         'answer:ntext',
                         // 'type',

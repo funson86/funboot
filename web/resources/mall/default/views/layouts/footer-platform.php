@@ -5,7 +5,7 @@ use yii\helpers\Url;
 <div class="container footer">
     <div class="row">
         <div class="col-md-12 text-center">
-            © <?= $this->context->store->name ?> <?= date('Y') ?> All Right Reserved.
+            © <?= $this->context->store->name ?> <?= date('Y') ?> <?= Yii::t('app', 'All Right Reserved.') ?>
         </div>
     </div>
 </div>

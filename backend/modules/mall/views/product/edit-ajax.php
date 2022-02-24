@@ -63,6 +63,7 @@ $form = ActiveForm::begin([
         ]); ?>
         <?= $form->field($model, 'brief')->textarea(['rows' => 6]) ?>
         <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+        <?= $form->field($model, 'seo_url')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'seo_title')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'seo_description')->textarea(['rows' => 6]) ?>

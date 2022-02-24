@@ -61,10 +61,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="col-sm-4 pr-4"><?= $form->field($model, 'brand_id')->dropDownList(\common\models\mall\Brand::getIdLabel(true)) ?></div>
                             <div class="col-sm-4 pr-4"><?= $form->field($model, 'vendor_id')->dropDownList(\common\models\mall\Vendor::getIdLabel(true)) ?></div>
                         </div>
-                        <?= $form->field($model, 'tags')->widget(kartik\select2\Select2::class, [
-                            'data' => $allTags, //传入变量
-                            'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
-                        ]) ?>
+                        <div class="row">
+                            <div class="col-sm-4 pr-4"><?= $form->field($model, 'seo_url')->textInput(['maxlength' => true]) ?></div>
+                            <div class="col-sm-8 pr-8">
+                                <?= $form->field($model, 'tags')->widget(kartik\select2\Select2::class, [
+                                    'data' => $allTags, //传入变量
+                                    'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => 'multiple'],
+                                ]) ?>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-4 pr-4"><?= $form->field($model, 'sort')->textInput() ?></div>
                             <div class="col-sm-4 pr-4"><?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?></div>
@@ -139,6 +144,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="tab-pane fade show" id="tab-content-3">
                         <?= $form->field($model, 'thumb')->widget(\common\components\uploader\FileWidget::class, [
+                            'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
+                            'theme' => 'default',
+                            'themeConfig' => [],
+                            'config' => [
+                                // 可设置自己的上传地址, 不设置则默认地址
+                                // 'server' => '',
+                                'pick' => [
+                                    'multiple' => false,
+                                ],
+                            ]
+                        ]); ?>
+                        <?= $form->field($model, 'image')->widget(\common\components\uploader\FileWidget::class, [
                             'uploadType' => \common\models\base\Attachment::UPLOAD_TYPE_IMAGE,
                             'theme' => 'default',
                             'themeConfig' => [],

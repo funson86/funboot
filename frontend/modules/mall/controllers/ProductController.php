@@ -2,90 +2,61 @@
 
 namespace frontend\modules\mall\controllers;
 
+use common\helpers\ArrayHelper;
 use common\models\mall\Attribute;
 use common\models\mall\AttributeSet;
 use common\models\mall\Consultation;
 use common\models\mall\Favorite;
 use common\models\mall\Param;
+use common\models\mall\Product;
 use common\models\mall\ProductAttributeItemLabel;
 use common\models\mall\ProductParam;
 use common\models\mall\ProductSku;
-use common\models\mall\SearchLog;
-use common\models\mall\Brand;
-
+use common\models\mall\Review;
 use Yii;
-use common\models\mall\Category;
-use common\models\mall\Product;
 use yii\data\ActiveDataProvider;
-use yii\db\Query;
-use common\helpers\ArrayHelper;
-use yii\web\BadRequestHttpException;
-use yii\web\Cookie;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
+/**
+ * Class ProductController
+ * @package frontend\modules\mall\controllers
+ * @author funson86 <funson86@gmail.com>
+ */
 class ProductController extends BaseController
 {
-    const PRODUCT_SORT_CREATED_AT = 1;
-    const PRODUCT_SORT_SALES = 2;
-
-    public function actionView($id)
+    public function actionIndex()
     {
-        $model = $this->findModel($id);
+        return $this->goHome();
+    }
 
-        $allCategory = Category::find()->asArray()->all();
-        $arrayCategoryIdName = ArrayHelper::map($allCategory, 'id', 'name');
-        $rootCategoryId = Category::getRootCatalogId($model->category_id, $allCategory);
-        $arraySameRootCategory = Category::getArraySubCatalogId($rootCategoryId, $allCategory);
-
-        // 同类商品  和 同大类商品
-        $sameCategoryProducts = Product::find()->where(['category_id' => $model->category_id])->orderBy(['sales' => SORT_DESC])->limit(3)->all();
-        $sameRootCategoryProducts = Product::find()->where(['category_id' => $arraySameRootCategory])->orderBy(['sales' => SORT_DESC])->limit(Yii::$app->params['productHotCount'] ?? 8)->all();
-
-        // 记录浏览日志
-        $historyProducts = [];
-        $cookies = Yii::$app->request->cookies;
-        if ($cookies->has('productHistory')) {
-            $arrHistory = explode(',', $cookies->getValue('productHistory'));
-
-            foreach ($arrHistory as $productId) {
-                $product = Product::findOne($productId);
-                if ($product) {
-                    array_push($historyProducts, $product);
-                }
-            }
-
-            array_unshift($arrHistory, $id);
-            $arrHistory = array_unique($arrHistory);
-            while (count($arrHistory) > (Yii::$app->params['productHistoryCount'] ?? 8)) {
-                array_pop($arrHistory);
-            }
-            Yii::$app->response->cookies->remove('productHistory');
-            Yii::$app->response->cookies->add(new Cookie([
-                'name' => 'productHistory',
-                'value' => implode(',', $arrHistory),
-                'expire' => time() + 3600 * 24 * 30,
-            ]));
-        } else {
-            Yii::$app->response->cookies->add(new Cookie([
-                'name' => 'productHistory',
-                'value' => $id,
-                'expire' => time() + 3600 * 24 * 30,
-            ]));
+    public function actionView()
+    {
+        $id = Yii::$app->request->get('id');
+        $seoUrl = Yii::$app->request->get('seo_url');
+        if ($id) {
+            $model = Product::findOne(['store_id' => $this->getStoreId(), 'id' => $id]);
+        } elseif ($seoUrl) {
+            $model = Product::findOne(['store_id' => $this->getStoreId(), 'seo_url' => $seoUrl]);
         }
 
+        if (!$model) {
+            return $this->goBack();
+        }
+
+
         // 计算属性
+        $jsonProductAttribute = []; // 控制前端显示价格和库存，简单处理方式，点击后看购物车按钮是否可用
         $enableValueIds = [];
         $productSkus = ProductSku::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id])->asArray()->all();
         if ($productSkus) {
             $enableValueIds = array_unique(explode(',', implode(',', ArrayHelper::getColumn($productSkus, 'attribute_value'))));
         }
         foreach ($productSkus as &$productSku) {
+            $jsonProductAttribute[$productSku['attribute_value']] = ['price' => $this->getNumberByCurrency($productSku['price']), 'stock' => $productSku['stock']];
+
             $attributeValueIds = explode(',', $productSku['attribute_value']);
             $productSku['attribute_value'] = ArrayHelper::intValue($attributeValueIds, true);
         }
-
-        $productAttributeItemLabels = ProductAttributeItemLabel::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $id])->all();
+        $productAttributeItemLabels = ProductAttributeItemLabel::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id])->all();
         $mapProductAttributeItemIdLabel = ArrayHelper::map($productAttributeItemLabels, 'id', 'label');
         $mapProductAttributeItemAttributeItemIdLabel = ArrayHelper::map($productAttributeItemLabels, 'attribute_item_id', 'label');
 
@@ -101,13 +72,6 @@ class ProductController extends BaseController
                         $query->andWhere(['id' => $enableValueIds]);
                     }])
                     ->all();
-                /*foreach ($attributes as &$attribute) {
-                    foreach ($attribute->attributeItems as &$attributeValue) {
-                        $attributeValue->label = $mapProductAttributeItemAttributeItemIdLabel[$attributeValue->id] ?? $attributeValue->name;
-                    }
-                    unset($attributeValue);
-                }
-                unset($attribute);*/
             }
         }
 
@@ -116,148 +80,165 @@ class ProductController extends BaseController
         $mapProductParamIdContent = $arrProductParamIds = [];
         if ($model->param_id > 0) {
             $allParams = ArrayHelper::mapIdData(Param::find()->where(['store_id' => $this->getStoreId(), 'parent_id' => $model->param_id, 'status' => Param::STATUS_ACTIVE])->with('children')->all());
-            $productParams = ProductParam::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $id])->all();
+            $productParams = ProductParam::find()->where(['store_id' => $this->getStoreId(), 'product_id' => $model->id])->all();
             $mapProductParamIdContent = ArrayHelper::map($productParams, 'param_id', 'content');
             $arrProductParamIds = ArrayHelper::getColumn($productParams, 'param_id');
         }
 
-        return $this->render('view', [
+        return $this->render($this->action->id, [
             'model' => $model,
-            'allCategory' => $allCategory,
-            'arrayCategoryIdName' => $arrayCategoryIdName,
-            'sameCategoryProducts' => $sameCategoryProducts,
-            'sameRootCategoryProducts' => $sameRootCategoryProducts,
-            'historyProducts' => $historyProducts,
             'attributes' => $attributes,
             'mapProductAttributeItemAttributeItemIdLabel' => $mapProductAttributeItemAttributeItemIdLabel,
-            'productSkus' => $productSkus,
+            'productSkus' => $productSkus, //此种计算方法更复杂，用于点击时显示下面的属性是否可选
+            'jsonProductAttribute' => json_encode($jsonProductAttribute),
             'allParams' => $allParams,
             'mapProductParamIdContent' => $mapProductParamIdContent,
             'arrProductParamIds' => $arrProductParamIds,
         ]);
     }
-    
-    public function actionBrand()
+
+    public function actionFavorite()
     {
-    	$allBrands = Brand::find()->where(['status' => Brand::STATUS_ACTIVE])->andwhere(['<>', 'logo', ''])->all();
-    	 
-        return $this->render('allbrands', [
-            'allBrands' => $allBrands,
-        ]);    	
-    } 
-
-    public function actionSearch($keyword = null, $type = self::PRODUCT_SORT_CREATED_AT)
-    {
-        if ($type == self::PRODUCT_SORT_CREATED_AT) {
-            $type = 'created_at';
-        } elseif ($type == self::PRODUCT_SORT_SALES) {
-            $type = 'sales';
-        } else {
-            throw new BadRequestHttpException('Type is not supported.');
-        }
-
-        if (trim($keyword)) {
-            $keyword = trim($keyword);
-            $searchLog = new SearchLog([
-                'session_id' => Yii::$app->session->id,
-                'user_id' => Yii::$app->user->id,
-                'keyword' => $keyword,
-                'ip' => Yii::$app->request->userIP,
-            ]);
-            $searchLog->save();
-
-            $query = Product::find()->where('name like "%' . $keyword . '%"');
-        } else {
-            $query = Product::find();
-        }
-        $query->orderBy(['sales' => SORT_DESC]);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeProduct']],
-            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
-        ]);
-
-        return $this->render('search', [
-            'products' => $dataProvider->getModels(),
-            'pagination' => $dataProvider->pagination,
-        ]);
-
-    }
-
-    public function actionFavorite($id)
-    {
-        if (!Yii::$app->user->isGuest) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $favorite = Favorite::find()->where(['user_id' => Yii::$app->user->id, 'product_id' => $id])->one();
-            if (!$favorite) {
-                $model = new Favorite([
-                    'user_id' => Yii::$app->user->id,
-                    'product_id' => $id,
-                ]);
-
-                if ($model->save()) {
-                    return [
-                        'status' => 1,
-                    ];
-                }
+        // 收藏&取消
+        if (Yii::$app->request->isPost) {
+            if (Yii::$app->user->isGuest) {
+                return $this->error(-2);
             }
-            return [
-                'status' => 2,
-            ];
-        } else {
-            return $this->redirect('site/login');
+
+            $productId = Yii::$app->request->post('product_id');
+            if (!$productId) {
+                return $this->error(-11, Yii::t('mall', 'Need Product'));
+            }
+            $product = Product::findOne(['store_id' => $this->getStoreId(), 'id' => $productId]);
+            if (!$product) {
+                return $this->error(-11, Yii::t('mall', 'Need Product'));
+            }
+
+            $model = Favorite::find()->where(['store_id' => $this->getStoreId(), 'user_id' => Yii::$app->user->id, 'product_id' => $productId])->one();
+            if ($model) {
+                $model->delete();
+                return $this->success(0);
+            } else {
+                $model = new Favorite();
+                $model->user_id = Yii::$app->user->id;
+                $model->product_id = $productId;
+                $model->name = $product->name;
+                if (!$model->save()) {
+                    Yii::$app->logSystem->db($model->errors);
+                    return $this->success(0);
+                }
+                return $this->success(1);
+            }
+        } else if (Yii::$app->request->isAjax) { // 查询
+            if (Yii::$app->user->isGuest) {
+                return $this->error(-2);
+            }
+
+            $productId = Yii::$app->request->get('product_id');
+            if (!$productId) {
+                return $this->error(-11, Yii::t('mall', 'Need Product'));
+            }
+            $product = Product::findOne(['store_id' => $this->getStoreId(), 'id' => $productId]);
+            if (!$product) {
+                return $this->error(-11, Yii::t('mall', 'Need Product'));
+            }
+
+            $model = Favorite::find()->where(['store_id' => $this->getStoreId(), 'user_id' => Yii::$app->user->id, 'product_id' => $productId])->one();
+            if ($model) {
+                return $this->success(1);
+            }
+            return $this->success(0);
         }
-    }
 
-    public function actionComment($productId)
-    {
-        $this->layout = false;
-        if (Yii::$app->request->isAjax && $productId) {
-            $query = Comment::find()->where(['product_id' => $productId, 'status' => Status::STATUS_ACTIVE]);
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-                'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeProduct']],
-                'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
-            ]);
-
-            return $this->render('comment', [
-                'data' => $dataProvider->getModels(),
-                'pagination' => $dataProvider->pagination,
-            ]);
-        }
-    }
-
-    public function actionConsultation($productId)
-    {
-        $this->layout = false;
-        if (Yii::$app->request->isAjax && $productId) {
-            $query = Consultation::find()->where(['product_id' => $productId, 'status' => Status::STATUS_ACTIVE]);
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-                'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeProduct']],
-                'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
-            ]);
-
-            return $this->render('consultation', [
-                'data' => $dataProvider->getModels(),
-                'pagination' => $dataProvider->pagination,
-            ]);
-        }
+        // 列表
+        $models = Favorite::find()->where(['store_id' => $this->getStoreId(), 'user_id' => Yii::$app->user->id])->all();
+        return $this->render($this->action->id, [
+            'models' => $models,
+        ]);
     }
 
     /**
-     * Finds the Category model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Category the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return array|mixed
+     * @throws \yii\base\InvalidConfigException
      */
-    protected function findModel($id, $action = false)
+    public function actionConsultation()
     {
-        if (($model = Product::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+        if (!Yii::$app->request->isAjax) {
+            return $this->error();
         }
+
+        $productId = Yii::$app->request->get('product_id', Yii::$app->request->post('product_id'));
+        if (!$productId) {
+            return $this->error(-1);
+        }
+        $product = Product::findOne(['store_id' => $this->getStoreId(), 'id' => $productId]);
+        if (!$product) {
+            return $this->error(-1);
+        }
+
+        // add
+        if (Yii::$app->request->isPost) {
+            if (Yii::$app->user->isGuest) {
+                return $this->error(-2);
+            }
+
+            if (strlen(Yii::$app->request->post('question')) <= 0) {
+                return $this->error(-1);
+            }
+
+            $model = new Consultation();
+            $model->product_id = $productId;
+            $model->question = Yii::$app->request->post('question');
+            $model->user_id = Yii::$app->user->id;
+            $model->name = Yii::$app->user->identity->email ?: Yii::$app->user->identity->username;
+            $model->status = Consultation::STATUS_INACTIVE;
+
+            if (!$model->save()) {
+                Yii::$app->logSystem->db($model->errors);
+                return $this->error();
+            }
+            return $this->success();
+        }
+
+        $query = Consultation::find()->where(['product_id' => $productId, 'status' => Consultation::STATUS_ACTIVE]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeProductConsultation'] ?? 1],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+
+        return $this->success($this->renderPartial($this->action->id, [
+            'models' => $dataProvider->getModels(),
+            'pagination' => $dataProvider->pagination,
+        ]));
+    }
+
+    public function actionReview()
+    {
+        if (!Yii::$app->request->isAjax) {
+            return $this->error();
+        }
+
+        $productId = Yii::$app->request->get('product_id', Yii::$app->request->post('product_id'));
+        if (!$productId) {
+            return $this->error(-1);
+        }
+        $product = Product::findOne(['store_id' => $this->getStoreId(), 'id' => $productId]);
+        if (!$product) {
+            return $this->error(-1);
+        }
+
+        $query = Review::find()->where(['product_id' => $productId, 'status' => Review::STATUS_ACTIVE]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => ['defaultPageSize' => Yii::$app->params['defaultPageSizeProductRank'] ?? 1],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+
+        return $this->success($this->renderPartial($this->action->id, [
+            'models' => $dataProvider->getModels(),
+            'pagination' => $dataProvider->pagination,
+        ]));
+
     }
 }

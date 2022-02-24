@@ -369,7 +369,7 @@ class DefaultController extends BaseController
             return '';
         }
 
-        return Yii::$app->cacheSystemCms->getStorePageByCode($code);
+        return Yii::$app->cacheSystemCms->getPageByCode($code);
     }
 
     public function getBlockValue($code = 'contact_us', $field = 'name', $lang = null)
@@ -378,7 +378,7 @@ class DefaultController extends BaseController
             return '';
         }
 
-        $model = Yii::$app->cacheSystemCms->getStorePageByCode($code);
+        $model = Yii::$app->cacheSystemCms->getPageByCode($code);
         if (!$model) {
             return '';
         }
@@ -399,7 +399,7 @@ class DefaultController extends BaseController
 
     public function getBlockFieldIndex($index = 0, $code = 'contact_us', $field = 'name', $split = '|')
     {
-        $model = Yii::$app->cacheSystemCms->getStorePageByCode($code);
+        $model = Yii::$app->cacheSystemCms->getPageByCode($code);
         if (!$model) {
             return '';
         }
