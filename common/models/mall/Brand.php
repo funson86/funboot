@@ -13,7 +13,7 @@ use common\models\Store;
  * @property int $store_id 商家
  * @property string $name 名称
  * @property string $logo Logo
- * @property string|null $brief 描述
+ * @property string|null $brief 简介
  * @property string $url 网址
  * @property int $type 排序
  * @property int $sort 排序
@@ -57,7 +57,7 @@ class Brand extends BrandBase
                 'store_id' => '商家',
                 'name' => '名称',
                 'logo' => 'Logo',
-                'brief' => '描述',
+                'brief' => '简介',
                 'url' => '网址',
                 'type' => '排序',
                 'sort' => '排序',

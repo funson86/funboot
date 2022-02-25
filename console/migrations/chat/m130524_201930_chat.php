@@ -104,6 +104,7 @@ INSERT INTO `fb_base_role_permission` VALUES ('5976', '1', '', '50', '5974', '1'
 INSERT INTO `fb_base_role_permission` VALUES ('5977', '1', '', '50', '5975', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('5978', '1', '', '50', '5976', '1', '50', '1', '1608030276', '1608030276', '1', '1');
 
+SET FOREIGN_KEY_CHECKS=1;
         ";
 
         $this->execute($sql);

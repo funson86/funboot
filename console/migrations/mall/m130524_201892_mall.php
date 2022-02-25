@@ -57,7 +57,7 @@ CREATE TABLE `fb_mall_brand` (
   `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
   `name` varchar(255) NOT NULL COMMENT '名称',
   `logo` varchar(255) NOT NULL DEFAULT '' COMMENT 'Logo',
-  `brief` text comment '描述',
+  `brief` text comment '简介',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '网址',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '排序',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
@@ -81,7 +81,7 @@ CREATE TABLE `fb_mall_vendor` (
   `mobile` varchar(255) NOT NULL DEFAULT '' COMMENT '手机',
   `email` varchar(255) NOT NULL DEFAULT '' COMMENT '邮箱',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '网址',
-  `brief` text comment '描述',
+  `brief` text comment '简介',
   `type` int(11) NOT NULL DEFAULT '1' COMMENT '排序',
   `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
@@ -236,6 +236,7 @@ CREATE TABLE `fb_mall_product` (
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
   `image` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
   `images` json DEFAULT NULL COMMENT '图集',
+  `tags` json NULL COMMENT '标签',
   `brief` text COMMENT '简介',
   `content` text COMMENT '内容',
   `seo_url` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索优化Url',
@@ -247,7 +248,7 @@ CREATE TABLE `fb_mall_product` (
   `attribute_set_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '属性集',
   `param_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '参数',
   `star` decimal(11,2) NOT NULL DEFAULT '5.00' COMMENT '星级',
-  `reviews` int(11) NOT NULL DEFAULT '0' COMMENT '评论量',
+  `reviews` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
   `sales` int(11) NOT NULL DEFAULT '0' COMMENT '销量',
   `click` int(11) NOT NULL DEFAULT '0' COMMENT '浏览量',
   `type` int(11) NOT NULL DEFAULT '0' COMMENT '类型',
@@ -590,11 +591,11 @@ CREATE TABLE `fb_mall_order_product` (
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
   KEY `mall_order_product_k0` (`store_id`),
-  KEY `mall_order_product_k3` (`user_id`),
+  KEY `mall_order_product_k1` (`user_id`),
   KEY `mall_order_product_k3` (`order_id`),
   KEY `mall_order_product_k4` (`product_id`),
+  CONSTRAINT `mall_order_product_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_order_product_fk1` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `mall_order_product_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_order_product_fk3` FOREIGN KEY (`order_id`) REFERENCES `fb_mall_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mall_order_product_fk4` FOREIGN KEY (`product_id`) REFERENCES `fb_mall_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单商品';
@@ -761,9 +762,10 @@ CREATE TABLE `fb_mall_point_log` (
   CONSTRAINT `mall_point_log_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='积分记录';
 
+SET FOREIGN_KEY_CHECKS=1;
 
--- ALTER TABLE `fb_mall_brand` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
--- ALTER TABLE `fb_mall_vendor` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
+-- ALTER TABLE `fb_mall_brand` change `description` `brief` text COMMENT '简介';  
+-- ALTER TABLE `fb_mall_vendor` change `description` `brief` text COMMENT '简介';  
 -- ALTER TABLE `fb_mall_attribute_item` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_attribute_set` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_mall_param` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
@@ -950,6 +952,7 @@ INSERT INTO `fb_base_setting_type` VALUES (2151, 1, 21, 'backend', '货币', 'ma
 INSERT INTO `fb_base_setting_type` VALUES (2321, 1, 23, 'backend', 'PayPal Client ID', 'mall_payment_paypal_client_id', '', 7, 1, 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
 INSERT INTO `fb_base_setting_type` VALUES (2322, 1, 23, 'backend', 'PayPal Secret', 'mall_payment_paypal_secret', '', 7, 1, 'text', '', '', 50, 1, 1600948360, 1600948360, 1, 1);
 
+SET FOREIGN_KEY_CHECKS=1;
         ";
 
         //add user: admin  password: 123456
@@ -988,6 +991,8 @@ DROP TABLE IF EXISTS `fb_mall_param`;
 DROP TABLE IF EXISTS `fb_mall_product_param`;
 DROP TABLE IF EXISTS `fb_mall_refund`;
 DROP TABLE IF EXISTS `fb_mall_invoice`;
+DROP TABLE IF EXISTS `fb_mall_order_log`;
+DROP TABLE IF EXISTS `fb_mall_point_log`;
 
 SET FOREIGN_KEY_CHECKS=0;
         ";

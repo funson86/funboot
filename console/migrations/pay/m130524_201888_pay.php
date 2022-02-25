@@ -61,6 +61,7 @@ INSERT INTO `fb_base_role_permission` VALUES ('228', '1', '', '50', '5516', '1',
 
 INSERT INTO `fb_base_schedule` VALUES ('55', '1', 'funpay/order-expire', '', '删除30天前日志，每天凌晨执行', '30 5 * * *', '1', '50', '1', '1600251253', '1602205031', '1', '1');
 
+SET FOREIGN_KEY_CHECKS=1;
         ";
 
         $this->execute($sql);

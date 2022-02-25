@@ -65,18 +65,9 @@ CREATE TABLE `fb_tool_tree` (
   CONSTRAINT `tool_tree_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT 'Tree';
 
+SET FOREIGN_KEY_CHECKS=1;
         ";
 
-        $this->execute($sql);
-
-
-        $sql = "
-SET FOREIGN_KEY_CHECKS=0;
-
-
-        ";
-
-        //add user: admin  password: 123456
         $this->execute($sql);
 
     }

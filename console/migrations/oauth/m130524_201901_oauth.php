@@ -104,6 +104,8 @@ CREATE TABLE `fb_oauth_refresh_token` (
   CONSTRAINT `oauth_refresh_token_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Oauth访问Token';
 
+SET FOREIGN_KEY_CHECKS=1;
+
 INSERT INTO `fb_base_setting_type` VALUES ('87', '1', '0', 'backend', 'Oauth2', 'oauth', '', 3, 64, 'text', '', '', '50', '1', '1600948360', '1600948360', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('8701', '1', '87', 'backend', 'RSA Public', 'oauth_rsa_public', 'RSA公钥绝对路径，Linux下权限600或660', 7, 1, 'text', '', '@common/config/oauth2_public.key', '50', '1', '1600948360', '1600948360', '1', '1');
 INSERT INTO `fb_base_setting_type` VALUES ('8703', '1', '87', 'backend', 'RSA Public', 'oauth_rsa_private', 'RSA私钥绝对路径，Linux下权限600或660', 7, 1, 'text', '', '@common/config/oauth2_private.key', '50', '1', '1600948360', '1600948360', '1', '1');

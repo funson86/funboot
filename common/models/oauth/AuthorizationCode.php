@@ -15,7 +15,7 @@ use common\models\Store;
  * @property string $client_id 客户ID
  * @property string|null $scope 范围
  * @property int $expired_at 过期时间
- * @property string $redirect_uri 回调Url
+ * @property string $redirect_uri 回调Uri
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -60,7 +60,7 @@ class AuthorizationCode extends AuthorizationCodeBase
                 'client_id' => '客户ID',
                 'scope' => '范围',
                 'expired_at' => '过期时间',
-                'redirect_uri' => '回调Url',
+                'redirect_uri' => '回调Uri',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',

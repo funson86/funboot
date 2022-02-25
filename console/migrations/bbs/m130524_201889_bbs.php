@@ -407,6 +407,7 @@ INSERT INTO `fb_base_role_permission` VALUES ('496', '1', '', '50', '5394', '1',
 INSERT INTO `fb_base_role_permission` VALUES ('497', '1', '', '50', '5395', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 INSERT INTO `fb_base_role_permission` VALUES ('498', '1', '', '50', '5396', '1', '50', '1', '1602505044', '1606818825', '1', '1');
 
+SET FOREIGN_KEY_CHECKS=1;
         ";
 
         //add user: admin  password: 123456
@@ -416,6 +417,15 @@ INSERT INTO `fb_base_role_permission` VALUES ('498', '1', '', '50', '5396', '1',
 
     public function down()
     {
-        $this->dropTable('{{%user}}');
+        $sql = "
+
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE `fb_bbs_meta`;
+
+SET FOREIGN_KEY_CHECKS=1;
+        ";
+
+        $this->execute($sql);
     }
 }

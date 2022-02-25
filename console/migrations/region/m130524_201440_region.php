@@ -3716,6 +3716,7 @@ INSERT INTO `fb_base_region` VALUES (460400116, 1, 460400, '新州镇', '0', 'X'
 INSERT INTO `fb_base_region` VALUES (460400499, 1, 460400, '洋浦经济开发区', '0', 'Y', '109.19229656623', '19.775218244804', 4, 1, 0, 1, 1, 1, 1, 1);
 INSERT INTO `fb_base_region` VALUES (460400500, 1, 460400, '华南热作学院', '0', 'H', '109.58745583569', '19.527146110044', 4, 1, 0, 1, 1, 1, 1, 1);
 
+SET FOREIGN_KEY_CHECKS=1;
         ";
 
         //add user: admin  password: 123456

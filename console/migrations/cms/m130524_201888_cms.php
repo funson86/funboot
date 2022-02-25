@@ -112,6 +112,7 @@ CREATE TABLE `fb_cms_page` (
 -- ALTER TABLE `fb_cms_page` change `para9` `param9` int(11) NOT NULL DEFAULT '0' COMMENT '页面参数9';
 -- ALTER TABLE `fb_cms_page` change `para10` `param10` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '页面参数10';
 
+SET FOREIGN_KEY_CHECKS=1;
         ";
 
         $this->execute($sql);
