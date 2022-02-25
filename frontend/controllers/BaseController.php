@@ -132,7 +132,8 @@ class BaseController extends \common\components\controller\BaseController
     {
         !$name && $name = 'default';
 
-        if (StringHelper::urlFull($name)) {
+        // 全地址或者/开头
+        if (StringHelper::urlFull($name) || strpos($name, '/') === 0) {
             return $name;
         }
 
