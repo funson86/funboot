@@ -28,14 +28,15 @@ class AddressBase extends BaseModel
         ];
     }
 
-    /** add function getXxxLabels here, detail in BaseModel **/
     public function scenarios()
     {
-        return [
+        return array_merge(parent::scenarios(), [
             'withoutRegion' => ['first_name', 'last_name', 'country', 'province', 'city', 'distinct', 'address', 'mobile'],
-            'default' => ['first_name', 'last_name', 'country', 'province', 'city', 'distinct', 'address', 'mobile'],
-        ];
+        ]);
     }
+
+    /** add function getXxxLabels here, detail in BaseModel **/
+
     /**
      * {@inheritdoc}
      */
