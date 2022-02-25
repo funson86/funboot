@@ -132,60 +132,13 @@ class ProductBase extends BaseModel
         return $this->hasOne(AttributeSet::className(), ['id' => 'attribute_set_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRanksPassed()
+    public function getTypeOne($label = false)
     {
-        return $this->hasMany(Rank::className(), ['product_id' => 'id'])->where(['status' => Rank::STATUS_ACTIVE])->orderBy(['created_at' => SORT_DESC]);
-    }
+        $arr = [];
+        foreach (self::getTypeLabels() as $type => $typeLabel) {
+            array_push($arr, $this->type & $type);
+        }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRanksPassedGood()
-    {
-        return $this->hasMany(Rank::className(), ['product_id' => 'id'])->where(['and', 'status =' . Rank::STATUS_ACTIVE, 'star >= 4'])->orderBy(['created_at' => SORT_DESC]);
+        return $label ? self::getTypeLabels(max($arr)) : max($arr);
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRanksPassedNormal()
-    {
-        return $this->hasMany(Rank::className(), ['product_id' => 'id'])->where(['and', 'status =' . Rank::STATUS_ACTIVE, 'star >= 2', 'star <= 3'])->orderBy(['created_at' => SORT_DESC]);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRanksPassedBad()
-    {
-        return $this->hasMany(Rank::className(), ['product_id' => 'id'])->where(['status' => Rank::STATUS_ACTIVE, 'star' => 1])->orderBy(['created_at' => SORT_DESC]);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConsultations()
-    {
-        return $this->hasMany(Consultation::className(), ['product_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConsultationsSortTime()
-    {
-        return $this->hasMany(Consultation::className(), ['product_id' => 'id'])->orderBy(['created_at' => SORT_DESC]);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConsultationsPassed()
-    {
-        return $this->hasMany(Consultation::className(), ['product_id' => 'id'])->where(['status' => Consultation::STATUS_ACTIVE])->orderBy(['created_at' => SORT_DESC]);
-    }
-
 }

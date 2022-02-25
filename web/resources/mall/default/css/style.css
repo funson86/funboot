@@ -1633,8 +1633,14 @@ img {
     top: 10px;
 }
 
-.product-item-pic .label.new {
+.product-item-pic .label.hot, .product-item-pic .label.type-1 {
+    background: #f51167;
+}
+.product-item-pic .label.new, .product-item-pic .label.type-2 {
     background: #36a300;
+}
+.product-item-pic .label.sale, .product-item-pic .label.type-4 {
+    background: #ca1515;
 }
 
 .product-item-pic .label.stockout {
@@ -1643,10 +1649,6 @@ img {
 
 .product-item-pic .label.stockblue {
     background: #0066bd !important;
-}
-
-.product-item-pic .label.sale {
-    background: #ca1515;
 }
 
 .product-hover {
