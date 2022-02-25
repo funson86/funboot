@@ -9,7 +9,7 @@ use common\models\mall\Product;
 /* @var $productsHot \common\models\mall\Product[] */
 
 
-$this->title = 'index';
+$this->title = '';
 
 $store = $this->context->store;
 

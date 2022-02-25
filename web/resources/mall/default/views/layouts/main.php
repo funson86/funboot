@@ -11,9 +11,8 @@ $this->registerCssFile($this->context->getCss('style.css?v=1'), ['depends' => Ma
 $this->registerJsFile($this->context->getJs('main.js'), ['depends' => MallAsset::className()]);
 
 $store = $this->context->store;
-
-$title = $store->settings['website_seo_keywords'] ?: $store->settings['website_name'];
-$title = ($title ? ($this->title . ' - ' . $title) : $this->title);
+$suffix = $store->settings['website_seo_keywords'] ?: $store->settings['website_name'] ?: $store->name;
+$title = (($this->title && $suffix) ? ($this->title . ' - ' . $suffix) : ($this->title ?: $suffix));
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -23,7 +22,7 @@ $title = ($title ? ($this->title . ' - ' . $title) : $this->title);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($title) ?></title>
-    <meta name="keywords" content="<?= Html::encode($store->settings['website_seo_keywords'] ?: $store->settings['website_name']) ?>"/>
+    <meta name="keywords" content="<?= $suffix ?>"/>
     <meta name="description" content="<?= Html::encode($store->settings['website_seo_description'] ?: $store->settings['website_name']) ?>"/>
     <link rel="icon" href="<?= $this->context->getFavicon() ?>" type="image/x-icon" />
     <?php $this->head() ?>
