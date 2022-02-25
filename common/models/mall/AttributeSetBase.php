@@ -15,8 +15,6 @@ use Yii;
  */
 class AttributeSetBase extends BaseModel
 {
-    public $attributes;
-
     /**
      * @return array|array[]
      */
@@ -47,7 +45,6 @@ class AttributeSetBase extends BaseModel
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
-            'attributes' => Yii::t('app', 'Attributes'),
         ]);
     }
 
