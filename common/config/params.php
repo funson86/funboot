@@ -3,7 +3,7 @@ return [
     'system_version' => '1.1.3',
     'sys_tags' => '1',
     'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'service@wewok.co.uk',
+    'supportEmail' => 'funson86@gmail.com',
     'senderEmail' => 'noreply@example.com',
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 13600,

@@ -22,10 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         <?= ListView::widget([
                             'dataProvider' => $dataProvider,
-                            'itemOptions' => ['class' => 'list-group-item border-0 p-0'],
+                            'itemOptions' => ['class' => 'col-lg-4 col-md-6'],
                             'summary' => false,
                             'itemView' => '_' . $this->context->action->id,
-                            'options' => ['class' => 'list-group'],
+                            'options' => ['class' => 'row'],
                             'pager' => [
                                 'options' => ['class' => 'pagination user-pagination'],
                                 'pageCssClass' => 'page-item',

@@ -2983,5 +2983,20 @@ img {
 
 /*** user ***/
 
+.info-box {
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 0.25rem;
+    background: #ffffff;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    padding: .8rem;
+    position: relative;
+    width: 100%;
+}
+
+.info-box-text {
+    display: block;
+}
+
 /*** end of user ***/
 

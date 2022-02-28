@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'visible' => false,
                         ],
 
-                        // 'id',
+                        'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->email; }, 'filter' => true],
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
@@ -79,7 +79,26 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'created_by',
                         // 'updated_by',
 
-                        Html::actionsModal(),
+                        [
+                            'header' => Yii::t('app', 'Actions'),
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{view} {edit} {delete} {refund}',
+                            'buttons' => [
+                                'view' => function ($url, $model, $key) {
+                                    return Html::view(['view', 'id' => $model->id], null, ['class' => 'btn btn-default btn-sm']);
+                                },
+                                'edit' => function ($url, $model, $key) {
+                                    return Html::editModal(['edit-ajax', 'id' => $model->id]);
+                                },
+                                'delete' => function ($url, $model, $key) {
+                                    return Html::delete(['delete', 'id' => $model->id, 'soft' => true], Yii::t('app', 'Delete'));
+                                },
+                                'refund' => function ($url, $model, $key) {
+                                    return $model->payment_method == ActiveModel::PAYMENT_METHOD_PAY && $model->payment_status == ActiveModel::PAYMENT_STATUS_PAID ? Html::buttonModal(['edit-status', 'id' => $model->id, 'status' => ActiveModel::PAYMENT_STATUS_REFUND], Yii::t('app', 'Refund'), ['class' => "btn btn-danger btn-sm"], false) : '';
+                                },
+                            ],
+                            'headerOptions' => ['class' => 'action-column action-column-lg'],
+                        ],
                     ]
                 ]); ?>
             </div>

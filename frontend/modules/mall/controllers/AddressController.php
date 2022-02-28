@@ -44,14 +44,7 @@ class AddressController extends BaseController
     public function actionEdit()
     {
         $id = Yii::$app->request->get('id');
-        if (!$id) {
-            return $this->goBack();
-        }
-        /** @var ActiveRecord $model */
-        $model = $this->modelClass::findOne(['store_id' => $this->getStoreId(), 'user_id' => Yii::$app->user->id, 'id' => $id]);
-        if (!$model) {
-            return $this->goBack();
-        }
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirectSuccess(['/mall/user/address']);

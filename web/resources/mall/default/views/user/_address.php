@@ -8,13 +8,11 @@ use yii\helpers\Html;
 
 <div class="info-box position-relative shadow-sm">
     <div class="info-box-content">
-        <p class="info-box-text m-0"><?= $model->name ?> <?= $model->mobile ?> <?= $model->is_default ? '<span class="pull-right btn-xs btn-success">' . Yii::t('app', 'Default') . '</span>' : '' ?></p>
-        <p class="info-box-text small m-0"><?= $model->address ?></p>
-        <p class="info-box-text small m-0"><?= $model->address2 ?></p>
-        <p class="info-box-text small m-0"><?= $model->postcode ?> <span class="pull-right"><?= $model->country ?></span></p>
+        <p class="info-box-text m-0"><?= $model->first_name ?> <?= $model->last_name ?> <?= $model->mobile ?> <?= $model->is_default ? '<span class="pull-right btn-xs btn-success">' . Yii::t('app', 'Default') . '</span>' : '' ?></p>
+        <p class="info-box-text small m-0"><?= $model->address ?> <?= $model->address2 ?> <?= $model->city ?> <?= $model->province ?> <?= $model->country ?> <?= $model->postcode ?></p>
         <span class="info-box-text text-right">
-            <?= Html::a(Yii::t('app', 'Edit'), ['/mall/address/edit', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary px-3'], false) ?>
-            <?= Html::a(Yii::t('app', 'Delete'), ['/mall/address/delete', 'id' => $model->id], ['class' => 'btn btn-sm btn-danger ml-3'], false) ?>
+            <?= Html::a(Yii::t('app', 'Edit'), ['/mall/address/edit', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary px-3']) ?>
+            <?= Html::a(Yii::t('app', 'Delete'), ['/mall/address/delete', 'id' => $model->id], ['class' => 'btn btn-sm btn-danger ml-3']) ?>
         </span>
     </div>
 </div>

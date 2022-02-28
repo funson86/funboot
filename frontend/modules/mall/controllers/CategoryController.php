@@ -82,7 +82,7 @@ class CategoryController extends BaseController
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'defaultPageSize' => Yii::$app->request->get('page-size') ?? (Yii::$app->params['defaultPageSizeMallProduct'] ?? 1),
+                'defaultPageSize' => Yii::$app->request->get('page-size') ?? (Yii::$app->params['defaultPageSizeMallProduct'] ?? 12),
             ],
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
