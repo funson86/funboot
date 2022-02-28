@@ -98,6 +98,7 @@ class SignupEmailForm extends Model
                 return $user;
             } else {
                 Yii::error($user->errors);
+                return false;
             }
         }
     }

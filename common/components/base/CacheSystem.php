@@ -125,51 +125,24 @@ class CacheSystem extends \yii\base\Component
     }
 
     /**
-     * @return array|mixed|\yii\db\ActiveRecord[]
-     */
-    public function getAllSetting()
-    {
-        $data = Yii::$app->cache->get('allSetting');
-        if (!$data) {
-            $stores = self::getAllStore();
-            foreach ($stores as $store) {
-                $settingTypes = SettingType::find()->where(['status' => SettingType::STATUS_ACTIVE])
-                    ->with(['setting' => function ($query) use ($store) {
-                        $query->andWhere(['store_id' => $store->id]);
-                    }])
-                    ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
-                    ->asArray()
-                    ->all();
-                $data[$store->id] = $settingTypes;
-            }
-
-            Yii::$app->cache->set('allSetting', $data);
-        }
-        return $data;
-    }
-
-    /**
      * @param $storeId
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
     public function getStoreSetting($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        $data = Yii::$app->cache->get('allSetting');
-        if (!isset($data[$storeId])) {
-            $settingTypes = SettingType::find()->where(['status' => SettingType::STATUS_ACTIVE])
+        $data = Yii::$app->cache->get('storeSetting:' . $storeId);
+        if (!$data) {
+            $data = SettingType::find()->where(['status' => SettingType::STATUS_ACTIVE])
                 ->with(['setting' => function ($query) use ($storeId) {
                     $query->andWhere(['store_id' => $storeId]);
                 }])
                 ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
                 ->asArray()
                 ->all();
-        } else {
-            $settingTypes = $data[$storeId];
+            Yii::$app->cache->set('storeSetting:' . $storeId, $data);
         }
-        $data[$storeId] = $settingTypes;
-        Yii::$app->cache->set('allSetting', $data);
-        return $settingTypes;
+        return $data;
     }
 
     /**
@@ -177,7 +150,10 @@ class CacheSystem extends \yii\base\Component
      */
     public function clearAllSetting()
     {
-        return Yii::$app->cache->delete('allSetting');
+        $stores = self::getAllStore();
+        foreach ($stores as $store) {
+            return Yii::$app->cache->delete('storeSetting:' . $store->id);
+        }
     }
 
     /**
@@ -187,9 +163,7 @@ class CacheSystem extends \yii\base\Component
     public function clearStoreSetting($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        $data = $this->getAllSetting();
-        unset($data[$storeId]);
-        return Yii::$app->cache->set('allSetting', $data);
+        return Yii::$app->cache->delete('storeSetting:' . $storeId);
     }
 
     public function setLanguage($lang, $userId = 0, $sessionId = null)

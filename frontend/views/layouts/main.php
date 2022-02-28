@@ -109,6 +109,7 @@ NavBar::end();
 
 
 <?= $content ?>
+<?= \common\widgets\alert\SweetAlert2::widget() ?>
 
 <footer class="footer">
     <div class="container">

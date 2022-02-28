@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\helpers\BaiduTranslate;
 use common\helpers\CommonHelper;
 use common\models\forms\base\FeedbackForm;
+use common\models\forms\base\StoreCreateForm;
 use Da\QrCode\Action\QrCodeAction;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -294,6 +295,25 @@ class SiteController extends BaseController
         if ($model->load(Yii::$app->request->post()) && $model->create()) {
             $this->flashSuccess(Yii::t('app', 'Operate Successfully'));
         }
+
+        return $this->render($this->action->id, [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * apply an new store
+     * @return string|\yii\web\Response
+     */
+    public function actionStoreCreate()
+    {
+        $model = new StoreCreateForm();
+        $model->checkCaptchaRequired();
+
+        /*if ($model->load(Yii::$app->request->post()) && $store = $model->create()) {
+            $this->flashSuccess(Yii::t('app', 'Operate Successfully'));
+            return $this->redirect(CommonHelper::getHostPrefix($store->host_name));
+        }*/
 
         return $this->render($this->action->id, [
             'model' => $model,

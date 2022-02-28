@@ -33,8 +33,8 @@ $this->registerJsFile($this->context->getJs('main-platform.js'), ['depends' => M
     </header>
 
     <main class="container">
-        <?= Alert::widget() ?>
         <?= $content ?>
+        <?= \common\widgets\alert\SweetAlert2::widget() ?>
     </main>
 
     <footer>
