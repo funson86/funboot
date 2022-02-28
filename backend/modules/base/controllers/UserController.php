@@ -61,7 +61,7 @@ class UserController extends BaseController
     protected function filterParams(&$params)
     {
         if (!$this->isAdmin()) {
-            $params['ModelSearch']['id'] = '<>' . $this->store->user_id;
+            $params['ModelSearch']['id'] = '>' . $this->store->user_id;
         }
     }
 
