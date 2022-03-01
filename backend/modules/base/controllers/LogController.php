@@ -66,7 +66,7 @@ class LogController extends BaseController
      */
     public function actionIndex()
     {
-        $type = Yii::$app->request->get('type');
+        $type = Yii::$app->request->get('type', 1);
         if (!$type) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
@@ -117,9 +117,6 @@ class LogController extends BaseController
     public function actionStatAjaxError()
     {
         $type = Yii::$app->request->get('type');
-        if (!$type) {
-            return $this->redirectError(Yii::t('app', 'Invalid id'));
-        }
 
         // 返回Modal视图
         if (empty($type)) {
@@ -148,9 +145,6 @@ class LogController extends BaseController
     public function actionStatAjaxLogin()
     {
         $type = Yii::$app->request->get('type');
-        if (!$type) {
-            return $this->redirectError(Yii::t('app', 'Invalid id'));
-        }
 
         // 返回Modal视图
         if (empty($type)) {
