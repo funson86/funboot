@@ -1,24 +1,24 @@
 <?php
 
-namespace backend\modules\mall\controllers;
+namespace backend\modules\base\controllers;
 
 use Yii;
-use common\models\mall\PointLog;
+use common\models\base\BalanceLog;
 use common\models\ModelSearch;
 use backend\controllers\BaseController;
 
 /**
- * PointLog
+ * BalanceLog
  *
- * Class PointLogController
- * @package backend\modules\mall\controllers
+ * Class BalanceLogController
+ * @package backend\modules\base\controllers
  */
-class PointLogController extends BaseController
+class BalanceLogController extends BaseController
 {
     /**
-      * @var PointLog
+      * @var BalanceLog
       */
-    public $modelClass = PointLog::class;
+    public $modelClass = BalanceLog::class;
 
     /**
       * 模糊查询字段

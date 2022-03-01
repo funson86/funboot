@@ -719,30 +719,6 @@ CREATE TABLE `fb_mall_order_log` (
   CONSTRAINT `mall_order_log_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单记录';
 
-DROP TABLE IF EXISTS `fb_mall_point_log`;
-CREATE TABLE `fb_mall_point_log` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `store_id` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '商家',
-  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `point` int(11) NOT NULL DEFAULT '0' COMMENT '积分',
-  `original` int(11) NOT NULL DEFAULT '0' COMMENT '原值',
-  `balance` int(11) NOT NULL DEFAULT '0' COMMENT '余额',
-  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
-  `type` int(11) NOT NULL DEFAULT '1' COMMENT '类型',
-  `sort` int(11) NOT NULL DEFAULT '50' COMMENT '排序',
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
-  `created_at` int(11) NOT NULL DEFAULT '1' COMMENT '创建时间',
-  `updated_at` int(11) NOT NULL DEFAULT '1' COMMENT '更新时间',
-  `created_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '创建用户',
-  `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
-  PRIMARY KEY (`id`),
-  KEY `mall_point_log_k0` (`store_id`),
-  KEY `mall_point_log_k1` (`user_id`),
-  CONSTRAINT `mall_point_log_fk2` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `mall_point_log_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='积分记录';
-
 SET FOREIGN_KEY_CHECKS=1;
 
 -- ALTER TABLE `fb_mall_brand` change `description` `brief` text COMMENT '简介';  

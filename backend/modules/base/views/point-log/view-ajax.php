@@ -3,10 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\enums\YesNo;
-use common\models\mall\PointLog as ActiveModel;
+use common\models\base\PointLog as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\PointLog */
+/* @var $model common\models\base\PointLog */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Point Logs'), 'url' => ['index']];
@@ -26,16 +26,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'options' => ['class' => 'table table-bordered table-hover box', 'style' => 'table-layout:fixed; width:100%;'],
         'attributes' => [
             'id',
-            ['attribute' => 'store_id', 'value' => function ($model) { return ActiveModel::getStoreIdLabels($model->store_id); }, ],
-            ['attribute' => 'user_id', 'value' => function ($model) { return ActiveModel::getUserIdLabels($model->user_id); }, ],
+            'store_id',
+            'user_id',
             'name',
-            'point',
+            'change',
             'original',
             'balance',
             'remark',
-            ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
+            'type',
             'sort',
-            ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
+            'status',
             'created_at:datetime',
             'updated_at:datetime',
             'created_by',

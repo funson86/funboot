@@ -3,13 +3,13 @@
 namespace frontend\modules\mall\controllers;
 
 use common\models\BaseModel;
+use common\models\base\PointLog;
 use common\models\mall\Address;
 use common\models\mall\Cart;
 use common\models\mall\CouponType;
 use common\models\mall\Order;
 use common\models\mall\OrderLog;
 use common\models\mall\OrderProduct;
-use common\models\mall\PointLog;
 use common\models\mall\Product;
 use common\models\mall\ProductSku;
 use common\models\User;

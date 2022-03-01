@@ -4,11 +4,11 @@ use common\helpers\Html;
 use common\helpers\Url;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
-use common\models\mall\PointLog as ActiveModel;
+use common\models\base\BalanceLog as ActiveModel;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\mall\PointLog */
+/* @var $model common\models\base\BalanceLog */
 /* @var $form yii\widgets\ActiveForm */
 
 $form = ActiveForm::begin([
@@ -25,16 +25,21 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'store_id')->dropDownList(ActiveModel::getStoreIdLabels()) ?>
-        <?= $form->field($model, 'user_id')->dropDownList(ActiveModel::getUserIdLabels()) ?>
+        <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'store_id')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'point')->textInput() ?>
+        <?= $form->field($model, 'change')->textInput() ?>
         <?= $form->field($model, 'original')->textInput() ?>
         <?= $form->field($model, 'balance')->textInput() ?>
         <?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
+        <?= $form->field($model, 'type')->textInput() ?>
         <?= $form->field($model, 'sort')->textInput() ?>
-        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
+        <?= $form->field($model, 'status')->textInput() ?>
+        <?= $form->field($model, 'created_at')->textInput() ?>
+        <?= $form->field($model, 'updated_at')->textInput() ?>
+        <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>

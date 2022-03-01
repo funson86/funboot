@@ -399,6 +399,9 @@ return [
     'Favorites' => '收藏',
 
 
+    'Balance Log' => '余额记录',
+    'Balance Logs' => '余额记录',
+
     'Point Log' => '积分',
     'Point Logs' => '积分',
     'Type' => '类型',

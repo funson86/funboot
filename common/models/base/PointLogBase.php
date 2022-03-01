@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\mall;
+namespace common\models\base;
 
 use common\models\BaseModel;
 use common\models\Store;
@@ -9,7 +9,7 @@ use Yii;
 use yii\web\NotFoundHttpException;
 
 /**
- * This is the model base class for table "{{%mall_point_log}}" to add your code.
+ * This is the model base class for table "{{%base_point_log}}" to add your code.
  *
  * @property Store $store
  */
@@ -57,6 +57,7 @@ class PointLogBase extends BaseModel
         return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
+
     /**
      * {@inheritdoc}
      */
@@ -67,7 +68,7 @@ class PointLogBase extends BaseModel
             'store_id' => Yii::t('app', 'Store ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'name' => Yii::t('app', 'Name'),
-            'point' => Yii::t('app', 'Point'),
+            'change' => Yii::t('app', 'Change'),
             'original' => Yii::t('app', 'Original'),
             'balance' => Yii::t('app', 'Balance'),
             'remark' => Yii::t('app', 'Remark'),
@@ -81,12 +82,12 @@ class PointLogBase extends BaseModel
         ]);
     }
 
-    public static function create($point, $original, $balance, $name = '', $type = self::TYPE_BOUGHT, $ip = null, $userId = null, $sessionId = null)
+    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_BOUGHT, $ip = null, $userId = null, $sessionId = null)
     {
         $model = new PointLog();
         $model->name = $name;
         $model->user_id = Yii::$app->user->id;
-        $model->point = $point;
+        $model->change = $change;
         $model->original = $original;
         $model->balance = $balance;
         $model->type = PointLog::TYPE_BOUGHT;

@@ -1,19 +1,19 @@
 <?php
 
-namespace common\models\mall;
+namespace common\models\base;
 
 use Yii;
 use common\models\User;
 use common\models\Store;
 
 /**
- * This is the model class for table "{{%mall_point_log}}".
+ * This is the model class for table "{{%base_balance_log}}".
  *
  * @property int $id
  * @property int $store_id 商家
- * @property int $user_id 用户
+ * @property int $user_id 用户ID
  * @property string $name 名称
- * @property int $point 积分
+ * @property int $change 变动
  * @property int $original 原值
  * @property int $balance 余额
  * @property string $remark 备注
@@ -25,14 +25,14 @@ use common\models\Store;
  * @property int $created_by 创建用户
  * @property int $updated_by 更新用户
  */
-class PointLog extends PointLogBase
+class BalanceLog extends BalanceLogBase
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%mall_point_log}}';
+        return '{{%base_balance_log}}';
     }
 
     /**
@@ -41,8 +41,7 @@ class PointLog extends PointLogBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'user_id', 'point', 'original', 'balance', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['user_id'], 'required'],
+            [['store_id', 'user_id', 'change', 'original', 'balance', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'remark'], 'string', 'max' => 255],
         ]);
     }
@@ -56,9 +55,9 @@ class PointLog extends PointLogBase
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
-                'user_id' => '用户',
+                'user_id' => '用户ID',
                 'name' => '名称',
-                'point' => '积分',
+                'change' => '变动',
                 'original' => '原值',
                 'balance' => '余额',
                 'remark' => '备注',
@@ -76,7 +75,7 @@ class PointLog extends PointLogBase
                 'store_id' => Yii::t('app', 'Store ID'),
                 'user_id' => Yii::t('app', 'User ID'),
                 'name' => Yii::t('app', 'Name'),
-                'point' => Yii::t('app', 'Point'),
+                'change' => Yii::t('app', 'Change'),
                 'original' => Yii::t('app', 'Original'),
                 'balance' => Yii::t('app', 'Balance'),
                 'remark' => Yii::t('app', 'Remark'),
