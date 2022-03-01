@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
  * This is the model base class for table "{{%base_point_log}}" to add your code.
  *
  * @property Store $store
+ * @property User $user
  */
 class PointLogBase extends BaseModel
 {
@@ -29,6 +30,7 @@ class PointLogBase extends BaseModel
         return [
             [['id'], 'safe'],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -90,7 +92,7 @@ class PointLogBase extends BaseModel
         $model->change = $change;
         $model->original = $original;
         $model->balance = $balance;
-        $model->type = PointLog::TYPE_BOUGHT;
+        $model->type = self::TYPE_BOUGHT;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
             throw new NotFoundHttpException('PointLog Error');
