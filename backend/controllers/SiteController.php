@@ -293,10 +293,10 @@ class SiteController extends BaseController
             Yii::$app->cacheSystem->clearAllSetting();
             Yii::$app->cacheSystem->clearAllDict();
 
-            if (isset(Yii::$app->cacheSystemCms)) {
+            if (isset(Yii::$app->cacheSystemCms) && ((Yii::$app->params['systemSupport'] & Yii::$app->params['routeCode']['cms']) == Yii::$app->params['routeCode']['cms'])) {
                 Yii::$app->cacheSystemCms->clearCmsAllData();
             }
-            if (isset(Yii::$app->cacheSystemMall)) {
+            if (isset(Yii::$app->cacheSystemMall) && ((Yii::$app->params['systemSupport'] & Yii::$app->params['routeCode']['mall']) == Yii::$app->params['routeCode']['mall'])) {
                 Yii::$app->cacheSystemMall->clearMallAllData();
             }
         } else {
@@ -304,11 +304,11 @@ class SiteController extends BaseController
             Yii::$app->cacheSystem->clearStoreSetting();
             Yii::$app->cacheSystem->refreshStoreLang();
 
-            if (isset(Yii::$app->cacheSystemCms)) {
+            if (isset(Yii::$app->cacheSystemCms) && ((Yii::$app->params['systemSupport'] & Yii::$app->params['routeCode']['cms']) == Yii::$app->params['routeCode']['cms'])) {
                 Yii::$app->cacheSystemCms->clearCatalogs();
                 Yii::$app->cacheSystemCms->clearPages();
             }
-            if (isset(Yii::$app->cacheSystemMall)) {
+            if (isset(Yii::$app->cacheSystemMall) && ((Yii::$app->params['systemSupport'] & Yii::$app->params['routeCode']['mall']) == Yii::$app->params['routeCode']['mall'])) {
                 Yii::$app->cacheSystemMall->clearCategories();
                 Yii::$app->cacheSystemMall->clearProducts();
             }

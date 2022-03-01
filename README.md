@@ -23,12 +23,13 @@ Any question pls add issue on github：[Funboot Issues](https://github.com/funso
 
 ### Installation
 
-https://github.com/funson86/funboot/blob/master/docs/guide/start-installation.md
+https://github.com/funson86/funboot/blob/master/docs/guide/start-installation.md  [Installation Video](https://www.bilibili.com/video/BV1kP4y1t7ky/)
 
 
-### Docs
+### Development Docs
 
-https://github.com/funson86/funboot/blob/master/docs/guide/README.md  [Installation Video](https://www.bilibili.com/video/BV1kP4y1t7ky/)
+https://github.com/funson86/funboot/blob/master/docs/guide/README.md
+
 
 ### Video
 

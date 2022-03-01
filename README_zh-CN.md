@@ -23,12 +23,12 @@ Funboot是一个一站式Saas快速开发平台，基于Yii 2.0框架，提供�
 
 ### 快速安装
 
-https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/start-installation.md
+https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/start-installation.md   [安装视频](https://www.bilibili.com/video/BV1kP4y1t7ky/)
 
 
-### 在线开发文档
+### 二次开发文档
 
-https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md  [安装视频](https://www.bilibili.com/video/BV1kP4y1t7ky/)
+https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md
 
 ### 系列视频
 
