@@ -77,18 +77,18 @@ class BalanceLogBase extends BaseModel
         ]);
     }
 
-    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_CONSUME, $ip = null, $userId = null, $sessionId = null)
+    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_CONSUME, $userId = null)
     {
         $model = new BalanceLog();
         $model->name = $name;
-        $model->user_id = Yii::$app->user->id;
+        $model->user_id = $userId ?? Yii::$app->user->id;
         $model->change = $change;
         $model->original = $original;
         $model->balance = $balance;
-        $model->type = self::TYPE_CONSUME;
+        $model->type = $type;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
-            throw new NotFoundHttpException('PointLog Error');
+            throw new NotFoundHttpException('BalanceLog Error');
         }
 
         return true;

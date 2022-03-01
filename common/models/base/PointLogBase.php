@@ -84,15 +84,15 @@ class PointLogBase extends BaseModel
         ]);
     }
 
-    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_BOUGHT, $ip = null, $userId = null, $sessionId = null)
+    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_BOUGHT, $userId = null)
     {
         $model = new PointLog();
         $model->name = $name;
-        $model->user_id = Yii::$app->user->id;
+        $model->user_id = $userId ?? Yii::$app->user->id;
         $model->change = $change;
         $model->original = $original;
         $model->balance = $balance;
-        $model->type = self::TYPE_BOUGHT;
+        $model->type = $type;
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
             throw new NotFoundHttpException('PointLog Error');
