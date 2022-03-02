@@ -28,10 +28,10 @@ class MessageSystem extends \yii\base\Component
 
         $users = [];
         if ($message->send_target == MessageType::SEND_TARGET_ALL) {
-            $users = User::find()->all();
+            $users = User::find()->select(['id', 'store_id'])->asArray()->all();
         } else {
             $arrUser = explode('|', $message->send_user);
-            $users = User::find()->where(['id' => $arrUser])->all();
+            $users = User::find()->where(['id' => $arrUser])->select(['id', 'store_id'])->asArray()->all();
         }
 
         if (count($users) <= 0) {
@@ -41,10 +41,10 @@ class MessageSystem extends \yii\base\Component
         foreach ($users as $user) {
 
             $model = new Message();
-            $model->store_id = $user->store_id;
+            $model->store_id = $user['store_id'];
             $model->message_type_id = $message->id;
             $model->name = $message->name;
-            $model->user_id = $user->id;
+            $model->user_id = $user['id'];
             $model->from_id = $fromId;
 
             // 插入队列

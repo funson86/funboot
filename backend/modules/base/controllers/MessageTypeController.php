@@ -58,7 +58,7 @@ class MessageTypeController extends BaseController
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
 
-        $allUsers = ArrayHelper::map(User::find()->where(['status' => User::STATUS_ACTIVE])->asArray()->all(), 'id', 'username');
+        $allUsers = ArrayHelper::map(User::find()->where(['status' => User::STATUS_ACTIVE])->select(['id', 'username'])->asArray()->all(), 'id', 'username');
 
         // ajax 校验
         $this->activeFormValidate($model);
