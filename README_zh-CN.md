@@ -14,10 +14,10 @@ Funboot是一个一站式Saas快速开发平台，基于Yii 2.0框架，提供�
 ### 在线Demo
 
 * [Funboot开发平台](https://github.com/funson86/funboot) 演示地址：[https://www.funboot.net/backend/](https://www.funboot.net/backend/) test 123456
+* [FunMall商城系统](https://github.com/funson86/funmall) 演示地址：[https://funmall.funboot.net/](https://funmall.funboot.net/)  [说明&模板](https://github.com/funson86/funmall)
 * [FunPay个人收款系统](https://github.com/funson86/funpay) 演示地址：[https://funpay.funboot.net/](https://funpay.funboot.net/)
 * [FunCms建站系统](https://github.com/funson86/funcms) 演示地址：[https://funcms.funboot.net/](https://funcms.funboot.net/)  [网站模板](https://github.com/funson86/funcms)
 * [FunBBS论坛系统](https://github.com/funson86/funbbs) 演示地址：[https://funbbs.funboot.net/](https://funbbs.funboot.net/)  [说明](https://github.com/funson86/funbbs)
-* [FunMall商城系统](https://github.com/funson86/funmall) 演示地址：[https://funmall.funboot.net/](https://funmall.funboot.net/)  [说明&模板](https://github.com/funson86/funmall)
 * [FunChat聊天室](https://github.com/funson86/yii2-websocket) 演示地址：[https://chat.funboot.net/](https://chat.funboot.net/)  [说明&模板](https://github.com/funson86/yii2-websocket)
 
 
@@ -66,6 +66,27 @@ https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md
 - [x] 数据字典、Echart图表等
 
 - [x] 验收测试：优化系统代码变更无需一个个检查
+
+### Funmall开源SaaS商城功能特性
+
+- [x] 多店铺: 内置SaaS系统
+- [x] 多属性
+- [x] 多语言 [文档](https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/dev-lang.md)
+- [x] 多货币
+- [x] 商品参数
+- [x] 商品标签
+- [x] 分类和商品Url支持搜索引擎seo优化
+- [x] 在线支付：已内置Paypal支付 [文档](https://github.com/funson86/funmall/blob/master/docs/guide_zh-CN/funmall-paypal.md)
+- [x] 自适应各种设备
+- [x] 设计简洁，易于二次开发和扩展
+- [x] 优惠券 & 促销码
+- [x] 积分
+- [x] 评价
+- [x] 购买咨询
+- [x] 收藏
+- [x] 退款
+- [x] 发票
+- [x] 供应商
 
 
 ### 系统快照
