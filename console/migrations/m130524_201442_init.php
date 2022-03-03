@@ -388,9 +388,6 @@ CREATE TABLE `fb_base_setting_type` (
   CONSTRAINT `base_setting_type_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='配置类型';
 
--- ALTER TABLE `fb_base_setting_type` ADD COLUMN `support_role` int(11) NOT NULL DEFAULT '7' COMMENT '支持角色' AFTER `brief`;  
--- ALTER TABLE `fb_base_setting_type` ADD COLUMN `support_system` int(11) NOT NULL DEFAULT '1' COMMENT '支持系统' AFTER `support_role`;  
-
 -- ----------------------------
 -- Table structure for fb_base_user_role
 -- ----------------------------
@@ -461,15 +458,6 @@ CREATE TABLE `fb_store` (
   KEY `base_store_fk1` (`user_id`),
   CONSTRAINT `base_store_fk1` FOREIGN KEY (`user_id`) REFERENCES `fb_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='店铺';
-
--- ALTER TABLE `fb_store` ADD COLUMN `code` varchar(255) NOT NULL DEFAULT '' COMMENT '代码' AFTER `host_name`;  
--- ALTER TABLE `fb_store` ADD COLUMN `lang_source` varchar(255) NOT NULL DEFAULT 'zh-CN' COMMENT '翻译源语言' AFTER `language`;  
--- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言' AFTER `lang_source`;  
--- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言' AFTER `lang_frontend`;  
--- ALTER TABLE `fb_store` ADD COLUMN `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言' AFTER `lang_frontend_default`;  
--- ALTER TABLE `fb_store` ADD COLUMN `lang_backend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '后端默认语言' AFTER `lang_backend`;  
--- ALTER TABLE `fb_store` ADD COLUMN `lang_api` int(11) NOT NULL DEFAULT '3' COMMENT 'API支持语言' AFTER `lang_backend_default`;  
--- ALTER TABLE `fb_store` ADD COLUMN `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言' AFTER `lang_api`;  
 
 -- ----------------------------
 -- Table structure for fb_user
@@ -695,6 +683,14 @@ CREATE TABLE `fb_base_point_log` (
 -- ALTER TABLE `fb_base_role` change `description` `brief` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '简介';  
 -- ALTER TABLE `fb_user` ADD `openid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '微信Id' after `verification_token`;
 -- ALTER TABLE `fb_user` ADD `unionid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '微信唯一Id' after `openid`;
+-- ALTER TABLE `fb_store` ADD COLUMN `code` varchar(255) NOT NULL DEFAULT '' COMMENT '代码' AFTER `host_name`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_source` varchar(255) NOT NULL DEFAULT 'zh-CN' COMMENT '翻译源语言' AFTER `language`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend` int(11) NOT NULL DEFAULT '3' COMMENT '前端支持语言' AFTER `lang_source`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_frontend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '前端默认语言' AFTER `lang_frontend`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_backend` int(11) NOT NULL DEFAULT '3' COMMENT '后端支持语言' AFTER `lang_frontend_default`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_backend_default` varchar(255) NOT NULL DEFAULT '' COMMENT '后端默认语言' AFTER `lang_backend`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_api` int(11) NOT NULL DEFAULT '3' COMMENT 'API支持语言' AFTER `lang_backend_default`;  
+-- ALTER TABLE `fb_store` ADD COLUMN `lang_api_default` varchar(255) NOT NULL DEFAULT '' COMMENT 'API默认语言' AFTER `lang_api`;  
 -- ALTER TABLE `fb_store` ADD `consume_count` int(11) NOT NULL DEFAULT '0' COMMENT '消费次数' after `lang_api_default`;
 -- ALTER TABLE `fb_store` ADD `consume_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '消费金额' after `consume_count`;
 -- ALTER TABLE `fb_store` ADD `history_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '历史金额' after `consume_amount`;
@@ -704,6 +700,8 @@ CREATE TABLE `fb_base_point_log` (
 -- ALTER TABLE `fb_store` ADD `param4` int(11) NOT NULL DEFAULT '0' COMMENT '参数4' after `param3`;
 -- ALTER TABLE `fb_store` ADD `param5` int(11) NOT NULL DEFAULT '0' COMMENT '参数5' after `param4`;
 -- ALTER TABLE `fb_store` ADD `param6` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '参数6' after `param5`;
+-- ALTER TABLE `fb_base_setting_type` ADD COLUMN `support_role` int(11) NOT NULL DEFAULT '7' COMMENT '支持角色' AFTER `brief`;  
+-- ALTER TABLE `fb_base_setting_type` ADD COLUMN `support_system` int(11) NOT NULL DEFAULT '1' COMMENT '支持系统' AFTER `support_role`;  
 
 
 
