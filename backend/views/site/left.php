@@ -35,6 +35,8 @@ foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
         $class = ' fbLeftMenuCat fbLeftMenuCat-' . $leftPermissions['id'];
         if ($leftPermissions['id'] != $defaultId) {
             $class .= ' hidden';
+        } else {
+            $class .= ' isDefaultMenu';
         }
 
         $menu += [

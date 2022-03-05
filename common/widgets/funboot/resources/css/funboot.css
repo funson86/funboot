@@ -129,6 +129,12 @@ table .form-sort {
     padding: 0 0.5em;
 }
 
+@media (max-width: 767px) {
+    .wrapper .content{
+        padding: 0;
+    }
+}
+
 .content-wrapper {
     overflow: hidden;
     width: auto;

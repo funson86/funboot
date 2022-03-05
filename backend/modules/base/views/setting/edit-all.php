@@ -20,20 +20,28 @@ $this->params['breadcrumbs'][] = $this->title;
     .text-sm .btn, .btn-sm, .btn-group-sm > .btn {
         margin-bottom: 0;
     }
+    @media (max-width: 576px) {
+        #vert-tabs-tab {
+            flex-direction: row !important;
+        }
+        #vert-tabs-tab .nav-link.active {
+            border-color: #dee2e6 #dee2e6 #dee2e6 #dee2e6;
+        }
+    }
 </style>
 
 <div class="row pt-3 pb-5">
     <div class="col-md-2 col-sm-2 col-xs-2 pr-0">
         <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
             <?php foreach ($settingTypes as $k => $settingType) { ?>
-            <a class="nav-link <?php if ($k == 0) echo 'active'; ?>" data-toggle="pill" href="#setting_type_<?= $settingType['id'] ?>" role="tab" aria-selected="false"><?= Yii::t('setting', $settingType['name']) ?></a>
+            <a class="nav-link <?= $k == 0 ? 'active' : '' ?>" data-toggle="pill" href="#setting_type_<?= $settingType['id'] ?>" role="tab" aria-selected="false"><?= Yii::t('setting', $settingType['name']) ?></a>
             <?php } ?>
         </div>
     </div>
     <div class="col-md-7 col-sm-10 col-xs-10 bg-white" style="border-radius: 3px; border: 1px solid #dee2e6; border-left: none">
         <div class="tab-content p-3" id="vert-tabs-tabContent">
             <?php foreach ($settingTypes as $k => $settingType) { ?>
-            <div class="tab-pane text-left fade <?php if ($k == 0) echo 'active show'; ?>" id="setting_type_<?= $settingType['id'] ?>" role="tabpanel">
+            <div class="tab-pane text-left fade <?= $k == 0 ? 'active show' : '' ?>" id="setting_type_<?= $settingType['id'] ?>" role="tabpanel">
                 <div class="panel-body">
                     <?php $form = ActiveForm::begin([
                         'id' => 'form-tab-' . $settingType['id']

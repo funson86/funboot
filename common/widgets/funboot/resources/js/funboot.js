@@ -117,13 +117,11 @@ function autoChangeMenu(leftAuto = false) {
     }
     $(".J_mainContent").height(mainContent);
 
-    if (config.isMobile == true) {
+    if (config.isMobile === true) {
         // 显示左边菜单
-        $('.fbLeftMenu').removeClass('hidden');
+        $('.fbLeftMenuCat').removeClass('hidden');
         // 隐藏tag
         $(".content-tabs").addClass('hidden');
-        // 显示退出
-        $("#logout").removeClass('hidden');
         // 隐藏头部菜单栏
         $('.fbTopMenu').each(function (i, data) {
             var type = $(this).data('type');
@@ -137,11 +135,11 @@ function autoChangeMenu(leftAuto = false) {
         // 底部隐藏
         $(".main-footer").addClass('hidden');
     } else {
-        if (leftAuto == true) {
+        if (leftAuto === true) {
             // 隐藏左边菜单
-            $('.fbLeftMenu').addClass('hidden');
+            $('.fbLeftMenuCat').addClass('hidden');
             // 默认菜单显示
-            $('.is_default_show').removeClass('hidden');
+            $('.isDefaultMenu').removeClass('hidden');
         }
 
         // 头部菜单栏

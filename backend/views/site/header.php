@@ -10,6 +10,14 @@ $store = $this->context->store;
 
 ?>
 
+<style>
+    @media (max-width: 991px) {
+        .fbTopMenu .nav-link span {
+            display: none;
+        }
+    }
+</style>
+
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -20,7 +28,7 @@ $store = $this->context->store;
         <?php foreach (\common\helpers\ArrayHelper::tree(Yii::$app->authSystem->userPermissions) as $item) { ?>
         <li class="nav-item d-none d-sm-inline-block fbTopMenu">
             <a href="javascript:;" class="nav-link fbTopNav" data-id="<?= $item['id'] ?>" >
-                <i class="nav-icon <?= strlen($item['icon']) > 0 ? $item['icon'] : 'fas fa-circle-o' ?>"></i> <?= Yii::t('permission', $item['name']) ?></span>
+                <i class="nav-icon <?= strlen($item['icon']) > 0 ? $item['icon'] : 'fas fa-circle-o' ?>"></i> <span><?= Yii::t('permission', $item['name']) ?></span>
             </a>
         </li>
         <?php } ?>
