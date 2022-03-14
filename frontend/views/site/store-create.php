@@ -14,11 +14,7 @@ $store = $this->context->store;
 $this->title = Yii::t('app', 'Store Create');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<style>
-    .help-block-error {
-        width: 100%;
-    }
-</style>
+
 <div class="page-section">
     <div class="container">
         <div class="row">
@@ -31,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form
                     ->field($model,'code', [
                         'options' => ['class' => 'form-group has-feedback'],
-                        'inputTemplate' => '<div class="input-group-prepend"><div class="input-group-text">https://</div></div>{input}<div class="input-group-append"><div class="input-group-text">.funboot.com</div></div>',
+                        'inputTemplate' => '<div class="input-group-prepend"><div class="input-group-text">https://</div></div>{input}<div class="input-group-append"><div class="input-group-text">.' . Yii::$app->params['storePlatformDomain'] . '</div></div>',
                         'template' => '{beginWrapper}{input}{error}{endWrapper}',
                         'wrapperOptions' => ['class' => 'input-group mb-3']
                     ])

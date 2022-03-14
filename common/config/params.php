@@ -161,8 +161,15 @@ return [
         ],
     ],
 
-    // 平台url店名前缀 http://www.funboot/store-aaa
+    // 平台url店名前缀 http://www.funboot.com/store-aaa
     'storePlatformUrlPrefix' => 'store-',
+    'storePlatformDomain' => 'funboot.com',
+    'storePlatformRoute' => 'mall',
+    'storePlatformValidTime' => 365 * 86400,
+    'storePlatformRoleId' => 50,
+
+    // cms
+    'cmsForceHostName' => true,
 
     'smtp_host' => 'smtp.office365.com',
     'smtp_username' => 'xxx@outlook.com',

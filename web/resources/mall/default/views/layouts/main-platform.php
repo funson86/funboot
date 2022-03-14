@@ -10,7 +10,7 @@ use yii\helpers\Url;
 $store = $this->context->store;
 
 MallPlatformAsset::register($this);
-$this->registerCssFile($this->context->getCss('style-platform.css?v=1'), ['depends' => MallPlatformAsset::className()]);
+$this->registerCssFile($this->context->getCss('style-platform.css?v=' . Yii::$app->params['system_version']), ['depends' => MallPlatformAsset::className()]);
 $this->registerJsFile($this->context->getJs('main-platform.js'), ['depends' => MallPlatformAsset::className()]);
 ?>
 <?php $this->beginPage() ?>

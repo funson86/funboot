@@ -50,7 +50,7 @@ $menuItems = [
 
 echo Nav::widget([
     'encodeLabels' => false,
-    'options' => ['class' => 'navbar-nav ml-auto'],
+    'options' => ['class' => 'navbar-nav ml-auto navbar-menu'],
     'items' => $menuItems,
     'activateParents' => true,
 ]);
@@ -83,6 +83,19 @@ NavBar::end();
             $('.navbar').css('opacity', 0.95);
         }
     })
+
+    // 切换语言
+    $('.funboot-lang').click(function() {
+        let lang = $(this).data('lang')
+        let param = {
+            lang: lang
+        }
+        $.get("<?= Url::to(['/cms/default/set-language']) ?>", param, function(data) {
+            if (parseInt(data.code) === 200) {
+                window.location.reload();
+            }
+        })
+    });
 </script>
 
 <main role="main" class="main">
@@ -223,7 +236,7 @@ NavBar::end();
 </section>
 
 <script>
-    $('.nav a, #myCarousel a').click(function(){
+    $('.navbar-menu a, #myCarousel a').click(function(){
         $('html, body').animate({
             scrollTop: $( $.attr(this, 'href') ).offset().top - 60
         }, 1000);

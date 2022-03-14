@@ -21,10 +21,6 @@ class StoreCreateForm extends Model
 
     const KEY_FAILED = 'storeCreateFailed';
 
-    public function __construct($config = [])
-    {
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -83,7 +79,9 @@ class StoreCreateForm extends Model
             $store->user_id = 1;
             $store->name = ucfirst(strtolower($this->code));
             $store->code = $this->code;
-            $store->host_name = $this->code . '.funboot.com';
+            $store->host_name = $this->code . '.' . Yii::$app->params['storePlatformDomain'];
+            $store->route = Yii::$app->params['storePlatformRoute'];
+            $store->expired_at = strtotime(date('Y-m-d', time())) + (Yii::$app->params['defaultStoreValidTime'] ?? (365 * 86400)) - 1;
             if (!$store->save()) {
                 Yii::error($store->errors);
                 Yii::$app->session->set(self::KEY_FAILED, Yii::$app->session->get(self::KEY_FAILED, 0) + 1);
@@ -98,6 +96,8 @@ class StoreCreateForm extends Model
 
             $user->generateAuthKey();
             $user->generateEmailVerificationToken();
+
+            $this->setDefaultUser($user);
             if (!$user->save()) {
                 Yii::error($user->errors);
                 $store->delete();
@@ -112,10 +112,10 @@ class StoreCreateForm extends Model
             }
 
             $store->user_id = $user->id;
-            $this->setDefaultData($store);
+            $this->setDefaultStore($store);
             $store->save();
             $this->sendEmail($store, $user);
-            return $store;
+            return $user;
         }
     }
 
@@ -150,9 +150,13 @@ class StoreCreateForm extends Model
         return Yii::$app->params['storeCreateAttempts'] ?? 3;
     }
 
-    protected function setDefaultData(Store $store)
+    protected function setDefaultStore(Store $store)
     {
-        $store->route = 'site';
-        $store->expired_at = strtotime(date('Y-m-d', time())) + (Yii::$app->params['defaultStoreValidTime'] ?? (365 * 86400 - 1));
+        return true;
+    }
+
+    protected function setDefaultUser(User $user)
+    {
+        return true;
     }
 }

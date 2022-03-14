@@ -10,7 +10,7 @@ use frontend\assets\ChatAsset;
 $store = $this->context->store;
 ChatAsset::register($this);
 
-$this->registerCssFile($this->context->getCss('style.css?v=1'), ['depends' => ChatAsset::className()]);
+$this->registerCssFile($this->context->getCss('style.css?v=' . Yii::$app->params['system_version']), ['depends' => ChatAsset::className()]);
 $this->registerJsFile($this->context->getJs('main.js'), ['depends' => ChatAsset::className()]);
 
 ?>

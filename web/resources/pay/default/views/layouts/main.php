@@ -10,7 +10,7 @@ use frontend\assets\PayAsset;
 $store = $this->context->store;
 PayAsset::register($this);
 
-$this->registerCssFile($this->context->getCss('style.css?v=1'), ['depends' => PayAsset::className()]);
+$this->registerCssFile($this->context->getCss('style.css?v=' . Yii::$app->params['system_version']), ['depends' => PayAsset::className()]);
 $this->registerJsFile($this->context->getJs('main.js'), ['depends' => PayAsset::className()]);
 
 ?>

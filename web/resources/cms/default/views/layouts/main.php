@@ -8,7 +8,7 @@ use frontend\assets\CmsAllAsset;
 
 $store = $this->context->store;
 CmsAllAsset::register($this);
-$this->registerCssFile($this->context->getCss('style.css?v=1'), ['depends' => CmsAllAsset::className()]);
+$this->registerCssFile($this->context->getCss('style.css?v=' . Yii::$app->params['system_version']), ['depends' => CmsAllAsset::className()]);
 $this->registerJsFile($this->context->getJs('main.js'), ['depends' => CmsAllAsset::className()]);
 ?>
 <?php $this->beginPage() ?>

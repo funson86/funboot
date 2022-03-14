@@ -7,7 +7,7 @@ use common\widgets\Alert;
 /* @var $content string */
 
 BbsAsset::register($this);
-$this->registerCssFile($this->context->getCss('style.css?v=1'), ['depends' => BbsAsset::className()]);
+$this->registerCssFile($this->context->getCss('style.css?v=' . Yii::$app->params['system_version']), ['depends' => BbsAsset::className()]);
 $this->registerJsFile($this->context->getJs('main.js'), ['depends' => BbsAsset::className()]);
 
 $store = $this->context->store;

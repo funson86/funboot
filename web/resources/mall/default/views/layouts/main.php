@@ -7,7 +7,7 @@ use common\helpers\CommonHelper;
 /* @var $content string */
 
 MallAsset::register($this);
-$this->registerCssFile($this->context->getCss('style.css?v=1'), ['depends' => MallAsset::className()]);
+$this->registerCssFile($this->context->getCss('style.css?v=' . Yii::$app->params['system_version']), ['depends' => MallAsset::className()]);
 $this->registerJsFile($this->context->getJs('main.js'), ['depends' => MallAsset::className()]);
 
 $store = $this->context->store;
