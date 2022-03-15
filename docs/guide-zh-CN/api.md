@@ -107,6 +107,8 @@ Api
 
 如果不需要的字段，可以通过fields()和extraFields()来控制，在extraFields中的Model中要有对应的getXxx函数，如api/models/User.php
 
+- 如果extraField关联对象需要指定字段，覆盖getXxx并select指定字段。
+
 ```php
 class User extends \common\models\User implements RateLimitInterface
 {
@@ -118,6 +120,11 @@ class User extends \common\models\User implements RateLimitInterface
     public function extraFields()
     {
         return ['store'];
+    }
+
+    public function getStore()
+    {
+        return parent::getStore() ? parent::getStore()->select(['name']) : null;
     }
 }
 ```

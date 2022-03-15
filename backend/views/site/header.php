@@ -123,7 +123,7 @@ $store = $this->context->store;
                 <i class="flag-icon flag-icon-<?= Lang::getLanguageFlag(Lang::getLanguageCode(Yii::$app->language, true, true)) ?>"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right p-0">
-                <?php foreach (Lang::getLanguageCode() as $id => $label) { if (($store->language & $id) == $id) {?>
+                <?php foreach (Lang::getLanguageCode() as $id => $label) { if (($store->lang_backend & $id) == $id) {?>
                 <a href="javascript:;" class="dropdown-item funboot-lang" data-lang="<?= $label ?>">
                     <i class="flag-icon flag-icon-<?= Lang::getLanguageFlag($id) ?> mr-2"></i> <?= Lang::getLanguageLabels($id) ?>
                 </a>

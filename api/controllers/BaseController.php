@@ -14,7 +14,6 @@ use yii\filters\auth\HttpHeaderAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\RateLimiter;
 use yii\rest\ActiveController;
-use yii\web\NotFoundHttpException;
 
 /**
  * Class BaseController
@@ -51,6 +50,12 @@ class BaseController extends ActiveController
      * @var int
      */
     protected $pageSize = 10;
+
+    /**
+     * 是否高并发
+     * @var bool
+     */
+    protected $highConcurrency = false;
 
     /**
      * 序列化数据

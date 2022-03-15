@@ -53,6 +53,32 @@ class SettingController extends BaseController
 
     protected $exportSort = ['store_id' => SORT_ASC, 'setting_type_id' => SORT_ASC];
 
+    public function actionIndex()
+    {
+        $parentId = Yii::$app->request->get('parent_id');
+        if (!$parentId) {
+            return $this->goBack();
+        }
+
+        $storeId = Yii::$app->request->get('store_id', $this->getStoreId());
+        $settingTypes = SettingType::find()->where(['status' => SettingType::STATUS_ACTIVE, 'parent_id' => $parentId])
+            ->andWhere('support_role & ' . Yii::$app->authSystem->getRoleCode() . ' = ' . Yii::$app->authSystem->getRoleCode())
+            ->andWhere(['or', 'support_system & 1 = 1', 'support_system & ' . Yii::$app->storeSystem->getRouteCode() . ' = ' .Yii::$app->storeSystem->getRouteCode()])
+            ->with(['setting' => function ($query) use ($storeId) {
+                $query->andWhere(['store_id' => $storeId]);
+            }])
+            ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
+            ->asArray()
+            ->all();
+        if (!count($settingTypes)) {
+            return $this->goBack();
+        }
+
+        return $this->render($this->action->id, [
+            'settingTypes' => [['children' => $settingTypes]],
+        ]);
+    }
+
     /**
       * ajax编辑/创建
       *

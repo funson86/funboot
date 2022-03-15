@@ -6,30 +6,22 @@ if (config == NaN) {
 }
 
 function fbSuccess(content, title = '') {
-    //Swal.fire(title, content, 'success')
+    Swal.fire(title, content, 'success')
+}
+function fbError(content, title = '') {
+    Swal.fire(title, content, 'error')
+}
+function fbInfo(content, title = '') {
     toastr.options = {
         "closeButton": true, //是否显示关闭按钮
         "positionClass": "toast-center-center",//弹出窗的位置
         "hideDuration": "1000",//消失的动画时间
         "timeOut": "3000", //展现时间
     };
-    toastSuccess(content)
-}
-function fbError(content, title = '') {
-    Swal.fire(title, content, 'error')
-}
-function fbInfo(content, title = '') {
-    Swal.fire(title, content, 'info')
+    toastInfo(content)
 }
 function fbWarning(content, title = '') {
-    // Swal.fire(title, content, 'warning')
-    toastr.options = {
-        "closeButton": true, //是否显示关闭按钮
-        "positionClass": "toast-center-center",//弹出窗的位置
-        "hideDuration": "1000",//消失的动画时间
-        "timeOut": "5000", //展现时间
-    };
-    toastr.error(content)
+    Swal.fire(title, content, 'warning')
 }
 
 function flashSuccess(msg) {
@@ -48,6 +40,10 @@ function flashError(msg) {
 
 function toastSuccess(msg) {
     toastr.success(msg)
+}
+
+function toastInfo(msg) {
+    toastr.info(msg)
 }
 
 function messageWarning(content, title = '') {

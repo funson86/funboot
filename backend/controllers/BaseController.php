@@ -611,6 +611,11 @@ class BaseController extends \common\components\controller\BaseController
         $post = Yii::$app->request->post();
         if (isset($post['Lang'])) {
             foreach ($post['Lang'] as $field => $item) {
+                // Ueditor 带格式不做自动翻译
+                if ($this->modelClass::getLangFieldType($field) == 'Ueditor') {
+                    continue;
+                }
+
                 foreach ($post['Lang'][$field] as $target => $content) {
                     //翻译源语言和目标语言一致则忽略
                     if ($this->store->lang_source == $target) {

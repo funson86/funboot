@@ -238,7 +238,8 @@ class CacheSystem extends \yii\base\Component
         if (!Yii::$app->cache->get('lang:' . $tableCode . ':' . $targetId . ':' . $field . ':' . $target)) {
             $this->refreshLang($tableCode, $targetId);
         }
-        return  Yii::$app->cache->get('lang:' . $tableCode . ':' . $targetId . ':' . $field . ':' . $target) ?: $default;
+
+        return Yii::$app->cache->get('lang:' . $tableCode . ':' . $targetId . ':' . $field . ':' . $target) ?: $default;
     }
 
     public function refreshLang($tableCode, $targetId)
