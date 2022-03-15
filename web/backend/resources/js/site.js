@@ -69,7 +69,3 @@ function fbT(msgVariable, data, msg) {
         return msg;
     }
 }
-
-jQuery(function ($) {
-    $("body").niceScroll();
-});
