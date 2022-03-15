@@ -40,6 +40,5 @@ class AdminlteAsset extends AssetBundle
 
     public $depends = [
         'common\widgets\adminlte\HeadJsAsset',
-        'common\components\assets\JqueryNiceScrollAsset',
     ];
 }
