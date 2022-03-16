@@ -71,7 +71,7 @@ class ScheduleController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionConfig()
+    public function actionEditConfig()
     {
         if ($this->writeSchedule()) {
             return $this->redirectSuccess();
