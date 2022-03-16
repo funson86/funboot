@@ -37,10 +37,10 @@ NavBar::begin([
 ]);
 $menuItems = [
     ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
-    ['label' => Yii::t('app', 'Funmall'), 'url' => 'https://funmall.funboot.net/', 'linkOptions' => ['target' => '_blank']],
+    ['label' => Yii::t('app', 'Funmall商城'), 'url' => 'https://funmall.funboot.net/', 'linkOptions' => ['target' => '_blank']],
     ['label' => Yii::t('app', 'Funpay'), 'url' => 'https://funpay.funboot.net/', 'linkOptions' => ['target' => '_blank']],
     ['label' => Yii::t('app', 'Funcms'), 'url' => 'https://funpay.funboot.net/', 'linkOptions' => ['target' => '_blank']],
-    ['label' => Yii::t('app', 'Chat Room'), 'url' => 'https://chat.funboot.net/', 'linkOptions' => ['target' => '_blank']],
+    ['label' => Yii::t('app', 'Websocket Chat Room'), 'url' => 'https://chat.funboot.net/', 'linkOptions' => ['target' => '_blank']],
     ['label' => Yii::t('app', 'Feedback'), 'url' => ['/site/feedback']],
     ['label' => Yii::t('app', 'Funboot Demo(test/123456)'), 'url' => 'https://www.funboot.net/backend/'],
 ];
