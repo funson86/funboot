@@ -37,6 +37,7 @@ NavBar::begin([
 ]);
 $menuItems = [
     ['label' => Yii::t('app', 'Home'), 'url' => ['/']],
+    ['label' => Yii::t('app', 'Funmall'), 'url' => 'https://funmall.funboot.net/', 'linkOptions' => ['target' => '_blank']],
     ['label' => Yii::t('app', 'Funpay'), 'url' => 'https://funpay.funboot.net/', 'linkOptions' => ['target' => '_blank']],
     ['label' => Yii::t('app', 'Funcms'), 'url' => 'https://funpay.funboot.net/', 'linkOptions' => ['target' => '_blank']],
     ['label' => Yii::t('app', 'Chat Room'), 'url' => 'https://chat.funboot.net/', 'linkOptions' => ['target' => '_blank']],
@@ -71,7 +72,8 @@ NavBar::end();
                 <?php if ($url == '/') { ?>
                     <p class="pt-3">
                         <?= Html::a('系统源码', 'https://github.com/funson86/funboot', ['class' => 'btn btn-success wow bounceInLeft', 'target' => '_blank', 'data-wow-duration' => '2s']) ?>
-                        <?= Html::a('开发文档', 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN/README.md', ['class' => 'btn btn-info ml-3 wow bounceInRight', 'target' => '_blank', 'data-wow-duration' => '5s']) ?>
+                        <?= Html::a('开发文档', 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN/README.md', ['class' => 'btn btn-info ml-3 wow bounceInUp', 'target' => '_blank', 'data-wow-duration' => '3s']) ?>
+                        <?= Html::a('商城演示', 'https://funmall.funboot.net', ['class' => 'btn btn-danger ml-3 wow bounceInRight', 'target' => '_blank', 'data-wow-duration' => '2s']) ?>
                     </p>
                 <?php } ?>
             </div>
