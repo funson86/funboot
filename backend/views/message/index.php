@@ -35,18 +35,18 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body p-0" style="display: block;">
                 <ul class="nav nav-pills flex-column">
                     <li class="nav-item active">
-                        <a href="<?= Url::to(['message/index', 'status' => 0], false, false) ?>" class="nav-link">
+                        <a href="<?= Url::to(['/message/index', 'status' => 0], false, false) ?>" class="nav-link">
                             <i class="fas fa-inbox"></i> <?= Yii::t('cons', 'STATUS_UNREAD') ?><?= Yii::t('app', 'Message') ?>
                             <span class="badge bg-primary float-right"><?= $unread ?></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= Url::to(['message/index', 'status' => 1], false, false) ?>" class="nav-link">
+                        <a href="<?= Url::to(['/message/index', 'status' => 1], false, false) ?>" class="nav-link">
                             <i class="far fa-envelope"></i> <?= Yii::t('cons', 'STATUS_READ') ?><?= Yii::t('app', 'Message') ?>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= Url::to(['message/index', 'status' => -1], false, false) ?>" class="nav-link">
+                        <a href="<?= Url::to(['/message/index', 'status' => -1], false, false) ?>" class="nav-link">
                             <i class="far fa-trash-alt"></i> <?= Yii::t('cons', 'STATUS_RECYCLE') ?>
                         </a>
                     </li>

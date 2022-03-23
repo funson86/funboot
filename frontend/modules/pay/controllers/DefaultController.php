@@ -20,7 +20,10 @@ class DefaultController extends BaseController
 {
     public function beforeAction($action)
     {
-        return parent::beforeAction($action);
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        return true;
     }
 
     /**

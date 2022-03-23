@@ -22,6 +22,7 @@ return [
     '系统配置' => 'Setting',
     '配置类型管理' => 'Setting Type',
     '数据字典' => 'Dict Data',
+    '消息列表' => 'Message',
 
     '系统监控' => 'System Monitor',
     '定时任务' => 'Schedule',
