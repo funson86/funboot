@@ -78,6 +78,15 @@ class SiteController extends BaseController
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        $this->layout = Yii::$app->authSystem->isAdmin() ? 'main' : 'main-store';
+        return true;
+    }
+
     /**
      * Displays homepage.
      *
@@ -86,7 +95,7 @@ class SiteController extends BaseController
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']);
+            return $this->redirect(['/site/login']);
         }
 
         // 非管理员不能登录后台
@@ -109,7 +118,7 @@ class SiteController extends BaseController
                     // 如果客户登录，Store已经非激活，用户无法登录。如果是super admin从后台登录允许
                     if (!Yii::$app->authSystem->isSuperAdmin() && $store->status != Store::STATUS_ACTIVE) {
                         Yii::$app->user->logout();
-                        return $this->redirect(['site/login']);
+                        return $this->redirect(['/site/login']);
                     } else {
                         // 同一个入口，跳转到不同的后台
                         return $this->redirect(CommonHelper::getHostPrefix($store->host_name) . '/backend/site/login-backend?token=' . $user->token);
@@ -117,12 +126,16 @@ class SiteController extends BaseController
                 } else {
                     Yii::$app->logSystem->db($user->errors);
                     Yii::$app->user->logout();
-                    return $this->redirect(['site/login']);
+                    return $this->redirect(['/site/login']);
                 }
             }
         }
 
-        return $this->renderPartial('index');
+        if (Yii::$app->authSystem->isAdmin()) {
+            return $this->renderPartial('index');
+        } else {
+            return $this->redirect(['/site/info']);
+        }
     }
 
     /**
@@ -136,7 +149,6 @@ class SiteController extends BaseController
         $logCount = Log::find()->filterWhere(['store_id' => $storeId])->count();
         $userCount = User::find()->filterWhere(['store_id' => $storeId])->count();
 
-        $this->layout = 'main';
         return $this->render($this->action->id, [
             'userCount' => $userCount,
             'logCount' => $logCount,

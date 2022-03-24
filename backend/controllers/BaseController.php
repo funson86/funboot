@@ -161,7 +161,12 @@ class BaseController extends \common\components\controller\BaseController
         } catch (ForbiddenHttpException $e) {
             Yii::$app->logSystem->login(Yii::$app->user->identity->username ?? Yii::$app->user->identity->username . ' of id ' . Yii::$app->user->id . ' with no auth to backend', null, true);
             Yii::$app->user->logout();
-            $this->redirect('/');
+            return false;
+        }
+
+        // 店主使用另外一种layout
+        if ($this->isBackend() && !$this->isAdmin()) {
+            $this->layout = '@backend/views/layouts/main-store';
         }
 
         return true;
@@ -965,5 +970,13 @@ class BaseController extends \common\components\controller\BaseController
     public function isSuperAdmin()
     {
         return Yii::$app->authSystem->isSuperAdmin();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBackend()
+    {
+        return Yii::$app->authSystem->isBackend();
     }
 }

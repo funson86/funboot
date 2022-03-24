@@ -4,15 +4,39 @@ use common\helpers\ArrayHelper;
 use common\helpers\Url;
 use common\helpers\Html;
 use common\helpers\ImageHelper;
+use common\helpers\AuthHelper;
 
 $store = $this->context->store;
+!isset($type) && $type = 'admin';
 
 $menus = [];
-$defaultId = 0;
+$defaultId = $firstId = 0;
+
 foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
-    if ($defaultId == 0) {
-        $defaultId = $leftPermissions['id'];
+    if ($firstId == 0) {
+        $firstId = $leftPermissions['id'];
     }
+
+    if ($type == 'store') {
+        foreach ($leftPermissions['children'] as $permission) {
+            if (isset($permission['path']) && $permission['path'] && strpos(Yii::$app->request->url, $permission['path']) !== false) {
+                $defaultId = $leftPermissions['id'];
+                break;
+            }
+            if (count($permission['children']) > 0) {
+                foreach ($permission['children'] as $child) {
+                    if (isset($child['path']) && $child['path'] && strpos(Yii::$app->request->url, $child['path']) !== false) {
+                        $defaultId = $leftPermissions['id'];
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+$defaultId == 0 && $defaultId = $firstId;
+
+foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
     foreach ($leftPermissions['children'] as $permission) {
         $menu = [];
 
@@ -21,11 +45,13 @@ foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
 
             $url = '#';
             foreach ($permission['children'] as $child) {
+                $list = [$child['path']];
+                isset($child['children']) && $list += ArrayHelper::getColumn($child['children'], 'path');
                 $subMenu = [
                     'label' => Yii::t('permission', $child['name']),
                     'icon' => $child['icon'],
                     'url' => [$child['path']],
-                    'class' => $child['target'] ? '' : 'J_menuItem',
+                    'active' => AuthHelper::urlMath('/' . Yii::$app->controller->route, $list) ? 'active' : '',
                     'target' => $child['target'] ? '_blank' : '_self',
                 ];
                 $menu['items'][] = $subMenu;
@@ -47,9 +73,8 @@ foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
         ];
         array_push($menus, $menu);
     }
-
 }
-if ($this->context->isAdmin()) { //管理员显示
+if (Yii::$app->authSystem->isAdmin()) { //管理员显示
     if (YII_ENV_DEV) {
         $subMenu = [
             ['label' => Yii::t('permission', 'Gii Crud'), 'icon' => 'fas fa-file-signature', 'url' => ['/gii/crud'], 'class' => 'nav-link', 'target' => '_blank'],
@@ -73,6 +98,9 @@ if ($this->context->isAdmin()) { //管理员显示
     }
     array_push($menus, ['label' => Yii::t('permission', 'Funboot开发指南'), 'icon' => 'fa fa-book', 'url' => 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN', 'target' => '_blank']);
     array_push($menus, ['label' => Yii::t('permission', 'QQ开发交流群'), 'icon' => 'fab fa-qq', 'url' => 'https://qm.qq.com/cgi-bin/qm/qr?k=jJwNMMAkEelzRPmHrSc-WXS5jrwVH-3x&jump_from=webapi', 'target' => '_blank']);
+} else {
+    array_push($menus, ['label' => Yii::t('permission', '帮助系统'), 'icon' => 'fas fa-question-circle', 'url' => '/help/' . Yii::$app->language . '/', 'target' => '_blank']);
+    array_push($menus, ['label' => Yii::t('permission', '消息列表'), 'icon' => 'fas fa-comments', 'url' => ['/message/index', 'status' => 0], 'class' => 'leftMessage']);
 }
 ?>
 
@@ -102,6 +130,7 @@ if ($this->context->isAdmin()) { //管理员显示
             <?= \common\widgets\adminlte\Menu::widget([
                 'items' => $menus
             ]) ?>
+        </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

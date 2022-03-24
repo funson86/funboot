@@ -28,9 +28,7 @@ class AuthHelper
             return true;
         }
 
-        if (!$list) {
-            $list = isset(Yii::$app->params['myPermissions']) ? Yii::$app->params['myPermissions'] : null;
-        }
+        !$list && $list = Yii::$app->params['myPermissions'] ?? [];
 
         return self::urlMath($url, $list);
     }

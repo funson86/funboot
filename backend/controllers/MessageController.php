@@ -53,8 +53,10 @@ class MessageController extends BaseController
 
     public function beforeAction($action)
     {
-        $this->layout = 'main';
-        parent::beforeAction($action);
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        $this->layout = Yii::$app->authSystem->isAdmin() ? 'main' : 'main-store';
         return true;
     }
 
@@ -113,7 +115,7 @@ class MessageController extends BaseController
         $list = [];
         foreach ($models as $model) {
             $item = $model;
-            $item['url'] = Url::to(['message/view', 'id' => $model['id']], true);
+            $item['url'] = Url::to(['/message/view', 'id' => $model['id']], true);
             $item['avatar'] = ImageHelper::getAvatar($model['from']['avatar']);
             $item['username'] = strlen($model['from']['name']) > 0 ? $model['from']['name'] : $model['from']['username'];
             $item['created_at'] = (time() - $model['created_at']) > 86400 ? Yii::$app->formatter->asDatetime($model['created_at']) : Yii::$app->formatter->asRelativeTime($model['created_at']);
@@ -139,6 +141,9 @@ class MessageController extends BaseController
         $model = Message::findOne($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+        if ($model->user_id !== Yii::$app->user->id) {
+            return $this->redirectError(Yii::t('app', 'No Auth'));
         }
 
         $model->status = Message::STATUS_READ;

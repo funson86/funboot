@@ -18,7 +18,7 @@ use common\helpers\Url;
         <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-angle-double-left"></i></button>
         <nav class="page-tabs J_menuTabs" id="rftags">
             <div class="page-tabs-content">
-                <a href="javascript:void (0);" class="active J_menuTab" data-id="<?= Url::to(['site/info'], false, false); ?>"><?= Yii::t('app', 'Home') ?></a>
+                <a href="javascript:void (0);" class="active J_menuTab" data-id="<?= Url::to(['/site/info'], false, false); ?>"><?= Yii::t('app', 'Home') ?></a>
                 <!--默认主页需在对应的选项卡a元素上添加data-id="默认主页的url"-->
             </div>
         </nav>
@@ -32,11 +32,11 @@ use common\helpers\Url;
                 <li class="J_tabCloseOther"><a><?= Yii::t('app', 'Close Other Tab') ?></a></li>
             </ul>
         </div>
-        <a href="<?= Url::to(['site/logout']); ?>" data-method="post" class="roll-nav roll-right J_tabExit"><i class="nav-icon fas fa-sign-out-alt"></i> <?= Yii::t('app', 'Logout') ?></a>
+        <a href="<?= Url::to(['/site/logout']); ?>" data-method="post" class="roll-nav roll-right J_tabExit"><i class="nav-icon fas fa-sign-out-alt"></i> <?= Yii::t('app', 'Logout') ?></a>
     </div>
     <div class="J_mainContent" id="content-main">
         <!--默认主页需在对应的页面显示iframe元素上添加name="iframe0"和data-id="默认主页的url"-->
-        <iframe class="J_iframe" name="iframe0" width="100%" height="100%" data-src="<?= Url::to(['site/info'], false, false); ?>" frameborder="0" data-id="<?= Url::to(['site/info'], false, false); ?>" seamless></iframe>
+        <iframe class="J_iframe" name="iframe0" width="100%" height="100%" data-src="<?= Url::to(['/site/info'], false, false); ?>" frameborder="0" data-id="<?= Url::to(['/site/info'], false, false); ?>" seamless></iframe>
     </div>
 </div>
 
