@@ -96,9 +96,10 @@ if (Yii::$app->authSystem->isAdmin()) { //管理员显示
             ['label' => Yii::t('permission', '接口文档'), 'icon' => 'fas fa-file-alt', 'url' => ['/swagger/index'], 'class' => 'nav-link', 'target' => '_blank'],
         ];
         array_push($menus, ['label' => Yii::t('permission', 'Tools'), 'icon' => 'fas fa-puzzle-piece', 'url' => '#', 'class' => '', 'items' => $subMenu]);
+
+        array_push($menus, ['label' => Yii::t('permission', 'Funboot开发指南'), 'icon' => 'fa fa-book', 'url' => 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN', 'target' => '_blank']);
+        array_push($menus, ['label' => Yii::t('permission', 'QQ开发交流群'), 'icon' => 'fab fa-qq', 'url' => 'https://qm.qq.com/cgi-bin/qm/qr?k=jJwNMMAkEelzRPmHrSc-WXS5jrwVH-3x&jump_from=webapi', 'target' => '_blank']);
     }
-    array_push($menus, ['label' => Yii::t('permission', 'Funboot开发指南'), 'icon' => 'fa fa-book', 'url' => 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN', 'target' => '_blank']);
-    array_push($menus, ['label' => Yii::t('permission', 'QQ开发交流群'), 'icon' => 'fab fa-qq', 'url' => 'https://qm.qq.com/cgi-bin/qm/qr?k=jJwNMMAkEelzRPmHrSc-WXS5jrwVH-3x&jump_from=webapi', 'target' => '_blank']);
 } else {
     array_push($menus, ['label' => Yii::t('permission', '帮助系统'), 'icon' => 'fas fa-question-circle', 'url' => '/help/' . Yii::$app->language . '/', 'target' => '_blank']);
 }
