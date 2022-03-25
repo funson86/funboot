@@ -25,11 +25,9 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'user_id')->textInput() ?>
-        <?= $form->field($model, 'from_id')->textInput() ?>
-        <?= $form->field($model, 'message_type_id')->textInput() ?>
+        <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
+        <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>

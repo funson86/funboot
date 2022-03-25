@@ -76,6 +76,11 @@ class BaseController extends \common\components\controller\BaseController
     protected $editAjaxFields = ['name', 'sort'];
 
     /**
+     * @var bool 强制查询当前store
+     */
+    protected $forceStoreId = true;
+
+    /**
      * 导入导出字段
      *
      * @var int
@@ -264,6 +269,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
+        $this->beforeView($id, $model);
         return $this->render($this->action->id, [
             'model' => $model,
         ]);
@@ -286,9 +292,15 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
+        $this->beforeView($id, $model);
         return $this->renderAjax($this->action->id, [
             'model' => $model,
         ]);
+    }
+
+    protected function beforeView($id, $model)
+    {
+        return true;
     }
 
     /**
@@ -845,7 +857,7 @@ class BaseController extends \common\components\controller\BaseController
         /* @var $model \yii\db\ActiveRecord */
 
         // 管理员无需store_id
-        $storeId = (($this->modelClass === Store::class) || $this->isAdmin()) ? null : $this->getStoreId();
+        $storeId = (($this->modelClass === Store::class) || $this->isAdmin() || !$this->forceStoreId) ? null : $this->getStoreId();
         if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
             if ($action) {
                 return null;

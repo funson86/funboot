@@ -73,6 +73,7 @@ return [
     'SEND_TARGET_USER' => '指定用户',
     'STATUS_READ' => '已读',
     'STATUS_UNREAD' => '未读',
+    'STATUS_STAR' => '星标',
     'STATUS_RECYCLE' => '回收站',
 
     'Grade' => '级别',

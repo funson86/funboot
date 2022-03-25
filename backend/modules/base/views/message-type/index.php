@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a class="nav-link active"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= Url::to(['/message/index']) ?>"><?= Yii::t('app', 'Message') ?></a>
+                        <a class="nav-link" href="<?= Url::to(['/base/message/index']) ?>"><?= Yii::t('app', 'Message') ?></a>
                     </li>
                     <li class="nav-tabs-tools">
                         <?= Html::createModal(['edit-ajax'], null, ['class' => 'btn btn-primary btn-xs']) ?>

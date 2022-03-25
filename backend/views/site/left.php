@@ -52,6 +52,7 @@ foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
                     'icon' => $child['icon'],
                     'url' => [$child['path']],
                     'active' => AuthHelper::urlMath('/' . Yii::$app->controller->route, $list) ? 'active' : '',
+                    'class' => ($child['target'] || $type == 'store') ? '' : 'J_menuItem',
                     'target' => $child['target'] ? '_blank' : '_self',
                 ];
                 $menu['items'][] = $subMenu;
@@ -100,8 +101,8 @@ if (Yii::$app->authSystem->isAdmin()) { //管理员显示
     array_push($menus, ['label' => Yii::t('permission', 'QQ开发交流群'), 'icon' => 'fab fa-qq', 'url' => 'https://qm.qq.com/cgi-bin/qm/qr?k=jJwNMMAkEelzRPmHrSc-WXS5jrwVH-3x&jump_from=webapi', 'target' => '_blank']);
 } else {
     array_push($menus, ['label' => Yii::t('permission', '帮助系统'), 'icon' => 'fas fa-question-circle', 'url' => '/help/' . Yii::$app->language . '/', 'target' => '_blank']);
-    array_push($menus, ['label' => Yii::t('permission', '消息列表'), 'icon' => 'fas fa-comments', 'url' => ['/message/index', 'status' => 0], 'class' => 'leftMessage']);
 }
+array_push($menus, ['label' => Yii::t('permission', '消息列表'), 'icon' => 'fas fa-comments', 'url' => ['/base/msg/index'], 'class' => 'leftMessage ' . ($type != 'store' ? 'J_menuItem' : '')]);
 ?>
 
 <!-- Main Sidebar Container -->

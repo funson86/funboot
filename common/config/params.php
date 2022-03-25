@@ -17,6 +17,7 @@ return [
     'defaultStoreId' => 2, //默认店铺ID，当不存在时用该id
     'defaultUserId' => 2, //默认用户ID
     'defaultSort' => 50, //默认排序ID
+    'defaultMessageMessageTypeId' => 3, //默认私信消息ID
     'defaultFeedbackMessageTypeId' => 7, //默认在线反馈消息ID
     'defaultWebsiteLogo' => '/resources/images/default-logo.png', //默认在线反馈消息ID
     'defaultWebsiteBanner' => '/resources/images/default-banner.jpg', //默认banner

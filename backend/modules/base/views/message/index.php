@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header p-0 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= Url::to(['message-type/index']) ?>"><?= Yii::t('app', 'Message Type') ?></a>
+                        <a class="nav-link" href="<?= Url::to(['/base/message-type/index']) ?>"><?= Yii::t('app', 'Message Type') ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?></a>
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'created_by',
                         // 'updated_by',
 
-                        Html::actionsDelete(),
+                        Html::actionsCustom(['view']),
                     ]
                 ]); ?>
             </div>

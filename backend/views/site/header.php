@@ -41,15 +41,11 @@ $store = $this->context->store;
         <li class="nav-link" id="help">
             <a href="/help/<?= Yii::$app->language ?>/" target="_blank"><i class="fas fa-question-circle"></i></a>
         </li>
-        <li class="nav-item dropdown" id="headerMessage">
-            <a class="nav-link" data-toggle="dropdown" href="#">
+        <li class="nav-link" id="headerMessage">
+            <a href="<?= Url::to(['/base/msg/index'], false, false) ?>" class="text-secondary <?= $type != 'store' ? 'J_menuItem' : '' ?>" onclick="$('body').click();">
                 <i class="far fa-comments"></i>
                 <span class="badge badge-danger navbar-badge" id="unreadMessageCount"></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <div class="dropdown-divider"></div>
-                <a href="<?= Url::to(['/message/index'], false, false) ?>" class="dropdown-item dropdown-footer <?= $type != 'store' ? 'J_menuItem' : '' ?>" onclick="$('body').click();"><?= Yii::t('app', 'View all messages') ?></a>
-            </div>
         </li>
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown <?= Yii::$app->user->id != 1 ? 'hidden' : '' ?>">
@@ -159,7 +155,7 @@ $store = $this->context->store;
 
 <?php
 $urlSetLanguage = Url::to(['/site/set-language'], false, false);
-$urlMessageList = Url::to(['/message/list'], false, false);
+$urlMessageList = Url::to(['/base/msg/list'], false, false);
 $urlSiteLog = Url::to(['/site/log'], false, false);
 $js = <<<JS
 $(document).ready(function() {

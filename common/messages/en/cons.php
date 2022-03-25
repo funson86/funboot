@@ -73,6 +73,7 @@ return [
     'SEND_TARGET_USER' => 'Target User',
     'STATUS_READ' => 'Read ',
     'STATUS_UNREAD' => 'Unread ',
+    'STATUS_STAR' => 'Star',
     'STATUS_RECYCLE' => 'Recycle',
 
     'GRADE_COUNTRY' => 'Country',

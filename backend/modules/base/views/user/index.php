@@ -85,8 +85,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'header' => Yii::t('app', 'Actions'),
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{login} {edit} {delete}',
+                            'template' => '{msg} {login} {edit} {delete}',
                             'buttons' => [
+                                'msg' => function ($url, $model, $key) {
+                                    return Html::a(Yii::t('app', 'Message'), ['/base/msg/edit', 'user_id' => $model->id], ['class' => 'btn btn-sm btn-info']);
+                                },
                                 'login' => function ($url, $model, $key) {
                                     if ($this->context->isSuperAdmin()) {
                                         return Html::buttonModal(['login', 'id' => $model->id], Yii::t('app', 'Login'), ['class' => 'btn btn-sm btn-success'], false, true);

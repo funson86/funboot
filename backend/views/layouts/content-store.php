@@ -3,7 +3,7 @@ use yii\bootstrap4\Breadcrumbs;
 use common\helpers\Url;
 ?>
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="overflow: auto; height: auto">
     <div class="wrapper" style="background: #f4f6f9">
 
         <?php if (!Yii::$app->request->isAjax) { ?>
@@ -39,6 +39,7 @@ use common\helpers\Url;
         <section class="content">
             <div class="container-fluid">
                 <?= $content ?>
+                <?= !Yii::$app->request->isAjax ? \common\widgets\alert\SweetAlert2::widget() : '' ?>
             </div>
         </section>
     </div>

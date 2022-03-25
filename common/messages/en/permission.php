@@ -3,6 +3,8 @@ return [
     '管理系统' => 'Management',
     'Funboot系统' => 'Management',
     '商城管理' => 'Mall',
+    '商城' => 'Mall',
+    '微信' => 'Wechat',
     '系统管理' => 'System Setting',
     '订单管理' => 'Order',
     '商品管理' => 'Product',
@@ -34,6 +36,24 @@ return [
     '接口文档' => 'Swagger Api',
     'Funboot开发指南' => 'Funboot Develop Docs',
     'QQ开发交流群' => 'Funboot QQ Group',
+
+    // subsystem
+    '支付管理' => 'Payment',
+    'Cms网站' => 'CMS',
+    '页面管理' => 'Page',
+    'BBS社区' => 'BBS',
+    '话题管理' => 'Topic',
+    '评论管理' => 'Comment',
+    '栏目管理' => 'Catalog',
+    '参数管理' => 'Meta',
+    '广告管理' => 'Stuff',
+    '粉丝管理' => 'Fans',
+    '粉丝列表' => 'Fan',
+    '粉丝标签' => 'Tag',
+    '高级功能' => 'Advanced',
+    '自定义菜单' => 'Menu',
+    '推广二维码' => 'Qrcode',
+    '' => '',
 
     // mall
     '订单列表' => 'Orders',

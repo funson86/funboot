@@ -58,8 +58,6 @@ class MessageTypeController extends BaseController
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
 
-        $allUsers = ArrayHelper::map(User::find()->where(['status' => User::STATUS_ACTIVE])->select(['id', 'username'])->asArray()->all(), 'id', 'username');
-
         // ajax 校验
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
@@ -83,7 +81,6 @@ class MessageTypeController extends BaseController
         $model->sendTypes = ArrayHelper::intToArray($model->send_type, $this->modelClass::getSendTypeLabels());
         return $this->renderAjax($this->action->id, [
             'model' => $model,
-            'allUsers' => $allUsers,
         ]);
     }
 

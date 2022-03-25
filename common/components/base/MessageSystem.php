@@ -46,6 +46,7 @@ class MessageSystem extends \yii\base\Component
             $model->name = $message->name;
             $model->user_id = $user['id'];
             $model->from_id = $fromId;
+            $model->status = Message::STATUS_UNREAD;
 
             // 插入队列
             if ($this->queue) {
