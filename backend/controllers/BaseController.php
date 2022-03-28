@@ -229,7 +229,7 @@ class BaseController extends \common\components\controller\BaseController
         $params = Yii::$app->request->queryParams;
         if (!$this->isAdmin()) {
             $params['ModelSearch']['store_id'] = $this->getStoreId();
-            $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
+            !$params['ModelSearch']['status'] && $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
         }
         if ($this->style == 11) {
             $params['ModelSearch']['parent_id'] = 0;

@@ -157,7 +157,7 @@ class BaseController extends ActiveController
     {
         return new ActiveDataProvider([
             'query' => $this->modelClass::find()
-                ->where(['status' => $this->modelClass::STATUS_ACTIVE])
+                ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
                 ->andFilterWhere(['store_id' => $this->getStoreId()])
                 ->orderBy($this->defaultOrder),
             'pagination' => [
