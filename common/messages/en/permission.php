@@ -6,6 +6,7 @@ return [
     '商城' => 'Mall',
     '微信' => 'Wechat',
     '系统管理' => 'System Setting',
+    '系统设置' => 'System Setting',
     '订单管理' => 'Order',
     '商品管理' => 'Product',
     '分类管理' => 'Category',

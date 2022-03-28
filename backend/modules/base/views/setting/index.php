@@ -26,10 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-12 bg-white border-1" style="border-radius: 3px;">
         <div class="tab-content p-3" id="vert-tabs-tabContent">
             <?php foreach ($settingTypes as $k => $settingType) { ?>
-                <div class="tab-pane text-left fade <?php if ($k == 0) echo 'active show'; ?>" id="setting_type_<?= $settingType['id'] ?>" role="tabpanel">
+                <div class="tab-pane text-left fade <?php if ($k == 0) echo 'active show'; ?>" id="setting_type_<?= $settingType['id'] ?? 0 ?>" role="tabpanel">
                     <div class="panel-body">
                         <?php $form = ActiveForm::begin([
-                            'id' => 'form-tab-' . $settingType['id']
+                            'id' => 'form-tab-' . ($settingType['id'] ?? 0)
                         ]); ?>
                         <?php foreach ($settingType['children'] as $setting) {  if (isset($setting['children']) && count($setting['children']) > 0) { ?>
                             <h2 style="font-size: 18px;padding-top: 0;margin-top: 0">
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php } } ?>
                         <div class="col-sm-12 pl-3 form-group clearfix">
                             <div class="col-sm-12 text-center">
-                                <span type="submit" class="btn btn-primary" onclick="editAjaxSave(<?= $settingType['id'] ?>)"><?= Yii::t('app', 'Save') ?></span>
+                                <span type="submit" class="btn btn-primary" onclick="editAjaxSave(<?= $settingType['id'] ?? 0 ?>)"><?= Yii::t('app', 'Save') ?></span>
                                 <?= Html::export() ?>
                                 <?= Html::import() ?>
                                 <?php if ($this->context->isAdmin()) { ?>
