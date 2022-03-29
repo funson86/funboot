@@ -31,8 +31,8 @@ return [
     'components' => [
         'user' => [
             'identityClass' => 'api\models\User',
-             'enableAutoLogin' => true,
-             'enableSession' => false,// 显示一个HTTP 403 错误, 不是跳转到登录界面
+            'enableAutoLogin' => true,
+            'enableSession' => false,// 显示一个HTTP 403 错误, 不是跳转到登录界面
             'loginUrl' => null,
         ],
         'log' => [
