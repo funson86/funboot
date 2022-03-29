@@ -533,67 +533,34 @@ class Html extends \yii\helpers\Html
         $buttons = [];
         foreach ($options as $option) {
             $str = $option;
-            if ($option == 'edit-modal') {
-                $str = 'edit';
-            } elseif ($option == 'view-modal') {
-                $str = 'view';
-            }
+
             $template .= ' {' . $str . '}';
-
-            if ($option == 'status') {
-                array_push($buttons, [
-                    'status' => function ($url, $model, $key) {
-                        return Html::status($model->status);
-                    },
-                ]);
-            }
-
-            if ($option == 'view') {
-                array_push($buttons, [
-                    'view' => function ($url, $model, $key) {
-                        return Html::view(['view', 'id' => $model->id]);
-                    },
-                ]);
-            }
-
-            if ($option == 'view-modal') {
-                array_push($buttons, [
-                    'view' => function ($url, $model, $key) {
-                        return Html::viewModal(['view-ajax', 'id' => $model->id]);
-                    },
-                ]);
-            }
-
-            if ($option == 'edit-modal') {
-                array_push($buttons, [
-                    'edit' => function ($url, $model, $key) {
-                        return Html::editModal(['edit-ajax', 'id' => $model->id]);
-                    },
-                ]);
-            }
-
-            if ($option == 'edit') {
-                array_push($buttons, [
-                    'edit' => function ($url, $model, $key) {
-                        return Html::edit(['edit-ajax', 'id' => $model->id]);
-                    },
-                ]);
-            }
-
-            if ($option == 'delete') {
-                array_push($buttons, [
-                    'delete' => function ($url, $model, $key) {
-                        Html::delete(['delete', 'id' => $model->id]);
-                    },
-                ]);
-            }
         }
 
         return [
             'header' => Yii::t('app', 'Actions'),
             'class' => 'yii\grid\ActionColumn',
             'template' => $template,
-            'buttons' => $buttons,
+            'buttons' => [
+                'status' => function ($url, $model, $key) {
+                    return static::status($model->status);
+                },
+                'view-modal' => function ($url, $model, $key) {
+                    return static::viewModal(['view-ajax', 'id' => $model->id]);
+                },
+                'view' => function ($url, $model, $key) {
+                    return static::view(['view', 'id' => $model->id]);
+                },
+                'edit-modal' => function ($url, $model, $key) {
+                    return static::editModal(['edit-ajax', 'id' => $model->id]);
+                },
+                'edit' => function ($url, $model, $key) {
+                    return static::edit(['edit-ajax', 'id' => $model->id]);
+                },
+                'delete' => function ($url, $model, $key) use ($options) {
+                    return Html::delete(['delete', 'id' => $model->id, 'soft' => ($options['soft'] ?? false), 'tree' => ($options['tree'] ?? false)]);
+                },
+            ],
             'headerOptions' => ['class' => 'action-column action-column-lg'],
         ];
     }

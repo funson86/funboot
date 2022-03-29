@@ -6,6 +6,8 @@ return [
     'ignoreUrlList' => [
         '/site/*', //自身判断是否登录
         '/base/msg/*', //消息
+        '/base/recharge/*', //充值
+        '/base/invoice/*', //发票
         '/swagger/*', //公开
         '/ueditor/*', //百度编辑器，有文件本身判断是否登录
         '/file/*', //文件上传相关，有文件本身判断是否登录

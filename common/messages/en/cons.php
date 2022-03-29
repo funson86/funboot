@@ -104,6 +104,7 @@ return [
     'STATUS_DELETED' => 'Deleted',
     'PAYMENT_STATUS_COD' => 'Cash',
     'PAYMENT_STATUS_UNPAID' => 'Unpaid',
+    'PAYMENT_STATUS_REFUND' => 'Refund',
     'PAYMENT_STATUS_PAYING' => 'Paying',
     'PAYMENT_STATUS_PAID' => 'Paid',
     'SHIPMENT_STATUS_UNSHIPPED' => 'Unshipped',

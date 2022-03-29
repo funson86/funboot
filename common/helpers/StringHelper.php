@@ -191,7 +191,7 @@ class StringHelper extends BaseStringHelper
     /**
      * 加密名称
      * @param $str
-     * @param string $target
+     * @param string $secretChar
      * @return mixed
      */
     public static function secretName($str, $secretChar = '*')
@@ -269,5 +269,25 @@ class StringHelper extends BaseStringHelper
     public static function urlFull($url)
     {
         return (strpos($url, 'http://') !== false) || (strpos($url, 'https://') !== false);
+    }
+
+    /**
+     * 返回固定长度并用省略号
+     * @param $str
+     * @param int $length
+     * @param string $replace
+     * @return string
+     */
+    public static function fixLength($str, $length = 10, $replace = '...')
+    {
+        if ($length < 0) {
+            return $str;
+        }
+
+        if (strlen($str) > $length) {
+            return substr($str, 0, $length) . $replace;
+        }
+
+        return $str;
     }
 }

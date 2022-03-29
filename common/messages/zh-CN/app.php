@@ -181,6 +181,10 @@ return [
     'Normal' => '一般',
     'Stuff' => '物料',
     'Stuffs' => '物料',
+    'Fund Log' => '资金记录',
+    'Fund Logs' => '资金记录',
+    'Recharge' => '充值',
+    'Recharges' => '充值',
 
     'No Auth' => '没有权限',
     'Exist' => '已存在',

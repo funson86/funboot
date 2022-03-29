@@ -5,6 +5,7 @@ use common\helpers\Url;
 use common\helpers\Html;
 use common\helpers\ImageHelper;
 use common\helpers\AuthHelper;
+use common\helpers\StringHelper;
 
 $store = $this->context->store;
 !isset($type) && $type = 'admin';
@@ -75,6 +76,19 @@ foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
         array_push($menus, $menu);
     }
 }
+
+$subMenu = [
+    ['label' => Yii::t('permission', '在线充值'), 'icon' => 'fas fa-credit-card', 'url' => ['/base/recharge/edit'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+    ['label' => Yii::t('permission', '充值列表'), 'icon' => 'fas far fa-list-alt', 'url' => ['/base/recharge/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+    ['label' => Yii::t('permission', '资金记录'), 'icon' => 'fas far fa-list', 'url' => ['/base/fund-log/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+    ['label' => Yii::t('permission', '发票索取'), 'icon' => 'fas fas fa-receipt', 'url' => ['/base/invoice/edit'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+    ['label' => Yii::t('permission', '发票列表'), 'icon' => 'fas far fa-copy', 'url' => ['/base/invoice/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+];
+array_push($menus, ['label' => Yii::t('permission', '财务管理'), 'icon' => 'fas fa-dollar-sign', 'url' => '#', 'class' => '', 'items' => $subMenu]);
+
+array_push($menus, ['label' => Yii::t('permission', '帮助系统'), 'icon' => 'fas fa-question-circle', 'url' => '/help/' . Yii::$app->language . '/', 'target' => '_blank']);
+array_push($menus, ['label' => Yii::t('permission', '消息列表'), 'icon' => 'fas fa-comments', 'url' => ['/base/msg/index'], 'class' => 'leftMessage ' . ($type != 'store' ? 'J_menuItem' : '')]);
+
 if (Yii::$app->authSystem->isAdmin()) { //管理员显示
     if (YII_ENV_DEV) {
         $subMenu = [
@@ -100,10 +114,7 @@ if (Yii::$app->authSystem->isAdmin()) { //管理员显示
         array_push($menus, ['label' => Yii::t('permission', 'Funboot开发指南'), 'icon' => 'fa fa-book', 'url' => 'https://github.com/funson86/funboot/tree/master/docs/guide-zh-CN', 'target' => '_blank']);
         array_push($menus, ['label' => Yii::t('permission', 'QQ开发交流群'), 'icon' => 'fab fa-qq', 'url' => 'https://qm.qq.com/cgi-bin/qm/qr?k=jJwNMMAkEelzRPmHrSc-WXS5jrwVH-3x&jump_from=webapi', 'target' => '_blank']);
     }
-} else {
-    array_push($menus, ['label' => Yii::t('permission', '帮助系统'), 'icon' => 'fas fa-question-circle', 'url' => '/help/' . Yii::$app->language . '/', 'target' => '_blank']);
 }
-array_push($menus, ['label' => Yii::t('permission', '消息列表'), 'icon' => 'fas fa-comments', 'url' => ['/base/msg/index'], 'class' => 'leftMessage ' . ($type != 'store' ? 'J_menuItem' : '')]);
 ?>
 
 <!-- Main Sidebar Container -->
@@ -122,7 +133,7 @@ array_push($menus, ['label' => Yii::t('permission', '消息列表'), 'icon' => '
                 <img src="<?= \common\helpers\ImageHelper::getAvatar() ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="javascript:;" class="d-block"><?= Yii::$app->user->identity->username ?></a>
+                <a href="<?= ($type != 'store') ? 'javascript:;' : Url::to(['/base/recharge/index']) ?>" class="d-block"><?= StringHelper::fixLength(Yii::$app->user->identity->username, 15) ?> (<?= $store->fund ?>)</a>
             </div>
         </div>
 
