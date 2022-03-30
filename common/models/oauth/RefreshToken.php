@@ -14,7 +14,7 @@ use common\models\Store;
  * @property string $name 名称
  * @property string $client_id 客户ID
  * @property int $user_id 用户
- * @property string $refresh_token 访问Token
+ * @property string $refresh_token 刷新Token
  * @property string|null $scope 范围
  * @property int $expired_at 过期时间
  * @property string $grant_type 授权类型
@@ -61,7 +61,7 @@ class RefreshToken extends RefreshTokenBase
                 'name' => '名称',
                 'client_id' => '客户ID',
                 'user_id' => '用户',
-                'refresh_token' => '访问Token',
+                'refresh_token' => '刷新Token',
                 'scope' => '范围',
                 'expired_at' => '过期时间',
                 'grant_type' => '授权类型',
