@@ -4,7 +4,6 @@ namespace api\controllers;
 
 use common\helpers\ArrayHelper;
 use common\helpers\CommonHelper;
-use common\helpers\IdHelper;
 use common\models\Store;
 use Yii;
 use yii\base\Model;
@@ -37,6 +36,13 @@ class BaseController extends ActiveController
      * @var Store
      */
     protected $store;
+
+    /**
+     * 模糊查询字段
+     *
+     * @var int
+     */
+    protected $likeAttributes = ['name'];
 
     /**
      * 列表默认排序
@@ -149,17 +155,32 @@ class BaseController extends ActiveController
     }
 
     /**
-     * 首页
-     *
-     * @return ActiveDataProvider
+     * @OA\Get(
+     *     path="/api/xxx/users",
+     *     tags={"Base"},
+     *     summary="List records",
+     *     description="list ?page=2 pagination  ?name='funson&created_at=>1648607050 search",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionIndex()
     {
+        $query = $this->modelClass::find()
+            ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
+            ->andFilterWhere(['store_id' => $this->getStoreId()]);
+        foreach (Yii::$app->request->get() as $field => $value) {
+            if (in_array($field, $this->modelClass::getTableSchema()->getColumnNames())) {
+                if (in_array($field, $this->likeAttributes)) {
+                    $query->andWhere(['like', $field, trim($value)]);
+                } else {
+                    $query->andWhere($this->conditionTrans($field, $value));
+                }
+            }
+        }
+        $query->orderBy($this->defaultOrder);
         return new ActiveDataProvider([
-            'query' => $this->modelClass::find()
-                ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
-                ->andFilterWhere(['store_id' => $this->getStoreId()])
-                ->orderBy($this->defaultOrder),
+            'query' => $query,
             'pagination' => [
                 'pageSize' => $this->pageSize,
                 'validatePage' => false,// 超出分页不返回data
@@ -168,9 +189,14 @@ class BaseController extends ActiveController
     }
 
     /**
-     * 查看单条记录
-     *
-     * @return ActiveDataProvider
+     * @OA\Get(
+     *     path="/api/xxx/users/{id}",
+     *     tags={"Base"},
+     *     summary="View one record",
+     *     description="View one record",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionView()
     {
@@ -188,9 +214,24 @@ class BaseController extends ActiveController
     }
 
     /**
-     * 新增
-     * @return mixed|\yii\db\ActiveRecord
-     * @throws \Exception
+     * @OA\Post(
+     *     path="/api/xxx/users",
+     *     tags={"Base"},
+     *     summary="Create a new record",
+     *     description="Create a new record",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *           mediaType="application/x-www-form-urlencoded",
+     *           @OA\Schema(
+     *               type="object",
+     *               @OA\Property(property="name", type="string", description="Name"),
+     *           )
+     *       )
+     *     ),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionCreate()
     {
@@ -210,9 +251,25 @@ class BaseController extends ActiveController
     }
 
     /**
-     * 更新
-     * @return mixed|\yii\db\ActiveRecord
-     * @throws \Exception
+     * @OA\Put(
+     *     path="/api/xxx/users/{id}",
+     *     tags={"Base"},
+     *     summary="Update a record",
+     *     description="Update a record",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\Parameter(name="id", required=true, @OA\Schema(type="string"), in="path", description="id"),
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *           mediaType="application/x-www-form-urlencoded",
+     *           @OA\Schema(
+     *               type="object",
+     *               @OA\Property(property="name", type="string", description="Name"),
+     *           )
+     *       )
+     *     ),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionUpdate()
     {
@@ -239,15 +296,18 @@ class BaseController extends ActiveController
         return $model;
     }
 
-
     /**
-     * 删除
-     * delete?soft=true 软删除，状态变成删除状态
-     * delete?tree=true 树状删除，删除所有
-     * @param $id
-     * @return mixed
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @OA\Delete(
+     *     path="/api/xxx/users/{id}",
+     *     tags={"Base"},
+     *     summary="Delete a record",
+     *     description="Delete a record, delete?soft=true delete softly, status to STATUS_DELETED. delete?tree=true delete include the data which parent_id matched",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\Parameter(name="id", required=true, @OA\Schema(type="string"), in="path", description="id"),
+     *     @OA\Parameter(name="soft", required=false, @OA\Schema(type="string"), in="path", description="soft"),
+     *     @OA\Parameter(name="tree", required=false, @OA\Schema(type="string"), in="path", description="tree"),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionDelete()
     {
@@ -327,7 +387,7 @@ class BaseController extends ActiveController
     protected function findModel($id, $action = true)
     {
         $storeId = $this->getStoreId();
-        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id, 'status' => $this->modelClass::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->one())))) {
+        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
             if ($action) {
                 return null;
             }
@@ -336,6 +396,40 @@ class BaseController extends ActiveController
         }
 
         return $model;
+    }
+
+    /**
+     * 可以查询大于小于和IN
+     *
+     * @param $attributeName
+     * @param $value
+     * @return array
+     */
+    private function conditionTrans($attributeName, $value)
+    {
+        switch (true) {
+            case is_array($value):
+                return [$attributeName => $value];
+                break;
+            case stripos($value, '>=') !== false:
+                return ['>=', $attributeName, substr($value, 2)];
+                break;
+            case stripos($value, '<=') !== false:
+                return ['<=', $attributeName, substr($value, 2)];
+                break;
+            case stripos($value, '<') !== false:
+                return ['<', $attributeName, substr($value, 1)];
+                break;
+            case stripos($value, '>') !== false:
+                return ['>', $attributeName, substr($value, 1)];
+                break;
+            case stripos($value, ',') !== false:
+                return [$attributeName => explode(',', $value)];
+                break;
+            default:
+                return [$attributeName => $value];
+                break;
+        }
     }
 
     /**

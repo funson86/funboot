@@ -16,9 +16,6 @@ return [
     // Swagger扫描api的路径
     'swaggerScanPath' => [
         '@api/controllers',
-        '@api/modules/mini/controllers',
-        '@api/modules/v1/controllers',
-        '@api/modules/v2/controllers',
     ],
 
     'helpUrl' => [

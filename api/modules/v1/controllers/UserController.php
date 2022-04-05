@@ -6,5 +6,6 @@ use api\models\User;
 
 class UserController extends BaseController
 {
-    public $modelClass = User::class;
+    // may be dangerous for test account
+    // public $modelClass = User::class;
 }

@@ -16,12 +16,6 @@ class DefaultController extends BaseController
 
     public $optionalAuth = ['index', 'login'];
 
-    /**
-     * @OA\Get(
-     *     path="/v1/default/index",
-     *     @OA\Response(response="200", description="default action for /v1")
-     * )
-     */
     public function actionIndex()
     {
         return $this->success('v1');

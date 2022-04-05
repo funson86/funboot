@@ -9,12 +9,6 @@ use api\controllers\BaseController;
  */
 class DefaultController extends BaseController
 {
-    /**
-     * @OA\Get(
-     *     path="/v2/default/index",
-     *     @OA\Response(response="200", description="default action for /v2")
-     * )
-     */
     public function actionIndex()
     {
         return $this->success('v2');
