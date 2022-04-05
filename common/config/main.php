@@ -5,8 +5,8 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'language' => 'zh-CN',
-    'timeZone' => 'Asia/Shanghai',
+    'language' => 'en',
+    'timeZone' => 'Europe/London',
     'bootstrap' => ['log', 'queue'],
     'components' => [
         'cache' => [
