@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'history_amount',
                         // ['attribute' => 'type', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => false,],
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
-                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return Html::color($model->status, ActiveModel::getStatusLabels($model->status), [ActiveModel::STATUS_ACTIVE], [ActiveModel::STATUS_INACTIVE], [ActiveModel::STATUS_MAINTENANCE], [ActiveModel::STATUS_DELETED]); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'expired_at:datetime',
                         'created_at:datetime',
                         // 'updated_at:datetime',

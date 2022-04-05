@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         // 'parent_id',
-                        ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->email; }, 'filter' => true],
+                        ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->email ?? ''; }, 'filter' => true],
                         'session_id',
                         ['attribute' => 'product_id', 'format' => 'raw', 'value' => function ($model) { return $model->product->name; }, 'filter' => false,],
                         // 'product_attribute_value',
