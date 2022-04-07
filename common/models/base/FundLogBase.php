@@ -6,6 +6,7 @@ use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
 use Yii;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model base class for table "{{%base_fund_log}}" to add your code.
@@ -14,6 +15,9 @@ use Yii;
  */
 class FundLogBase extends BaseModel
 {
+    const TYPE_RECHARGE = 1;
+    const TYPE_CONSUME = 2;
+
     /**
      * @return array|array[]
      */
@@ -26,6 +30,26 @@ class FundLogBase extends BaseModel
     }
 
     /** add function getXxxLabels here, detail in BaseModel **/
+    /**
+     * return label or labels array
+     * @param null $id
+     * @param bool $flip
+     * @param bool $all
+     * @return array|mixed
+     */
+    public static function getTypeLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::TYPE_RECHARGE => Yii::t('cons', 'TYPE_RECHARGE'),
+            self::TYPE_CONSUME => Yii::t('cons', 'TYPE_CONSUME'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
 
     /**
      * {@inheritdoc}
@@ -51,4 +75,21 @@ class FundLogBase extends BaseModel
         ]);
     }
 
+    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_RECHARGE, $userId = null, $storeId = null)
+    {
+        $model = new FundLog();
+        $model->name = $name;
+        $model->store_id = $storeId;
+        $model->user_id = $userId ?? Yii::$app->user->id;
+        $model->change = $change;
+        $model->original = $original;
+        $model->balance = $balance;
+        $model->type = $type;
+        if (!$model->save()) {
+            Yii::$app->logSystem->db($model->errors);vd($model->errors);
+            throw new NotFoundHttpException('FundLog Error');
+        }
+
+        return true;
+    }
 }

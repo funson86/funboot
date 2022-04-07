@@ -13,6 +13,7 @@ use common\models\Store;
  * @property int $store_id 商家
  * @property int $user_id 用户
  * @property string $name 名称
+ * @property string $address 地址
  * @property string $mobile 手机
  * @property string $tax_no 税号
  * @property string|null $content 内容
@@ -46,7 +47,7 @@ class Invoice extends InvoiceBase
             [['user_id', 'name'], 'required'],
             [['content'], 'string'],
             [['amount'], 'number'],
-            [['name', 'mobile', 'tax_no', 'remark'], 'string', 'max' => 255],
+            [['name', 'address', 'mobile', 'tax_no', 'remark'], 'string', 'max' => 255],
         ]);
     }
 
@@ -61,6 +62,7 @@ class Invoice extends InvoiceBase
                 'store_id' => '商家',
                 'user_id' => '用户',
                 'name' => '名称',
+                'address' => '地址',
                 'mobile' => '手机',
                 'tax_no' => '税号',
                 'content' => '内容',
@@ -80,6 +82,7 @@ class Invoice extends InvoiceBase
                 'store_id' => Yii::t('app', 'Store ID'),
                 'user_id' => Yii::t('app', 'User ID'),
                 'name' => Yii::t('app', 'Name'),
+                'address' => Yii::t('app', 'Address'),
                 'mobile' => Yii::t('app', 'Mobile'),
                 'tax_no' => Yii::t('app', 'Tax No'),
                 'content' => Yii::t('app', 'Content'),

@@ -37,6 +37,7 @@ class InvoiceBase extends BaseModel
             'store_id' => Yii::t('app', 'Store ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'name' => Yii::t('app', 'Name'),
+            'address' => Yii::t('app', 'Address'),
             'mobile' => Yii::t('app', 'Mobile'),
             'tax_no' => Yii::t('app', 'Tax No'),
             'content' => Yii::t('app', 'Content'),

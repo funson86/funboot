@@ -13,9 +13,9 @@ use common\models\Store;
  * @property int $store_id 商家
  * @property int $user_id 用户ID
  * @property string $name 名称
- * @property int $change 变动
- * @property int $original 原值
- * @property int $balance 余额
+ * @property float $change 变动
+ * @property float $original 原值
+ * @property float $balance 余额
  * @property string $remark 备注
  * @property int $type 类型
  * @property int $sort 排序
@@ -41,7 +41,8 @@ class FundLog extends FundLogBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'user_id', 'change', 'original', 'balance', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'user_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['change', 'original', 'balance'], 'number'],
             [['name', 'remark'], 'string', 'max' => 255],
         ]);
     }
