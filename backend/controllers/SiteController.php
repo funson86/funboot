@@ -6,7 +6,9 @@ use common\helpers\CommonHelper;
 use common\helpers\DateHelper;
 use common\helpers\EchartsHelper;
 use common\helpers\IdHelper;
+use common\models\base\FundLog;
 use common\models\base\Log;
+use common\models\base\Recharge;
 use common\models\forms\ChangePasswordForm;
 use common\models\pay\Payment;
 use common\models\Store;
@@ -35,7 +37,7 @@ class SiteController extends BaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'login-backend', 'error', 'captcha', 'set-language', 'qrcode', 'mail-audit'],
+                        'actions' => ['login', 'login-backend', 'error', 'captcha', 'set-language', 'qrcode', 'recharge-notify', 'mail-audit'],
                         'allow' => true,
                     ],
                     [
@@ -328,6 +330,35 @@ class SiteController extends BaseController
 
         Yii::$app->cache->flush();
         return $this->redirectSuccess();
+    }
+
+    public function actionRechargeNotify()
+    {
+        $id = Yii::$app->request->get('id');
+        if (!$id) {
+            return $this->htmlFailed();
+        }
+        /** @var Recharge $model */
+        $model = Recharge::findOne(['id' => $id]);
+        if (!$model) {
+            return $this->htmlFailed();
+        }
+
+        $model->payment_status = Recharge::PAYMENT_STATUS_PAID;
+        if (!$model->save()) {
+            Yii::$app->logSystem->db($model->errors);
+            return $this->htmlFailed();
+        }
+
+        // 资金 && 资金记录
+        $store = Store::findOne($model->store_id);
+        $original = $store->fund;
+        $amount = intval($model->amount);
+        Store::updateAllCounters(['fund' => $amount, 'billable_fund' => $amount], ['id' => $model->store_id]);
+        FundLog::create($amount, $original, $original + $amount, $model->name, FundLog::TYPE_RECHARGE, $model->user_id, $store->id);
+        Yii::$app->cacheSystem->refreshStoreById();
+
+        return $this->redirectSuccess(['/base/fund-log/index'], Yii::t('app', 'Recharge Successfully'));
     }
 
     public function actionStat()
