@@ -11,7 +11,8 @@ use common\helpers\ArrayHelper;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $searchModel common\models\ModelSearch */
 
-$this->title = Yii::t('app', 'Invoices');
+$currency = $this->context->store->settings['payment_currency'] ?? '$';
+$this->title = Yii::t('app', 'Invoices') . ' (' . Yii::t('app', 'Billable') . ': ' . $currency . $this->context->store->billable_fund . ')';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -19,11 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Invoices'] ?? null) ?></h2>
+                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id] ?? null) ?></h2>
                 <div class="card-tools">
-                    <?= Html::createModal() ?>
+                    <?= Html::create() ?>
                     <?= Html::export() ?>
-                    <?= Html::import() ?>
+                    <!--<?= Html::import() ?>-->
                 </div>
             </div>
             <div class="card-body">
@@ -38,23 +39,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
 
                         'id',
-                        ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        // 'user_id',
-                        ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', $this->context->getStoresIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        // ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, 'filter' => Html::activeDropDownList($searchModel, 'user_id', $this->context->getUsersIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        'amount',
+                        'name',
+                        // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        'address',
                         'mobile',
                         // 'tax_no',
                         // 'content:ntext',
-                        'amount',
                         'remark',
-                        // 'type',
-                        // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
-                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        // ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => Html::activeDropDownList($searchModel, 'type', ActiveModel::getTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => true,],
+                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'created_at:datetime',
                         // 'updated_at:datetime',
-                        // 'created_by',
-                        // 'updated_by',
+                        // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->username ?? '-'; }, ],
+                        // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->username ?? '-'; }, ],
 
-                        Html::actionsModal(),
+                        Html::actionsViewDelete(),
                     ]
                 ]); ?>
             </div>

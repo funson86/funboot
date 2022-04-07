@@ -25,9 +25,8 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'store_id')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
+        <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
+        <?= $form->field($model, 'user_id')->dropDownList($this->context->getUsersIdName()) // $form->field($model, 'user_id')->widget(kartik\select2\Select2::classname(), ['data' => $this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'sn')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
@@ -39,13 +38,9 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'tax')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'invoice')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'type')->textInput() ?>
+        <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
         <?= $form->field($model, 'sort')->textInput() ?>
-        <?= $form->field($model, 'status')->textInput() ?>
-        <?= $form->field($model, 'created_at')->textInput() ?>
-        <?= $form->field($model, 'updated_at')->textInput() ?>
-        <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>

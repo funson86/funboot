@@ -19,11 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Fund Logs'] ?? null) ?></h2>
+                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id] ?? null) ?></h2>
                 <div class="card-tools">
                     <?= Html::createModal() ?>
                     <?= Html::export() ?>
-                    <?= Html::import() ?>
+                    <!--<?= Html::import() ?>-->
                 </div>
             </div>
             <div class="card-body">
@@ -39,21 +39,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        // 'user_id',
-                        ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
-                        'change',
+                        // ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, 'filter' => Html::activeDropDownList($searchModel, 'user_id', $this->context->getUsersIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        'name',
+                        ['attribute' => 'change', 'format' => 'raw', 'value' => function ($model) { return $model->change > 0 ? Html::colorLabel('+' . $model->change, 'success', true) : Html::colorLabel($model->change, 'danger', true); }, 'filter' => true,],
                         'original',
                         'balance',
                         'remark',
-                        // 'type',
+                        ['attribute' => 'type', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => Html::activeDropDownList($searchModel, 'type', ActiveModel::getTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]), ],
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
                         // ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'created_at:datetime',
                         // 'updated_at:datetime',
-                        // 'created_by',
-                        // 'updated_by',
+                        // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->username ?? '-'; }, ],
+                        // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->username ?? '-'; }, ],
 
-                        Html::actionsModal(),
+                        Html::actionsView(),
                     ]
                 ]); ?>
             </div>
