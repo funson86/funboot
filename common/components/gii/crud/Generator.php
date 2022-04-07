@@ -60,7 +60,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     public function generateActiveFieldFunboot($attribute, $modal = false)
     {
         $tableSchema = $this->getTableSchema();
-        $type = $this->inputType[$attribute] ?? '';
+        $type = $this->inputType[$attribute] ?? 'text';
 
         $blank = '        ';
         if (!$modal) {
