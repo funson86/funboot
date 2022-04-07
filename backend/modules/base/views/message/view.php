@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\enums\YesNo;
 use common\models\base\Message as ActiveModel;
+use yii\helpers\HtmlPurifier;
+use yii\helpers\Markdown;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\base\Message */
@@ -34,8 +36,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id',
                 ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name ?? '-'; }, ],
                 ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, ],
-                'message_type_id',
+                ['attribute' => 'message_type_id', 'value' => function ($model) { return $model->messageType->name ?? '-'; }, ],
                 'name',
+                [
+                    'attribute' => 'content',
+                    'format' => 'html',
+                    'value' => function ($model) {
+                        if ($model->content && strlen($model->content) > 0) {
+                            if ($model->type == ActiveModel::TYPE_JSON) {
+                                $content = json_decode($model->content, true);
+                                return !is_array($content) ? $content : DetailView::widget([
+                                    'model' => $content,
+                                    'attributes' => array_keys($content),
+                                ]);
+                            } elseif ($model->type == ActiveModel::TYPE_MARKDOWN) {
+                                return HtmlPurifier::process(Markdown::process($model->content, 'gfm'));
+                            } else {
+                                return $model->content;
+                            }
+                        } else {
+                            return $model->messageType->content;
+                        }
+                    },
+                ],
                 ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
                 'sort',
                 ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],
