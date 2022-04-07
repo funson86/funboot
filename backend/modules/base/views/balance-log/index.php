@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->name; }],
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
                         'name',
-                        'change',
+                        ['attribute' => 'change', 'format' => 'raw', 'value' => function ($model) { return $model->change > 0 ? Html::colorLabel('+' . $model->change, 'success', true) : Html::colorLabel($model->change, 'danger', true); }, 'filter' => true,],
                         'original',
                         'balance',
                         'remark',
