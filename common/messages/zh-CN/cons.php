@@ -16,6 +16,7 @@ return [
     'STATUS_MAINTENANCE' => '维护',
     'YES' => '是',
     'NO' => '否',
+    'TYPE_DEFAULT' => '默认',
     'TYPE_A' => '类型一',
     'TYPE_B' => '类型二',
     'SEX_UNKNOWN' => '未知',
@@ -120,6 +121,9 @@ return [
     'TYPE_BOUGHT' => '购买商品',
     'TYPE_COMMENT' => '评价商品',
     'TYPE_BUYING' => '消费积分',
+
+    'TYPE_RECHARGE' => '充值',
+    'TYPE_CONSUME' => '消费',
 
     'TYPE_USER' => '按用户发送',
     'TYPE_ORDER' => '按订单发送',

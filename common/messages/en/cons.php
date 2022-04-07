@@ -16,6 +16,7 @@ return [
     'STATUS_MAINTENANCE' => 'Maintenance',
     'YES' => 'Yes',
     'NO' => 'No',
+    'TYPE_DEFAULT' => 'Default',
     'TYPE_A' => 'Type A',
     'TYPE_B' => 'Type B',
     'SEX_UNKNOWN' => 'Unknown',
@@ -119,6 +120,9 @@ return [
     'POINT_TYPE_BOUGHT' => 'Bought',
     'POINT_TYPE_COMMENT' => 'Comment',
     'POINT_TYPE_BUYING' => 'Buying',
+
+    'TYPE_RECHARGE' => 'Recharge',
+    'TYPE_CONSUME' => 'Consume',
 
     'COUPON_TYPE_USER' => 'User',
     'COUPON_TYPE_ORDER' => 'Order',
