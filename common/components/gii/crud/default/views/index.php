@@ -73,6 +73,9 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         } elseif ($column->name == 'parent_id') {
             $filter = "'filter' => Html::activeDropDownList(\$searchModel, '" . $column->name . "', ActiveModel::getTreeIdLabel(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),";
             echo "                        ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->parent->name ?? '-'; }, " . $filter . "],\n";
+        } elseif ($column->name == 'user_id') {
+            $filter = "'filter' => Html::activeDropDownList(\$searchModel, '" . $column->name . "', \$this->context->getUsersIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),";
+            echo "                        ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->user->username ?? '-'; }, " . $filter . "],\n";
         } elseif ($column->name == 'name') {
             echo "                        " . (in_array($column->name, $listFields) ? '// ' : '') . "'" . $column->name . "',\n";
             $filter = "'filter' => true,";
@@ -89,7 +92,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         } elseif (($column->name == 'created_at')) {
             echo "                        '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
         } elseif (in_array($column->name, ['created_by', 'updated_by'])) {
-            echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->" . Inflector::variablize($column->name) . "->username ?? '-'); }, ],\n";
+            echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->" . Inflector::variablize($column->name) . "->username ?? '-'; }, ],\n";
         } elseif (isset($generator->inputType[$column->name]) && in_array($generator->inputType[$column->name], ['dropDownList'])) {
             $filter = "'filter' => Html::activeDropDownList(\$searchModel, '" . $column->name . "', ActiveModel::get" . Inflector::camelize($column->name) . "Labels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),";
             echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'value' => function (\$model) { return ActiveModel::get" . Inflector::camelize($column->name) . "Labels(\$model->" . $column->name . "); }, " . $filter . "],\n";

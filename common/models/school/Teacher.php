@@ -12,8 +12,8 @@ use common\models\Store;
  * @property int $id
  * @property int $store_id 商家
  * @property int $parent_id 父节点
- * @property string $name 名称
  * @property int $user_id 用户ID
+ * @property string $name 名称
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -54,8 +54,8 @@ class Teacher extends TeacherBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
                 'parent_id' => '父节点',
-                'name' => '名称',
                 'user_id' => '用户ID',
+                'name' => '名称',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -69,8 +69,8 @@ class Teacher extends TeacherBase
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
                 'parent_id' => Yii::t('app', 'Parent ID'),
-                'name' => Yii::t('app', 'Name'),
                 'user_id' => Yii::t('app', 'User ID'),
+                'name' => Yii::t('app', 'Name'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

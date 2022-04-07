@@ -27,8 +27,8 @@ $form = ActiveForm::begin([
     <div class="modal-body">
         <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
         <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getTreeIdLabel()) ?>
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'user_id')->dropDownList($this->context->getUsersIdName()) // $form->field($model, 'user_id')->widget(kartik\select2\Select2::classname(), ['data' => $this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],]) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
         <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
