@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'tree',
             //'level',
             //['attribute' => 'target', 'value' => function ($model) { return ActiveModel::getTargetLabels($model->target); }, 'filter' => Html::activeDropDownList($searchModel, 'target', ActiveModel::getTargetLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-            //'type',
+            // ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
             //'sort',
             ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }],
             //['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],

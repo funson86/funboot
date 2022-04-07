@@ -32,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'options' => ['class' => 'table table-bordered table-hover box'],
             'attributes' => [
                 'id',
-                'parent_id',
-                'user_id',
+                ['attribute' => 'parent_id', 'value' => function ($model) { return $model->parent->name ?? '-'; }, ],
+                ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, ],
                 'name',
                 'brief',
                 'host_name',
@@ -42,13 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'expired_at:datetime',
                 'remark:ntext',
                 'language',
-                'type',
+                ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
                 'sort',
-                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
+                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],
                 'created_at:datetime',
                 'updated_at:datetime',
-                'created_by',
-                'updated_by',
+                ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->username ?? '-'; }, ],
+                ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->username ?? '-'; }, ],
             ],
         ]) ?>
 
