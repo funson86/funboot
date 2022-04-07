@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
                 <div class="col-sm-12">
-                    <?= $form->field($model, 'store_id')->textInput(['maxlength' => true]) ?>
+                    <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'client_id')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'client_secret')->textInput(['maxlength' => true]) ?>

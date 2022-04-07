@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body">
                 <div class="col-sm-12">
                     <?= $form->field($model, 'product_id')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'user_id')->dropDownList($this->context->getUsersIdName()) // $form->field($model, 'user_id')->widget(kartik\select2\Select2::classname(), ['data' => $this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],]) ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
                     <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>

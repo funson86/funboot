@@ -26,10 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
                 <div class="col-sm-12">
-                    <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'store_id')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'parent_id')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
+                    <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
+                    <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getTreeIdLabel()) ?>
+                    <?= $form->field($model, 'user_id')->dropDownList($this->context->getUsersIdName()) // $form->field($model, 'user_id')->widget(kartik\select2\Select2::classname(), ['data' => $this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],]) ?>
                     <?= $form->field($model, 'session_id')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'product_id')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'product_attribute_value')->textInput(['maxlength' => true]) ?>
@@ -41,13 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'market_price')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'cost_price')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'wholesale_price')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'type')->textInput() ?>
+                    <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
                     <?= $form->field($model, 'sort')->textInput() ?>
-                    <?= $form->field($model, 'status')->textInput() ?>
-                    <?= $form->field($model, 'created_at')->textInput() ?>
-                    <?= $form->field($model, 'updated_at')->textInput() ?>
-                    <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>
             </div>
             <div class="card-footer">

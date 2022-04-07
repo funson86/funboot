@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]); ?>
                 <div class="col-sm-12">
-                    <?= $form->field($model, 'parent_id')->textInput() ?>
+                    <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getTreeIdLabel()) ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'path')->textInput(['maxlength' => true]) ?>

@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'type')->textInput() ?>
+                    <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
                     <?= $form->field($model, 'sort')->textInput() ?>
                     <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                     <?= $form->field($model, 'created_at')->textInput() ?>

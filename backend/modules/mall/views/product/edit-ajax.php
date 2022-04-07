@@ -73,9 +73,9 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'star')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'sales')->textInput() ?>
         <?= $form->field($model, 'click')->textInput() ?>
-        <?= $form->field($model, 'type')->textInput() ?>
+        <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
         <?= $form->field($model, 'sort')->textInput() ?>
-        <?= $form->field($model, 'status')->textInput() ?>
+        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>

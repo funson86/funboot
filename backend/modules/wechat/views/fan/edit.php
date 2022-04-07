@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body">
                 <div class="col-sm-12">
                     <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'status')->textInput() ?>
+                    <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>
             </div>
             <div class="card-footer">

@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'expired_second')->textInput() ?>
                     <?= $form->field($model, 'subscribe_count')->textInput() ?>
                     <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
-                    <?= $form->field($model, 'status')->textInput() ?>
+                    <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>
             </div>
             <div class="card-footer">
