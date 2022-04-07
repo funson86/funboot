@@ -433,8 +433,11 @@ class Html extends \yii\helpers\Html
         return [
             'header' => Yii::t('app', 'Actions'),
             'class' => 'yii\grid\ActionColumn',
-            'template' => '{edit} {delete}',
+            'template' => '{view} {edit} {delete}',
             'buttons' => [
+                'view' => function ($url, $model, $key) {
+                    return Html::viewModal(['view-ajax', 'id' => $model->id]);
+                },
                 'edit' => function ($url, $model, $key) {
                     return Html::editModal(['edit-ajax', 'id' => $model->id]);
                 },
@@ -488,6 +491,27 @@ class Html extends \yii\helpers\Html
                 },
                 'delete' => function ($url, $model, $key) use ($options) {
                     return Html::delete(['delete', 'id' => $model->id, 'soft' => ($options['soft'] ?? false), 'tree' => ($options['tree'] ?? false)]);
+                },
+            ],
+            'headerOptions' => ['class' => 'action-column'],
+        ];
+    }
+
+    /**
+     * 弹框，适用Log
+     *
+     * @param array $options
+     * @return array
+     */
+    public static function actionsView($options = [])
+    {
+        return [
+            'header' => Yii::t('app', 'Actions'),
+            'class' => 'yii\grid\ActionColumn',
+            'template' => '{view}',
+            'buttons' => [
+                'view' => function ($url, $model, $key) {
+                    return Html::viewModal(['view-ajax', 'id' => $model->id]);
                 },
             ],
             'headerOptions' => ['class' => 'action-column'],
@@ -604,13 +628,12 @@ class Html extends \yii\helpers\Html
      * @param string $color  default info danger warning success
      * @return string|null
      */
-    public static function colorLabel($label = null, $color = 'info')
+    public static function colorLabel($label = null, $color = 'info', $text = false)
     {
         if (!$label || strlen($label) < 1) {
             return $label;
         }
 
-        $class = 'btn-' . $color;
-        return Html::tag('span', $label, ['class' => 'btn-xs ' . $class]);
+        return Html::tag('span', $label, ['class' => $text ? ('text-' . $color) : ('btn-xs btn-' . $color)]);
     }
 }

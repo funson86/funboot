@@ -18,9 +18,8 @@ class CommonHelper
     public static function getStoreById($id)
     {
         $allStore = Yii::$app->cacheSystem->getAllStore();
-        $mapIdStore = ArrayHelper::mapIdData($allStore);
 
-        return $mapIdStore[$id] ?? null;
+        return $allStore[$id] ?? null;
     }
 
     /**
@@ -42,7 +41,6 @@ class CommonHelper
     public static function getStoreByHostName()
     {
         $allStore = Yii::$app->cacheSystem->getAllStore();
-        $mapIdStore = ArrayHelper::mapIdData($allStore);
 
         // host id map
         $mapHostNameId = [];
@@ -59,7 +57,7 @@ class CommonHelper
         $hostName = Yii::$app->request->hostName;
         $storeId = $mapHostNameId[$hostName] ?? null;
 
-        return $storeId ? $mapIdStore[$storeId] : ($mapIdStore[Yii::$app->params['defaultStoreId']] ?? null);
+        return $storeId ? $allStore[$storeId] : ($allStore[Yii::$app->params['defaultStoreId']] ?? null);
     }
 
     /** 获取类似 http(s)://www.host_name.com 域名前缀
