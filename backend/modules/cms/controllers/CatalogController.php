@@ -69,7 +69,7 @@ class CatalogController extends BaseController
         }
     }
 
-    protected function beforeDeleteModel($id, $soft = false, $tree = false)
+    protected function beforeDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         if (!$soft) {
             Page::deleteAll(['catalog_id' => $id]);

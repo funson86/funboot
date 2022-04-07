@@ -8,6 +8,7 @@ use common\models\Store;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpHeaderAuth;
 use yii\filters\auth\QueryParamAuth;
@@ -328,7 +329,7 @@ class BaseController extends ActiveController
         } else {
             $ids = $id;
         }
-        $this->beforeDeleteModel($ids, $soft, $tree);
+        $this->beforeDeleteModel($ids, $model, $soft, $tree);
 
         if ($soft) {
             $model->status = $this->modelClass::STATUS_DELETED;
@@ -357,11 +358,12 @@ class BaseController extends ActiveController
     /**
      * 删除动作前处理，子方法只需覆盖该函数即可
      * @param $id
+     * @param null|ActiveRecord $model
      * @param bool $soft
      * @param bool $tree
      * @return bool
      */
-    protected function beforeDeleteModel($id, $soft = false, $tree = false)
+    protected function beforeDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         return true;
     }
@@ -369,11 +371,12 @@ class BaseController extends ActiveController
     /**
      * 删除动作后处理，子方法只需覆盖该函数即可
      * @param $id
+     * @param null|ActiveRecord $model
      * @param bool $soft
      * @param bool $tree
      * @return bool
      */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function afterDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         return true;
     }
@@ -456,11 +459,12 @@ class BaseController extends ActiveController
     }
 
     /**
+     * @param bool $force
      * @return Store
      */
-    public function getStore()
+    public function getStore($force = false)
     {
-        return $this->store;
+        return $force ? Store::findOne($this->getStoreId()) : $this->store;
     }
 
     /**

@@ -132,6 +132,8 @@ class MsgController extends BaseController
             }
         }
         $model->store_id = $model->user->store_id;
+
+        return true;
     }
 
     /**

@@ -88,7 +88,7 @@ class MessageTypeController extends BaseController
      * @param $id
      * @return bool|void
      */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function afterDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         if ($soft) {
             return Message::updateAll(['status' => Message::STATUS_DELETED], ['message_type_id' => $id]);

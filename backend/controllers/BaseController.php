@@ -13,6 +13,7 @@ use common\models\base\Permission;
 use common\models\BaseModel;
 use common\models\ModelSearch;
 use common\models\Store;
+use common\models\User;
 use common\services\base\UserPermission;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
@@ -22,6 +23,7 @@ use yii\base\Model;
 use common\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
+use yii\db\ActiveRecord;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Inflector;
@@ -318,14 +320,15 @@ class BaseController extends \common\components\controller\BaseController
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $model->translating = Yii::$app->request->post($model->formName())['translating'] ?? 0;
-                $this->beforeEditSave($id, $model);
-                if ($model->save()) {
-                    $this->afterEdit($id, $model);
-                    $this->isMultiLang && $this->afterLang($id, $model);
-                    return $this->redirectSuccess(['index']);
-                } else {
-                    Yii::$app->logSystem->db($model->errors);
-                    $this->flashError($this->getError($model));
+                if ($this->beforeEditSave($id, $model)) {
+                    if ($model->save()) {
+                        $this->afterEdit($id, $model);
+                        $this->isMultiLang && $this->afterLang($id, $model);
+                        return $this->redirectSuccess(['index']);
+                    } else {
+                        Yii::$app->logSystem->db($model->errors);
+                        $this->flashError($this->getError($model));
+                    }
                 }
             }
         }
@@ -353,10 +356,13 @@ class BaseController extends \common\components\controller\BaseController
         $this->activeFormValidate($model);
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             $model->translating = Yii::$app->request->post($model->formName())['translating'] ?? 0;
-            $this->beforeEditSave($id, $model);
 
-            if (!$model->save()) {
-                return $this->redirectError($this->getError($model));
+            if ($this->beforeEditSave($id, $model)) {
+                if (!$model->save()) {
+                    return $this->redirectError($this->getError($model));
+                }
+            } else {
+                return $this->redirect(Yii::$app->request->referrer);
             }
 
             $this->afterEdit($id, $model);
@@ -556,7 +562,7 @@ class BaseController extends \common\components\controller\BaseController
         } else {
             $ids = $id;
         }
-        $this->beforeDeleteModel($ids, $soft, $tree);
+        $this->beforeDeleteModel($ids, $model, $soft, $tree);
 
         if ($soft) {
             $model->status = $this->modelClass::STATUS_DELETED;
@@ -667,18 +673,26 @@ class BaseController extends \common\components\controller\BaseController
 
     /**
      * 删除动作前处理，子方法只需覆盖该函数即可
+     * @param $id
+     * @param null|ActiveRecord $model
+     * @param bool $soft
+     * @param bool $tree
      * @return bool
      */
-    protected function beforeDeleteModel($id, $soft = false, $tree = false)
+    protected function beforeDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         return true;
     }
 
     /**
      * 删除动作后处理，子方法只需覆盖该函数即可
+     * @param $id
+     * @param null|ActiveRecord $model
+     * @param bool $soft
+     * @param bool $tree
      * @return bool
      */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function afterDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         return true;
     }
@@ -990,5 +1004,19 @@ class BaseController extends \common\components\controller\BaseController
     public function isBackend()
     {
         return Yii::$app->authSystem->isBackend();
+    }
+
+    /**
+     * @param null $field
+     * @param null $storeId
+     * @return array
+     */
+    public function getUsersIdName($field = null, $storeId = null)
+    {
+        !$storeId && $storeId = ($this->isAdmin() ? null : $this->getStoreId());
+        !$field && $field = 'username';
+        $selection = ['id', $field];
+        $models = User::find()->where(['status' => User::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->select($selection)->all();
+        return ArrayHelper::map($models, 'id', $field);
     }
 }

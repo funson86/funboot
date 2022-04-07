@@ -58,7 +58,7 @@ class ScheduleController extends BaseController
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function afterDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         $this->writeSchedule();
     }

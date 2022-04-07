@@ -76,7 +76,7 @@ class PermissionController extends BaseController
      * @param $id
      * @return bool|void
      */
-    protected function beforeDeleteModel($id, $soft = false, $tree = false)
+    protected function beforeDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         if (!$soft) {
             RolePermission::deleteAll(['permission_id' => $id]);
@@ -87,7 +87,7 @@ class PermissionController extends BaseController
      * @param $id
      * @return bool
      */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function afterDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         return Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
     }

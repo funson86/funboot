@@ -54,7 +54,7 @@ class RechargeController extends BaseController
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 if ($recharge = $model->build()) {
-                    return $this->redirectSuccess(['pay', 'id' => $recharge->id]);
+                    return $this->redirect(['pay', 'id' => $recharge->id]);
                 } else {
                     Yii::$app->logSystem->db($model->errors);
                     $this->flashError($this->getError($model));

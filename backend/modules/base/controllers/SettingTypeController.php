@@ -62,6 +62,7 @@ class SettingTypeController extends BaseController
     {
         $post = Yii::$app->request->post();
         $model->support_role = ArrayHelper::arrayToInt($post['SettingType']['supportRoles']);
+        return true;
     }
 
     protected function afterEdit($id = null, $model = null)
@@ -69,7 +70,7 @@ class SettingTypeController extends BaseController
         Yii::$app->cacheSystem->clearAllSetting(); // 清理缓存
     }
 
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function afterDeleteModel($id, $model = null, $soft = false, $tree = false)
     {
         Yii::$app->cacheSystem->clearAllSetting(); // 清理缓存
     }

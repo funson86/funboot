@@ -49,6 +49,8 @@ class CrudController extends BaseController
         $post = Yii::$app->request->post();
         $model->started_at = strtotime($post['Crud']['startedTime']);
         $model->ended_at = strtotime($post['Crud']['endedTime']);
+
+        return true;
     }
 
 }

@@ -58,6 +58,8 @@ class CouponTypeController extends BaseController
         $model->ended_at = strtotime($post['CouponType']['endedTime']) + 86400 - 1;
         !$model->sn && $model->sn = substr(IdHelper::uuid(), -8);
         $model->type = strpos($model->money, '%') ? $this->modelClass::TYPE_PERCENT : $this->modelClass::TYPE_FIXED;
+
+        return true;
     }
 
 }
