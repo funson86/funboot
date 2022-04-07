@@ -7,6 +7,7 @@ return [
         '/site/*', //自身判断是否登录
         '/base/msg/*', //消息
         '/base/recharge/*', //充值
+        '/base/fund-log/*', //充值
         '/base/invoice/*', //发票
         '/swagger/*', //公开
         '/ueditor/*', //百度编辑器，有文件本身判断是否登录
@@ -21,9 +22,13 @@ return [
     'helpUrl' => [
         'en' => [
             'Coupon Types' => '',
+            'school_student' => 'https://github.com/funson86/funboot/blob/master/README.md',
+            'school_teacher' => 'https://github.com/funson86/funboot/blob/master/docs/guide/README.md',
         ],
         'zh-CN' => [
             'Coupon Types' => '',
+            'school_student' => 'https://github.com/funson86/funboot/blob/master/README_zh-CN.md',
+            'school_teacher' => 'https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md',
         ],
     ]
 ];

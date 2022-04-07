@@ -136,7 +136,7 @@ return [
             'datetimeFormat' => 'yyyy-MM-dd HH:mm:ss',
             'decimalSeparator' => '.',
             'thousandSeparator' => ' ',
-            'currencyCode' => 'CNY',
+            'currencyCode' => 'USD',
         ],
     ],
 ];

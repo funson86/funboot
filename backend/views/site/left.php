@@ -6,6 +6,7 @@ use common\helpers\Html;
 use common\helpers\ImageHelper;
 use common\helpers\AuthHelper;
 use common\helpers\StringHelper;
+use common\models\Store;
 
 $store = $this->context->store;
 !isset($type) && $type = 'admin';
@@ -77,14 +78,16 @@ foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
     }
 }
 
-$subMenu = [
-    ['label' => Yii::t('permission', '在线充值'), 'icon' => 'fas fa-credit-card', 'url' => ['/base/recharge/edit'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
-    ['label' => Yii::t('permission', '充值列表'), 'icon' => 'fas far fa-list-alt', 'url' => ['/base/recharge/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
-    ['label' => Yii::t('permission', '资金记录'), 'icon' => 'fas far fa-list', 'url' => ['/base/fund-log/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
-    ['label' => Yii::t('permission', '发票索取'), 'icon' => 'fas fas fa-receipt', 'url' => ['/base/invoice/edit'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
-    ['label' => Yii::t('permission', '发票列表'), 'icon' => 'fas far fa-copy', 'url' => ['/base/invoice/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
-];
-array_push($menus, ['label' => Yii::t('permission', '财务管理'), 'icon' => 'fas fa-dollar-sign', 'url' => '#', 'class' => '', 'items' => $subMenu]);
+if ($this->context->isStoreOwner() || $this->context->isAdmin()) {
+    $subMenu = [
+        ['label' => Yii::t('permission', '在线充值'), 'icon' => 'fas fa-credit-card', 'url' => ['/base/recharge/new'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+        ['label' => Yii::t('permission', '充值列表'), 'icon' => 'fas far fa-list-alt', 'url' => ['/base/recharge/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+        ['label' => Yii::t('permission', '资金记录'), 'icon' => 'fas far fa-list', 'url' => ['/base/fund-log/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+        ['label' => Yii::t('permission', '发票索取'), 'icon' => 'fas fas fa-receipt', 'url' => ['/base/invoice/edit'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+        ['label' => Yii::t('permission', '发票列表'), 'icon' => 'fas far fa-copy', 'url' => ['/base/invoice/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+    ];
+    array_push($menus, ['label' => Yii::t('permission', '财务管理'), 'icon' => 'fas fa-dollar-sign', 'url' => '#', 'class' => '', 'items' => $subMenu]);
+}
 
 array_push($menus, ['label' => Yii::t('permission', '帮助系统'), 'icon' => 'fas fa-question-circle', 'url' => '/help/' . Yii::$app->language . '/', 'target' => '_blank']);
 array_push($menus, ['label' => Yii::t('permission', '消息列表'), 'icon' => 'fas fa-comments', 'url' => ['/base/msg/index'], 'class' => 'leftMessage ' . ($type != 'store' ? 'J_menuItem' : '')]);
@@ -121,8 +124,8 @@ if (Yii::$app->authSystem->isAdmin()) { //管理员显示
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?= Yii::$app->homeUrl ?>" class="brand-link">
-        <img src="<?= $store->settings['website_logo'] ?: ImageHelper::getLogo() ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light"><?= $store->settings['website_name'] ? substr($store->settings['website_name'], 0, 30) : Yii::$app->name ?></span>
+        <img src="<?= $store->settings['website_logo'] ?: ImageHelper::getLogo() ?>" alt="<?= $store->settings['website_name'] ?: $store->name ?>" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light"><?= substr(($store->settings['website_name'] ?: $store->name), 0, 20) ?></span>
     </a>
 
     <!-- Sidebar -->
@@ -133,7 +136,7 @@ if (Yii::$app->authSystem->isAdmin()) { //管理员显示
                 <img src="<?= \common\helpers\ImageHelper::getAvatar() ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="<?= ($type != 'store') ? 'javascript:;' : Url::to(['/base/recharge/index']) ?>" class="d-block"><?= StringHelper::fixLength(Yii::$app->user->identity->username, 15) ?> (<?= $store->fund ?>)</a>
+                <a href="<?= ($type == 'store' && $this->context->isStoreOwner()) ? Url::to(['/base/fund-log/index']) : 'javascript:;' ?>" class="d-block"><?= StringHelper::fixLength(Yii::$app->user->identity->username, 15) ?> (<?= ($store->settings['payment_currency'] ?? Store::getCurrencyShortName(Yii::$app->formatter->currencyCode, true, true)) . $store->fund ?>)</a>
             </div>
         </div>
 
