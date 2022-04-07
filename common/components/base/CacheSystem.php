@@ -2,6 +2,7 @@
 
 namespace common\components\base;
 
+use common\helpers\ArrayHelper;
 use common\models\base\Dict;
 use common\models\base\DictData;
 use common\models\base\Lang;
@@ -27,7 +28,7 @@ class CacheSystem extends \yii\base\Component
     {
         $data = Yii::$app->cache->get('allStore');
         if (!$data) {
-            $data = Store::find()->all();
+            $data = ArrayHelper::mapIdData(Store::find()->all());
             Yii::$app->cache->set('allStore', $data);
         }
         return $data;
@@ -39,6 +40,27 @@ class CacheSystem extends \yii\base\Component
     public function clearAllStore()
     {
         return Yii::$app->cache->delete('allStore');
+    }
+
+    /**
+     * @param null $storeId
+     * @return bool
+     */
+    public function refreshStoreById($storeId = null)
+    {
+        !$storeId && $storeId = Yii::$app->storeSystem->getId();
+
+        $data = Yii::$app->cache->get('allStore');
+        if (!$data) {
+            $data = Store::find()->all();
+            Yii::$app->cache->set('allStore', $data);
+            return true;
+        }
+
+        $model = Store::findOne($storeId);
+        $data[$model->id] = $model;
+        Yii::$app->cache->set('allStore', $data);
+        return true;
     }
 
     /**

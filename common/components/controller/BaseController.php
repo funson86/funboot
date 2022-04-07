@@ -153,13 +153,13 @@ class BaseController extends Controller
     }
 
     /**
+     * @param bool $force
      * @return Store
      */
-    public function getStore()
+    public function getStore($force = false)
     {
-        return $this->store;
+        return $force ? Store::findOne($this->getStoreId()) : $this->store;
     }
-
 
     /**
      * @return Store
@@ -167,6 +167,14 @@ class BaseController extends Controller
     public function getStores()
     {
         return Yii::$app->cacheSystem->getAllStore();
+    }
+
+    /**
+     * @return array
+     */
+    public function getStoresIdName()
+    {
+        return ArrayHelper::map($this->getStores(), 'id', 'name');
     }
 
     /**
@@ -412,6 +420,14 @@ class BaseController extends Controller
 
         $errors = array_values($firstErrors)[0];
         return $errors ? $errors : Yii::t('app', 'Uncaught Error');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStoreOwner()
+    {
+        return Yii::$app->user->isGuest ? false : ($this->store->user_id == Yii::$app->user->id);
     }
 
     /**
