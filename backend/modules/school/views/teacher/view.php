@@ -3,17 +3,17 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\enums\YesNo;
-use common\models\school\Student as ActiveModel;
+use common\models\school\Teacher as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\school\Student */
+/* @var $model common\models\school\Teacher */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Students'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Teachers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="card student-view">
+<div class="card teacher-view">
     <div class="card-header">
         <?= Html::a(Yii::t('app', 'Update'), ['edit', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
@@ -33,7 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'attributes' => [
                 'id',
                 ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name ?? '-'; }, ],
+                ['attribute' => 'parent_id', 'value' => function ($model) { return $model->parent->name ?? '-'; }, ],
                 'name',
+                ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, ],
                 ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
                 'sort',
                 ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],

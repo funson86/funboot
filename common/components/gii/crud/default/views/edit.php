@@ -49,6 +49,9 @@ if (!empty($generator->formFields)) {
     }
 } else {
     foreach ($generator->getColumnNames() as $attribute) {
+        if (in_array($attribute, ['id', 'created_at', 'updated_at', 'created_by', 'updated_by'])) {
+            continue;
+        }
         if (in_array($attribute, $safeAttributes)) {
             echo "                    <?= " . $generator->generateActiveFieldFunboot($attribute) . " ?>\n";
         }

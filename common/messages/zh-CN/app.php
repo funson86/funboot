@@ -630,6 +630,8 @@ return [
 
     'Student' => '学生',
     'Students' => '学生',
+    'Teacher' => '老师',
+    'Teachers' => '老师',
 
     'Loading' => '加载中...',
     '10 per page' => '10条/页',

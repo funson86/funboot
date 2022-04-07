@@ -67,6 +67,24 @@ class Generator extends \yii\gii\generators\crud\Generator
             $blank = '                    ';
         }
 
+        switch ($attribute) {
+            case 'store_id':
+                return "\$this->context->isAdmin() ? \$form->field(\$model, '$attribute')->dropDownList(\$this->context->getStoresIdName()) : ''";
+                break;
+            case 'parent_id':
+                return "\$form->field(\$model, '$attribute')->dropDownList(ActiveModel::getTreeIdLabel())";
+                break;
+            case 'user_id':
+                return "\$form->field(\$model, '$attribute')->dropDownList(\$this->context->getUsersIdName()) // \$form->field(\$model, '$attribute')->widget(kartik\select2\Select2::classname(), ['data' => \$this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],])";
+                break;
+            case 'type':
+                return "\$form->field(\$model, '$attribute')->dropDownList(ActiveModel::get" . Inflector::camelize($attribute) . "Labels())";
+                break;
+            case 'status':
+                return "\$form->field(\$model, '$attribute')->radioList(ActiveModel::get" . Inflector::camelize($attribute) . "Labels())";
+                break;
+        }
+
         switch ($type) {
             case 'text':
                 return parent::generateActiveField($attribute);

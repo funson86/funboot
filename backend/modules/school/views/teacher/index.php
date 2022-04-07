@@ -3,7 +3,7 @@
 use yii\grid\GridView;
 use common\helpers\Html;
 use common\components\enums\YesNo;
-use common\models\school\Student as ActiveModel;
+use common\models\school\Teacher as ActiveModel;
 use yii\helpers\Inflector;
 use common\helpers\ArrayHelper;
 
@@ -11,7 +11,7 @@ use common\helpers\ArrayHelper;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $searchModel common\models\ModelSearch */
 
-$this->title = Yii::t('app', 'Students');
+$this->title = Yii::t('app', 'Teachers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -39,8 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', $this->context->getStoresIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        ['attribute' => 'parent_id', 'value' => function ($model) { return $model->parent->name ?? '-'; }, 'filter' => Html::activeDropDownList($searchModel, 'parent_id', ActiveModel::getTreeIdLabel(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'name',
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        // 'user_id',
                         // ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => Html::activeDropDownList($searchModel, 'type', ActiveModel::getTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => true,],
                         ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
