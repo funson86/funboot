@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             //'id',
-            //'store_id',
+            // ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', $this->context->getStoresIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],,
             //'parent_id',
             //'name',
             //'app_id',

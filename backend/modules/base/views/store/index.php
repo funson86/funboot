@@ -66,8 +66,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'expired_at:datetime',
                         'created_at:datetime',
                         // 'updated_at:datetime',
-                        // 'created_by',
-                        // 'updated_by',
+                        // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->username ?? '-'; }, ],
+                        // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->username ?? '-'; }, ],
 
                         [
                             'header' => Yii::t('app', 'Actions'),
