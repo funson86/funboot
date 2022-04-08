@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name ?? '-'; }, ],
                 ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, ],
                 'name',
-                'sn',
+                // 'sn',
                 'mobile',
                 'email:email',
                 'remark',

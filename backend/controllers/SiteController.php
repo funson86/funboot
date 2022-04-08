@@ -37,7 +37,7 @@ class SiteController extends BaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'login-backend', 'error', 'captcha', 'set-language', 'qrcode', 'recharge-notify', 'mail-audit'],
+                        'actions' => ['login', 'login-backend', 'error', 'captcha', 'set-language', 'qrcode', 'recharge-notify', 'recharge-cancel', 'mail-audit'],
                         'allow' => true,
                     ],
                     [
@@ -335,11 +335,12 @@ class SiteController extends BaseController
     public function actionRechargeNotify()
     {
         $id = Yii::$app->request->get('id');
-        if (!$id) {
+        $sn = Yii::$app->request->get('sn');
+        if (!($id || $sn)) {
             return $this->htmlFailed();
         }
         /** @var Recharge $model */
-        $model = Recharge::findOne(['id' => $id]);
+        $model = $id ? Recharge::findOne(['id' => $id]) : Recharge::findOne(['sn' => $sn]);
         if (!$model) {
             return $this->htmlFailed();
         }
@@ -358,7 +359,23 @@ class SiteController extends BaseController
         FundLog::create($amount, $original, $original + $amount, $model->name, FundLog::TYPE_RECHARGE, $model->user_id, $store->id);
         Yii::$app->cacheSystem->refreshStoreById();
 
-        return $this->redirectSuccess(['/base/fund-log/index'], Yii::t('app', 'Recharge Successfully'));
+        return $this->redirectSuccess(['/base/recharge/index'], Yii::t('app', 'Recharge Successfully'));
+    }
+
+    public function actionRechargeCancel()
+    {
+        $id = Yii::$app->request->get('id');
+        $sn = Yii::$app->request->get('sn');
+        if (!($id || $sn)) {
+            return $this->htmlFailed();
+        }
+        /** @var Recharge $model */
+        $model = $id ? Recharge::findOne(['id' => $id]) : Recharge::findOne(['sn' => $sn]);
+        if (!$model) {
+            return $this->htmlFailed();
+        }
+
+        return $this->redirectError(Yii::t('app', 'Recharge Cancelled'), ['/base/recharge/index']);
     }
 
     public function actionStat()

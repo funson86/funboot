@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, ],
             // ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, 'filter' => Html::activeDropDownList($searchModel, 'user_id', $this->context->getUsersIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],,
             'name',
-            'sn',
+            // 'sn',
             'mobile',
             'email:email',
             'remark',
