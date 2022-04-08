@@ -50,7 +50,7 @@ Funboot开发文档
 ### 第三方组件
 
 * [Redis](3rd-redis.md)
-* [Mongodb](3rd-redis.md)
+* [Mongodb](3rd-mongodb.md)
 * [Elasticsearch](3rd-elasticsearch.md)
 
 附录

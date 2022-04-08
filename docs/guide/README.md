@@ -50,7 +50,7 @@ Documents
 ### 3rd Component
 
 * [Redis](3rd-redis.md)
-* [Mongodb](3rd-redis.md)
+* [Mongodb](3rd-mongodb.md)
 * [Elasticsearch](3rd-elasticsearch.md)
 
 Appendix

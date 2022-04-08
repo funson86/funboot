@@ -21,14 +21,28 @@ return [
 
     'helpUrl' => [
         'en' => [
-            'Coupon Types' => '',
+            'base_setting_50' => '/help/en/',
             'school_student' => 'https://github.com/funson86/funboot/blob/master/README.md',
             'school_teacher' => 'https://github.com/funson86/funboot/blob/master/docs/guide/README.md',
+            'tool_qr' => '/help/en/',
+            'tool_crud' => 'https://github.com/funson86/funboot/blob/master/docs/guide/dev-gii.md',
+            'tool_cruds' => 'https://github.com/funson86/funboot/blob/master/docs/guide/dev-gii.md',
+            'tool_tree' => 'https://github.com/funson86/funboot/blob/master/docs/guide/dev-gii.md',
+            'tool_mongodb-crud' => 'https://github.com/funson86/funboot/blob/master/docs/guide/3rd-mongodb.md',
+            'tool_redis-crud' => 'https://github.com/funson86/funboot/blob/master/docs/guide/3rd-redis.md',
+            'tool_elasticsearch-crud' => 'https://github.com/funson86/funboot/blob/master/docs/guide/3rd-elasticsearch.md',
         ],
         'zh-CN' => [
-            'Coupon Types' => '',
+            'base_setting_50' => '/help/zh-CN/',
             'school_student' => 'https://github.com/funson86/funboot/blob/master/README_zh-CN.md',
             'school_teacher' => 'https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md',
+            'tool_qr' => '/help/zh-CN/',
+            'tool_crud' => 'https://github.com/funson86/funboot/blob/master/docs/guide/dev-gii.md',
+            'tool_cruds' => 'https://github.com/funson86/funboot/blob/master/docs/guide/dev-gii.md',
+            'tool_tree' => 'https://github.com/funson86/funboot/blob/master/docs/guide/dev-gii.md',
+            'tool_mongodb-crud' => 'https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/3rd-mongodb.md',
+            'tool_redis-crud' => 'https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/3rd-redis.md',
+            'tool_elasticsearch-crud' => 'https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/3rd-elasticsearch.md',
         ],
     ]
 ];
