@@ -34,7 +34,7 @@ $urlRechargeNotify = Yii::$app->urlManager->createAbsoluteUrl(['/site/recharge-n
                         <p class="attention-icon"><i class="fa fa-close text-danger"></i></p>
                         <h5 class="text-center mb-3"><?= Yii::t('app', 'Expired') ?></h5>
 
-                        <?= Html::a(Yii::t('app', 'Back to Recharge'), ['/base/recharge/new'], ['class' => 'btn btn-theme control-full mt-3']) ?>
+                        <?= Html::a(Yii::t('app', 'Back to Recharge'), ['/base/recharge/edit-new'], ['class' => 'btn btn-theme control-full mt-3']) ?>
                     <?php } ?>
                 </div>
             </div>

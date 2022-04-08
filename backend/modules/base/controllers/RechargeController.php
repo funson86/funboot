@@ -47,14 +47,14 @@ class RechargeController extends BaseController
         'type' => 'select',
     ];
 
-    public function actionNew()
+    public function actionEditNew()
     {
         $model = new RechargeForm();
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 if ($recharge = $model->build()) {
-                    return $this->redirect(['pay', 'id' => $recharge->id]);
+                    return $this->redirect(['edit-pay', 'id' => $recharge->id]);
                 } else {
                     Yii::$app->logSystem->db($model->errors);
                     $this->flashError($this->getError($model));
@@ -67,7 +67,7 @@ class RechargeController extends BaseController
         ]);
     }
 
-    public function actionPay()
+    public function actionEditPay()
     {
         $id = Yii::$app->request->get('id');
         if (!$id) {

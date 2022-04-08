@@ -80,7 +80,7 @@ foreach (Yii::$app->authSystem->userPermissionsTree as $leftPermissions) {
 
 if ($this->context->isStoreOwner() || $this->context->isAdmin()) {
     $subMenu = [
-        ['label' => Yii::t('permission', '在线充值'), 'icon' => 'fas fa-credit-card', 'url' => ['/base/recharge/new'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
+        ['label' => Yii::t('permission', '在线充值'), 'icon' => 'fas fa-credit-card', 'url' => ['/base/recharge/edit-new'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
         ['label' => Yii::t('permission', '充值列表'), 'icon' => 'fas far fa-list-alt', 'url' => ['/base/recharge/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
         ['label' => Yii::t('permission', '资金记录'), 'icon' => 'fas far fa-list', 'url' => ['/base/fund-log/index'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
         ['label' => Yii::t('permission', '发票索取'), 'icon' => 'fas fas fa-receipt', 'url' => ['/base/invoice/edit'], 'class' => 'nav-link ' . ($type != 'store' ? 'J_menuItem' : '')],
