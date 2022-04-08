@@ -24,7 +24,7 @@ $tags = $tag ? ArrayHelper::map($tag->tags, 'id', 'name') : [];
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language]['Fans'] ?? null) ?></h2>
+                <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id] ?? null) ?></h2>
                 <div class="card-tools">
                     <?php if (\common\helpers\AuthHelper::verify('/wechat/fan/edit-ajax-sync-select')) { ?>
                         <span class="btn btn-primary btn-xs" id="syncSelect"><i class="icon ion-ios-cloud-download-outline"></i> <?= Yii::t('app', 'Sync Select') ?></span>
