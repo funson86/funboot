@@ -200,7 +200,7 @@ class BaseController extends \common\components\controller\BaseController
                 'pagination' => false
             ]);
 
-            return $this->render($this->action->id, [
+            return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
                 'dataProvider' => $dataProvider,
             ]);
         } elseif ($this->style == 3) {
@@ -213,7 +213,7 @@ class BaseController extends \common\components\controller\BaseController
                 ->limit($pages->limit)
                 ->all();
 
-            return $this->render($this->action->id, [
+            return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
                 'models' => $models,
                 'pages' => $pages
             ]);
@@ -239,7 +239,7 @@ class BaseController extends \common\components\controller\BaseController
         $this->filterParams($params);
         $dataProvider = $searchModel->search($params);
 
-        return $this->render($this->action->id, [
+        return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
         ]);
@@ -272,7 +272,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $this->beforeView($id, $model);
-        return $this->render($this->action->id, [
+        return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
             'model' => $model,
         ]);
     }
@@ -295,7 +295,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $this->beforeView($id, $model);
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
             'model' => $model,
         ]);
     }
@@ -334,7 +334,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $this->beforeEditRender($id, $model);
-        return $this->render($this->action->id, [
+        return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
             'model' => $model,
             'lang' => $lang,
         ]);
@@ -370,7 +370,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $this->beforeEditRender($id, $model);
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
             'model' => $model,
         ]);
     }
@@ -853,7 +853,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectSuccess();
         }
 
-        return $this->renderAjax('@backend/views/site/' . $this->action->id);
+        return $this->renderAjax(Yii::$app->request->get('view') ?? '@backend/views/site/' . $this->action->id);
     }
 
     protected function beforeImport($model = null)
