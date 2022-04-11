@@ -27,6 +27,9 @@ class LogSystem extends \yii\base\Component
 
     public $levels = ['error'];
 
+    // support log type
+    public $types = ['operation', 'login', 'db', 'error', 'console', 'mail'];
+
     public $ignoreCodes = [404];
 
     /**
@@ -37,6 +40,9 @@ class LogSystem extends \yii\base\Component
      */
     public function operation(int $code, $data = null, Request $request = null)
     {
+        if (!in_array(__FUNCTION__, $this->types)) {
+            return false;
+        }
         return $this->create(Log::TYPE_OPERATION, $request, $data, $code);
     }
 
@@ -48,6 +54,10 @@ class LogSystem extends \yii\base\Component
      */
     public function login($data = null, Request $request = null, $failed = false)
     {
+        if (!in_array(__FUNCTION__, $this->types)) {
+            return false;
+        }
+
         $code = $failed ? Log::CODE_LOGIN_FAILED : Log::CODE_SUCCESS;
         if (!$failed) {
             $user = Yii::$app->user->identity;
@@ -66,6 +76,10 @@ class LogSystem extends \yii\base\Component
      */
     public function db($data = null, Request $request = null)
     {
+        if (!in_array(__FUNCTION__, $this->types)) {
+            return false;
+        }
+
         return $this->create(Log::TYPE_DB, $request, $data);
     }
 
@@ -76,6 +90,10 @@ class LogSystem extends \yii\base\Component
      */
     public function error(Response $response, Request $request = null)
     {
+        if (!in_array(__FUNCTION__, $this->types)) {
+            return false;
+        }
+
         $code = $response->getStatusCode();
         $level = Log::getCodeLevel($code);
         if (!in_array($level, $this->levels) || $code < 400 || in_array($code, $this->ignoreCodes)) {
@@ -97,6 +115,44 @@ class LogSystem extends \yii\base\Component
         $msg = isset($data['message']) ? $data['message'] : '';
 
         return $this->create(Log::TYPE_ERROR, $request, $data, $code, $msg);
+    }
+
+    public function console($command, $code, $msg)
+    {
+        if (!in_array(__FUNCTION__, $this->types)) {
+            return false;
+        }
+
+        $model = $this->newModel();
+        $model->type = Log::TYPE_CONSOLE;
+        $model->name = 'system';
+        $model->url = $command;
+        $model->code = $code;
+        $model->cost_time = Yii::getLogger()->getElapsedTime();
+        $model->msg = $msg;
+        return $model->save();
+    }
+
+    /**
+     * @param null $data
+     * @param Request|null $request
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function mail($to, $subject, $content, $cc = [], $from = null, $code = 200)
+    {
+        if (!in_array(__FUNCTION__, $this->types)) {
+            return false;
+        }
+
+        $model = $this->newModel();
+        $model->type = Log::TYPE_MAIL;
+        $model->name = $to;
+        is_array($cc) && $model->url = implode(';', $cc);
+        $model->code = $code;
+        $model->cost_time = Yii::getLogger()->getElapsedTime();
+        $model->msg = $subject;
+        $model->data = $content;
+        return $model->save();
     }
 
     /**
@@ -158,36 +214,6 @@ class LogSystem extends \yii\base\Component
         if (!$model->save()) {
             Yii::error($model->errors);
         }
-    }
-
-    public function console($command, $code, $msg)
-    {
-        $model = $this->newModel();
-        $model->type = Log::TYPE_CONSOLE;
-        $model->name = 'system';
-        $model->url = $command;
-        $model->code = $code;
-        $model->cost_time = Yii::getLogger()->getElapsedTime();
-        $model->msg = $msg;
-        return $model->save();
-    }
-
-    /**
-     * @param null $data
-     * @param Request|null $request
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function mail($to, $subject, $content, $cc = [], $from = null, $code = 200)
-    {
-        $model = $this->newModel();
-        $model->type = Log::TYPE_MAIL;
-        $model->name = $to;
-        is_array($cc) && $model->url = implode(';', $cc);
-        $model->code = $code;
-        $model->cost_time = Yii::getLogger()->getElapsedTime();
-        $model->msg = $subject;
-        $model->data = $content;
-        return $model->save();
     }
 
     /**

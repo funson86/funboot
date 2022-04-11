@@ -112,12 +112,6 @@ class AuthSystem extends \yii\base\Component
             return true;
         }
 
-        // 不使用role的type，使用id区段提升性能
-        /*foreach (Yii::$app->user->identity->userRoles as $model) {
-            if ($model->role_id <= $this->maxAdminRoleId) {
-                return true;
-            }
-        }*/
         $ids = Yii::$app->cacheSystem->getUserRoleIds(Yii::$app->user->id);
         if (count($ids) <= 0) {
             return false;
