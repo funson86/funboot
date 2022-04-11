@@ -207,10 +207,10 @@ class SiteController extends BaseController
                             } else {
                                 Yii::$app->logSystem->db($user->errors);
                                 Yii::$app->user->logout();
-                                return $this->redirect(['/']);
+                                return Yii::$app->authSystem->isAdmin() ? $this->redirect(['/']) : $this->goBack();
                             }
                         } else {
-                            return $this->redirect(['/']);
+                            return Yii::$app->authSystem->isAdmin() ? $this->redirect(['/']) : $this->goBack();
                         }
                     }
                 }
@@ -301,7 +301,10 @@ class SiteController extends BaseController
      */
     public function actionClearCache()
     {
-        if (Yii::$app->authSystem->isAdmin()) {
+        if (Yii::$app->authSystem->isSuperAdmin()) {
+            Yii::$app->db->schema->refresh();
+            Yii::$app->cache->flush();
+        } elseif (Yii::$app->authSystem->isAdmin()) {
             Yii::$app->cacheSystem->clearAllPermission();
             Yii::$app->cacheSystem->clearAllStore();
             Yii::$app->cacheSystem->clearAllSetting();
@@ -315,6 +318,7 @@ class SiteController extends BaseController
             }
         } else {
             Yii::$app->cacheSystem->clearUserPermissionIds(Yii::$app->user->id);
+            Yii::$app->cacheSystem->clearUserRoleIds(Yii::$app->user->id);
             Yii::$app->cacheSystem->clearStoreSetting();
             Yii::$app->cacheSystem->refreshStoreLang();
 
@@ -328,7 +332,6 @@ class SiteController extends BaseController
             }
         }
 
-        Yii::$app->cache->flush();
         return $this->redirectSuccess();
     }
 

@@ -113,6 +113,29 @@ class CacheSystem extends \yii\base\Component
     }
 
     /**
+     * @param $userId
+     * @return array|mixed|\yii\db\ActiveRecord[]
+     */
+    public function getUserRoleIds($userId)
+    {
+        $data = Yii::$app->cache->get('userRoleIds:' . $userId);
+        if (!$data) {
+            $data = UserPermission::getUserPermissions(Yii::$app->user->id, true);
+            Yii::$app->cache->set('userRoleIds:' . $userId, $data);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return bool
+     */
+    public function clearUserRoleIds($userId)
+    {
+        return Yii::$app->cache->delete('userRoleIds:' . $userId);
+    }
+
+    /**
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
     public function getAllDict()

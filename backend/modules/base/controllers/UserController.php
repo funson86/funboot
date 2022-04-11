@@ -109,11 +109,12 @@ class UserController extends BaseController
                         }
                     }
 
+                    Yii::$app->cacheSystem->clearUserRoleIds($model->id);
                     Yii::$app->cacheSystem->clearUserPermissionIds($model->id);
                     return $this->redirectSuccess(['index']);
                 } else {
                     Yii::error($model->errors);
-                    $this->flashError('操作失败' . json_encode($model->errors));
+                    $this->flashError($this->getError($model));
                 }
             }
         }
