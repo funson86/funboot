@@ -27,6 +27,18 @@ return [
     'defaultContactAddress' => '7 Wardour St, London W1D 6PE', //默认在线反馈消息ID
     'defaultContactMobile' => '0796 7888 883', //默认在线反馈消息ID
     'defaultLogo' => '/resources/images/default-logo.png', //默认在线反馈消息ID
+    'defaultStoreRoleId' => 50, //默认店铺角色ID
+    'defaultStoreRole' => [
+        'site' => 50,
+        'pay' => 50,
+        'cms' => 50,
+        'bbs' => 50,
+        'mall' => 50,
+        'wechat' => 50,
+        'mini' => 50,
+        'chat' => 50,
+        'food' => 61,
+    ],
 
     // 默认错误码，在返回前还会做i18n翻译
     'errorCode' => [

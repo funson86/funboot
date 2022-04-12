@@ -858,12 +858,12 @@ class BaseController extends \common\components\controller\BaseController
 
     protected function beforeImport($model = null)
     {
-        return true;
+        return $this->beforeEditSave($model->id, $model);
     }
 
     protected function afterImport($model = null)
     {
-        return true;
+        return $this->afterEdit($model->id, $model);
     }
 
     protected function findModel($id, $action = false)

@@ -117,4 +117,13 @@ class RoleBase extends BaseModel
         list($start, $end) = Yii::$app->authSystem->getStoreRoleIdRange();
         return self::find()->where(['between', 'id', $start, $end])->one();
     }
+
+    /**
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public static function getDefaultStoreRoleId()
+    {
+        $model = self::getDefaultStoreRole();
+        return $model->id ?? Yii::$app->params['defaultStoreRoleId'];
+    }
 }

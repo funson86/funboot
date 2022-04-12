@@ -99,10 +99,7 @@ class StoreController extends BaseController
                 }
 
                 // 增加user为默认店铺角色
-                $role = Role::getDefaultStoreRole();
-                if ($role) {
-                    $user->addRole($role->id, $model->id);
-                }
+                $user->addRole(Yii::$app->params['defaultStoreRole'][$model->route] ?? Role::getDefaultStoreRoleId(), $model->id);
 
                 // 设置store的管理员
                 $model->user_id = $user->id;
