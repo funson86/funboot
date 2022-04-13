@@ -234,7 +234,7 @@ class BaseController extends Controller
      */
     protected function flashSuccess($msg = null)
     {
-        $msg = $msg ? $msg : Yii::t('app', 'Operate Successfully');
+        $msg = $msg ?? Yii::$app->session->getAllFlashes()['success'] ?? Yii::t('app', 'Operate Successfully');
         $this->setFlash('success', $msg);
     }
 
@@ -244,7 +244,7 @@ class BaseController extends Controller
      */
     protected function flashError($msg = null)
     {
-        $msg = $msg ? $msg : Yii::t('app', 'Operation Failed');
+        $msg = $msg ?? Yii::$app->session->getAllFlashes()['danger'] ??  Yii::t('app', 'Operation Failed');
         $this->setFlash('danger', $msg);
     }
 
@@ -254,7 +254,7 @@ class BaseController extends Controller
      */
     protected function flashWarning($msg = null)
     {
-        $msg = $msg ? $msg : Yii::t('app', 'Operation Warning');
+        $msg = $msg ?? Yii::$app->session->getAllFlashes()['warning'] ?? Yii::t('app', 'Operation Warning');
         $this->setFlash('warning', $msg);
     }
 
@@ -264,7 +264,7 @@ class BaseController extends Controller
      */
     protected function flashInfo($msg = null)
     {
-        $msg = $msg ? $msg : Yii::t('app', 'Operation Info');
+        $msg = $msg ?? Yii::$app->session->getAllFlashes()['info'] ?? Yii::t('app', 'Operation Info');
         $this->setFlash('info', $msg);
     }
 

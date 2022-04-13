@@ -76,6 +76,7 @@ class InvoiceController extends BaseController
             Store::updateAllCounters(['billable_fund' => -$model->amount], ['id' => $model->store_id]);
         }
         Yii::$app->cacheSystem->refreshStoreById();
+        $this->flashSuccess(Yii::t('app', 'Invoice is applied successfully, Please wait us to conduct it in 5 days'));
     }
 
     protected function beforeDeleteModel($id = null, $model = null, $soft = false, $tree = false)
