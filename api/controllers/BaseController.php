@@ -363,7 +363,7 @@ class BaseController extends ActiveController
      * @param bool $tree
      * @return bool
      */
-    protected function beforeDeleteModel($id, $model = null, $soft = false, $tree = false)
+    protected function beforeDeleteModel($id = null, $model = null, $soft = false, $tree = false)
     {
         return true;
     }
@@ -376,7 +376,7 @@ class BaseController extends ActiveController
      * @param bool $tree
      * @return bool
      */
-    protected function afterDeleteModel($id, $model = null, $soft = false, $tree = false)
+    protected function afterDeleteModel($id = null, $model = null, $soft = false, $tree = false)
     {
         return true;
     }

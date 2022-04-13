@@ -85,7 +85,7 @@ return [
         'mini' => 64,
         'chat' => 128,
     ],
-    'systemSupport' => 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128,
+    'systemSupport' => 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 65536,
 
     // 定时任务存储路径
     'scheduleFile' => '@console/runtime/schedule/schedule.php',
