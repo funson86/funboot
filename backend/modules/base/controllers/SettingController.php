@@ -223,12 +223,12 @@ class SettingController extends BaseController
 
                     //数据无错误才插入
                     if (!$errorData) {
-                        $this->beforeImport($model);
+                        $this->beforeImport($model->id, $model);
                         if (!$model->save()) {
                             array_push($errorLines, $i);
                             array_push($errorMsgs, json_encode($model->errors));
                         }
-                        $this->afterImport($model);
+                        $this->afterImport($model->id, $model);
                         $countCreate++;
                     }
 

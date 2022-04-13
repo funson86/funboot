@@ -163,7 +163,7 @@ class StoreController extends BaseController
         ]);
     }
 
-    protected function afterEditAjaxStatus($id, $status, $model = null)
+    protected function afterEditAjaxStatus($id = null, $model = null, $status = null)
     {
         Yii::$app->cacheSystem->clearAllStore();
         Yii::$app->cacheSystem->clearStoreSetting();

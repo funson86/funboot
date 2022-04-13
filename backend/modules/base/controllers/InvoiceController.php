@@ -78,7 +78,7 @@ class InvoiceController extends BaseController
         Yii::$app->cacheSystem->refreshStoreById();
     }
 
-    protected function beforeDeleteModel($id, $model = null, $soft = false, $tree = false)
+    protected function beforeDeleteModel($id = null, $model = null, $soft = false, $tree = false)
     {
         Store::updateAllCounters(['billable_fund' => $model->amount], ['id' => $model->store_id]);
         Yii::$app->cacheSystem->refreshStoreById();
