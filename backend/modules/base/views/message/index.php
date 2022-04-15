@@ -65,8 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'created_at:datetime',
                         // 'updated_at:datetime',
-                        // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->username ?? '-'; }, ],
-                        // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->username ?? '-'; }, ],
+                        // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
+                        // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
 
                         Html::actionsCustom(['view']),
                     ]
