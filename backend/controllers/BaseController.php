@@ -1020,6 +1020,14 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
+     * @return bool
+     */
+    public function isAgent()
+    {
+        return Yii::$app->authSystem->isAgent();
+    }
+
+    /**
      * 如果在authSystem中配置，或者有superadmin角色，则是，拥有所有权限
      * @return bool
      */
@@ -1049,4 +1057,30 @@ class BaseController extends \common\components\controller\BaseController
         $models = User::find()->where(['status' => User::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->select($selection)->all();
         return ArrayHelper::map($models, 'id', $field);
     }
+
+    /**
+     * @return array
+     */
+    public function getAgentStores()
+    {
+        $models = Yii::$app->cacheSystem->getAllStore();
+        $list = [];
+        foreach ($models as $model) {
+            if ($model->created_by == Yii::$app->user->id) {
+                $list[] = $model;
+            }
+        }
+        return $list;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getStoresIdName()
+    {
+        $stores = Yii::$app->authSystem->isAgent() ? $this->getAgentStores() : $this->getStores();
+        return ArrayHelper::map($stores, 'id', 'name');
+    }
+
 }

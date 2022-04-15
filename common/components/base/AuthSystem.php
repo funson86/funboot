@@ -127,6 +127,34 @@ class AuthSystem extends \yii\base\Component
     }
 
     /**
+     * 判断是否为管理员，管理员可以看所有store的数据
+     * @return bool
+     */
+    public function isAgent()
+    {
+        if (Yii::$app->user->isGuest) {
+            return false;
+        }
+
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        $ids = Yii::$app->cacheSystem->getUserRoleIds(Yii::$app->user->id);
+        if (count($ids) <= 0) {
+            return false;
+        }
+
+        foreach ($ids as $id) {
+            if ($id == (Yii::$app->params['defaultAgentRoleId'] ?? 0)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * 是否能进后台
      * @return bool
      */

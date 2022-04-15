@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
 
                         'id',
-                        ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', $this->context->getStoresIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         // ['attribute' => 'parent_id', 'value' => function ($model) { return $model->parent->name ?? '-'; }, 'filter' => Html::activeDropDownList($searchModel, 'parent_id', ActiveModel::getTreeIdLabel(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],,
                         // 'username',
                         ['attribute' => 'username', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->username; }, 'filter' => true,],
@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'header' => Yii::t('app', 'Actions'),
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{msg} {login} {view} {edit} {delete}',
+                            'template' => '{msg} {login} {edit-reset-password} {view} {edit} {delete}',
                             'buttons' => [
                                 'msg' => function ($url, $model, $key) {
                                     return Html::a(Yii::t('app', 'Message'), ['/base/msg/edit', 'user_id' => $model->id], ['class' => 'btn btn-sm btn-info']);
@@ -94,6 +94,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     if ($this->context->isSuperAdmin()) {
                                         return Html::buttonModal(['login', 'id' => $model->id], Yii::t('app', 'Login'), ['class' => 'btn btn-sm btn-success'], false, true);
                                     }
+                                },
+                                'edit-reset-password' => function ($url, $model, $key) {
+                                    return Html::buttonModal(['edit-ajax', 'id' => $model->id, 'view' => 'edit-reset-password'], Yii::t('app', 'Reset password'), ['class' => 'btn btn-sm btn-warning']);
                                 },
                                 'view' => function ($url, $model, $key) {
                                     return Html::viewModal(['view-ajax', 'id' => $model->id]);

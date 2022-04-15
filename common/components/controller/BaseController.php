@@ -162,7 +162,7 @@ class BaseController extends Controller
     }
 
     /**
-     * @return Store
+     * @return array
      */
     public function getStores()
     {
@@ -183,6 +183,14 @@ class BaseController extends Controller
     public function getStoreId()
     {
         return $this->store->id ?? 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAgentStoreIds()
+    {
+        return ArrayHelper::getColumn($this->getAgentStores(), 'id');
     }
 
     /**

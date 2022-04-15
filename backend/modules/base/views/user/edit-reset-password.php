@@ -25,7 +25,6 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'password')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="modal-footer">
