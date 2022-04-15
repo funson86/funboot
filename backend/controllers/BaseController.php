@@ -813,6 +813,7 @@ class BaseController extends \common\components\controller\BaseController
                 $countCreate = $countUpdate = 0;
                 $errorLines = $errorMsgs = [];
                 for ($i = 2; $i <= $count; $i++) { // 忽略第1行表头
+                    $isUpdate = false;
                     $row = $data[$i];
 
                     // 更新的话ID必须在第一行，有数据才查找
@@ -822,6 +823,8 @@ class BaseController extends \common\components\controller\BaseController
                             array_push($errorLines, $i);
                             $errorData = true;
                             continue;
+                        } else {
+                            $isUpdate = true;
                         }
                     } else {
                         $model = new $this->modelClass();
@@ -859,7 +862,7 @@ class BaseController extends \common\components\controller\BaseController
                             array_push($errorMsgs, json_encode($model->errors));
                         }
                         $this->afterImport($model->id, $model);
-                        $countCreate++;
+                        $isUpdate ? $countUpdate++ : $countCreate++;
                     }
 
                     if (count($errorLines)) {

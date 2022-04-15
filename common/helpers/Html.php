@@ -55,8 +55,8 @@ class Html extends \yii\helpers\Html
         if (!$url) {
             return null;
         }
-        !$text && $text = '<i class="fas fa-question-circle"></i> ' . Yii::t('app', 'Help');
-        return self::aRedirect(self::colorLabel($text, 'info'), $url, $options);
+        !$text && $text = ' <i class="fas fa-question-circle text-info"></i> ';
+        return self::aRedirect($text, $url, $options);
     }
 
     /**

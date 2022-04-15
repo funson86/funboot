@@ -82,7 +82,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'format' => 'raw', 'value' => function (\$model) { return Html::field('" . $column->name . "', \$model->name); }, " . $filter . "],\n";
         } elseif ($column->name == 'type') {
             $filter = "'filter' => Html::activeDropDownList(\$searchModel, '" . $column->name . "', ActiveModel::get" . Inflector::camelize($column->name) . "Labels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),";
-            echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'value' => function (\$model) { return ActiveModel::get" . Inflector::camelize($column->name) . "Labels(\$model->" . $column->name . "); }, " . $filter . "],\n";
+            echo "                        ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return ActiveModel::get" . Inflector::camelize($column->name) . "Labels(\$model->" . $column->name . "); }, " . $filter . "],\n";
         } elseif ($column->name == 'sort') {
             $filter = "'filter' => true,";
             echo "                        ['attribute' => '" . $column->name . "', 'format' => 'raw', 'value' => function (\$model) { return Html::sort(\$model->sort); }, " . $filter . "],\n";
