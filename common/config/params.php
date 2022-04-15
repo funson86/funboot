@@ -17,7 +17,7 @@ return [
     'defaultStoreId' => 2, //默认店铺ID，当不存在时用该id
     'defaultUserId' => 2, //默认用户ID
     'defaultSort' => 50, //默认排序ID
-    'defaultNameAdminField' => 'email', //默认显示created_by updated_by字段
+    'defaultNameAdminField' => 'username', //默认显示created_by updated_by字段
     'defaultMessageMessageTypeId' => 3, //默认私信消息ID
     'defaultFeedbackMessageTypeId' => 7, //默认在线反馈消息ID
     'defaultWebsiteLogo' => '/resources/images/default-logo.png', //默认在线反馈消息ID

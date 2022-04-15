@@ -175,7 +175,7 @@ class StringHelper extends BaseStringHelper
     /**
      * 加密邮箱
      * @param $str
-     * @param string $target
+     * @param string $secretChar
      * @return mixed
      */
     public static function secretEmail($str, $secretChar = '*')

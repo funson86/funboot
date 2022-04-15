@@ -396,6 +396,12 @@ class UserBase extends BaseModel implements IdentityInterface
         $this->password_reset_token = '';
     }
 
+    public function getNameAdmin()
+    {
+        $name = Yii::$app->params['defaultNameAdminField'] ?? 'username';
+        return $this->$name ?: $this->username;
+    }
+
     /**
      * @param $roleId
      * @return array|UserRole|ActiveRecord

@@ -92,7 +92,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         } elseif (($column->name == 'created_at')) {
             echo "                        '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
         } elseif (in_array($column->name, ['created_by', 'updated_by'])) {
-            echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->" . Inflector::variablize($column->name) . "->username ?? '-'; }, ],\n";
+            echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->" . Inflector::variablize($column->name) . "->nameAdmin ?? '-'; }, ],\n";
         } elseif (isset($generator->inputType[$column->name]) && in_array($generator->inputType[$column->name], ['dropDownList'])) {
             $filter = "'filter' => Html::activeDropDownList(\$searchModel, '" . $column->name . "', ActiveModel::get" . Inflector::camelize($column->name) . "Labels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),";
             echo "                        " . $comment . "['attribute' => '" . $column->name . "', 'value' => function (\$model) { return ActiveModel::get" . Inflector::camelize($column->name) . "Labels(\$model->" . $column->name . "); }, " . $filter . "],\n";

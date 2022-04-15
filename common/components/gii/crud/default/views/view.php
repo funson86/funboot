@@ -61,7 +61,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         } elseif (in_array($column->name, ['status'])) {
             echo "                ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return ActiveModel::get" . Inflector::camelize($column->name) . "Labels(\$model->" . $column->name . ", true); }, ],\n";
         } elseif (in_array($column->name, ['created_by', 'updated_by'])) {
-            echo "                ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->" . Inflector::variablize($column->name) . "->username ?? '-'; }, ],\n";
+            echo "                ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->" . Inflector::variablize($column->name) . "->adminAdmin ?? '-'; }, ],\n";
         } elseif (isset($generator->inputType[$column->name]) && in_array($generator->inputType[$column->name], ['dropDownList', 'radioList'])) {
             echo "                ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return ActiveModel::get" . Inflector::camelize($column->name) . "Labels(\$model->" . $column->name . "); }, ],\n";
         } else {
