@@ -5,7 +5,6 @@ namespace backend\modules\mall\controllers;
 use Yii;
 use common\models\mall\Category;
 use common\models\ModelSearch;
-use backend\controllers\BaseController;
 
 /**
  * Category

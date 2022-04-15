@@ -19,21 +19,32 @@ use Yii;
 class CacheSystemMall extends CacheSystem
 {
     /**
+     * clear all data, if specify storeId, then only clear one store data.
      * @param null $storeId
-     * @return void
+     * @return bool
      */
     public function clearMallAllData($storeId = null)
     {
-        $models = Yii::$app->cacheSystem->getAllStore();
-        foreach ($models as $model) {
-            if (!$storeId || ($storeId && Yii::$app->storeSystem->getId() == $storeId)) {
-                $this->clearProductSkus();
-                $this->clearAttribute();
-                $this->clearAttributeItem();
-                $this->clearCategories($model->id);
-                $this->clearProducts($model->id);
+        if ($storeId) {
+            return $this->clearItems($storeId);
+        } else {
+            $models = Yii::$app->cacheSystem->getAllStore();
+            foreach ($models as $model) {
+                $this->clearItems($model->id);
             }
         }
+        return true;
+    }
+
+    protected function clearItems($storeId)
+    {
+        $this->clearProductSkus($storeId);
+        $this->clearAttribute($storeId);
+        $this->clearAttributeItem($storeId);
+        $this->clearCategories($storeId);
+        $this->clearProducts($storeId);
+
+        return true;
     }
 
     /**

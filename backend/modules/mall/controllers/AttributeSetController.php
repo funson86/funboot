@@ -7,7 +7,6 @@ use common\models\mall\AttributeSetAttribute;
 use Yii;
 use common\models\mall\AttributeSet;
 use common\models\ModelSearch;
-use backend\controllers\BaseController;
 
 /**
  * AttributeSet

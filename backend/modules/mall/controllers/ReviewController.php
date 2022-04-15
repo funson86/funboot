@@ -5,7 +5,6 @@ namespace backend\modules\mall\controllers;
 use Yii;
 use common\models\mall\Review;
 use common\models\ModelSearch;
-use backend\controllers\BaseController;
 
 /**
  * Review

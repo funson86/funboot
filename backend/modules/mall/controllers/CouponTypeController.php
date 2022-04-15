@@ -6,7 +6,6 @@ use common\helpers\IdHelper;
 use Yii;
 use common\models\mall\CouponType;
 use common\models\ModelSearch;
-use backend\controllers\BaseController;
 
 /**
  * CouponType

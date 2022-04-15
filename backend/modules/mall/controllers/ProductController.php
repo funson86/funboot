@@ -15,7 +15,7 @@ use common\models\mall\Tag;
 use Yii;
 use common\models\mall\Product;
 use common\models\ModelSearch;
-use backend\controllers\BaseController;
+
 use yii\web\NotFoundHttpException;
 
 /**
@@ -208,6 +208,7 @@ class ProductController extends BaseController
                     }
 
                     $transaction->commit();
+                    $this->clearCache();
                     return $this->redirectSuccess(['index']);
                 } catch (\Exception $e) {
                     $transaction->rollBack();

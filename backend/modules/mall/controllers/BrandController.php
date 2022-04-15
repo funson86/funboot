@@ -5,7 +5,6 @@ namespace backend\modules\mall\controllers;
 use Yii;
 use common\models\mall\Brand;
 use common\models\ModelSearch;
-use backend\controllers\BaseController;
 
 /**
  * Brand
