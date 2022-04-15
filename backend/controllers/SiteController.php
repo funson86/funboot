@@ -448,7 +448,7 @@ class SiteController extends BaseController
 
         Yii::$app->response->format = Response::FORMAT_RAW;
         Yii::$app->response->headers->add('Content-Type', $qrCode->getContentType());
-        echo $qrCode->writeString();
+        return $qrCode->writeString();
     }
 
     /**
