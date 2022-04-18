@@ -43,7 +43,7 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * a标签，鉴权
+     * a标签，帮助
      *
      * @param $text
      * @param null $url
@@ -56,6 +56,26 @@ class Html extends \yii\helpers\Html
             return null;
         }
         !$text && $text = ' <i class="fas fa-question-circle text-info"></i> ';
+        !isset($options['title']) && $options['title'] = Yii::t('app', 'Help');
+        return self::aRedirect($text, $url, $options);
+    }
+
+    /**
+     * a标签，VIP
+     *
+     * @param $text
+     * @param null $url
+     * @param array $options
+     * @return string
+     */
+    public static function aVip($url = null, $text = null, $options = [])
+    {
+        if (!$url) {
+            return null;
+        }
+
+        !$text && $text = ' <i class="fa fa-star text-warning" aria-hidden="true"></i> ';
+        !isset($options['title']) && $options['title'] = Yii::t('app', 'VIP');
         return self::aRedirect($text, $url, $options);
     }
 

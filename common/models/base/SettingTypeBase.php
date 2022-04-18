@@ -4,6 +4,7 @@ namespace common\models\base;
 
 use common\models\BaseModel;
 use common\models\Store;
+use common\models\User;
 use Yii;
 
 /**
@@ -46,6 +47,8 @@ class SettingTypeBase extends BaseModel
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
     }
+
+    /** add function getXxxLabels here, detail in BaseModel **/
 
     /**
      * return label or labels array
@@ -138,12 +141,13 @@ class SettingTypeBase extends BaseModel
             'name' => Yii::t('app', 'Name'),
             'code' => Yii::t('app', 'Code'),
             'brief' => Yii::t('app', 'Brief'),
-            'type' => Yii::t('app', 'Type'),
-            'value_range' => Yii::t('app', 'Value Range'),
-            'value_default' => Yii::t('app', 'Value Default'),
             'support_role' => Yii::t('app', 'Support Role'),
             'supportRoles' => Yii::t('app', 'Support Role'),
             'support_system' => Yii::t('app', 'Support System'),
+            'type' => Yii::t('app', 'Type'),
+            'value_range' => Yii::t('app', 'Value Range'),
+            'value_default' => Yii::t('app', 'Value Default'),
+            'grade' => Yii::t('app', 'Grade'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),

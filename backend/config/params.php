@@ -22,6 +22,8 @@ return [
     'helpUrl' => [
         'en' => [
             'base_setting_50' => '/help/en/',
+            'setting_5023' => '/help/en/',
+            'vip_1' => '/help/en/',
             'school_student' => 'https://github.com/funson86/funboot/blob/master/README.md',
             'school_teacher' => 'https://github.com/funson86/funboot/blob/master/docs/guide/README.md',
             'tool_qr' => '/help/en/',
@@ -34,6 +36,8 @@ return [
         ],
         'zh-CN' => [
             'base_setting_50' => '/help/zh-CN/',
+            'setting_5023' => '/help/zh-CN/',
+            'vip_1' => '/help/zh-CN/',
             'school_student' => 'https://github.com/funson86/funboot/blob/master/README_zh-CN.md',
             'school_teacher' => 'https://github.com/funson86/funboot/blob/master/docs/guide-zh-CN/README.md',
             'tool_qr' => '/help/zh-CN/',

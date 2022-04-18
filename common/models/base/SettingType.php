@@ -21,6 +21,7 @@ use common\models\Store;
  * @property string $type 类型
  * @property string $value_range 可选值
  * @property string $value_default 默认值
+ * @property int $grade 级别
  * @property int $sort 排序
  * @property int $status 状态
  * @property int $created_at 创建时间
@@ -44,9 +45,10 @@ class SettingType extends SettingTypeBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'parent_id', 'support_role', 'support_system', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'parent_id', 'support_role', 'support_system', 'grade', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'code'], 'required'],
-            [['app_id', 'name', 'code', 'brief', 'type', 'value_range', 'value_default'], 'string', 'max' => 255],
+            [['app_id', 'name', 'brief', 'type', 'value_range', 'value_default'], 'string', 'max' => 255],
+            [['code'], 'string', 'max' => 128],
             [['code'], 'unique'],
         ]);
     }
@@ -70,6 +72,7 @@ class SettingType extends SettingTypeBase
                 'type' => '类型',
                 'value_range' => '可选值',
                 'value_default' => '默认值',
+                'grade' => '级别',
                 'sort' => '排序',
                 'status' => '状态',
                 'created_at' => '创建时间',
@@ -91,6 +94,7 @@ class SettingType extends SettingTypeBase
                 'type' => Yii::t('app', 'Type'),
                 'value_range' => Yii::t('app', 'Value Range'),
                 'value_default' => Yii::t('app', 'Value Default'),
+                'grade' => Yii::t('app', 'Grade'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),
                 'created_at' => Yii::t('app', 'Created At'),

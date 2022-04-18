@@ -4,6 +4,7 @@ namespace common\models\base;
 
 use common\models\BaseModel;
 use common\models\Store;
+use common\models\User;
 use Yii;
 
 /**
@@ -30,6 +31,8 @@ class SettingBase extends BaseModel
         ];
     }
 
+    /** add function getXxxLabels here, detail in BaseModel **/
+
     /**
      * {@inheritdoc}
      */
@@ -43,6 +46,7 @@ class SettingBase extends BaseModel
             'name' => Yii::t('app', 'Name'),
             'code' => Yii::t('app', 'Code'),
             'value' => Yii::t('app', 'Value'),
+            'grade' => Yii::t('app', 'Grade'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),
