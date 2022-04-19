@@ -52,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </h2>
                         <div class="col-sm-12 pl-3">
                             <?php foreach ($setting['children'] as $row) { ?>
+                                <?= Html::a('', null, ['name' => 'anchor-' . $row['id'], 'class' => 'anchor']); ?>
                                 <?= $this->render($row['type'], [
                                     'row' => $row,
                                     'valueRange' => \common\helpers\StringHelper::parseAttr($row['value_range']),
@@ -61,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     <?php } else { $row = $setting; ?>
                     <div class="col-sm-12 pl-3">
+                        <?= Html::a('', null, ['name' => 'anchor-' . $row['id'], 'class' => 'anchor']); ?>
                         <?= $this->render($row['type'], [
                             'row' => $row,
                             'valueRange' => \common\helpers\StringHelper::parseAttr($row['value_range']),
