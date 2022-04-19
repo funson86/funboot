@@ -196,6 +196,6 @@ class RoleController extends BaseController
 
     protected function clearCache()
     {
-        return Yii::$app->cacheSystem->clearAllData();
+        return Yii::$app->cacheSystem->clearAllUserRole();
     }
 }

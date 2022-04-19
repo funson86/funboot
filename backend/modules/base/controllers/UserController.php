@@ -113,7 +113,8 @@ class UserController extends BaseController
                         }
                     }
 
-                    $this->clearCache();
+                    Yii::$app->cacheSystem->clearUserRoleIds($model->id);
+                    Yii::$app->cacheSystem->clearUserPermissionIds($model->id);
                     return $this->redirectSuccess(['index']);
                 } else {
                     Yii::error($model->errors);
@@ -171,6 +172,7 @@ class UserController extends BaseController
 
     protected function clearCache()
     {
-        return Yii::$app->cacheSystem->clearAllData();
+        Yii::$app->cacheSystem->clearAllPermission();
+        return Yii::$app->cacheSystem->clearAllUserRole();
     }
 }

@@ -331,6 +331,7 @@ class StoreController extends BaseController
 
     protected function clearCache()
     {
-        return Yii::$app->cacheSystem->clearAllData();
+        Yii::$app->cacheSystem->clearStoreSetting();
+        return Yii::$app->cacheSystem->clearAllStore();
     }
 }
