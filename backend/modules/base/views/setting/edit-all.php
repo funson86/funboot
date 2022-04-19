@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h5 class="tag-title"></h5>
                 <?= Html::input('text', 'settingCode', '', ['class' => 'form-control', 'id' => 'settingCode', 'readonly' => 'readonly']); ?>
                 <div class="hr-line-dashed"></div>
-                <div class="clearfix"><?= Yii::t('app', 'Code') ?>:  <span id="settingName">-</span></div>
+                <div class="clearfix"><?= Yii::t('app', 'Name') ?>:  <span id="settingName">-</span></div>
             </div>
         </div>
     </div>
