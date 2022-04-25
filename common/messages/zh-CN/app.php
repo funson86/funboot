@@ -212,6 +212,17 @@ return [
     'Sort Order' => '排序',
     'Root' => '顶级',
 
+    'Choose' => '选择文件',
+    'Upload' => '立即上传',
+    'Preview' => '预览',
+    'Upload failed with server error' => '上传失败，服务器错误',
+    'File List' => '文件列表',
+    'All Years' => '不限年份',
+    'All Months' => '不限月份',
+    'All File Types' => '不限文件类型',
+    'Load More' => '加载更多',
+    'No more data' => '没有更多数据了',
+
     'Directly Input Time' => '可直接输入日期，格式：2015-01-01',
 
     'Regions' => '地区',

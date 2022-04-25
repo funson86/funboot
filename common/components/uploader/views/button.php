@@ -1,4 +1,4 @@
-<div class="btn btn-primary selector-upload-album" id="<?= $boxId ?>">立即上传</div>
+<div class="btn btn-primary selector-upload-album" id="<?= $boxId ?>"><?= Yii::t('app', 'Upload') ?></div>
 <!--隐藏上传组件-->
 <div class="hidden" id="upload-<?= $boxId; ?>">
     <div class="upload-album-<?= $boxId; ?>"></div>
@@ -47,6 +47,6 @@
     // 上传失败
     $(document).on('upload-error-' + boxId, function(e, file, reason, uploader, config){
         uploader.removeFile(file); //从队列中移除
-        fbError("上传失败，服务器错误");
+        fbError("<?= Yii::t('app', 'Upload failed with server error') ?>");
     });
 </script>
