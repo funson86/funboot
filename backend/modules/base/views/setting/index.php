@@ -4,7 +4,7 @@ use common\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\base\Setting as ActiveModel;
-use common\helpers\Url;
+use frontend\helpers\Url;
 use yii\helpers\Inflector;
 
 /* @var $this yii\web\View */
