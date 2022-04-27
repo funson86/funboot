@@ -84,9 +84,9 @@ class StoreController extends BaseController
             $model->user_id = Yii::$app->params['defaultUserId'];
             $model->route = $post['Store']['route'] ?? Yii::$app->params['defaultRoute'];
             $model->language = ArrayHelper::arrayToInt($post['Store']['languages'] ?? []);
-            $model->lang_backend = ArrayHelper::arrayToInt($post['Store']['langBackends'] ?? []);
-            $model->lang_frontend = ArrayHelper::arrayToInt($post['Store']['langFrontends'] ?? []);
-            $model->lang_api = ArrayHelper::arrayToInt($post['Store']['langApis'] ?? []);
+            $model->lang_backend = ArrayHelper::arrayToInt($post['Store']['langBackends'] ?? Yii::$app->params['defaultLangBackend'] ?? []);
+            $model->lang_frontend = ArrayHelper::arrayToInt($post['Store']['langFrontends'] ?? Yii::$app->params['defaultLangFrontend'] ?? []);
+            $model->lang_api = ArrayHelper::arrayToInt($post['Store']['langApis'] ?? Yii::$app->params['defaultLangApi'] ?? []);
             $model->type = ArrayHelper::arrayToInt($post['Store']['types'] ?? []);
             $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
             $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
@@ -147,10 +147,8 @@ class StoreController extends BaseController
             return $this->goBack();
         }
 
-        if (Yii::$app->request->isPost) {
-            $model->loadDefaultValues();
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             $post = Yii::$app->request->post();
-            $model->load($post);
             $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
             if (!$model->save()) {
                 Yii::$app->logSystem->db($model->errors);
