@@ -30,6 +30,10 @@ return [
     'defaultLogo' => '/resources/images/default-logo.png', //默认在线反馈消息ID
     'defaultAgentRoleId' => 49, //默认代理角色ID
     'defaultStoreRoleId' => 50, //默认店铺角色ID
+    'defaultRoute' => 'site',
+    'defaultLangBackend' => [1, 2],
+    'defaultLangFrontend' => [1, 2],
+    'defaultLangApi' => [1, 2],
     'defaultStoreRole' => [
         'site' => 50,
         'pay' => 50,
