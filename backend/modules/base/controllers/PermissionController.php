@@ -6,7 +6,7 @@ use common\helpers\ArrayHelper;
 use common\models\base\RolePermission;
 use Yii;
 use common\models\base\Permission;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\data\ActiveDataProvider;
 

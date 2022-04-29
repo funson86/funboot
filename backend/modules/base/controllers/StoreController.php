@@ -10,7 +10,7 @@ use common\models\User;
 use Da\QrCode\QrCode;
 use Yii;
 use common\models\Store;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\helpers\FileHelper;
 
@@ -54,7 +54,11 @@ class StoreController extends BaseController
 
    protected function filterParams(&$params)
    {
-       $params['ModelSearch']['status'] = '>=' . $this->modelClass::STATUS_DELETED;
+       (!isset($params['ModelSearch']['status']) || is_null($params['ModelSearch']['status'])) && $params['ModelSearch']['status'] = '>=' . $this->modelClass::STATUS_DELETED;
+
+       if ($this->isAgent()) {
+           $params['ModelSearch']['created_by'] = Yii::$app->user->id;
+       }
    }
 
     /**
@@ -138,7 +142,7 @@ class StoreController extends BaseController
     public function actionEditRenew()
     {
         $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->goBack();
         }
@@ -178,14 +182,14 @@ class StoreController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionLogin()
+    public function actionEditLogin()
     {
         $id = Yii::$app->request->get('id');
         if (!$id) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
@@ -209,14 +213,14 @@ class StoreController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionGo()
+    public function actionEditGo()
     {
         $id = Yii::$app->request->get('id');
         if (!$id) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }

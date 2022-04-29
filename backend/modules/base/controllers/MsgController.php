@@ -7,7 +7,6 @@ use common\helpers\ImageHelper;
 use common\helpers\Url;
 use Yii;
 use common\models\base\Message;
-use common\models\ModelSearch;
 use backend\controllers\BaseController;
 use yii\db\Exception;
 use yii\web\NotFoundHttpException;

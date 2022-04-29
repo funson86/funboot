@@ -4,6 +4,7 @@ namespace common\models\base;
 
 use common\models\BaseModel;
 use common\models\Store;
+use common\models\User;
 use Yii;
 
 /**

@@ -18,7 +18,7 @@ use common\models\base\Log as ActiveModel;
 </div>
 <div class="modal-body">
     <?= \common\widgets\echarts\Echarts::widget([
-        'config' => ['server' => Url::to(['stat-ajax-error']), 'height' => '400px', 'defaultType' => 'yesterday'],
+        'config' => ['server' => Url::to(['view-ajax-stat-error']), 'height' => '400px', 'defaultType' => 'yesterday'],
         'chartConfig' => ['today', 'yesterday', 'thisWeek', 'thisMonth', 'lastMonth', 'thisYear'],
     ]) ?>
 </div>

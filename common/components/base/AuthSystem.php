@@ -136,10 +136,6 @@ class AuthSystem extends \yii\base\Component
             return false;
         }
 
-        if ($this->isSuperAdmin()) {
-            return true;
-        }
-
         $ids = Yii::$app->cacheSystem->getUserRoleIds(Yii::$app->user->id);
         if (count($ids) <= 0) {
             return false;

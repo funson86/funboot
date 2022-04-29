@@ -28,6 +28,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Inflector;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -187,7 +188,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionIndex()
     {
-        $storeId = $this->isAdmin() ? null : $this->getStoreId();
+        $storeId = $this->getStoreId();
 
         if ($this->style == 2) {
             $query = $this->modelClass::find()
@@ -232,7 +233,10 @@ class BaseController extends \common\components\controller\BaseController
         if (!$this->isAdmin()) {
             $params['ModelSearch']['store_id'] = $this->getStoreId();
             (!isset($params['ModelSearch']['status']) || is_null($params['ModelSearch']['status'])) && $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
+        } elseif ($this->isAgent()) {
+            $params['ModelSearch']['store_id'] = $this->getAgentStoreIds();
         }
+
         if ($this->style == 11) {
             $params['ModelSearch']['parent_id'] = 0;
         }
@@ -266,7 +270,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
@@ -289,7 +293,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
@@ -314,6 +318,10 @@ class BaseController extends \common\components\controller\BaseController
     {
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
+        if (!$model) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $this->beforeEdit($id, $model);
         $lang = $this->isMultiLang ? $this->beforeLang($id, $model) : [];
 
@@ -330,6 +338,8 @@ class BaseController extends \common\components\controller\BaseController
                         Yii::$app->logSystem->db($model->errors);
                         $this->flashError($this->getError($model));
                     }
+                } else {
+                    $this->flashError(Yii::t('app', 'Something wrong'));
                 }
             }
         }
@@ -351,6 +361,10 @@ class BaseController extends \common\components\controller\BaseController
     {
         $id = Yii::$app->request->get('id');
         $model = $this->findModel($id);
+        if (!$model) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $this->beforeEdit($id, $model);
 
         // ajax 校验
@@ -363,7 +377,7 @@ class BaseController extends \common\components\controller\BaseController
                     return $this->redirectError($this->getError($model));
                 }
             } else {
-                return $this->redirect(Yii::$app->request->referrer);
+                return $this->redirectError(Yii::t('app', 'Something wrong'));
             }
 
             $this->afterEdit($id, $model);
@@ -410,7 +424,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->error(404);
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->error(404);
         }
@@ -460,7 +474,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->error(404);
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->error(404);
         }
@@ -512,7 +526,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
@@ -565,7 +579,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
@@ -896,19 +910,23 @@ class BaseController extends \common\components\controller\BaseController
         return $this->afterEdit($model->id, $model);
     }
 
-    protected function findModel($id, $action = false)
+    protected function findModel($id = null)
     {
         /* @var $model \yii\db\ActiveRecord */
-
-        // 管理员无需store_id
-        $storeId = (($this->modelClass === Store::class) || $this->isAdmin() || !$this->forceStoreId) ? null : $this->getStoreId();
-        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
-            if ($action) {
-                return null;
-            }
-
+        if (empty($id)) {
             $model = new $this->modelClass();
             $model->loadDefaultValues();
+        } else {
+            $storeId = $this->getFilterStoreId();
+            if ($this->modelClass == Store::class) {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['id' => $storeId])->one();
+            } else {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one();
+            }
+
+//            if (!$model) {
+//                throw new NotFoundHttpException(Yii::t('app', 'Invalid id'), 500);
+//            }
         }
 
         return $model;
@@ -1073,6 +1091,24 @@ class BaseController extends \common\components\controller\BaseController
         return $list;
     }
 
+    /**
+     * @return array
+     */
+    public function getAgentStoreIds()
+    {
+        return ArrayHelper::getColumn($this->getAgentStores(), 'id');
+    }
+
+    public function getFilterStoreId()
+    {
+        if ($this->isAgent()) {
+            return $this->getAgentStoreIds();
+        } elseif ($this->isAdmin()) {
+            return null;
+        } else {
+            return $this->getStoreId();
+        }
+    }
 
     /**
      * @return array

@@ -46,6 +46,9 @@ class StoreBase extends BaseModel
 {
     const STATUS_MAINTENANCE = -5;
 
+    const GRADE_NORMAL = 1;
+    const GRADE_VIP_1 = 10;
+
     public $expiredTime;
     public $types;
     public $languages;
@@ -109,6 +112,27 @@ class StoreBase extends BaseModel
 
         return !is_null($id) ? ($data[$id] ?? $id) : $data;
 
+    }
+
+    /**
+     * return label or labels array
+     *
+     * @param null $id
+     * @param bool $flip
+     * @return array|mixed
+     */
+    public static function getGradeLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::GRADE_NORMAL => Yii::t('cons', 'GRADE_NORMAL'),
+            self::GRADE_VIP_1 => Yii::t('cons', 'GRADE_VIP_1'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
     }
 
     /**
@@ -218,6 +242,12 @@ class StoreBase extends BaseModel
             'lang_api' => Yii::t('app', 'Lang Api'),
             'langApis' => Yii::t('app', 'Lang Apis'),
             'lang_api_default' => Yii::t('app', 'Lang Api Default'),
+            'fund' => Yii::t('app', 'Fund'),
+            'fund_amount' => Yii::t('app', 'Fund Amount'),
+            'billable_fund' => Yii::t('app', 'Billable Fund'),
+            'income' => Yii::t('app', 'Income'),
+            'income_amount' => Yii::t('app', 'Income Amount'),
+            'income_count' => Yii::t('app', 'Income Count'),
             'consume_count' => Yii::t('app', 'Consume Count'),
             'consume_amount' => Yii::t('app', 'Consume Amount'),
             'history_amount' => Yii::t('app', 'History Amount'),
@@ -227,6 +257,7 @@ class StoreBase extends BaseModel
             'param4' => Yii::t('app', 'Param4'),
             'param5' => Yii::t('app', 'Param5'),
             'param6' => Yii::t('app', 'Param6'),
+            'grade' => Yii::t('app', 'Grade'),
             'type' => Yii::t('app', 'Type'),
             'types' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),

@@ -91,7 +91,7 @@ use common\helpers\Html;
                             'format' => 'raw',
                             'headerOptions' => ['style' => 'width: 8%'],
                         ],
-                        // ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        // ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'created_at:datetime',
                         //'updated_at',
                         //'created_by',
@@ -103,7 +103,7 @@ use common\helpers\Html;
                             'template' => '{status} {edit} {delete}',
                             'buttons' => [
                                 'status' => function ($url, $model, $key) {
-                                    return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status);
+                                    return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status, true);
                                 },
                                 'permission' => function ($url, $model, $key) {
                                     return Html::buttonModal(['edit-ajax-permission', 'id' => $model->id], '菜单权限', ['class' => 'btn btn-primary btn-sm']);

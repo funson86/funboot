@@ -7,7 +7,7 @@ use common\models\base\Message;
 use common\models\User;
 use Yii;
 use common\models\base\MessageType;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 
 /**
@@ -47,41 +47,29 @@ class MessageTypeController extends BaseController
         'type' => 'select',
     ];
 
-    /**
-      * ajax编辑/创建
-      *
-      * @return mixed|string|\yii\web\Response
-      * @throws \yii\base\ExitException
-      */
-    public function actionEditAjax()
+
+    protected function beforeEditSave($id = null, $model = null)
     {
-        $id = Yii::$app->request->get('id', null);
-        $model = $this->findModel($id);
-
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-            $sendUsers = Yii::$app->request->post($model->formName())['sendUsers'] ?? null;
-            if ($sendUsers && count($sendUsers) > 0) {
-                $model->send_user = implode('|', $sendUsers);
-            }
-            $model->send_type = ArrayHelper::arrayToInt(Yii::$app->request->post($model->formName())['sendTypes'] ?? []);
-
-            if (!$model->save()) {
-                $this->redirectError($this->getError($model));
-            }
-
-            if (!$id) { //编辑的新消息才发送
-                Yii::$app->messageSystem->send($model, Yii::$app->user->id);
-            }
-            return $this->redirectSuccess();
+        $sendUsers = Yii::$app->request->post($model->formName())['sendUsers'] ?? null;
+        if ($sendUsers && count($sendUsers) > 0) {
+            $model->send_user = implode('|', $sendUsers);
         }
+        $model->send_type = ArrayHelper::arrayToInt(Yii::$app->request->post($model->formName())['sendTypes'] ?? []);
 
+        return true;
+    }
+
+    protected function afterEdit($id = null, $model = null)
+    {
+        if (!$id) { //编辑的新消息才发送
+            Yii::$app->messageSystem->send($model, Yii::$app->user->id);
+        }
+    }
+
+    protected function beforeEditRender($id = null, $model = null)
+    {
         $model->sendUsers = explode('|', $model->send_user);
         $model->sendTypes = ArrayHelper::intToArray($model->send_type, $this->modelClass::getSendTypeLabels());
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-        ]);
     }
 
     /**

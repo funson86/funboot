@@ -13,6 +13,7 @@ use Yii;
 use yii\base\Model;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -102,25 +103,26 @@ class BaseController extends Controller
      *
      * @param $id
      * @param bool $emptyNew
-     * @param bool $action
      * @return BaseModel
      * @throws \Exception
      */
-    protected function findModel($id, $action = false)
+    protected function findModel($id = null)
     {
-        try {
-            /* @var $model \yii\db\ActiveRecord */
-            $storeId = ($this->modelClass === Store::class) ? null : $this->getStoreId();
-            if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
-                if ($action) {
-                    return null;
-                }
-
-                $model = new $this->modelClass();
-                $model->loadDefaultValues();
+        /* @var $model \yii\db\ActiveRecord */
+        if (empty($id)) {
+            $model = new $this->modelClass();
+            $model->loadDefaultValues();
+        } else {
+            $storeId = $this->getStoreId();
+            if ($this->modelClass == Store::class) {
+                $model = $this->modelClass::find()->where(['id' => $id])->one();
+            } else {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one();
             }
-        } catch (\Exception $e) {
-            Yii:$this->error($e->getMessage());
+        }
+
+        if (!$model) {
+            throw new NotFoundHttpException(Yii::t('app', 'Invalid id'), 500);
         }
 
         return $model;
@@ -183,14 +185,6 @@ class BaseController extends Controller
     public function getStoreId()
     {
         return $this->store->id ?? 0;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAgentStoreIds()
-    {
-        return ArrayHelper::getColumn($this->getAgentStores(), 'id');
     }
 
     /**

@@ -3,8 +3,9 @@
 namespace common\models\base;
 
 use common\models\BaseModel;
-use Yii;
 use common\models\Store;
+use common\models\User;
+use Yii;
 
 /**
  * This is the model base class for table "{{%base_dict}}" to add your code.
@@ -25,6 +26,8 @@ class DictBase extends BaseModel
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
     }
+
+    /** add function getXxxLabels here, detail in BaseModel **/
 
     /**
      * {@inheritdoc}

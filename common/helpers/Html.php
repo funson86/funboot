@@ -561,8 +561,8 @@ class Html extends \yii\helpers\Html
 
     /**
      * 自定义按钮
-     * 如传入  ['edit-modal', 'delete']
-     * 如传入  ['view-modal', 'delete']
+     * 如传入  ['edit-ajax', 'delete']
+     * 如传入  ['view-ajax', 'delete']
      *
      * @param array $options
      * @return array
@@ -589,13 +589,13 @@ class Html extends \yii\helpers\Html
                 'status' => function ($url, $model, $key) {
                     return static::status($model->status);
                 },
-                'view-modal' => function ($url, $model, $key) {
+                'view-ajax' => function ($url, $model, $key) {
                     return static::viewModal(['view-ajax', 'id' => $model->id]);
                 },
                 'view' => function ($url, $model, $key) {
                     return static::view(['view', 'id' => $model->id]);
                 },
-                'edit-modal' => function ($url, $model, $key) {
+                'edit-ajax' => function ($url, $model, $key) {
                     return static::editModal(['edit-ajax', 'id' => $model->id]);
                 },
                 'edit' => function ($url, $model, $key) {

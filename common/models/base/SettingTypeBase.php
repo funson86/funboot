@@ -37,6 +37,9 @@ class SettingTypeBase extends BaseModel
     const SUPPORT_ROLE_STORE = 4;
     const SUPPORT_ROLE_FRONTEND = 8;
 
+    const GRADE_NORMAL = 1;
+    const GRADE_VIP_1 = 10;
+
     /**
      * @return array|array[]
      */
@@ -91,6 +94,27 @@ class SettingTypeBase extends BaseModel
      * @param bool $flip
      * @return array|mixed
      */
+    public static function getGradeLabels($id = null, $all = false, $flip = false)
+    {
+        $data = [
+            self::GRADE_NORMAL => Yii::t('cons', 'GRADE_NORMAL'),
+            self::GRADE_VIP_1 => Yii::t('cons', 'GRADE_VIP_1'),
+        ];
+
+        $all && $data += [];
+
+        $flip && $data = array_flip($data);
+
+        return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    /**
+     * return label or labels array
+     *
+     * @param null $id
+     * @param bool $flip
+     * @return array|mixed
+     */
     public static function getSupportRoleLabels($id = null, $all = false, $flip = false)
     {
         $data = [
@@ -118,7 +142,7 @@ class SettingTypeBase extends BaseModel
     {
         $data = [];
         foreach (Yii::$app->params['routeCode'] as $k => $v) {
-            $data[$k] = Yii::t('cons', Yii::$app->params['routes'][$k]);
+            $data[$v] = Yii::t('cons', Yii::$app->params['routes'][$k]);
         }
 
         $all && $data += [];

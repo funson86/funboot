@@ -4,6 +4,7 @@ namespace common\models\base;
 
 use common\models\BaseModel;
 use common\models\Store;
+use common\models\User;
 use Yii;
 
 /**
@@ -27,6 +28,8 @@ class DictDataBase extends BaseModel
         ];
     }
 
+    /** add function getXxxLabels here, detail in BaseModel **/
+
     /**
      * {@inheritdoc}
      */
@@ -37,6 +40,7 @@ class DictDataBase extends BaseModel
             'store_id' => Yii::t('app', 'Store ID'),
             'dict_id' => Yii::t('app', 'Dict ID'),
             'name' => Yii::t('app', 'Name'),
+            'code' => Yii::t('app', 'Code'),
             'value' => Yii::t('app', 'Value'),
             'brief' => Yii::t('app', 'Brief'),
             'type' => Yii::t('app', 'Type'),

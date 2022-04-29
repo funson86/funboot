@@ -14,6 +14,7 @@ use yii\filters\auth\HttpHeaderAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\RateLimiter;
 use yii\rest\ActiveController;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class BaseController
@@ -206,7 +207,7 @@ class BaseController extends ActiveController
             return $this->error();
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->error();
         }
@@ -284,7 +285,7 @@ class BaseController extends ActiveController
         }
 
         /* @var $model \yii\db\ActiveRecord */
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->error();
         }
@@ -317,7 +318,7 @@ class BaseController extends ActiveController
             return $this->error();
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->error();
         }
@@ -384,18 +385,25 @@ class BaseController extends ActiveController
     /**
      * 要操作的必须先查询有权限的ID
      * @param $id
-     * @param bool $action
      * @return mixed|null |null
      */
-    protected function findModel($id, $action = true)
+    protected function findModel($id = null)
     {
-        $storeId = $this->getStoreId();
-        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
-            if ($action) {
-                return null;
+        /* @var $model \yii\db\ActiveRecord */
+        if (empty($id)) {
+            $model = new $this->modelClass();
+            $model->loadDefaultValues();
+        } else {
+            $storeId = $this->getFilterStoreId();
+            if ($this->modelClass == Store::class) {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['id' => $storeId])->one();
+            } else {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one();
             }
 
-            $model = new $this->modelClass();
+            if (!$model) {
+                throw new NotFoundHttpException(Yii::t('app', 'Invalid id'), 500);
+            }
         }
 
         return $model;
@@ -476,11 +484,78 @@ class BaseController extends ActiveController
     }
 
     /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return Yii::$app->authSystem->isAdmin();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAgent()
+    {
+        return Yii::$app->authSystem->isAgent();
+    }
+
+    /**
+     * 如果在authSystem中配置，或者有superadmin角色，则是，拥有所有权限
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return Yii::$app->authSystem->isSuperAdmin();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBackend()
+    {
+        return Yii::$app->authSystem->isBackend();
+    }
+
+    /**
      * @return int
      */
     public function getStoreId()
     {
         return $this->store->id ?? 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAgentStores()
+    {
+        $models = Yii::$app->cacheSystem->getAllStore();
+        $list = [];
+        foreach ($models as $model) {
+            if ($model->created_by == Yii::$app->user->id) {
+                $list[] = $model;
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAgentStoreIds()
+    {
+        return ArrayHelper::getColumn($this->getAgentStores(), 'id');
+    }
+
+    public function getFilterStoreId()
+    {
+        if ($this->isAgent()) {
+            return $this->getAgentStoreIds();
+        } elseif ($this->isAdmin()) {
+            return null;
+        } else {
+            return $this->getStoreId();
+        }
     }
 
     /**

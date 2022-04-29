@@ -10,7 +10,7 @@ use common\models\base\UserRole;
 use common\models\Store;
 use Yii;
 use common\models\User;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 
 /**
@@ -139,14 +139,14 @@ class UserController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionLogin()
+    public function actionEditLogin()
     {
         $id = Yii::$app->request->get('id');
         if (!$id) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }

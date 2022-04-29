@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'parent_id', 'value' => function ($model) { return $model->parent->name ?? '-'; }, ],
                 ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, ],
                 'name',
+                ['attribute' => 'is_default', 'value' => function ($model) { return YesNo::getLabels($model->is_default); }, ],
                 ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
                 'sort',
                 ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],

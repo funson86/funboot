@@ -66,11 +66,6 @@ class LogController extends BaseController
      */
     public function actionIndex()
     {
-        $type = Yii::$app->request->get('type', 1);
-        if (!$type) {
-            return $this->redirectError(Yii::t('app', 'Invalid id'));
-        }
-
         if (Yii::$app->logSystem->driver == LogSystem::DRIVER_MONGODB) {
             $query = $this->modelClass::find()->where(['type' => intval($type)]);
             $pagination = new Pagination(['totalCount' => $query->count(), 'pageSize' => $this->pageSize]);
@@ -79,34 +74,15 @@ class LogController extends BaseController
             return $this->render($this->action->id, [
                 'models' => $models,
                 'pages' => $pagination,
-                'type' => $type,
-                'driver' => Yii::$app->logSystem->driver,
             ]);
         }
 
-        $searchModel = new ModelSearch([
-            'model' => $this->modelClass,
-            'scenario' => 'default',
-            'likeAttributes' => $this->likeAttributes,
-            'defaultOrder' => [
-                'id' => SORT_DESC
-            ],
-            'pageSize' => Yii::$app->request->get('page_size', $this->pageSize),
-        ]);
+        return parent::actionIndex();
+    }
 
-        $params = Yii::$app->request->queryParams;
-        if ($type > 0) {
-            $params['ModelSearch']['type'] = $type;
-        }
-        $dataProvider = $searchModel->search($params);
-
-        return $this->render($this->action->id, [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'type' => $type,
-            'driver' => Yii::$app->logSystem->driver,
-        ]);
-
+    protected function filterParams(&$params)
+    {
+        $params['ModelSearch']['type'] = Yii::$app->request->get('type', 1);
     }
 
     /**
@@ -114,7 +90,7 @@ class LogController extends BaseController
      * @param string $type
      * @return array|mixed
      */
-    public function actionStatAjaxError()
+    public function actionViewAjaxStatError()
     {
         $type = Yii::$app->request->get('type');
 
@@ -142,7 +118,7 @@ class LogController extends BaseController
      * @param string $type
      * @return array|mixed
      */
-    public function actionStatAjaxLogin()
+    public function actionViewAjaxStatLogin()
     {
         $type = Yii::$app->request->get('type');
 

@@ -95,7 +95,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return YII_ENV_PROD ? $this->renderPartial('prod') : $this->render('index');
     }
 
     /**

@@ -48,14 +48,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id',
                         ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', $this->context->getStoresIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'name',
-                        //['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
+                        // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
                         // 'content:ntext',
                         ['attribute' => 'send_type', 'value' => function ($model) { return ActiveModel::getSendTypeLabels($model->send_type); }, 'filter' => Html::activeDropDownList($searchModel, 'send_type', ActiveModel::getSendTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         ['attribute' => 'send_target', 'value' => function ($model) { return ActiveModel::getSendTargetLabels($model->send_target); }, 'filter' => Html::activeDropDownList($searchModel, 'send_target', ActiveModel::getSendTargetLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         // 'send_user:ntext',
                         ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => Html::activeDropDownList($searchModel, 'type', ActiveModel::getTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
-                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'created_at:datetime',
                         // 'updated_at:datetime',
                         // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
@@ -64,10 +64,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'header' => Yii::t('app', 'Actions'),
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{view} {edit} {delete}',
+                            'template' => ' {view-message} {view} {edit} {delete}',
                             'buttons' => [
+                                'view-message' => function ($url, $model, $key) {
+                                    return Html::buttonModal(['/base/message/index', 'message_type_id' => $model->id], Yii::t('app', 'View ') . Yii::t('app', 'Message'), ['class' => 'btn btn-sm btn-info'], false);
+                                },
                                 'view' => function ($url, $model, $key) {
-                                    return Html::buttonModal(['/base/message/index', 'message_type_id' => $model->id], Yii::t('app', 'View'), ['class' => 'btn btn-sm btn-default'], false);
+                                    return Html::viewModal(['view-ajax', 'id' => $model->id]);
                                 },
                                 'edit' => function ($url, $model, $key) {
                                     return Html::editModal(['edit-ajax', 'id' => $model->id]);

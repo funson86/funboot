@@ -38,6 +38,7 @@ class TeacherBase extends BaseModel
             'parent_id' => Yii::t('app', 'Parent ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'name' => Yii::t('app', 'Name'),
+            'is_default' => Yii::t('app', 'Is Default'),
             'type' => Yii::t('app', 'Type'),
             'sort' => Yii::t('app', 'Sort'),
             'status' => Yii::t('app', 'Status'),

@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
                         // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
 
-                        Html::actionsCustom(['view']),
+                        Html::actionsCustom(['view-ajax']),
                     ]
                 ]); ?>
             </div>

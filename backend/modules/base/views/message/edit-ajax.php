@@ -25,9 +25,15 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
+        <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
+        <?= $form->field($model, 'parent_id')->dropDownList(ActiveModel::getTreeIdLabel()) ?>
         <?= $form->field($model, 'user_id')->dropDownList($this->context->getUsersIdName()) // $form->field($model, 'user_id')->widget(kartik\select2\Select2::classname(), ['data' => $this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],]) ?>
-        <?= $form->field($model, 'message_type_id')->textInput() ?>
+        <?= $form->field($model, 'from_id')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'message_type_id')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+        <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
+        <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">

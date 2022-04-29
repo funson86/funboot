@@ -5,7 +5,7 @@ namespace backend\modules\base\controllers;
 use common\models\Store;
 use Yii;
 use common\models\base\Invoice;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 
 /**

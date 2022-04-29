@@ -4,7 +4,7 @@ namespace backend\modules\base\controllers;
 
 use Yii;
 use common\models\base\Schedule;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\helpers\FileHelper;
 

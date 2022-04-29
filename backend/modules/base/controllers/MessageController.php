@@ -44,42 +44,12 @@ class MessageController extends BaseController
         'type' => 'select',
     ];
 
-    /**
-      * 列表页
-      * @param int $messageTypeId
-      * @return string
-      * @throws \yii\web\NotFoundHttpException
-      */
-    public function actionIndex()
+    protected function filterParams(&$params)
     {
-        $searchModel = new ModelSearch([
-            'model' => $this->modelClass,
-            'scenario' => 'default',
-            'likeAttributes' => $this->likeAttributes,
-            'defaultOrder' => [
-                'id' => SORT_DESC
-            ],
-            'pageSize' => Yii::$app->request->get('page_size', $this->pageSize),
-        ]);
-
-        // 管理员级别才能查看所有数据，其他只能查看本store数据
-        $params = Yii::$app->request->queryParams;
         if (!$this->isAdmin()) {
             $params['ModelSearch']['store_id'] = $this->getStoreId();
-            $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
+            (!isset($params['ModelSearch']['status']) || is_null($params['ModelSearch']['status'])) && $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
         }
-
-        $messageTypeId = Yii::$app->request->get('message_type_id', 0);
-        if ($messageTypeId > 0) {
-            $params['ModelSearch']['message_type_id'] = $messageTypeId;
-        }
-
-        $dataProvider = $searchModel->search($params);
-
-        return $this->render($this->action->id, [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-        ]);
+        Yii::$app->request->get('message_type_id') && $params['ModelSearch']['message_type_id'] = Yii::$app->request->get('message_type_id');
     }
-
 }

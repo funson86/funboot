@@ -25,17 +25,16 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'store_id')->textInput() ?>
+        <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
         <?= $form->field($model, 'app_id')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'setting_type_id')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'value')->textarea(['rows' => 6]) ?>
+        <?= $form->field($model, 'grade')->textInput() ?>
         <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
         <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
-        <?= $form->field($model, 'created_at')->textInput() ?>
-        <?= $form->field($model, 'updated_at')->textInput() ?>
-        <?= $form->field($model, 'created_by')->textInput() ?>
-        <?= $form->field($model, 'updated_by')->textInput() ?>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>

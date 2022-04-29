@@ -50,12 +50,16 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             echo "            ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->parent->name ?? '-'; }, ],\n";
         } elseif (in_array($column->name, ['user_id'])) {
             echo "            ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->user->username ?? '-'; }, ],\n";
-        } elseif (in_array($column->name, ['type'])) {
+        } elseif (substr_compare($column->name, '_id', -strlen('_id')) === 0) {
+            echo "            ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->" . (Inflector::variablize(substr($column->name, 0, strlen($column->name) - 3))) . "->name ?? '-'; }, ],\n";
+        } elseif (strpos($column->name, 'is_') === 0) {
+            echo "            ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return YesNo::getLabels(\$model->" . $column->name . "); }, ],\n";
+        } elseif (in_array($column->name, ['type']) || (substr_compare($column->name, '_type', -strlen('_type')) === 0)) {
             echo "            ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return ActiveModel::get" . Inflector::camelize($column->name) . "Labels(\$model->" . $column->name . "); }, ],\n";
         } elseif (in_array($column->name, ['status'])) {
             echo "            ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return ActiveModel::get" . Inflector::camelize($column->name) . "Labels(\$model->" . $column->name . ", true); }, ],\n";
-        } elseif (in_array($column->name, ['created_by', 'updated_by'])) {
-            echo "            ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->" . Inflector::variablize($column->name) . "->adminAdmin ?? '-'; }, ],\n";
+        } elseif (substr_compare($column->name, '_by', -strlen('_by')) === 0) {
+            echo "            ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return \$model->" . Inflector::variablize($column->name) . "->nameAdmin ?? '-'; }, ],\n";
         } elseif (isset($generator->inputType[$column->name]) && in_array($generator->inputType[$column->name], ['dropDownList', 'radioList'])) {
             echo "            ['attribute' => '" . $column->name . "', 'value' => function (\$model) { return ActiveModel::get" . Inflector::camelize($column->name) . "Labels(\$model->" . $column->name . "); }, ],\n";
         } else {

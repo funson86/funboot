@@ -5,7 +5,7 @@ namespace backend\modules\base\controllers;
 use common\models\forms\base\RechargeForm;
 use Yii;
 use common\models\base\Recharge;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\db\ActiveRecord;
 use yii\filters\AccessControl;

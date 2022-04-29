@@ -4,6 +4,7 @@ namespace common\models\base;
 
 use common\models\BaseModel;
 use common\models\Store;
+use common\models\User;
 use Yii;
 
 /**
@@ -34,7 +35,10 @@ class DepartmentBase extends BaseModel
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
     }
-/**
+
+    /** add function getXxxLabels here, detail in BaseModel **/
+
+    /**
      * {@inheritdoc}
      */
     public function attributeLabels()
@@ -56,8 +60,8 @@ class DepartmentBase extends BaseModel
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
-            'heads' => Yii::t('app', '负责人'),
-            'viceHeads' => Yii::t('app', '副负责人'),
+            'heads' => Yii::t('app', 'Head'),
+            'viceHeads' => Yii::t('app', 'Vice Head'),
         ]);
     }
 

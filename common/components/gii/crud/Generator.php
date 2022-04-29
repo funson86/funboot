@@ -85,6 +85,19 @@ class Generator extends \yii\gii\generators\crud\Generator
                 break;
         }
 
+        if (strpos($attribute, '_at') !== false) {
+            return "\$form->field(\$model, '$attribute')->widget(kartik\\time\TimePicker::class, [
+" . $blank . "    'language' => 'zh-CN',
+" . $blank . "    'pluginOptions' => [
+" . $blank . "        'showSeconds' => true
+" . $blank . "    ]
+" . $blank . "])";
+        } elseif (strpos($attribute, '_by') !== false) {
+            return "\$form->field(\$model, '$attribute')->dropDownList(\$this->context->getUsersIdName()) // \$form->field(\$model, '$attribute')->widget(kartik\select2\Select2::classname(), ['data' => \$this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],])";
+        } elseif (strpos($attribute, 'is_') !== false) {
+            return "\$form->field(\$model, '$attribute')->radioList(YesNo::getLabels())";
+        }
+
         switch ($type) {
             case 'text':
                 return parent::generateActiveField($attribute);
@@ -278,11 +291,11 @@ class Generator extends \yii\gii\generators\crud\Generator
             return 'json';
         }
 
-        if (stripos($column->name, '_at') !== false && $column->phpType === 'integer') {
+        if ((substr_compare($column->name, '_at', -strlen('_at')) === 0) && $column->phpType === 'integer') {
             return 'datetime';
         }
 
-        if (stripos($column->name, 'time') !== false && $column->phpType === 'integer') {
+        if ((substr_compare($column->name, '_time', -strlen('_time')) === 0) && $column->phpType === 'integer') {
             return 'datetime';
         }
 

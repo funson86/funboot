@@ -6,14 +6,14 @@ use common\components\enums\YesNo;
 use common\models\base\MessageType as ActiveModel;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\base\Message */
+/* @var $model common\models\base\MessageType */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Message Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="card message-view">
+<div class="card message-type-view">
     <div class="card-header">
         <?= Html::a(Yii::t('app', 'Update'), ['edit', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name ?? '-'; }, ],
                 'name',
                 'content:ntext',
-                'send_type',
+                ['attribute' => 'send_type', 'value' => function ($model) { return ActiveModel::getSendTypeLabels($model->send_type); }, ],
                 ['attribute' => 'send_target', 'value' => function ($model) { return ActiveModel::getSendTargetLabels($model->send_target); }, ],
                 'send_user:ntext',
                 ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],

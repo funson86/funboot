@@ -1,10 +1,14 @@
 <?php
 
+use common\models\base\Dict;
 use yii\grid\GridView;
 use common\helpers\Html;
 use common\models\base\DictData as ActiveModel;
 use common\helpers\Url;
 use yii\helpers\Inflector;
+
+$dicts = Dict::find()->all();
+$dictId = Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -20,9 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
     <div class="col-md-3">
-        <?= Html::createModal(['edit-ajax-dict'], '添加数据字典', ['class' => 'btn btn-sm btn-primary mb-3']) ?>
-        <a class="btn btn-sm btn-success mb-3 need-id" href="<?= Url::to(['edit-ajax-dict', 'id' => (Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0)]) ?>" data-link="<?= Url::to(['edit-ajax-dict']) ?>" data-toggle="modal" data-target="#ajaxModal" id="editDict">编辑</a>
-        <a class="btn btn-sm btn-danger mb-3 need-id" href="<?= Url::to(['delete-dict', 'id' => (Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0)]) ?>" data-link="<?= Url::to(['delete-dict']) ?>" data-toggle="modal" data-target="#ajaxModal" id="deleteDict">删除</a>
+        <?= Html::createModal(['edit-ajax-dict'], Yii::t('app', 'Create ') . Yii::t('app', 'Dict'), ['class' => 'btn btn-sm btn-primary mb-3']) ?>
+        <a class="btn btn-sm btn-success mb-3 need-id" href="<?= Url::to(['edit-ajax-dict', 'id' => (Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0)]) ?>" data-link="<?= Url::to(['edit-ajax-dict']) ?>" data-toggle="modal" data-target="#ajaxModal" id="editDict"><?= Yii::t('app', 'Edit') ?></a>
+        <a class="btn btn-sm btn-danger mb-3 need-id" href="<?= Url::to(['delete-dict', 'id' => (Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0)]) ?>" data-link="<?= Url::to(['delete-dict']) ?>" data-toggle="modal" data-target="#ajaxModal" id="deleteDict"><?= Yii::t('app', 'Delete') ?></a>
 
         <!--<div class="btn-group mb-3">
             <button type="button" class="btn btn-default">更多操作</button>
@@ -30,13 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <span class="sr-only">Toggle Dropdown</span>
                 <div class="dropdown-menu" role="menu">
                     <a class="dropdown-item" href="<?= Url::to(['edit-ajax-dict']) ?>" data-link="<?= Url::to(['edit-ajax-dict']) ?>" data-toggle="modal" data-target="#ajaxModal" id="editDict">编辑</a>
-                    <?= Html::editModal(['edit-ajax-dict'], '编辑', ['class' => 'dropdown-item']) ?>
-                    <?= Html::editModal(['delete-dict'], '删除', ['class' => 'dropdown-item']) ?>
+                    <?= Html::editModal(['edit-ajax-dict'], null, ['class' => 'dropdown-item']) ?>
+                    <?= Html::delete(['delete-dict'], null, ['class' => 'dropdown-item']) ?>
                 </div>
             </button>
         </div>-->
         <!--a href="compose.html" class="btn btn-default mb-3">更多操作</a-->
-        <!--<?= Html::groupButton(['edit-ajax-dict' => '编辑', 'delete-dict' => '删除'], '更多操作', ['class' => 'btn-group mb-3 ']) ?>-->
+        <!--<?= Html::groupButton(['edit-ajax-dict' => Yii::t('app', 'Edit'), 'delete-dict' => Yii::t('app', 'Delete')], Yii::t('app', 'More'), ['class' => 'btn-group mb-3 ']) ?>-->
 
         <div class="card">
             <div class="card-header">
@@ -66,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id] ?? null) ?></h2>
                 <div class="card-tools">
-                    <?= Html::createModal(['edit-ajax', 'dict_id' => (Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0)], '添加字典项', ['class' => 'btn btn-sm btn-primary need-id']) ?>
+                    <?= Yii::$app->request->get('ModelSearch')['dict_id'] ? Html::createModal(['edit-ajax', 'dict_id' => (Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0)], Yii::t('app', 'Create ') . Yii::t('app', 'Dict Data'), ['class' => 'btn btn-sm btn-primary need-id']) : '' ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
                 </div>
@@ -114,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
     var currentDictId = <?= Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0 ?>;
     $('.need-id').click(function () {
         if (currentDictId == 0) {
-            fbError('请先选择字典项')
+            fbError(fbT('Pleas select dict first'))
             return false;
         }
         return true;

@@ -5,7 +5,7 @@ namespace backend\modules\base\controllers;
 use common\helpers\ArrayHelper;
 use Yii;
 use common\models\base\SettingType;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\data\ActiveDataProvider;
 

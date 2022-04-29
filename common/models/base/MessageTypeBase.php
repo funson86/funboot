@@ -40,6 +40,8 @@ class MessageTypeBase extends BaseModel
         ];
     }
 
+    /** add function getXxxLabels here, detail in BaseModel **/
+
     /**
      * return label or labels array
      *

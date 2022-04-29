@@ -4,7 +4,6 @@ namespace backend\modules\school\controllers;
 
 use Yii;
 use common\models\school\Teacher;
-use common\models\ModelSearch;
 use backend\controllers\BaseController;
 
 /**

@@ -27,6 +27,12 @@ use common\models\User;
  * @property string $lang_backend_default 后端默认语言
  * @property int $lang_api API支持语言
  * @property string $lang_api_default API默认语言
+ * @property float $fund 资金
+ * @property float $fund_amount 资金总量
+ * @property float $billable_fund 可开票金额
+ * @property float $income 收入
+ * @property float $income_amount 收入总量
+ * @property int $income_count 收入数量
  * @property int $consume_count 消费次数
  * @property float $consume_amount 消费金额
  * @property float $history_amount 历史金额
@@ -36,6 +42,7 @@ use common\models\User;
  * @property int $param4 参数4
  * @property int $param5 参数5
  * @property float $param6 参数6
+ * @property int $grade 级别
  * @property int $type 类型
  * @property int $sort 排序
  * @property int $status 状态
@@ -60,10 +67,10 @@ class Store extends StoreBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['parent_id', 'user_id', 'expired_at', 'language', 'lang_frontend', 'lang_backend', 'lang_api', 'consume_count', 'param4', 'param5', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['parent_id', 'user_id', 'expired_at', 'language', 'lang_frontend', 'lang_backend', 'lang_api', 'income_count', 'consume_count', 'param4', 'param5', 'grade', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['remark'], 'string'],
-            [['consume_amount', 'history_amount', 'param6'], 'number'],
+            [['fund', 'fund_amount', 'billable_fund', 'income', 'income_amount', 'consume_amount', 'history_amount', 'param6'], 'number'],
             [['name', 'brief', 'host_name', 'code', 'qrcode', 'route', 'lang_source', 'lang_frontend_default', 'lang_backend_default', 'lang_api_default', 'param1', 'param2', 'param3'], 'string', 'max' => 255],
         ]);
     }
@@ -94,6 +101,12 @@ class Store extends StoreBase
                 'lang_backend_default' => '后端默认语言',
                 'lang_api' => 'API支持语言',
                 'lang_api_default' => 'API默认语言',
+                'fund' => '资金',
+                'fund_amount' => '资金总量',
+                'billable_fund' => '可开票金额',
+                'income' => '收入',
+                'income_amount' => '收入总量',
+                'income_count' => '收入数量',
                 'consume_count' => '消费次数',
                 'consume_amount' => '消费金额',
                 'history_amount' => '历史金额',
@@ -103,6 +116,7 @@ class Store extends StoreBase
                 'param4' => '参数4',
                 'param5' => '参数5',
                 'param6' => '参数6',
+                'grade' => '级别',
                 'type' => '类型',
                 'sort' => '排序',
                 'status' => '状态',
@@ -132,6 +146,12 @@ class Store extends StoreBase
                 'lang_backend_default' => Yii::t('app', 'Lang Backend Default'),
                 'lang_api' => Yii::t('app', 'Lang Api'),
                 'lang_api_default' => Yii::t('app', 'Lang Api Default'),
+                'fund' => Yii::t('app', 'Fund'),
+                'fund_amount' => Yii::t('app', 'Fund Amount'),
+                'billable_fund' => Yii::t('app', 'Billable Fund'),
+                'income' => Yii::t('app', 'Income'),
+                'income_amount' => Yii::t('app', 'Income Amount'),
+                'income_count' => Yii::t('app', 'Income Count'),
                 'consume_count' => Yii::t('app', 'Consume Count'),
                 'consume_amount' => Yii::t('app', 'Consume Amount'),
                 'history_amount' => Yii::t('app', 'History Amount'),
@@ -141,6 +161,7 @@ class Store extends StoreBase
                 'param4' => Yii::t('app', 'Param4'),
                 'param5' => Yii::t('app', 'Param5'),
                 'param6' => Yii::t('app', 'Param6'),
+                'grade' => Yii::t('app', 'Grade'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),
                 'status' => Yii::t('app', 'Status'),

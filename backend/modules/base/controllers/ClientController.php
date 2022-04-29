@@ -4,7 +4,7 @@ namespace backend\modules\base\controllers;
 
 use Yii;
 use common\models\oauth\Client;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 
 /**

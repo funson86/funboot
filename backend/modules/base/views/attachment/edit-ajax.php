@@ -25,6 +25,7 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
+        <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
         <?= $form->field($model, 'upload_type')->dropDownList(ActiveModel::getUploadTypeLabels()) ?>
         <?= $form->field($model, 'file_type')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'path')->textInput(['maxlength' => true]) ?>

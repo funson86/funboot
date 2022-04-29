@@ -14,6 +14,9 @@ use common\components\base\LogSystem;
 /* @var $searchModel common\models\ModelSearch */
 /* @var int $type */
 
+$type = Yii::$app->request->get('type', 1);
+$driver = Yii::$app->logSystem->driver;
+
 $this->title = Yii::t('app', 'Logs');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </ul>
                 <div class="card-tools">
                     <?= Html::export() ?>
-                    <?= Html::buttonModal(['stat-ajax-error'], Yii::t('app', 'Error') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
-                    <?= Html::buttonModal(['stat-ajax-login'], Yii::t('app', 'Login') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
+                    <?= Html::buttonModal(['view-ajax-stat-error'], Yii::t('app', 'Error') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
+                    <?= Html::buttonModal(['view-ajax-stat-login'], Yii::t('app', 'Login') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
                 </div>
             </div>
 
@@ -87,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'visible' => intval(Yii::$app->request->get('id')) == 1,
                         ],*/
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
-                        // ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        // ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         'created_at:datetime',
                         // 'updated_at:datetime',
                         // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],

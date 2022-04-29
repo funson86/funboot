@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'consume_count',
                         'consume_amount',
                         // ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, 'filter' => Html::activeDropDownList($searchModel, 'type', ActiveModel::getTypeLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
                         // 'created_at:datetime',
                         // 'updated_at:datetime',
@@ -85,14 +85,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'header' => Yii::t('app', 'Actions'),
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{msg} {login} {edit-reset-password} {view} {edit} {delete}',
+                            'template' => '{edit-msg} {edit-login} {edit-reset-password} {view} {edit} {delete}',
                             'buttons' => [
-                                'msg' => function ($url, $model, $key) {
+                                'edit-msg' => function ($url, $model, $key) {
                                     return Html::a(Yii::t('app', 'Message'), ['/base/msg/edit', 'user_id' => $model->id], ['class' => 'btn btn-sm btn-info']);
                                 },
-                                'login' => function ($url, $model, $key) {
+                                'edit-login' => function ($url, $model, $key) {
                                     if ($this->context->isSuperAdmin()) {
-                                        return Html::buttonModal(['login', 'id' => $model->id], Yii::t('app', 'Login'), ['class' => 'btn btn-sm btn-success'], false, true);
+                                        return Html::buttonModal(['edit-login', 'id' => $model->id], Yii::t('app', 'Login'), ['class' => 'btn btn-sm btn-success'], false, true);
                                     }
                                 },
                                 'edit-reset-password' => function ($url, $model, $key) {

@@ -8,7 +8,7 @@ use common\helpers\OfficeHelper;
 use common\models\base\SettingType;
 use Yii;
 use common\models\base\Setting;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\db\Expression;
 use yii\helpers\Inflector;

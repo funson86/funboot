@@ -7,6 +7,7 @@ use Yii;
 use common\models\tool\RedisCrud;
 use common\models\ModelSearch;
 use backend\controllers\BaseController;
+use yii\web\NotFoundHttpException;
 
 /**
  * Crud
@@ -50,19 +51,22 @@ class RedisCrudController extends BaseController
 
     /**
      * @param $id
-     * @param bool $action
-     * @return RedisCurd|null
+     * @return RedisCrud|null
      * @throws \Exception
      */
-    protected function findModel($id, $action = false)
+    protected function findModel($id = null)
     {
-        if (empty($id) || empty(($model = $this->modelClass::findOne($id)))) {
+        if (is_null($id)) {
             $model = new $this->modelClass();
             $model->id = IdHelper::snowFlakeId();
             $model->sort = Yii::$app->params['defaultSort'];
             $model->status = $this->modelClass::STATUS_ACTIVE;
+        } else {
+            $model = $this->modelClass::findOne($id);
 
-            return $model;
+            if (!$model) {
+                throw new NotFoundHttpException(Yii::t('app', 'Invalid id'), 500);
+            }
         }
 
         return $model;

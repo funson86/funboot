@@ -2,10 +2,12 @@
 
 use common\helpers\Html;
 use common\helpers\Url;
+use common\models\User;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\base\Department as ActiveModel;
 
+$allUsers = User::getIdLabel(false, 'username');
 
 /* @var $this yii\web\View */
 /* @var $model common\models\base\Department */
