@@ -36,7 +36,7 @@ class CacheSystemMall extends CacheSystem
         return true;
     }
 
-    protected function clearItems($storeId)
+    protected function clearItems($storeId = null)
     {
         $this->clearProductSkus($storeId);
         $this->clearAttribute($storeId);

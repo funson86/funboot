@@ -42,7 +42,7 @@ class CacheSystem extends \yii\base\Component
         return $this->clearItems($storeId);
     }
 
-    protected function clearItems($storeId)
+    protected function clearItems($storeId = null)
     {
         $this->clearAllStore();
         $this->clearAllPermission();
@@ -163,7 +163,7 @@ class CacheSystem extends \yii\base\Component
     /**
      * @return bool
      */
-    public function clearAllUserRole($userId)
+    public function clearAllUserRole()
     {
         $users = User::find()->select(['id'])->asArray()->all();
         foreach ($users as $user) {
@@ -241,8 +241,9 @@ class CacheSystem extends \yii\base\Component
     {
         $stores = self::getAllStore();
         foreach ($stores as $store) {
-            return Yii::$app->cache->delete(self::STORE_SETTING . $store->id);
+            Yii::$app->cache->delete(self::STORE_SETTING . $store->id);
         }
+        return true;
     }
 
     /**

@@ -36,7 +36,7 @@ class CacheSystemCms extends CacheSystem
         return true;
     }
 
-    protected function clearItems($storeId)
+    protected function clearItems($storeId = null)
     {
         $this->clearCatalogs($storeId);
         $this->clearPages($storeId);
