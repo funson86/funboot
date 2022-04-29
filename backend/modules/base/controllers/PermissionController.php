@@ -67,11 +67,6 @@ class PermissionController extends BaseController
         }
     }
 
-    protected function afterEdit($id = null, $model = null)
-    {
-        Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
-    }
-
     /**
      * @param $id
      * @return bool|void
@@ -83,12 +78,8 @@ class PermissionController extends BaseController
         }
     }
 
-    /**
-     * @param $id
-     * @return bool
-     */
-    protected function afterDeleteModel($id = null, $model = null, $soft = false, $tree = false)
+    protected function clearCache()
     {
-        return Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
+        return Yii::$app->cacheSystem->clearAllData();
     }
 }

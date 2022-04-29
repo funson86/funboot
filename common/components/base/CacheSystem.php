@@ -33,6 +33,28 @@ class CacheSystem extends \yii\base\Component
     const LANG = 'lang:';
 
     /**
+     * clear all data, if specify storeId, then only clear one store data.
+     * @param null $storeId
+     * @return bool
+     */
+    public function clearAllData($storeId = null)
+    {
+        return $this->clearItems($storeId);
+    }
+
+    protected function clearItems($storeId)
+    {
+        $this->clearAllStore();
+        $this->clearAllPermission();
+        $this->clearAllUserRole();
+        $this->clearAllDict();
+        $this->clearAllSetting();
+        $this->clearLanguage();
+
+        return true;
+    }
+
+    /**
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
     public function getAllStore()
@@ -136,6 +158,17 @@ class CacheSystem extends \yii\base\Component
         }
 
         return $data;
+    }
+
+    /**
+     * @return bool
+     */
+    public function clearAllUserRole($userId)
+    {
+        $users = User::find()->select(['id'])->asArray()->all();
+        foreach ($users as $user) {
+            Yii::$app->cache->delete(self::USER_ROLE_IDS . $user['id']);
+        }
     }
 
     /**

@@ -113,8 +113,7 @@ class StoreController extends BaseController
                     return $this->redirectError($this->getError($model));
                 }
 
-                Yii::$app->cacheSystem->clearAllStore();
-                Yii::$app->cacheSystem->clearStoreSetting();
+                $this->clearCache();
                 $this->generateHostFile();
                 return $this->redirectSuccess();
             } else {
@@ -155,8 +154,7 @@ class StoreController extends BaseController
                 Yii::$app->logSystem->db($model->errors);
                 return $this->redirectError($this->getError($model));
             } else {
-                Yii::$app->cacheSystem->clearAllStore();
-                Yii::$app->cacheSystem->clearStoreSetting();
+                $this->clearCache();
                 return $this->redirectSuccess();
             }
         }
@@ -169,8 +167,7 @@ class StoreController extends BaseController
 
     protected function afterEditAjaxStatus($id = null, $model = null, $status = null)
     {
-        Yii::$app->cacheSystem->clearAllStore();
-        Yii::$app->cacheSystem->clearStoreSetting();
+        $this->clearCache();
         return true;
     }
 
@@ -316,8 +313,8 @@ class StoreController extends BaseController
     public function actionEditMaintainAll()
     {
         Store::updateAll(['status' => $this->modelClass::STATUS_MAINTENANCE], ['status' => $this->modelClass::STATUS_ACTIVE]);
-        Yii::$app->cacheSystem->clearAllStore();
 
+        $this->clearCache();
         return $this->redirectSuccess();
     }
 
@@ -327,8 +324,13 @@ class StoreController extends BaseController
     public function actionEditMaintainCancel()
     {
         Store::updateAll(['status' => $this->modelClass::STATUS_ACTIVE], ['status' => $this->modelClass::STATUS_MAINTENANCE]);
-        Yii::$app->cacheSystem->clearAllStore();
 
+        $this->clearCache();
         return $this->redirectSuccess();
+    }
+
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystem->clearAllData();
     }
 }

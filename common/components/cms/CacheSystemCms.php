@@ -15,16 +15,33 @@ use Yii;
  */
 class CacheSystemCms extends CacheSystem
 {
+    const CMS_CATALOG = 'cmsCatalog:';
+    const CMS_PAGE = 'cmsPage:';
+
     /**
+     * clear all data, if specify storeId, then only clear one store data.
+     * @param null $storeId
      * @return bool
      */
-    public function clearCmsAllData()
+    public function clearCmsAllData($storeId = null)
     {
-        $models = Yii::$app->cacheSystem->getAllStore();
-        foreach ($models as $model) {
-            $this->clearCatalogs($model->id);
-            $this->clearPages($model->id);
+        if ($storeId) {
+            return $this->clearItems($storeId);
+        } else {
+            $models = Yii::$app->cacheSystem->getAllStore();
+            foreach ($models as $model) {
+                $this->clearItems($model->id);
+            }
         }
+        return true;
+    }
+
+    protected function clearItems($storeId)
+    {
+        $this->clearCatalogs($storeId);
+        $this->clearPages($storeId);
+
+        return true;
     }
 
     /**
@@ -37,10 +54,10 @@ class CacheSystemCms extends CacheSystem
     public function getCatalogs($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        $data = Yii::$app->cache->get('cmsCatalog:' . $storeId);
+        $data = Yii::$app->cache->get(self::CMS_CATALOG . $storeId);
         if (!$data) {
             $data = Catalog::find()->where(['store_id' => $storeId,])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
-            Yii::$app->cache->set('cmsCatalog:' . $storeId, $data);
+            Yii::$app->cache->set(self::CMS_CATALOG . $storeId, $data);
         }
         return ArrayHelper::mapIdData($data);
     }
@@ -51,7 +68,7 @@ class CacheSystemCms extends CacheSystem
     public function clearCatalogs($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        return Yii::$app->cache->delete('cmsCatalog:' . $storeId);
+        return Yii::$app->cache->delete(self::CMS_CATALOG . $storeId);
     }
 
     /**
@@ -62,10 +79,10 @@ class CacheSystemCms extends CacheSystem
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
 
-        $data = Yii::$app->cache->get('cmsPage:' . $storeId);
+        $data = Yii::$app->cache->get(self::CMS_PAGE . $storeId);
         if (!$data) {
             $data = Page::find()->where(['store_id' => $storeId,])->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
-            Yii::$app->cache->set('cmsPage:' . $storeId, $data);
+            Yii::$app->cache->set(self::CMS_PAGE . $storeId, $data);
         }
         return ArrayHelper::mapIdData($data);
     }
@@ -76,7 +93,7 @@ class CacheSystemCms extends CacheSystem
     public function clearPages($storeId = null)
     {
         !$storeId && $storeId = Yii::$app->storeSystem->getId();
-        return Yii::$app->cache->delete('cmsPage:' . $storeId);
+        return Yii::$app->cache->delete(self::CMS_PAGE . $storeId);
     }
 
     /**

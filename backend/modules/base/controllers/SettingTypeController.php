@@ -67,11 +67,17 @@ class SettingTypeController extends BaseController
 
     protected function afterEdit($id = null, $model = null)
     {
-        Yii::$app->cacheSystem->clearAllSetting(); // 清理缓存
+        $this->clearCache();
     }
 
     protected function afterDeleteModel($id = null, $model = null, $soft = false, $tree = false)
     {
-        Yii::$app->cacheSystem->clearAllSetting(); // 清理缓存
+        $this->clearCache();
     }
+
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystem->clearAllData();
+    }
+
 }

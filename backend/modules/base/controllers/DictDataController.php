@@ -73,7 +73,7 @@ class DictDataController extends BaseController
 
     protected function afterEdit($id = null, $model = null)
     {
-        Yii::$app->cacheSystem->clearAllDict();
+        $this->clearCache();
     }
 
     /**
@@ -97,7 +97,7 @@ class DictDataController extends BaseController
                 $this->redirectError($this->getError($model));
             }
 
-            Yii::$app->cacheSystem->clearAllDict();
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
@@ -131,7 +131,7 @@ class DictDataController extends BaseController
             return $this->redirectError();
         }
 
-        Yii::$app->cacheSystem->clearAllDict();
+        $this->clearCache();
         return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete Successfully'));
     }
 
@@ -154,4 +154,8 @@ class DictDataController extends BaseController
         return $model;
     }
 
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystem->clearAllData();
+    }
 }

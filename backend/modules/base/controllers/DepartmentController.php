@@ -53,39 +53,6 @@ class DepartmentController extends BaseController
         'type' => 'select',
     ];
 
-    /**
-      * ajax编辑/创建
-      *
-      * @return mixed|string|\yii\web\Response
-      * @throws \yii\base\ExitException
-      */
-    /*public function actionEditAjax()
-    {
-        $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id);
-
-        $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
-        $allUsers = User::getIdLabel(false, 'username');
-
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-
-            if (!$model->save()) {
-                $this->redirectError($this->getError($model));
-            }
-
-            return $this->redirectSuccess();
-        }
-
-        $model->heads = explode('|', $model->head);
-        $model->viceHeads = explode('|', $model->vice_head);
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-            'allUsers' => $allUsers,
-        ]);
-    }*/
-
     protected function beforeEdit($id = null, $model = null)
     {
         $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
@@ -110,14 +77,5 @@ class DepartmentController extends BaseController
         }
 
         return true;
-    }
-
-    /**
-     * @param $id
-     * @return bool|void
-     */
-    protected function afterDeleteModel($id = null, $model = null, $soft = false, $tree = false)
-    {
-        Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
     }
 }

@@ -111,6 +111,7 @@ class RoleController extends BaseController
 
             RolePermission::deleteAll(['status' => RolePermission::STATUS_INACTIVE, 'role_id' => $id]);
 
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
@@ -156,6 +157,7 @@ class RoleController extends BaseController
 
             RoleDepartment::deleteAll(['status' => RoleDepartment::STATUS_INACTIVE, 'role_id' => $id]);
 
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
@@ -190,5 +192,10 @@ class RoleController extends BaseController
         }
 
         return null;
+    }
+
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystem->clearAllData();
     }
 }

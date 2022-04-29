@@ -140,7 +140,7 @@ class SettingController extends BaseController
             }
             $this->afterEditAjaxSave($setting);
 
-            Yii::$app->cacheSystem->clearStoreSetting($storeId);
+            $this->clearCache();
             return $this->success();
         }
 
@@ -155,6 +155,7 @@ class SettingController extends BaseController
     {
         foreach ($setting as $code => $value) { // 根据code自定义规则
         }
+        return $this->clearCache();
     }
 
     /**
@@ -246,7 +247,7 @@ class SettingController extends BaseController
                 return $this->redirectError($e->getMessage(), null, true);
             }
 
-            Yii::$app->cacheSystem->clearStoreSetting();
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
@@ -274,7 +275,7 @@ class SettingController extends BaseController
             Setting::updateAll(['name' => ($mapCodeName[$model->code] ?? '')], ['id' => $model->id]);
         }
 
-        Yii::$app->cacheSystem->clearStoreSetting();
+        $this->clearCache();
         return $this->redirectSuccess(Yii::$app->request->referrer);
     }
 
@@ -329,6 +330,14 @@ class SettingController extends BaseController
             return $this->error();
         }
 
+        // 系统维护
+        if ($code == 'store_status') {
+            $this->store->status = $value;
+            $this->store->save();
+            $this->clearCache();
+            return $this->success();
+        }
+
         $settingType = SettingType::findOne(['code' => $code]);
         if (!$settingType) {
             return $this->error();
@@ -350,12 +359,17 @@ class SettingController extends BaseController
         }
         $this->afterEditAjaxSave([$code => $value]);
 
-        Yii::$app->cacheSystem->clearStoreSetting($this->store->id);
+        $this->clearCache();
         return $this->success();
     }
 
     public function actionEditQuick()
     {
         return $this->render($this->action->id);
+    }
+
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystem->clearAllData();
     }
 }
