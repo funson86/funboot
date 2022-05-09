@@ -21,9 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id] ?? null) ?></h2>
                 <div class="card-tools">
-                    <?= Html::createModal() ?>
+                    <!--<?= Html::createModal() ?>
                     <?= Html::export() ?>
-                    <!--<?= Html::import() ?>-->
+                    <?= Html::import() ?>-->
                 </div>
             </div>
             <div class="card-body">

@@ -357,7 +357,7 @@ class SiteController extends BaseController
         // 资金 && 资金记录
         $store = Store::findOne($model->store_id);
         $original = $store->fund;
-        $amount = intval($model->amount);
+        $amount = floatval($model->amount);
         Store::updateAllCounters(['fund' => $amount, 'billable_fund' => $amount], ['id' => $model->store_id]);
         FundLog::create($amount, $original, $original + $amount, $model->name, FundLog::TYPE_RECHARGE, $model->user_id, $store->id);
         Yii::$app->cacheSystem->refreshStoreById();
