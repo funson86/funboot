@@ -117,7 +117,7 @@ class RoleController extends BaseController
 
         $permissions = Permission::find()->asArray()->all();
         $selectIds = ArrayHelper::getColumn(RolePermission::find()->where(['role_id' => $id])->all(), 'permission_id');
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
             'model' => $model,
             'permissions' => $permissions,
             'selectIds' => $selectIds,
@@ -163,7 +163,7 @@ class RoleController extends BaseController
 
         $departments = Department::find()->asArray()->all();
         $selectIds = ArrayHelper::getColumn(RoleDepartment::find()->where(['role_id' => $id])->all(), 'department_id');
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
             'model' => $model,
             'departments' => $departments,
             'selectIds' => $selectIds,

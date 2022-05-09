@@ -99,7 +99,7 @@ class FanController extends BaseController
             return $this->redirectSuccess();
         }
 
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
             'model' => $model,
             'tags' => ArrayHelper::map($tag->tags, 'id', 'name'),
         ]);
@@ -123,7 +123,7 @@ class FanController extends BaseController
             return $this->redirectSuccess();
         }
 
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
             'model' => $model,
         ]);
     }

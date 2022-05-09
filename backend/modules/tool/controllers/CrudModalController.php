@@ -44,28 +44,13 @@ class CrudModalController extends BaseController
         'type' => 'select',
     ];
 
-    public function actionEditAjax()
+    protected function beforeEditSave($id = null, $model = null)
     {
-        $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id);
+        $post = Yii::$app->request->post();
+        $model->started_at = strtotime($post[$model->formName()]['startedTime']);
+        $model->ended_at = strtotime($post[$model->formName()]['endedTime']);
 
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-            $post = Yii::$app->request->post();
-            $model->started_at = strtotime($post['Crud']['startedTime']);
-            $model->ended_at = strtotime($post['Crud']['endedTime']);
-
-            if (!$model->save()) {
-                $this->redirectError($this->getError($model));
-            }
-
-            return $this->redirectSuccess();
-        }
-
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-        ]);
+        return true;
     }
 
 }

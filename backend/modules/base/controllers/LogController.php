@@ -96,7 +96,7 @@ class LogController extends BaseController
 
         // 返回Modal视图
         if (empty($type)) {
-            return $this->renderAjax($this->action->id);
+            return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id);
         }
 
         // 返回json数据
@@ -124,7 +124,7 @@ class LogController extends BaseController
 
         // 返回Modal视图
         if (empty($type)) {
-            return $this->renderAjax($this->action->id);
+            return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id);
         }
 
         // 返回json数据
