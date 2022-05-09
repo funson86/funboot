@@ -176,7 +176,7 @@ class LogSystem extends \yii\base\Component
             $model->name = $user->identity->username ?? '';
             $model->user_id = $user->id;
             $model->store_id = $user->identity->store_id;
-        } elseif (isset($data['username'])) {
+        } elseif (is_array($data) && isset($data['username'])) {
             $model->name = $data['username'] ?? '';
         }
 
@@ -196,8 +196,8 @@ class LogSystem extends \yii\base\Component
         $model->cost_time = Yii::getLogger()->getElapsedTime();
         $model->type = $type;
         $model->code = $code;
-        $model->data = is_array($data) ? json_encode($data) : $data ?? '';
-        $model->msg = is_array($msg) ? json_encode($msg) : $msg ?? '';
+        $model->data = is_array($data) ? json_encode($data) : ($data ?? '');
+        $model->msg = is_array($msg) ? json_encode($msg) : ($msg ?? '');
 
         // 插入队列
         if ($this->queue) {
