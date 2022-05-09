@@ -42,6 +42,7 @@ use common\models\User;
  * @property int $param4 参数4
  * @property int $param5 参数5
  * @property float $param6 参数6
+ * @property string|null $chain 连锁
  * @property int $grade 级别
  * @property int $type 类型
  * @property int $sort 排序
@@ -69,7 +70,7 @@ class Store extends StoreBase
         return array_merge(parent::rules(), [
             [['parent_id', 'user_id', 'expired_at', 'language', 'lang_frontend', 'lang_backend', 'lang_api', 'income_count', 'consume_count', 'param4', 'param5', 'grade', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
-            [['remark'], 'string'],
+            [['remark', 'chain'], 'string'],
             [['fund', 'fund_amount', 'billable_fund', 'income', 'income_amount', 'consume_amount', 'history_amount', 'param6'], 'number'],
             [['name', 'brief', 'host_name', 'code', 'qrcode', 'route', 'lang_source', 'lang_frontend_default', 'lang_backend_default', 'lang_api_default', 'param1', 'param2', 'param3'], 'string', 'max' => 255],
         ]);
@@ -116,6 +117,7 @@ class Store extends StoreBase
                 'param4' => '参数4',
                 'param5' => '参数5',
                 'param6' => '参数6',
+                'chain' => '连锁',
                 'grade' => '级别',
                 'type' => '类型',
                 'sort' => '排序',
@@ -161,6 +163,7 @@ class Store extends StoreBase
                 'param4' => Yii::t('app', 'Param4'),
                 'param5' => Yii::t('app', 'Param5'),
                 'param6' => Yii::t('app', 'Param6'),
+                'chain' => Yii::t('app', 'Chain'),
                 'grade' => Yii::t('app', 'Grade'),
                 'type' => Yii::t('app', 'Type'),
                 'sort' => Yii::t('app', 'Sort'),

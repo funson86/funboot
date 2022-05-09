@@ -280,6 +280,7 @@ return [
     'Renew ' => '续期',
     'Sub' => '创建子店铺',
     'Sub ' => '创建子店铺',
+    'Chain' => '连锁',
     'Maintain All' => '维护所有',
     'Cancel Maintenance' => '取消维护',
 

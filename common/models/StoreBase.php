@@ -55,6 +55,7 @@ class StoreBase extends BaseModel
     public $langBackends;
     public $langFrontends;
     public $langApis;
+    public $chains;
 
     /**
      * @var array 配置
