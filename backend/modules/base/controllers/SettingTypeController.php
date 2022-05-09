@@ -61,7 +61,7 @@ class SettingTypeController extends BaseController
     protected function beforeEditSave($id = null, $model = null)
     {
         $post = Yii::$app->request->post();
-        $model->support_role = ArrayHelper::arrayToInt($post['SettingType']['supportRoles']);
+        $model->support_role = ArrayHelper::arrayToInt($post[$model->formName()]['supportRoles']);
         return true;
     }
 
