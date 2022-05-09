@@ -41,7 +41,7 @@ $currency = $this->context->store->settings['payment_currency'] ?? '$';
             <div class="card-body">
                 <div class="col-sm-12">
                     <?= $form->field($model, 'amount', ['inputTemplate' => '<div class="input-group"><div class="input-group-prepend"><span class="input-group-text">' . $currency . '</span></div>{input}</div>',])->label(false) ?>
-                    <?= $form->field($model, 'message')->textarea(['rows' => 4]) ?>
+                    <?= $form->field($model, 'message')->textarea(['rows' => 4])->label(Yii::t('app', 'Remark')) ?>
 
                     <?php if ($model->scenario == 'captchaRequired') { ?>
                         <?= $form->field($model,'verifyCode')->widget(\yii\captcha\Captcha::class, [
