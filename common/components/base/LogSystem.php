@@ -196,8 +196,8 @@ class LogSystem extends \yii\base\Component
         $model->cost_time = Yii::getLogger()->getElapsedTime();
         $model->type = $type;
         $model->code = $code;
-        $model->data = is_array($data) ? json_encode($data) : ($data ?? '');
-        $model->msg = is_array($msg) ? json_encode($msg) : ($msg ?? '');
+        $model->data = (is_array($data) ? json_encode($data) : ($data ?? ''));
+        $model->msg = (is_array($msg) ? json_encode($msg) : ($msg ?? ''));
 
         // 插入队列
         if ($this->queue) {
