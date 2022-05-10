@@ -64,17 +64,14 @@ class StringHelper extends BaseStringHelper
             for ($j = 0; $j < count($matches[0]); $j++)
             {
                 $str = $matches[0][$j];
-                if (strpos($str, '\\u') === 0)
-                {
+                if (strpos($str, '\\u') === 0) {
                     $code = base_convert(substr($str, 2, 2), 16, 10);
                     $code2 = base_convert(substr($str, 4), 16, 10);
                     $c = chr($code).chr($code2);
                     $c = iconv('UCS-2', 'UTF-8', $c);
                     $new .= $c;
-                }
-                else
-                {
-                    $new .= $str;
+                } else {
+                    $new .= ' ' . $str;
                 }
             }
         }
