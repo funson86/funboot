@@ -77,9 +77,10 @@ class BalanceLogBase extends BaseModel
         ]);
     }
 
-    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_CONSUME, $userId = null)
+    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_CONSUME, $userId = null, $storeId = null)
     {
         $model = new BalanceLog();
+        $storeId && $model->store_id = $storeId;
         $model->name = $name;
         $model->user_id = $userId ?? Yii::$app->user->id;
         $model->change = $change;

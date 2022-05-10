@@ -78,8 +78,8 @@ class FundLogBase extends BaseModel
     public static function create($change, $original, $balance, $name = '', $type = self::TYPE_RECHARGE, $userId = null, $storeId = null)
     {
         $model = new FundLog();
+        $storeId && $model->store_id = $storeId;
         $model->name = $name;
-        $model->store_id = $storeId;
         $model->user_id = $userId ?? Yii::$app->user->id;
         $model->change = $change;
         $model->original = $original;
