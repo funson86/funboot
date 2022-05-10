@@ -454,4 +454,27 @@ class BaseController extends Controller
 
         return $this->redirect($url);
     }
+
+    public function actionSitemap()
+    {
+        $str = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        $str .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+        $str .= '<url>' . "\n";
+
+        $str .= $this->buildLink();
+
+        $str .= '</url>' . "\n";
+        $str .= '</urlset>' . "\n";
+
+        file_put_contents(Yii::getAlias('@webroot/sitemap/' . CommonHelper::getHostPrefix($this->store->host_name, false) . '.xml'), $str);
+        return $this->redirect('/sitemap/' . CommonHelper::getHostPrefix($this->store->host_name, false) . '.xml');
+    }
+
+    protected function buildLink()
+    {
+        $str = '<loc>' . Yii::$app->urlManager->createAbsoluteUrl(['/']) . '</loc>' . "\n" . '<lastmod>' . date('Y-m-d') . '</lastmod>' . "\n";
+        // $str .= '';
+
+        return $str;
+    }
 }

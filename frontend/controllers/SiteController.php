@@ -320,29 +320,6 @@ class SiteController extends BaseController
         ]);
     }
 
-    public function actionSitemap()
-    {
-        $str = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $str .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-        $str .= '<url>' . "\n";
-
-        $str .= $this->buildLink();
-
-        $str .= '</url>' . "\n";
-        $str .= '</urlset>' . "\n";
-
-        file_put_contents(Yii::getAlias('@webroot/sitemap/' . $this->store->host_name . '.xml'), $str);
-        return $this->redirect('/sitemap/' . $this->store->host_name . '.xml');
-    }
-
-    protected function buildLink()
-    {
-        $str = '<loc>' . Yii::$app->urlManager->createAbsoluteUrl(['/']) . '</loc>' . "\n";
-        $str .= '<lastmod>' . date('Y-m-d') . '</lastmod>' . "\n";
-
-        return $str;
-    }
-
     /**
      * 百度地图iframe
      * http://www.funboot.com/site/baidu-map?lng=114.15&lat=22.62&width=99%&height=400px&title=Funboot系统&remark=加油

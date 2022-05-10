@@ -62,9 +62,10 @@ class CommonHelper
 
     /** 获取类似 http(s)://www.host_name.com 域名前缀
      * @param null $hostName
+     * @param bool $protocol
      * @return string
      */
-    public static function getHostPrefix($hostName = null)
+    public static function getHostPrefix($hostName = null, $protocol = true)
     {
         if (!$hostName) {
             $store = Yii::$app->storeSystem->get();
@@ -76,7 +77,7 @@ class CommonHelper
         }
 
         $hostNames = explode('|', $hostName);
-        return self::getHttpPrefix() . ($hostNames[0] ?? $hostName);
+        return ($protocol ? self::getHttpPrefix() : '') . ($hostNames[0] ?? $hostName);
     }
 
     /**
