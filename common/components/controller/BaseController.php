@@ -459,11 +459,9 @@ class BaseController extends Controller
     {
         $str = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         $str .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-        $str .= '<url>' . "\n";
 
         $str .= $this->buildLink();
 
-        $str .= '</url>' . "\n";
         $str .= '</urlset>' . "\n";
 
         file_put_contents(Yii::getAlias('@webroot/sitemap/' . CommonHelper::getHostPrefix($this->store->host_name, false) . '.xml'), $str);
@@ -472,8 +470,8 @@ class BaseController extends Controller
 
     protected function buildLink()
     {
-        $str = '<loc>' . Yii::$app->urlManager->createAbsoluteUrl(['/']) . '</loc>' . "\n" . '<lastmod>' . date('Y-m-d') . '</lastmod>' . "\n";
-        // $str .= '';
+        $str = "<url>\n<lastmod>" . date('Y-m-d') . "</lastmod>\n<loc>" . Yii::$app->urlManager->createAbsoluteUrl(['/']) . "</loc>\n</url>\n";
+        // $str .= "";
 
         return $str;
     }
