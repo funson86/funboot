@@ -83,7 +83,7 @@ class TagController extends BaseController
         }
 
         $model = new $this->modelClass;
-        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
 

@@ -181,6 +181,7 @@ return [
     'Normal' => '一般',
     'Stuff' => '物料',
     'Stuffs' => '物料',
+    'Fund' => '资金',
     'Fund Log' => '资金记录',
     'Fund Logs' => '资金记录',
     'Recharge' => '充值',
@@ -211,6 +212,10 @@ return [
     'Updated By' => '更新用户',
     'Sort Order' => '排序',
     'Root' => '顶级',
+    'Consume Count' => '消费次数',
+    'Consume Amount' => '消费金额',
+    'Last Paid At' => '最近消费',
+    'Last Login At' => '最近登录',
 
     'Choose' => '选择文件',
     'Upload' => '立即上传',

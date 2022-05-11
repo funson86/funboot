@@ -61,7 +61,7 @@ class QrcodeController extends BaseController
             return $this->redirectSuccess();
         }
 
-        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
     }

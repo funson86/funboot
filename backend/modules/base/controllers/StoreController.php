@@ -129,7 +129,7 @@ class StoreController extends BaseController
         $model->langApis = ArrayHelper::intToArray($model->lang_api, $this->modelClass::getLanguageLabels());
         $model->types = ArrayHelper::intToArray($model->type, $this->modelClass::getTypeLabels());
         $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
-        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
             'user' => $user,
         ]);
@@ -162,7 +162,7 @@ class StoreController extends BaseController
 
         $model->expiredTime = date('Y-m-d', ($model->expired_at > 0 ? $model->expired_at : time() + Yii::$app->params['defaultStoreExpiredTime']));
         $model->chains = $model->chain ? json_decode($model->chain, true) : [];
-        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
     }

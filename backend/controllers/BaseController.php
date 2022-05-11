@@ -101,6 +101,12 @@ class BaseController extends \common\components\controller\BaseController
     protected $exportSort = ['store_id' => SORT_ASC, 'id' => SORT_ASC];
 
     /**
+     * 用于多个action共用一个view file时设置
+     * @var array
+     */
+    protected $viewFile = null;
+
+    /**
      * 行为控制
      *
      * @return array
@@ -201,7 +207,7 @@ class BaseController extends \common\components\controller\BaseController
                 'pagination' => false
             ]);
 
-            return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
+            return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
                 'dataProvider' => $dataProvider,
             ]);
         } elseif ($this->style == 3) {
@@ -214,7 +220,7 @@ class BaseController extends \common\components\controller\BaseController
                 ->limit($pages->limit)
                 ->all();
 
-            return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
+            return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
                 'models' => $models,
                 'pages' => $pages
             ]);
@@ -243,7 +249,7 @@ class BaseController extends \common\components\controller\BaseController
         $this->filterParams($params);
         $dataProvider = $searchModel->search($params);
 
-        return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
+        return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
         ]);
@@ -276,7 +282,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $this->beforeView($id, $model);
-        return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
+        return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
     }
@@ -299,7 +305,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $this->beforeView($id, $model);
-        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
     }
@@ -345,7 +351,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $this->beforeEditRender($id, $model);
-        return $this->render(Yii::$app->request->get('view') ?? $this->action->id, [
+        return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
             'lang' => $lang,
         ]);
@@ -386,7 +392,7 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $this->beforeEditRender($id, $model);
-        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
     }
@@ -897,7 +903,7 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectSuccess();
         }
 
-        return $this->renderAjax(Yii::$app->request->get('view') ?? '@backend/views/site/' . $this->action->id);
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? '@backend/views/site/' . $this->action->id);
     }
 
     protected function beforeImport($id = null, $model = null)
