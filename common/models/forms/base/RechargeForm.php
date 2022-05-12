@@ -28,7 +28,7 @@ class RechargeForm extends \yii\base\Model
             [['amount'], 'required'],
             [['amount'], 'number'],
             [['message'], 'safe'],
-            ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
+            ['verifyCode', 'captcha', 'captchaAction'=>'site/captcha', 'on' => 'captchaRequired'],
         ];
     }
 
