@@ -113,6 +113,7 @@ class DefaultController extends BaseController
         $oldSessionId = Yii::$app->session->id;
 
         $model = new LoginEmailForm();
+        $model->checkCaptchaRequired();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $this->afterLogin($oldSessionId);
             if (Yii::$app->request->get('returnUrl')) {

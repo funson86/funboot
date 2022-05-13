@@ -172,7 +172,7 @@ class SiteController extends BaseController
         }
 
         $model = new LoginForm();
-        $model->loginCaptchaRequired();
+        $model->checkCaptchaRequired();
 
         // 如果是POST提交
         if (Yii::$app->request->isPost) {

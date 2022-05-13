@@ -18,6 +18,8 @@ class RefreshForm extends Model
     public $verifyCode;
     public $rememberMe = true;
 
+    const KEY_FAILED = 'refreshTokenFailed';
+
     protected $_user;
 
     /**
@@ -87,9 +89,9 @@ class RefreshForm extends Model
     /**
      * 验证码显示判断
      */
-    public function loginCaptchaRequired()
+    public function checkCaptchaRequired()
     {
-        if (Yii::$app->session->get('refreshTokenFailed') >= $this->getAttempts()) {
+        if (Yii::$app->session->get(self::KEY_FAILED) >= $this->getAttempts()) {
             $this->setScenario("captchaRequired");
         }
     }

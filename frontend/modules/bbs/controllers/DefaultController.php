@@ -98,6 +98,7 @@ class DefaultController extends BaseController
         }
 
         $model = new LoginEmailForm();
+        $model->checkCaptchaRequired();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {

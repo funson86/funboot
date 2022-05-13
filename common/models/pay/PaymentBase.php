@@ -32,6 +32,7 @@ class PaymentBase extends BaseModel
     const KIND_C = 19900;
     const KIND_D = 0;
 
+    const KEY_FAILED = 'paymentFailed';
 
     /**
      * @return array|array[]
@@ -117,7 +118,7 @@ class PaymentBase extends BaseModel
      */
     public function checkCaptchaRequired()
     {
-        if (Yii::$app->session->get('paymentSubmit') >= $this->getAttempts()) {
+        if (Yii::$app->session->get(self::KEY_FAILED) >= $this->getAttempts()) {
             $this->setScenario("captchaRequired");
         }
     }
