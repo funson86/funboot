@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'dataProvider' => $dataProvider,
                             'itemOptions' => ['class' => 'col-lg-4 col-md-6'],
                             'summary' => false,
-                            'itemView' => '_' . $this->context->action->id,
+                            'itemView' => $this->context->action->id . '_',
                             'options' => ['class' => 'row'],
                             'pager' => [
                                 'options' => ['class' => 'pagination user-pagination'],

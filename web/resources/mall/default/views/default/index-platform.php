@@ -54,7 +54,7 @@ $this->registerMetaTag(["name" => "description", "content" => $store->settings['
                     'dataProvider' => $dataProvider,
                     'itemOptions' => ['class' => 'list-group-item'],
                     'summary' => false,
-                    'itemView' => '_item',
+                    'itemView' => $this->context->action->id . '_',
                     'options' => ['class' => 'list-group'],
                     'pager' => [
                         'options' => ['class' => 'pagination topic-pagination'],

@@ -11,7 +11,7 @@
             'dataProvider' => $dataProvider,
             'itemOptions' => ['class' => 'list-group-item media mt0'],
             'summary' => false,
-            'itemView' => '_item',
+            'itemView' => $this->context->action->id . '_',
         ]) ?>
     </div>
 
