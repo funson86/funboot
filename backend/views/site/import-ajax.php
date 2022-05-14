@@ -17,13 +17,20 @@ $form = ActiveForm::begin([
 ]);
 ?>
     <div class="modal-header">
-        <h4 class="modal-title">导入</h4>
+        <h4 class="modal-title"><?= Yii::t('app', 'Import') ?></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <?= Html::label(Yii::t('app', '导入文件'), 'importFile', ['class' => 'col-lg-4 control-label']) ?>
-            <div class="col-lg-8"><?= Html::fileInput('importFile') ?></div>
+            <div class="input-group m-3">
+                <div class="input-group-prepend">
+                    <?= Html::buttonModal(['export', 'template' => 1], Yii::t('app', 'Download Template'), ['class' => 'input-group-text'], false, true) ?>
+                </div>
+                <div class="custom-file">
+                    <?= Html::label(Yii::t('app', 'Choose file'), 'importFile', ['class' => 'custom-file-label']) ?>
+                    <?= Html::fileInput('importFile', null, ['class' => 'custom-file-input', 'id' => 'importFile']) ?>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
@@ -31,4 +38,5 @@ $form = ActiveForm::begin([
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>
+
 

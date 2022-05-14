@@ -806,13 +806,19 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $ext = Yii::$app->request->get('ext', 'xls');
+        if (Yii::$app->request->get('template')) {
+            $spreadSheet = $this->arrayToSheet([], $fields);
+            OfficeHelper::write($spreadSheet, $ext, $this->store->host_name . '_template.' . $ext);
+            exit();
+        }
+
         $storeId = $this->isAdmin() ? null : $this->getStoreId();
         $models = $this->modelClass::find()->filterWhere(['store_id' => $storeId])->orderBy($this->exportSort)->asArray()->all();
 
         $spreadSheet = $this->arrayToSheet($models, $fields);
 
         $arrModelClass = explode('\\', strtolower($this->modelClass));
-        OfficeHelper::write($spreadSheet, $ext,  $this->store->host_name . '_' . array_pop($arrModelClass) . '_' . date('mdHis') . '.' . $ext);
+        OfficeHelper::write($spreadSheet, $ext, $this->store->host_name . '_' . array_pop($arrModelClass) . '_' . date('mdHis') . '.' . $ext);
 
         exit();
     }
