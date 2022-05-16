@@ -30,7 +30,7 @@ class RefreshForm extends Model
             [['refresh_token'], 'required'],
             // password is validated by validatePassword()
             ['refresh_token', 'validateToken'],
-            ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
+            ['verifyCode', 'captcha', 'captchaAction' => 'site/captcha', 'on' => 'captchaRequired'],
         ];
     }
 

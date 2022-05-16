@@ -42,7 +42,7 @@ class PaymentBase extends BaseModel
             [['id'], 'safe'],
             [['email'], 'required'],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
-            ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
+            ['verifyCode', 'captcha', 'captchaAction' => '/pay/default/captcha', 'on' => 'captchaRequired'],
         ];
     }
 
@@ -115,7 +115,7 @@ class PaymentBase extends BaseModel
     /**
      * 验证码显示判断
      */
-    public function captchaRequired()
+    public function checkCaptchaRequired()
     {
         if (Yii::$app->session->get('paymentSubmit') >= $this->getAttempts()) {
             $this->setScenario("captchaRequired");

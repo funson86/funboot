@@ -34,7 +34,7 @@ class StoreCreateForm extends Model
             ['email', 'checkExist'],
             ['code', 'checkExistCode'],
             ['password', 'string', 'min' => 6],
-            ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
+            ['verifyCode', 'captcha', 'captchaAction' => 'site/captcha', 'on' => 'captchaRequired'],
         ];
     }
 

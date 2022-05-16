@@ -28,7 +28,7 @@ class RechargeForm extends \yii\base\Model
             [['amount'], 'required'],
             [['amount'], 'number'],
             [['message'], 'safe'],
-            ['verifyCode', 'captcha', 'captchaAction'=>'site/captcha', 'on' => 'captchaRequired'],
+            ['verifyCode', 'captcha', 'captchaAction' => 'site/captcha', 'on' => 'captchaRequired'],
         ];
     }
 
@@ -47,7 +47,7 @@ class RechargeForm extends \yii\base\Model
     /**
      * 显示判断
      */
-    public function captchaRequired()
+    public function checkCaptchaRequired()
     {
         if (Yii::$app->session->get(self::KEY_FAILED) >= $this->getAttempts()) {
             $this->setScenario(self::KEY_FAILED);

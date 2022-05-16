@@ -33,7 +33,7 @@ class LoginEmailForm extends Model
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
             ['email', 'validateStatus'],
-            ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
+            ['verifyCode', 'captcha', 'captchaAction' => 'site/captcha', 'on' => 'captchaRequired'],
         ];
     }
 
@@ -118,7 +118,7 @@ class LoginEmailForm extends Model
     /**
      * 验证码显示判断
      */
-    public function loginCaptchaRequired()
+    public function checkCaptchaRequired()
     {
         if (Yii::$app->session->get('loginFailed') >= $this->getAttempts()) {
             $this->setScenario("captchaRequired");

@@ -44,7 +44,7 @@ class DefaultController extends BaseController
         $model = new Payment();
         $store = $this->store;
 
-        $model->captchaRequired();
+        $model->checkCaptchaRequired();
         if (Yii::$app->request->isPost) {
             if ($store->status != Store::STATUS_ACTIVE) {
                 $this->flashError(Yii::t('app', 'Closed Yet, please try it later'));

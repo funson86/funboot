@@ -9,6 +9,7 @@ use common\helpers\ResultHelper;
 use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
+use Da\QrCode\Action\QrCodeAction;
 use Yii;
 use yii\base\Model;
 use yii\web\Controller;
@@ -39,6 +40,27 @@ class BaseController extends Controller
      * @var int
      */
     protected $pageSize = 10;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+                'layout' => 'error',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+            'qr' => [
+                'class' => QrCodeAction::className(),
+                // 'component' => 'qr' // if configured in our app as `qr`
+            ],
+        ];
+    }
 
     /**
      * @param \yii\base\Action $action

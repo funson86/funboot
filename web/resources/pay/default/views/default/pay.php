@@ -50,8 +50,8 @@ $this->title = Yii::t('app', '确认订单');
                         <?= $form->field($model, 'bank_code')->hiddenInput(['maxlength' => true, 'value' => 'wechat'])->label(false) ?>
 
                         <?php if ($model->scenario == 'captchaRequired') { ?>
-                            <?= $form->field($model,'verifyCode')->widget(\yii\captcha\Captcha::class, [
-                                'captchaAction' => '/site/captcha',
+                            <?= $form->field($model, 'verifyCode')->widget(\yii\captcha\Captcha::class, [
+                                'captchaAction' => '/pay/default/captcha',
                                 'template' => '<div class="row mx-1"><div class="col-xs-7">{input}</div><div class="col-xs-5">{image}</div></div>',
                                 'imageOptions' => [
                                     'alt' => Yii::t('app', 'Click to change'),

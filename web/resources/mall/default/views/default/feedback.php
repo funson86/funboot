@@ -33,7 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= $form->field($model, 'content')->textarea(['rows' => 4, 'class' => 'form-control ', 'placeholder' => Yii::t('app', 'Content')])->label(false) ?>
 
                         <?php if ($model->scenario == 'captchaRequired') { ?>
-                            <?= $form->field($model,'verifyCode')->widget(\yii\captcha\Captcha::class, [
+                            <?= $form->field($model, 'verifyCode')->widget(\yii\captcha\Captcha::class, [
+                                'captchaAction' => '/mall/default/captcha',
                                 'template' => '<div class="row mx-1"><div class="col-xs-7">{input}</div><div class="col-xs-5">{image}</div></div>',
                                 'imageOptions' => [
                                     'alt' => Yii::t('app', 'Click to change'),

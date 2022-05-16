@@ -29,7 +29,7 @@ class FeedbackForm extends Model
             [['email'], 'safe'],
             [['mobile'], 'number'],
             [['content'], 'checkSpam'],
-            ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
+            ['verifyCode', 'captcha', 'captchaAction' => 'site/captcha', 'on' => 'captchaRequired'],
         ];
     }
 
