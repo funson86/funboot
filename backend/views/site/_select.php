@@ -85,7 +85,7 @@ $js = <<<JS
     $('.delete-selection').click(function () {
         url = "{$urlDelete}";
         if (isAllFilter) {
-            ids = {};
+            ids = {$jsonIdsFilter};
         } else {
             ids = $(".grid-view").yiiGridView("getSelectedRows");
         }
