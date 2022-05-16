@@ -94,6 +94,8 @@ return [
     'Active' => '启用',
     'Inactive' => '禁用',
     'Feedback' => '在线反馈',
+    'Bin' => '回收站',
+    'Trash' => '回收站',
     'Please contact us if you think this is a server error. Thank you.' => '如果这是一个服务器错误，请和我们联系，谢谢',
 
     'Quick Links' => '快速链接',
@@ -313,6 +315,7 @@ return [
     'Kind' => '类型',
     'Import' => '导入',
     'Import ' => '导入',
+    'Choose File ' => '选择文件',
     'Export' => '导出',
     'Export ' => '导出',
     'Export All' => '导出全部',
@@ -644,6 +647,10 @@ return [
     'Clear Successfully' => '清空成功',
     'Uncaught Error' => '未捕获到错误信息',
     'Invalid id' => 'id不存在',
+    '{count} records delete successfully.' => '{count}条数据删除成功',
+    'Current Page' => '全选当前页',
+    'All Filter' => '全选当前条件',
+    'Cancel All' => '取消全选',
 
     'Student' => '学生',
     'Students' => '学生',

@@ -64,7 +64,11 @@ if (tmp && $.inArray(tmp, skins)) {
 function fbT(msgVariable, data, msg) {
     if (typeof i18nLocal !== "undefined") {
         if (msg !== undefined) i18nLocal[msgVariable].push(msg);
-        return i18nLocal[msgVariable].replace('{val}', data);
+        if (i18nLocal[msgVariable] !== undefined) {
+            return i18nLocal[msgVariable].replace('{val}', data);
+        } else {
+            return msgVariable;
+        }
     } else {
         return msg;
     }

@@ -302,12 +302,15 @@ class Html extends \yii\helpers\Html
     /**
      * 状态标签
      *
+     * @param null $url
      * @param array $exts
+     * @param null $name
+     * @param array $options
      * @return mixed
      */
-    public static function export($url = 'export', $exts = [], $name = null, $options = [])
+    public static function export($url = null, $exts = [], $name = null, $options = [], $redirect = false)
     {
-        !$url && $url = 'export';
+        !$url && $url = ['export'];
         !$name && $name = Yii::t('app', 'Export ');
         empty($exts) && $exts = ['xls', 'xlsx', 'csv', 'html'];
 
@@ -316,7 +319,8 @@ class Html extends \yii\helpers\Html
         $links = '';
         $i = 0;
         foreach ($exts as $ext) {
-            $links .= self::tag('li', self::a($name . $ext, [$url, 'ext' => $ext]), ['class' => 'dropdown-item']);
+            $link = Url::to(array_merge($url, ['ext' => $ext]));
+            $links .= self::tag('li', $redirect ? self::a($name . $ext, $link, ['class' => 'dropdown-item']) : self::a($name . $ext, 'javascript:;', ['data-url' => $link, 'data-ext' => $ext, 'class' => 'dropdown-item ' . (($options['id'] ?? 'export-selection'))]));
             $i++;
             if ($i % 2 == 0 && $i < count($exts)) { // 每2行出一个分隔符
                 $links .= self::tag('li', '', ['class' => 'divider']);

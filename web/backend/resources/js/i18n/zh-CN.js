@@ -19,5 +19,8 @@ var i18nLocal = {
     'Output Speed': '发送速度',
     'Input Speed': '接收速度',
 
+    'Select at least 1 item first': '请先选择至少1条记录',
+    ' items selected': '条记录已选择',
+
     'End': '结尾'
 }

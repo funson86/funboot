@@ -8,3 +8,11 @@
 .js-batch-form input, .js-batch-form a {
     margin-right: 10px;
 }
+
+.btn-filter-active {
+    background-color: #CCC
+}
+
+.selection-info {
+    margin-left: 2rem
+}

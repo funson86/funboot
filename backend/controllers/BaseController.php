@@ -581,8 +581,49 @@ class BaseController extends \common\components\controller\BaseController
     public function actionDelete()
     {
         $id = Yii::$app->request->get('id');
-        if (!$id) {
+        $ids = Yii::$app->request->post('ids');
+        if (!$id && !$ids) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+        $soft = Yii::$app->request->get('soft', true);
+        $tree = Yii::$app->request->get('tree', false);
+
+        if ($ids) { // batch delete
+            // $count = $this->modelClass::deleteAll(['id' => explode(',', $ids)]); 简易版
+            $arrIds = explode(',', $ids);
+            if (empty($arrIds)) {
+                return $this->error(Yii::t('app', 'Invalid id'));
+            }
+
+            $count = 0;
+            foreach ($arrIds as $id) {
+                $model = $this->findModel($id);
+                if (!$model) {
+                    continue;
+                }
+
+                if ($tree) {
+                    $allIds = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->select(['id', 'parent_id'])->asArray()->all());
+                } else {
+                    $allIds = $id;
+                }
+                $this->beforeDeleteModel($allIds, $model, $soft, $tree);
+
+                if ($soft) {
+                    $model->status = $this->modelClass::STATUS_DELETED;
+                    $result = $model->save();
+                } else {
+                    $result = $model->delete();
+                }
+                if ($result !== false) {
+                    $count += $result;
+                }
+
+                $this->afterDeleteModel($id, $model, $soft, $tree);
+            }
+
+            $this->clearCache();
+            return $this->success([], [], Yii::t('app', '{count} records delete successfully.', ['count' => $count]));
         }
 
         $model = $this->findModel($id);
@@ -590,14 +631,12 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $soft = Yii::$app->request->get('soft', true);
-        $tree = Yii::$app->request->get('tree', false);
         if ($tree) {
-            $ids = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->asArray()->all());
+            $allIds = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->select(['id', 'parent_id'])->asArray()->all());
         } else {
-            $ids = $id;
+            $allIds = $id;
         }
-        $this->beforeDeleteModel($ids, $model, $soft, $tree);
+        $this->beforeDeleteModel($allIds, $model, $soft, $tree);
 
         if ($soft) {
             $model->status = $this->modelClass::STATUS_DELETED;
@@ -605,7 +644,6 @@ class BaseController extends \common\components\controller\BaseController
         } else {
             $result = $model->delete();
         }
-
         if ($result === false) {
             Yii::$app->logSystem->db($model->errors);
             return $this->redirectError($this->getError($model));
@@ -619,7 +657,8 @@ class BaseController extends \common\components\controller\BaseController
             }
         }
 
-        $this->afterDeleteModel($id, $soft, $tree);
+        $this->afterDeleteModel($ids, $model, $soft, $tree);
+
         $this->clearCache();
         return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete Successfully'));
     }
@@ -793,7 +832,7 @@ class BaseController extends \common\components\controller\BaseController
             $item = [];
             if ($type == 'select') {
                 $getLabels = 'get' . Inflector::camelize($field) . 'Labels';
-                $item = [$field, $model->attributeLabels()[$field] ?? '', $type, $this->modelClass::$getLabels()];
+                $item = [$field, $model->attributeLabels()[$field] ?? '', $type, $this->modelClass::$getLabels(null, true)];
             } elseif ($type == 'date') {
                 $item = [$field, $model->attributeLabels()[$field] ?? '', $type, 'Y-m-d'];
             } elseif ($type == 'datetime') {
@@ -806,14 +845,15 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $ext = Yii::$app->request->get('ext', 'xls');
-        if (Yii::$app->request->get('template')) {
+        if (Yii::$app->request->get('template')) { // download template
             $spreadSheet = $this->arrayToSheet([], $fields);
             OfficeHelper::write($spreadSheet, $ext, $this->store->host_name . '_template.' . $ext);
             exit();
         }
 
         $storeId = $this->isAdmin() ? null : $this->getStoreId();
-        $models = $this->modelClass::find()->filterWhere(['store_id' => $storeId])->orderBy($this->exportSort)->asArray()->all();
+        $condition = Yii::$app->request->post('ids') ? ['id' => explode(',', Yii::$app->request->post('ids'))] : ['store_id' => $storeId];
+        $models = $this->modelClass::find()->filterWhere($condition)->orderBy($this->exportSort)->asArray()->all();
 
         $spreadSheet = $this->arrayToSheet($models, $fields);
 
@@ -961,6 +1001,7 @@ class BaseController extends \common\components\controller\BaseController
 
     /**
      * @param array $models
+     * @param $fields
      * @return \PhpOffice\PhpSpreadsheet\Spreadsheet
      */
     protected function arrayToSheet($models, $fields)

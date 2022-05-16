@@ -1,0 +1,134 @@
+<?php
+
+use common\helpers\ArrayHelper;
+use common\helpers\Html;
+use common\helpers\Url;
+
+/* @var $this yii\web\View */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $searchModel common\models\ModelSearch */
+
+?>
+
+<style>
+    .select-on-check-all { display: none; }
+</style>
+
+<div class="section-filter mb-sm-2">
+    <div class="btn-group mr-3">
+        <button type="button" class="btn-selection btn btn-default btn-current"><?= Yii::t('app', 'Current Page') ?>(<?= min($dataProvider->count, $dataProvider->pagination->getPageSize()) ?>)</button>
+        <button type="button" class="btn-selection btn btn-default btn-filter"><?= Yii::t('app', 'All Filter') ?>(<?= $dataProvider->totalCount ?>)</button>
+        <button type="button" class="btn-selection btn btn-filter-active btn-cancel"><?= Yii::t('app', 'Cancel All') ?></button>
+    </div>
+    <?= Html::a(Yii::t('app', 'Delete'), "javascript:void(0);", ['class' => 'btn btn-default btn-sm delete-selection']); ?>
+    <?= Html::export(null, [], Yii::t('app', 'Export '), ['class' => 'btn btn-default btn-sm']) ?>
+</div>
+
+<?php
+$csrfToken = Yii::$app->request->getCsrfToken();
+
+$query = clone $dataProvider->query;
+$idsFilter = ArrayHelper::getColumn($query->select(['id'])->asArray()->all(), 'id');
+$jsonIdsFilter = json_encode($idsFilter);
+
+$totalCount = $dataProvider->totalCount;
+
+$urlDelete = Url::to(['delete', 'soft' => false]);
+$js = <<<JS
+    var isAllFilter = false;
+
+    $(document).ready(function () {
+        $('.summary').append('<span class="selection-info"></span>')
+        $('.selection-info').html(0 + fbT(' items selected'));
+    })
+
+    $('.btn-current').click(function () {
+        $('.btn-selection').removeClass('btn-filter-active').addClass('btn-default');
+        $(this).removeClass('btn-default').addClass('btn-filter-active');
+        $(".grid-view tbody input[type='checkbox']").each(function () {
+            $(this).prop('checked', true);
+        });
+        isAllFilter = false;
+        let count = $(".grid-view tbody input[type='checkbox']:checked").length;
+        $('.selection-info').html(count + fbT(' items selected'));
+    })
+
+    $('.btn-filter').click(function () {
+        $('.btn-selection').removeClass('btn-filter-active').addClass('btn-default');
+        $(this).removeClass('btn-default').addClass('btn-filter-active');
+        $(".grid-view tbody input[type='checkbox']").each(function () {
+            $(this).prop('checked', true);
+        });
+        isAllFilter = true;
+        $('.selection-info').html({$totalCount} + fbT(' items selected'));
+    })
+
+    $('.btn-cancel').click(function () {
+        $('.btn-selection').removeClass('btn-filter-active').addClass('btn-default');
+        $(this).removeClass('btn-default').addClass('btn-filter-active');
+        $(".grid-view tbody input[type='checkbox']").each(function () {
+            $(this).prop('checked', false);
+        });
+        isAllFilter = false;
+        let count = $(".grid-view tbody input[type='checkbox']:checked").length;
+        $('.selection-info').html(count + fbT(' items selected'));
+    })
+
+    $(".grid-view tbody input[type='checkbox']").change(function () {
+        $('.btn-selection').removeClass('btn-filter-active').addClass('btn-default');
+        $('.btn-cancel').removeClass('btn-default').addClass('btn-filter-active');
+        isAllFilter = false;
+        let count = $(".grid-view tbody input[type='checkbox']:checked").length;
+        $('.selection-info').html(count + fbT(' items selected'));
+    })
+
+    $('.delete-selection').click(function () {
+        url = "{$urlDelete}";
+        if (isAllFilter) {
+            ids = {};
+        } else {
+            ids = $(".grid-view").yiiGridView("getSelectedRows");
+        }
+
+        sendRequest(url, ids);
+    });
+
+    function sendRequest(url, ids) {
+        if (ids.length === 0) {
+            fbError(fbT('Select at least 1 item first'));
+            return false;
+        }
+
+        let param = {
+            'ids' : ids.toString(),
+            '_csrf-backend' : '{$csrfToken}'
+        };
+        $.post(url, param, function(data) {
+            if (parseInt(data.code) !== 200) {
+                fbError(data.msg);
+            } else {
+                Swal.fire({title: data.msg, confirmButtonText: fbT('Ok'),}).then(function () {
+                    window.location.reload();
+                });
+            }
+        }, "json");
+    }
+
+    $('.export-selection').click(function () {
+        url = $(this).data('url');
+        if (isAllFilter) {
+            ids = {$jsonIdsFilter};
+        } else {
+            ids = $(".grid-view").yiiGridView("getSelectedRows");
+        }
+
+        if (ids.length === 0) {
+            fbError(fbT('Select at least 1 item first'));
+            return false;
+        }
+        postLink(url, {'_csrf-backend': '{$csrfToken}', 'ids': ids.toString()});
+    });
+
+JS;
+
+$this->registerJs($js, \yii\web\View::POS_END);
