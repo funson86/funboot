@@ -27,6 +27,8 @@ class FeedbackForm extends Model
         return [
             [['name', 'mobile', 'content'], 'required'],
             [['email'], 'safe'],
+            [['mobile'], 'number'],
+            [['content'], 'checkSpam'],
             ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
         ];
     }
@@ -69,6 +71,17 @@ class FeedbackForm extends Model
         // 记录失败次数
         Yii::$app->session->set(self::KEY_FAILED, Yii::$app->session->get(self::KEY_FAILED, 0) + 1);
         return false;
+    }
+
+    public function checkSpam($attribute, $params)
+    {
+        $keywords = Yii::$app->params['spamKeywords'] ?? [];
+        $str = strtolower($this->content);
+        foreach ($keywords as $keyword) {
+            if (strpos($str, $keyword) !== false) {
+                $this->addError($attribute, Yii::t('app', '{attribute} contains spam keyword', ['attribute' => Yii::t('app', 'Content')]));
+            }
+        }
     }
 
     /**

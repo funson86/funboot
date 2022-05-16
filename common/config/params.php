@@ -246,5 +246,8 @@ return [
         'wechatPaymentConfig' => [],
     ]
 
+     'spamKeywords' => [
+         ' porn ',
+     ],
 
 ];
