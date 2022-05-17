@@ -426,43 +426,85 @@ class BaseController extends \common\components\controller\BaseController
     public function actionEditAjaxField()
     {
         $id = Yii::$app->request->get('id');
-        if (!$id) {
+        $ids = Yii::$app->request->post('ids');
+        if (!$id && !$ids) {
             return $this->error(404);
+        }
+
+        if ($ids) {
+            $field = Yii::$app->request->get('field');
+            $value = Yii::$app->request->get('value');
+            if (!$field || !$value) {
+                return $this->error(422);
+            }
+
+            $arrIds = explode(',', $ids);
+            if (empty($arrIds)) {
+                return $this->error(Yii::t('app', 'Invalid id'));
+            }
+
+            $count = 0;
+            foreach ($arrIds as $id) {
+                $model = $this->findModel($id);
+                if (!$model) {
+                    continue;
+                }
+
+                $this->beforeEditAjaxField($id, $model, $field, $value);
+                $model->$field = $value;
+
+                if ($this->beforeEditAjaxFieldSave($id, $model, $field, $value)) {
+                    if (!$model->save()) {
+                        Yii::$app->logSystem->db($model->errors);
+                        return $this->error(500, $this->getError($model));
+                    }
+                    $this->afterEditAjaxField($id, $model, $field, $value);
+                    $count++;
+                }
+            }
+
+            $this->clearCache();
+            return $this->success([], ['count' => $count], Yii::t('app', '{count} items update successfully.', ['count' => $count]));
+        }
+
+        $field = Yii::$app->request->post('field');
+        if (!in_array($field, $this->editAjaxFields)) {
+            return $this->error(422);
         }
 
         $model = $this->findModel($id);
         if (!$model) {
             return $this->error(404);
         }
+        $value = Yii::$app->request->post('value');
 
-        $this->beforeEditAjaxField($id, $model, Yii::$app->request->post('name'), Yii::$app->request->post('value'));
-        if ($name = Yii::$app->request->post('name')) {
-            if (in_array($name, $this->editAjaxFields)) {
-                $model->$name = Yii::$app->request->post('value');
+        $this->beforeEditAjaxField($id, $model, $field, $value);
+        $model->$field = $value;
+
+        if ($this->beforeEditAjaxFieldSave($id, $model, $field, $value)) {
+            if (!$model->save()) {
+                Yii::$app->logSystem->db($model->errors);
+                return $this->error(500, $this->getError($model));
             }
+            $this->afterEditAjaxField($id, $model, $field, $value);
+            $this->clearCache();
+            return $this->success($model->attributes, null, Yii::t('app', 'Edit Successfully'));
         }
 
-        $this->beforeEditAjaxFieldSave($id, $model, Yii::$app->request->post('name'), Yii::$app->request->post('value'));
-        if (!$model->save()) {
-            Yii::$app->logSystem->db($model->errors);
-            return $this->error(500, $this->getError($model));
-        }
-        $this->afterEditAjaxField($id, $model, Yii::$app->request->post('name'), Yii::$app->request->post('value'));
-        $this->clearCache();
-        return $this->success($model->attributes, null, Yii::t('app', 'Edit Successfully'));
+        return $this->error();
     }
 
-    protected function beforeEditAjaxField($id = null, $model = null, $name = null, $value = null)
+    protected function beforeEditAjaxField($id = null, $model = null, $field = null, $value = null)
     {
         return true;
     }
 
-    protected function beforeEditAjaxFieldSave($id = null, $model = null, $name = null, $value = null)
+    protected function beforeEditAjaxFieldSave($id = null, $model = null, $field = null, $value = null)
     {
         return true;
     }
 
-    protected function afterEditAjaxField($id = null, $model = null, $name = null, $value = null)
+    protected function afterEditAjaxField($id = null, $model = null, $field = null, $value = null)
     {
         return true;
     }
@@ -496,7 +538,7 @@ class BaseController extends \common\components\controller\BaseController
             foreach ($arrIds as $id) {
                 $model = $this->findModel($id);
                 if (!$model) {
-                    return $this->error(404);
+                    continue;
                 }
 
                 $this->beforeEditAjaxStatus($id, $model);
@@ -512,7 +554,7 @@ class BaseController extends \common\components\controller\BaseController
             }
 
             $this->clearCache();
-            return $this->success([], [], Yii::t('app', '{count} items update successfully.', ['count' => $count]));
+            return $this->success([], ['count' => $count], Yii::t('app', '{count} items update successfully.', ['count' => $count]));
         }
 
         $model = $this->findModel($id);

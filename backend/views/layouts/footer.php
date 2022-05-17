@@ -242,7 +242,7 @@ function fbField(obj) {
         id = self.parents('tr').attr('data-key');
     }
 
-    var name = self.attr('name');
+    var field = self.attr('name');
     var value = self.val();
     $.ajax({
         type: "post",
@@ -250,7 +250,7 @@ function fbField(obj) {
         dataType: "json",
         data: {
             id: id,
-            name: name,
+            field: field,
             value: value
         },
         success: function (data) {

@@ -9,36 +9,50 @@ use common\helpers\Url;
 /* @var $searchModel common\models\ModelSearch */
 /* @var $statusLabels array */
 /* @var $typeLabels array */
+/* @var $typeMultiple bool */
 
 ?>
 
 <style>
     .select-on-check-all { display: none; }
-    .btn-group-status label { display: block; margin: .2rem 0 0 0; }
+    .dropdown-options label { display: block; margin: .2rem 0 0 0; }
 </style>
 
 <div class="section-filter mb-sm-2">
-    <div class="btn-group mr-3">
+    <div class="btn-group">
         <button type="button" class="btn-selection btn btn-default btn-current"><?= Yii::t('app', 'Current Page') ?>(<?= min($dataProvider->count, $dataProvider->pagination->getPageSize()) ?>)</button>
         <button type="button" class="btn-selection btn btn-default btn-filter"><?= Yii::t('app', 'All Filter') ?>(<?= $dataProvider->totalCount ?>)</button>
         <button type="button" class="btn-selection btn btn-filter-active btn-cancel"><?= Yii::t('app', 'Cancel All') ?></button>
     </div>
-    <?= Html::export(null, [], Yii::t('app', 'Export '), ['class' => 'btn btn-default btn-sm']) ?>
-    <?= Html::a(Yii::t('app', 'Delete'), "javascript:void(0);", ['class' => 'btn btn-default btn-sm delete-selection']); ?>
+    <?= Html::export(null, [], Yii::t('app', 'Export '), ['class' => 'ml-3 btn btn-default btn-sm']) ?>
+    <?= Html::a(Yii::t('app', 'Delete'), "javascript:void(0);", ['class' => 'ml-3 btn btn-default btn-sm delete-selection']); ?>
 
     <?php if (isset($statusLabels) && count($statusLabels)) { ?>
-    <div class="btn-group btn-group-status">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-            <?= Yii::t('app', 'Status') ?>
-        </button>
+    <div class="btn-group ml-3 btn-group-status">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"><?= Yii::t('app', 'Status') ?></button>
         <div class="dropdown-menu">
-            <div class="px-4 py-1 status-items">
+            <div class="px-4 py-1 dropdown-options status-items">
                 <?= Html::radioList('status', key($statusLabels), $statusLabels, ['class' => '', 'itemOptions' => ['class' => 'form-group']]) ?>
             </div>
             <div class="dropdown-divider"></div>
-            <div class="text-center">
-                <button class="btn btn-primary status-selection"><?= Yii::t('app', 'Submit') ?></button>
+            <div class="text-center"><button class="btn btn-primary status-selection"><?= Yii::t('app', 'Submit') ?></button></div>
+        </div>
+    </div>
+    <?php } ?>
+
+    <?php if (isset($typeLabels) && count($typeLabels)) { ?>
+    <div class="btn-group ml-3 btn-group-type">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"><?= Yii::t('app', 'Type') ?></button>
+        <div class="dropdown-menu">
+            <div class="px-4 py-1 dropdown-options type-items">
+                <?php if (isset($typeMultiple) && $typeMultiple = true) { ?>
+                <?= Html::checkboxList('type', null, $typeLabels, ['class' => '', 'itemOptions' => ['class' => 'form-group']]) ?>
+                <?php } else { ?>
+                <?= Html::radioList('type', key($typeLabels), $typeLabels, ['class' => '', 'itemOptions' => ['class' => 'form-group']]) ?>
+                <?php } ?>
             </div>
+            <div class="dropdown-divider"></div>
+            <div class="text-center"><button class="btn btn-primary type-selection"><?= Yii::t('app', 'Submit') ?></button></div>
         </div>
     </div>
     <?php } ?>
@@ -56,6 +70,7 @@ $totalCount = $dataProvider->totalCount;
 
 $urlDelete = Url::to(['delete', 'soft' => false]);
 $urlStatus = Url::to(['edit-ajax-status']);
+$urlField = Url::to(['edit-ajax-field']);
 $js = <<<JS
     var isAllFilter = false;
 
@@ -117,6 +132,22 @@ $js = <<<JS
 
     $('.status-selection').click(function () {
         url = "{$urlStatus}" + '?status=' + $('.status-items input:checked').val();
+        if (isAllFilter) {
+            ids = {$jsonIdsFilter};
+        } else {
+            ids = $(".grid-view").yiiGridView("getSelectedRows");
+        }
+
+        sendRequest(url, ids);
+    });
+
+    $('.type-selection').click(function () {
+        let value = 0;
+        $(".type-items input:checked").each(function () {
+            value += parseInt($(this).val());
+        });
+
+        url = "{$urlField}" + '?field=type&value=' + value;
         if (isAllFilter) {
             ids = {$jsonIdsFilter};
         } else {
