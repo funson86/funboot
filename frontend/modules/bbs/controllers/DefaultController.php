@@ -58,7 +58,7 @@ class DefaultController extends BaseController
         if ($nodeId = Yii::$app->request->get('id')) {
             $node = Node::find()->where(['id' => $nodeId, 'store_id' => $this->getStoreId()])->one();
             if ($node) {
-                $nodeIds = ArrayHelper::getChildrenIds($nodeId, Node::find()->asArray()->all());
+                $nodeIds = ArrayHelper::getChildrenIds($nodeId, Node::find()->select(['id', 'parent_id'])->asArray()->all());
                 $params['ModelSearch']['node_id'] = $nodeIds;
             }
 

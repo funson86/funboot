@@ -326,7 +326,7 @@ class BaseController extends ActiveController
         $soft = Yii::$app->request->get('soft', true);
         $tree = Yii::$app->request->get('tree', false);
         if ($tree) {
-            $ids = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->asArray()->all());
+            $ids = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->select(['id', 'parent_id'])->asArray()->all());
         } else {
             $ids = $id;
         }
