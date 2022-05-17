@@ -37,6 +37,8 @@ use common\models\Store;
  * @property int $point 积分
  * @property float $balance 余额
  * @property string $remark 备注
+ * @property int $message_count 消息数量
+ * @property int $coupon_count 优惠券数
  * @property int $login_count 登录次数
  * @property int $last_login_at 最近登录时间
  * @property string $last_login_ip 最近登录IP
@@ -68,7 +70,7 @@ class User extends UserBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'parent_id', 'auth_role', 'sex', 'province_id', 'city_id', 'district_id', 'point', 'login_count', 'last_login_at', 'last_paid_at', 'consume_count', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'parent_id', 'auth_role', 'sex', 'province_id', 'city_id', 'district_id', 'point', 'message_count', 'coupon_count', 'login_count', 'last_login_at', 'last_paid_at', 'consume_count', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['username'], 'required'],
             [['balance', 'consume_amount'], 'number'],
             [['username'], 'string', 'max' => 190],
@@ -116,6 +118,8 @@ class User extends UserBase
                 'point' => '积分',
                 'balance' => '余额',
                 'remark' => '备注',
+                'message_count' => '消息数量',
+                'coupon_count' => '优惠券数',
                 'login_count' => '登录次数',
                 'last_login_at' => '最近登录时间',
                 'last_login_ip' => '最近登录IP',
@@ -162,6 +166,8 @@ class User extends UserBase
                 'point' => Yii::t('app', 'Point'),
                 'balance' => Yii::t('app', 'Balance'),
                 'remark' => Yii::t('app', 'Remark'),
+                'message_count' => Yii::t('app', 'Message Count'),
+                'coupon_count' => Yii::t('app', 'Coupon Count'),
                 'login_count' => Yii::t('app', 'Login Count'),
                 'last_login_at' => Yii::t('app', 'Last Login At'),
                 'last_login_ip' => Yii::t('app', 'Last Login Ip'),

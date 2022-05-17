@@ -21,6 +21,8 @@ update `fb_base_message` set status = 9 where status = 0;
 update `fb_base_message` set status = 0 where status = 1;
 update `fb_base_message` set status = 1 where status = 9;
 INSERT INTO `fb_base_message_type` VALUES ('3', '1', 'message', null, '0', '2', null, '3', '50', '1', '1', '1', '1', '1');
+ALTER TABLE `fb_user` ADD COLUMN `message_count` int(11) NOT NULL DEFAULT '0' COMMENT '消息数量' after `remark`;
+ALTER TABLE `fb_user` ADD COLUMN `coupon_count` int(11) NOT NULL DEFAULT '0' COMMENT '优惠券数' after `message_count`;
 
 ALTER TABLE `fb_store` ADD COLUMN `fund` decimal(10,3) NOT NULL DEFAULT '0.00' COMMENT '资金' after `lang_api_default`;
 ALTER TABLE `fb_store` ADD COLUMN `fund_amount` decimal(10,3) NOT NULL DEFAULT '0.00' COMMENT '资金总量' after `fund`;

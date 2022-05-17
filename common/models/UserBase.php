@@ -119,6 +119,8 @@ class UserBase extends BaseModel implements IdentityInterface
             'point' => Yii::t('app', 'Point'),
             'balance' => Yii::t('app', 'Balance'),
             'remark' => Yii::t('app', 'Remark'),
+            'message_count' => Yii::t('app', 'Message Count'),
+            'coupon_count' => Yii::t('app', 'Coupon Count'),
             'login_count' => Yii::t('app', 'Login Count'),
             'last_login_at' => Yii::t('app', 'Last Login At'),
             'last_login_ip' => Yii::t('app', 'Last Login Ip'),
