@@ -476,8 +476,43 @@ class BaseController extends \common\components\controller\BaseController
     public function actionEditAjaxStatus()
     {
         $id = Yii::$app->request->get('id');
-        if (!$id) {
+        $ids = Yii::$app->request->post('ids');
+        if (!$id && !$ids) {
             return $this->error(404);
+        }
+
+        if ($ids) {
+            $status = Yii::$app->request->get('status');
+            if ($status === null || !in_array(intval($status), array_keys($this->modelClass::getStatusLabels()))) {
+                return $this->error(422);
+            }
+
+            $arrIds = explode(',', $ids);
+            if (empty($arrIds)) {
+                return $this->error(Yii::t('app', 'Invalid id'));
+            }
+
+            $count = 0;
+            foreach ($arrIds as $id) {
+                $model = $this->findModel($id);
+                if (!$model) {
+                    return $this->error(404);
+                }
+
+                $this->beforeEditAjaxStatus($id, $model);
+                if ($this->beforeEditAjaxStatusSave($id, $model, $status)) {
+                    $model->status = intval($status);
+                    if (!$model->save()) {
+                        Yii::$app->logSystem->db($model->errors);
+                        return $this->error(500, $this->getError($model));
+                    }
+                    $this->afterEditAjaxStatus($id, $model, $status);
+                    $count++;
+                }
+            }
+
+            $this->clearCache();
+            return $this->success([], [], Yii::t('app', '{count} items update successfully.', ['count' => $count]));
         }
 
         $model = $this->findModel($id);
@@ -492,15 +527,18 @@ class BaseController extends \common\components\controller\BaseController
             return $this->error(422);
         }
 
-        $this->beforeEditAjaxStatusSave($id, $model, $status);
-        $model->status = intval($status);
-        if (!$model->save()) {
-            Yii::$app->logSystem->db($model->errors);
-            return $this->error(500, $this->getError($model));
+        if ($this->beforeEditAjaxStatusSave($id, $model, $status)) {
+            $model->status = intval($status);
+            if (!$model->save()) {
+                Yii::$app->logSystem->db($model->errors);
+                return $this->error(500, $this->getError($model));
+            }
+            $this->afterEditAjaxStatus($id, $model, $status);
+            $this->clearCache();
+            return $this->success($model->attributes);
         }
-        $this->afterEditAjaxStatus($id, $model, $status);
-        $this->clearCache();
-        return $this->success($model->attributes);
+
+        return $this->error();
     }
 
     protected function beforeEditAjaxStatus($id = null, $model = null)
@@ -583,7 +621,7 @@ class BaseController extends \common\components\controller\BaseController
         $id = Yii::$app->request->get('id');
         $ids = Yii::$app->request->post('ids');
         if (!$id && !$ids) {
-            return $this->redirectError(Yii::t('app', 'Invalid id'));
+            return Yii::$app->request->isPost ? $this->error(Yii::t('app', 'Invalid id')) : $this->redirectError(Yii::t('app', 'Invalid id'));
         }
         $soft = Yii::$app->request->get('soft', true);
         $tree = Yii::$app->request->get('tree', false);
@@ -623,7 +661,7 @@ class BaseController extends \common\components\controller\BaseController
             }
 
             $this->clearCache();
-            return $this->success([], [], Yii::t('app', '{count} records delete successfully.', ['count' => $count]));
+            return $this->success([], [], Yii::t('app', '{count} items delete successfully.', ['count' => $count]));
         }
 
         $model = $this->findModel($id);

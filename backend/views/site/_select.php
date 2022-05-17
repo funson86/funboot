@@ -7,11 +7,14 @@ use common\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $searchModel common\models\ModelSearch */
+/* @var $statusLabels array */
+/* @var $typeLabels array */
 
 ?>
 
 <style>
     .select-on-check-all { display: none; }
+    .btn-group-status label { display: block; margin: .2rem 0 0 0; }
 </style>
 
 <div class="section-filter mb-sm-2">
@@ -20,8 +23,26 @@ use common\helpers\Url;
         <button type="button" class="btn-selection btn btn-default btn-filter"><?= Yii::t('app', 'All Filter') ?>(<?= $dataProvider->totalCount ?>)</button>
         <button type="button" class="btn-selection btn btn-filter-active btn-cancel"><?= Yii::t('app', 'Cancel All') ?></button>
     </div>
-    <?= Html::a(Yii::t('app', 'Delete'), "javascript:void(0);", ['class' => 'btn btn-default btn-sm delete-selection']); ?>
     <?= Html::export(null, [], Yii::t('app', 'Export '), ['class' => 'btn btn-default btn-sm']) ?>
+    <?= Html::a(Yii::t('app', 'Delete'), "javascript:void(0);", ['class' => 'btn btn-default btn-sm delete-selection']); ?>
+
+    <?php if (isset($statusLabels) && count($statusLabels)) { ?>
+    <div class="btn-group btn-group-status">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+            <?= Yii::t('app', 'Status') ?>
+        </button>
+        <div class="dropdown-menu">
+            <div class="px-4 py-1 status-items">
+                <?= Html::radioList('status', key($statusLabels), $statusLabels, ['class' => '', 'itemOptions' => ['class' => 'form-group']]) ?>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="text-center">
+                <button class="btn btn-primary status-selection"><?= Yii::t('app', 'Submit') ?></button>
+            </div>
+        </div>
+    </div>
+    <?php } ?>
+
 </div>
 
 <?php
@@ -34,6 +55,7 @@ $jsonIdsFilter = json_encode($idsFilter);
 $totalCount = $dataProvider->totalCount;
 
 $urlDelete = Url::to(['delete', 'soft' => false]);
+$urlStatus = Url::to(['edit-ajax-status']);
 $js = <<<JS
     var isAllFilter = false;
 
@@ -84,6 +106,17 @@ $js = <<<JS
 
     $('.delete-selection').click(function () {
         url = "{$urlDelete}";
+        if (isAllFilter) {
+            ids = {$jsonIdsFilter};
+        } else {
+            ids = $(".grid-view").yiiGridView("getSelectedRows");
+        }
+
+        sendRequest(url, ids);
+    });
+
+    $('.status-selection').click(function () {
+        url = "{$urlStatus}" + '?status=' + $('.status-items input:checked').val();
         if (isAllFilter) {
             ids = {$jsonIdsFilter};
         } else {

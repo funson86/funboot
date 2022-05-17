@@ -300,7 +300,7 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * 状态标签
+     * 导出按钮组
      *
      * @param null $url
      * @param array $exts
@@ -315,7 +315,7 @@ class Html extends \yii\helpers\Html
         empty($exts) && $exts = ['xls', 'xlsx', 'csv', 'html'];
 
         $options['class'] = $options['class'] ?? 'btn btn-success btn-xs';
-        $head = '<button type="button" class="'. $options['class'] . '"><i class="icon ion-ios-cloud-download-outline"></i> ' . $name . '</button><button type="button" class="'. $options['class'] . ' dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>';
+        $head = '<button type="button" class="'. $options['class'] . ' dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon ion-ios-cloud-download-outline"></i> ' . $name . '</button>';
         $links = '';
         $i = 0;
         foreach ($exts as $ext) {
@@ -332,9 +332,11 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * 状态标签
+     * 状态按钮组
      *
-     * @param array $exts
+     * @param array $buttonLinkNames
+     * @param null $name
+     * @param array $options
      * @return mixed
      */
     public static function groupButton($buttonLinkNames = [], $name = null, $options = [])
