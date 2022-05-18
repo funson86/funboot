@@ -46,7 +46,7 @@ function toastInfo(msg) {
     toastr.info(msg)
 }
 
-function messageWarning(content, title = '') {
+function messageWarning(content, title = '', url = '') {
     // Swal.fire(title, content, 'warning')
     toastr.options = {
         "closeButton": true, //是否显示关闭按钮
@@ -55,6 +55,9 @@ function messageWarning(content, title = '') {
         "hideDuration": "1000",//消失的动画时间
         "timeOut": "5000", //展现时间
     };
+    if (url.length > 0) {
+        toastr.options.onclick = function() { window.location.href = url; }
+    }
     toastr.error(content)
 }
 

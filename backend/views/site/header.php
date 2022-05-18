@@ -155,8 +155,9 @@ $store = $this->context->store;
 
 <?php
 $urlSetLanguage = Url::to(['/site/set-language'], false, false);
-$urlMessageList = Url::to(['/base/msg/list'], false, false);
+$urlMsgList = Url::to(['/base/msg/list'], false, false);
 $urlSiteLog = Url::to(['/site/log'], false, false);
+$urlMsgIndex = ($type == 'admin' ? '' : Url::to(['/base/msg/index'], false, false));
 $js = <<<JS
 $(document).ready(function() {
     $('.J_iframe').attr('src', $('.J_iframe').data('src'));
@@ -176,14 +177,14 @@ $('.funboot-lang').click(function() {
 function getMessageList() {
     $.ajax({
         type: "get",
-        url: "{$urlMessageList}",
+        url: "{$urlMsgList}",
         dataType: "json",
         success: function (data) {
             if (parseInt(data.code) === 200) {
                 if (parseInt(data.map.unread) > 0) {
                     $('#unreadMessageCount').html(data.map.unread);
                     $('.leftMessage p').append('<span class="badge badge-danger ">' + data.map.unread + '</span>');
-                    messageWarning(fbT('New Message'))
+                    messageWarning(fbT('New Message'), '', '{$urlMsgIndex}')
                 }
 
                 let items = data.data;
