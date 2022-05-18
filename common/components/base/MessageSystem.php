@@ -16,21 +16,36 @@ class MessageSystem extends \yii\base\Component
     public $queue = false;
 
     /**
-     * @param MessageType $model
+     * @param Message $model
+     * @param $toId
+     */
+    public function send(Message $model)
+    {
+        // 插入队列
+        if ($this->queue) {
+            Yii::$app->queue->push(new MessageJob(['model' => $model]));
+        } else {
+            $this->insert($model);
+        }
+    }
+
+    /**
+     * @param MessageType $messageType
      * @param int $fromId
      * @return array|bool
+     * @throws \yii\base\InvalidConfigException
      */
-    public function send(MessageType $message, $fromId = 1)
+    public function sendMessageType(MessageType $messageType, $fromId = 1)
     {
-        if (!$message) {
+        if (!$messageType) {
             return false;
         }
 
         $users = [];
-        if ($message->send_target == MessageType::SEND_TARGET_ALL) {
+        if ($messageType->send_target == MessageType::SEND_TARGET_ALL) {
             $users = User::find()->select(['id', 'store_id'])->asArray()->all();
         } else {
-            $arrUser = explode('|', $message->send_user);
+            $arrUser = explode('|', $messageType->send_user);
             $users = User::find()->where(['id' => $arrUser])->select(['id', 'store_id'])->asArray()->all();
         }
 
@@ -42,8 +57,8 @@ class MessageSystem extends \yii\base\Component
 
             $model = new Message();
             $model->store_id = $user['store_id'];
-            $model->message_type_id = $message->id;
-            $model->name = $message->name;
+            $model->message_type_id = $messageType->id;
+            $model->name = $messageType->name;
             $model->user_id = $user['id'];
             $model->from_id = $fromId;
             $model->status = Message::STATUS_UNREAD;
@@ -59,11 +74,18 @@ class MessageSystem extends \yii\base\Component
         return true;
     }
 
-    public function insert($model)
+    /**
+     * @param Message $model
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function insert(Message $model)
     {
         if (!$model->save()) {
             Yii::$app->logSystem->db($model->errors);
         }
+
+        User::updateMessageCount(1, $model->user_id);
+        return true;
     }
 
 }

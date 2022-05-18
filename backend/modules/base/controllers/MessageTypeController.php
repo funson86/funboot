@@ -62,7 +62,7 @@ class MessageTypeController extends BaseController
     protected function afterEdit($id = null, $model = null)
     {
         if (!$id) { //编辑的新消息才发送
-            Yii::$app->messageSystem->send($model, Yii::$app->user->id);
+            Yii::$app->messageSystem->sendMessageType($model, Yii::$app->user->id);
         }
     }
 
