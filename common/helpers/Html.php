@@ -443,7 +443,9 @@ class Html extends \yii\helpers\Html
                 'data-target' => '#ajaxModalFilter',
             ];
         }
-        return self::a($name, '#', $options);
+
+        $btnReset = self::a(Yii::t('app', 'Reset'), ['/' . Yii::$app->request->getPathInfo()], ['class' => 'btn btn-default']);
+        return self::tag('span',  $btnReset . self::a($name, '#', $options), ['class' => 'btn-group']);
     }
 
     /**

@@ -2,10 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\ModelSearch */
-
 ?>
 
 <div class="modal fade" id="ajaxModalFilter" aria-hidden="true">
@@ -27,17 +27,38 @@ use yii\widgets\ActiveForm;
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-sm-6">
                         <?= $form->field($model, 'id')->textInput(['value' => '']) ?>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-sm-6">
                         <?= $form->field($model, 'name')->textInput(['value' => '']) ?>
                     </div>
-                    <div class="col-lg-6">
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
                         <?= $form->field($model, 'status')->dropDownList($this->context->modelClass::getStatusLabels(null, true), ['prompt' => Yii::t('app', 'All'), 'value' => null]) ?>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-sm-6">
                         <?= $form->field($model, 'type')->dropDownList($this->context->modelClass::getTypeLabels(), ['prompt' => Yii::t('app', 'All'), 'value' => null]) ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-sm-right"><?= Yii::t('app', 'Created At') ?></div>
+                    <div class="col-sm-10 input-group drp-container">
+                        <?= DateRangePicker::widget([
+                            'name' => 'rangeCreatedAt',
+                            'value' => '',
+                            'useWithAddon' => true,
+                            'convertFormat' => true,
+                            'attribute' => 'created_at',
+                            'options' => [
+                                'class' => 'form-control',
+                                'placeholder' => Yii::t('app', 'Start Time - End Time')
+                            ],
+                            'pluginOptions' => [
+                                'locale' => ['format' => 'Y-m-d H:i'],
+                            ],
+                        ]);?>
                     </div>
                 </div>
             </div>

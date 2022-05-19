@@ -220,6 +220,15 @@ class BaseController extends \common\components\controller\BaseController
         if ($this->style == 11) {
             $params['ModelSearch']['parent_id'] = 0;
         }
+
+        // 可以在filterParams方法中unset($params['ModelSearch']['created_at']) 清除该时间范围，然后筛选到其他字段
+        if (Yii::$app->request->get('rangeCreatedAt')) {
+            $arrDate = explode(' - ', Yii::$app->request->post('rangeCreatedAt'));
+            $arrDate[0] = strtotime($arrDate[0] ?: '-1 month');
+            $arrDate[1] = strtotime($arrDate[1] ?? 'now');
+            $params['ModelSearch']['created_at'] = implode('><', $arrDate);
+        }
+
         $this->filterParams($params);
         $dataProvider = $searchModel->search($params);
 

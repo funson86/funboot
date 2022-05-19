@@ -34,10 +34,7 @@ class BaseModel extends ActiveRecord
     /** @var array multiple type */
     public $types;
 
-    /**
-     * 是否启用高并发，需要启用的在XxxBase中设置
-     * @var bool
-     */
+    /** @var bool 是否启用高并发，需要启用的在XxxBase中设置 */
     protected $highConcurrency = false;
 
     const SORT_DEFAULT = 50;
