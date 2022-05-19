@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="form-group">
                     <div class="col-sm-12 text-center">
                         <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-                        <span class="btn btn-white" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
+                        <span class="btn btn-default" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
                     </div>
                 </div>
                 <?php ActiveForm::end(); ?>

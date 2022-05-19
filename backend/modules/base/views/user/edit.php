@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="card-footer">
                 <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
-                <span class="btn btn-white" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
+                <span class="btn btn-default" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
             </div>
         </div>
     </div>
