@@ -37,7 +37,7 @@ use common\helpers\Url;
                     'placeholder' => Yii::t('app', 'Keywords'),
                     'id' => 'fbKeyword'
                 ]); ?>
-                <?= Html::tag('span', '<button class="btn btn-white" onclick="fbAttachmentSearch()"><i class="fa fa-search"></i> ' . Yii::t('app', 'Search') . '</button>', ['class' => 'input-group-btn'])?>
+                <?= Html::tag('span', '<button class="input-group-text" onclick="fbAttachmentSearch()"><i class="fa fa-search"></i></button>', ['class' => 'input-group-append'])?>
             </div>
         </div>
         <div class="col-lg-3 text-right">
@@ -62,7 +62,7 @@ use common\helpers\Url;
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+    <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
     <button class="btn btn-primary" data-dismiss="modal" id="fbAttachmentDetermine"><?= Yii::t('app', 'Ok') ?></button>
 </div>
 
@@ -153,7 +153,7 @@ use common\helpers\Url;
                         var html = template('fbAttachmentTemplate', data);
                         // 渲染添加数据
                         $('#fbAttachmentList').append(html);
-                        $('#loadingAttachment').html('<span onclick="fbGetAttachment()" class="btn btn-white"><?= Yii::t('app', 'Load More') ?>></span>');
+                        $('#loadingAttachment').html('<span onclick="fbGetAttachment()" class="btn btn-default"><?= Yii::t('app', 'Load More') ?>></span>');
                     } else {
                         $('#loadingAttachment').text('<?= Yii::t('app', 'No more data') ?>');
                     }
