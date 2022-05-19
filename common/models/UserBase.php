@@ -445,4 +445,25 @@ class UserBase extends BaseModel implements IdentityInterface
 
         return false;
     }
+
+    public static function updateCounter($field, $count = 1, $userId = null)
+    {
+        !$userId && !Yii::$app->user->isGuest && $userId = Yii::$app->user->id;
+        return !$userId ? false : User::updateAllCounters([$field => $count], ['id' => $userId]);
+    }
+
+    public static function updateMessageCount($count = 1, $userId = null)
+    {
+        return static::updateCounter('message_count', $count, $userId);
+    }
+
+    public static function updateCouponCount($count = 1, $userId = null)
+    {
+        return static::updateCounter('coupon_count', $count, $userId);
+    }
+
+    public static function updateLoginCount($count = 1, $userId = null)
+    {
+        return static::updateCounter('login_count', $count, $userId);
+    }
 }

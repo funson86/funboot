@@ -101,6 +101,7 @@ class MsgController extends BaseController
             if ($parent->status == $this->modelClass::STATUS_UNREAD && $parent->user_id == Yii::$app->user->id) {
                 $parent->status = $this->modelClass::STATUS_READ;
                 $parent->save(false);
+                User::updateMessageCount(-1, $parent->user_id);
             }
         }
     }
@@ -133,6 +134,11 @@ class MsgController extends BaseController
         $model->store_id = $model->user->store_id;
 
         return true;
+    }
+
+    protected function afterEdit($id = null, $model = null)
+    {
+        User::updateMessageCount(1, $model->user_id);
     }
 
     /**

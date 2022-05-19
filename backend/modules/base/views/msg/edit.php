@@ -34,7 +34,7 @@ $allUsers = ArrayHelper::map(User::find()->where(['status' => User::STATUS_ACTIV
         <div class="card">
             <div class="card-header">
                 <?php if (isset($model->parent)) { ?>
-                <?= Html::a('<i class="fa fa-star"></i> ' . Yii::t('cons', 'STATUS_STAR'), ['edit-status', 'id' => $model->parent->id, 'status' => ActiveModel::STATUS_STAR], ['class' => 'btn btn-dark text-warning mr-3']) ?>
+                <?= Html::a('<i class="fa fa-star"></i> ' . ($model->parent->status == ActiveModel::STATUS_STAR ? Yii::t('app', 'Cancel ') : '') . Yii::t('cons', 'STATUS_STAR'), ['edit-status', 'id' => $model->parent->id, 'status' => ($model->parent->status == ActiveModel::STATUS_READ ? ActiveModel::STATUS_STAR : ActiveModel::STATUS_READ)], ['class' => 'btn btn-dark text-warning mr-3']) ?>
                 <?= Html::a('<i class="fa fa-trash"></i> ' . Yii::t('cons', 'STATUS_RECYCLE'), ['delete', 'id' => $model->parent->id], [
                     'class' => 'btn btn-danger',
                     'data' => [
@@ -80,7 +80,7 @@ $allUsers = ArrayHelper::map(User::find()->where(['status' => User::STATUS_ACTIV
                 <?php if ($model->parent_id > 0) { $parent = $model->parent; while ($parent) { ?>
                     <div class="col-sm-10 col-sm-offset-2">
                         <hr>
-                        <p class="text-secondary"><?= $parent->from->username ?> <?= Yii::$app->formatter->asDatetime($parent->created_at) ?></p>
+                        <p class="text-secondary"><?= $parent->from->email ?: $parent->from->username ?> <?= Yii::$app->formatter->asDatetime($parent->created_at) ?></p>
                         <h6><?= $parent->name ?></h6>
                         <?php
                         if ($parent->content && strlen($parent->content) > 0) {

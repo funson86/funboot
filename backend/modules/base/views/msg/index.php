@@ -63,7 +63,7 @@ $box = Yii::$app->request->get('box');
                             'attribute' => 'user_id',
                             'format' => 'raw',
                             'value' => function ($model) {
-                                $icon = ($model->status == ActiveModel::STATUS_UNREAD) ?  '<i class="fa fa-envelope text-warning"></i> ' : '<i class="fa fa-envelope-open text-secondary"></i> ';
+                                $icon = '<i class="fas fa-paper-plane text-secondary"></i> ';
                                 $model->status == ActiveModel::STATUS_STAR && $icon .= '<i class="fa fa-star text-warning"></i> ';
                                 $option = ($model->status == ActiveModel::STATUS_UNREAD && !Yii::$app->request->get('box')) ? ['class' => 'text-bold'] : [];
                                 return Html::a(

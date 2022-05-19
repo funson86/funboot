@@ -60,6 +60,7 @@ return [
     'Submit' => '提交',
     'Save' => '保存',
     'Cancel' => '取消',
+    'Cancel ' => '取消',
     'Refresh' => '刷新',
     'Sync' => '同步',
     'Back' => '返回',
