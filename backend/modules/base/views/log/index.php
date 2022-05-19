@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php } ?>
                 </ul>
                 <div class="card-tools">
+                    <?= Html::filterModal() ?>
                     <?= Html::export() ?>
                     <?= Html::buttonModal(['view-ajax-stat-error'], Yii::t('app', 'Error') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
                     <?= Html::buttonModal(['view-ajax-stat-login'], Yii::t('app', 'Login') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
@@ -40,13 +41,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php if (Yii::$app->logSystem->driver == LogSystem::DRIVER_MYSQL) { ?>
 
             <div class="card-body">
+                <?//= $this->render('@backend/views/site/_select', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>
+
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'tableOptions' => ['class' => 'table table-hover'],
                     'columns' => [
                         [
-                            'class' => 'yii\grid\SerialColumn',
+                            'class' => 'yii\grid\CheckboxColumn',
                             'visible' => false,
                         ],
 
@@ -91,8 +94,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],*/
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
                         // ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        'created_at:datetime',
-                        // 'updated_at:datetime',
+                        ['attribute' => 'created_at', 'format' => 'datetime', 'filter' => false],
+                        // ['attribute' => 'updated_at', 'format' => 'datetime', 'filter' => false],
                         // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
                         // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
 
@@ -163,3 +166,4 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
+<?= $this->render('@backend/views/site/_filter', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>

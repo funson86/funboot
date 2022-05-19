@@ -70,20 +70,23 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id] ?? null) ?></h2>
                 <div class="card-tools">
-                    <?= Yii::$app->request->get('ModelSearch')['dict_id'] ? Html::createModal(['edit-ajax', 'dict_id' => (Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0)], Yii::t('app', 'Create ') . Yii::t('app', 'Dict Data'), ['class' => 'btn btn-sm btn-primary need-id']) : '' ?>
+                    <?= Html::filterModal() ?>
+                    <?= isset(Yii::$app->request->get('ModelSearch')['dict_id']) ? (Html::createModal(['edit-ajax', 'dict_id' => (Yii::$app->request->get('ModelSearch')['dict_id'])], Yii::t('app', 'Create ') . Yii::t('app', 'Dict Data'), ['class' => 'btn btn-sm btn-primary need-id'])) : '' ?>
                     <?= Html::export() ?>
                     <?= Html::import() ?>
                 </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+                <?//= $this->render('@backend/views/site/_select', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>
+
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'tableOptions' => ['class' => 'table table-hover'],
                     'columns' => [
                         [
-                            'class' => 'yii\grid\SerialColumn',
+                            'class' => 'yii\grid\CheckboxColumn',
                             'visible' => false,
                         ],
 
@@ -97,8 +100,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         // ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
                         'sort',
                         // ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        // 'created_at:datetime',
-                        // 'updated_at:datetime',
+                        // ['attribute' => 'created_at', 'format' => 'datetime', 'filter' => false],
+                        // ['attribute' => 'updated_at', 'format' => 'datetime', 'filter' => false],
                         // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
                         // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
 
@@ -113,6 +116,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <!-- /.col -->
 </div>
+
+<?= $this->render('@backend/views/site/_filter', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>
 
 <script>
     var currentDictId = <?= Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0 ?>;

@@ -72,7 +72,7 @@ use common\helpers\Html;
                     'tableOptions' => ['class' => 'table table-hover'],
                     'columns' => [
                         [
-                            'class' => 'yii\grid\SerialColumn',
+                            'class' => 'yii\grid\CheckboxColumn',
                             'visible' => false,
                         ],
 

@@ -25,7 +25,7 @@ class ScheduleController extends BaseController
       * 模糊查询字段
       * @var string[]
       */
-    public $likeAttributes = ['name'];
+    public $likeAttributes = ['name', 'params', 'brief', 'cron'];
 
     /**
      * 可编辑字段

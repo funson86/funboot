@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'options' => ['class' => 'table table-hover tab-treegrid'],
                     'columns' => [
                         [
-                            'class' => 'yii\grid\SerialColumn',
+                            'class' => 'yii\grid\CheckboxColumn',
                             'visible' => false,
                         ],
 
@@ -70,8 +70,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'sort',
                         ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }],
                         // ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        // 'created_at:datetime',
-                        // 'updated_at:datetime',
+                        // ['attribute' => 'created_at', 'format' => 'datetime', 'filter' => false],
+                        // ['attribute' => 'updated_at', 'format' => 'datetime', 'filter' => false],
                         // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
                         // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
 

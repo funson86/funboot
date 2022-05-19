@@ -177,7 +177,7 @@ class SiteController extends BaseController
         // 如果是POST提交
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
-                Yii::$app->logSystem->login();
+                Yii::$app->logSystem->login((Yii::$app->user->identity->email ?: Yii::$app->user->identity->username) . ' ' . Yii::$app->user->id . ' login');
 
                 // 如果Store已经非激活，用户无法登录
                 if ($this->store->status != Store::STATUS_ACTIVE) {

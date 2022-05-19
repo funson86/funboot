@@ -69,7 +69,7 @@ class ElasticsearchCrudController extends BaseController
         $storeId = $this->isAdmin() ? null : $this->getStoreId();
         $data = $this->modelClass::find()
             ->andFilterWhere(['>', 'status', $this->modelClass::STATUS_DELETED])
-            ->andFilterWhere(['store_id' => 1]);
+            ->andFilterWhere(['store_id' => $storeId]);
         $filterArr = [];
         $pages = new Pagination(['totalCount' => $data->count(), 'pageSize' => $this->pageSize]);
         $models = $data->offset($pages->offset)

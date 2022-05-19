@@ -38,19 +38,22 @@ $box = Yii::$app->request->get('box');
                     <li class="nav-item"><a class="nav-link <?= $status == ActiveModel::STATUS_DELETED && !$box ? 'active' : '' ?>" href="<?= Url::to(['index', 'status' => ActiveModel::STATUS_DELETED]) ?>"><?= Yii::t('cons', 'STATUS_RECYCLE') ?></a></li>
                 </ul>
                 <div class="card-tools">
+                    <?= Html::filterModal() ?>
                     <?= Html::create() ?>
                     <!--<?= Html::export() ?>
                     <?= Html::import() ?>-->
                 </div>
             </div>
             <div class="card-body">
+                <?//= $this->render('@backend/views/site/_select', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>
+
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'tableOptions' => ['class' => 'table table-hover'],
                     'columns' => [
                         [
-                            'class' => 'yii\grid\SerialColumn',
+                            'class' => 'yii\grid\CheckboxColumn',
                             'visible' => false,
                         ],
 
@@ -130,3 +133,5 @@ $box = Yii::$app->request->get('box');
         </div>
     </div>
 </div>
+
+<?= $this->render('@backend/views/site/_filter', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>

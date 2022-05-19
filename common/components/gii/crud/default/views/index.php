@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <h2 class="card-title"><?= "<?= " ?>!is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= "<?= " ?>Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id] ?? null) ?></h2>
                 <div class="card-tools">
+                    <?= "<?= " ?>Html::filterModal() ?>
                     <?= "<?= " ?>Html::createModal() ?>
                     <?= "<?= " ?>Html::export() ?>
                     <?= "<?= " ?>Html::import() ?>
@@ -39,13 +40,15 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="card-body">
 <?php if ($generator->indexWidgetType === 'grid'): ?>
+                <?= "<?//= " ?> $this->render('@backend/views/site/_select', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>
+
                 <?= "<?= " ?>GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'tableOptions' => ['class' => 'table table-hover'],
                     <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
                         [
-                            'class' => 'yii\grid\SerialColumn',
+                            'class' => 'yii\grid\CheckboxColumn',
                             'visible' => false,
                         ],
 
@@ -96,7 +99,9 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             $filter = "'filter' => Html::activeDropDownList(\$searchModel, '" . $column->name . "', ActiveModel::get" . Inflector::camelize($column->name) . "Labels(null, true), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),";
             echo "                        ['attribute' => '" . $column->name . "', 'format' => 'raw', 'value' => function (\$model) { return ActiveModel::isStatusActiveInactive(\$model->status) ? Html::status(\$model->status) : ActiveModel::getStatusLabels(\$model->status, true); }, " . $filter . "],\n";
         } elseif ($column->name == 'created_at') {
-            echo "                        '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
+            echo "                        ['attribute' => '" . $column->name . "', 'format' => 'datetime', 'filter' => false],\n";
+        } elseif ($column->name == 'updated_at') {
+            echo "                        // ['attribute' => '" . $column->name . "', 'format' => 'datetime', 'filter' => false],\n";
         } elseif ((substr_compare($column->name, '_at', -strlen('_at')) === 0)) {
             echo "                        " . $comment . "'" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
         } elseif ((substr_compare($column->name, '_by', -strlen('_by')) === 0)) {
@@ -130,3 +135,5 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         </div>
     </div>
 </div>
+
+<?= "<?= " ?>$this->render('@backend/views/site/_filter', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>

@@ -28,18 +28,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a class="nav-link active"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?></a>
                     </li>
                     <li class="nav-tabs-tools">
+                        <?= Html::filterModal() ?>
                         <!--<?= Html::export() ?>-->
                     </li>
                 </ul>
             </div>
             <div class="card-body">
+                <?//= $this->render('@backend/views/site/_select', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>
+
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'tableOptions' => ['class' => 'table table-hover'],
                     'columns' => [
                         [
-                            'class' => 'yii\grid\SerialColumn',
+                            'class' => 'yii\grid\CheckboxColumn',
                             'visible' => false,
                         ],
 
@@ -63,8 +66,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                             'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),
                         ],
-                        'created_at:datetime',
-                        // 'updated_at:datetime',
+                        ['attribute' => 'created_at', 'format' => 'datetime', 'filter' => false],
+                        // ['attribute' => 'updated_at', 'format' => 'datetime', 'filter' => false],
                         // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
                         // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
 
@@ -75,3 +78,5 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+<?= $this->render('@backend/views/site/_filter', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>

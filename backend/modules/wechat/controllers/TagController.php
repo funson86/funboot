@@ -54,7 +54,6 @@ class TagController extends BaseController
             $model = $this->modelClass::find()->andFilterWhere(['store_id' => $storeId])->one();
         }
 
-
         return $this->render($this->action->id, [
             'models' => $model->tags ?? [],
             //'pages' => $pages
@@ -70,19 +69,19 @@ class TagController extends BaseController
 
     public function actionEditAjax()
     {
+        $model = new $this->modelClass;
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            if (!isset($post['Tag']['name']) || strlen($post['Tag']['name']) <= 0) {
+            if (!isset($post[$model->formName()]['name']) || strlen($post[$model->formName()]['name']) <= 0) {
                 return $this->redirectError();
             }
 
-            Yii::$app->wechat->app->user_tag->create($post['Tag']['name']);
+            Yii::$app->wechat->app->user_tag->create($post[$model->formName()]['name']);
             TagService::syncAll();
 
             return $this->redirectSuccess();
         }
 
-        $model = new $this->modelClass;
         return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
