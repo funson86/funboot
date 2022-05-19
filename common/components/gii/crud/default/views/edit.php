@@ -61,7 +61,7 @@ if (!empty($generator->formFields)) {
             </div>
             <div class="card-footer">
                 <?= "<?" ?>= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-                <span class="btn btn-white" onclick="history.go(-1)"><?= "<?" ?>= Yii::t('app', 'Back') ?></span>
+                <span class="btn btn-default" onclick="history.go(-1)"><?= "<?" ?>= Yii::t('app', 'Back') ?></span>
             </div>
         </div>
     </div>
