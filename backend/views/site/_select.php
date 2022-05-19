@@ -7,10 +7,9 @@ use common\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $searchModel common\models\ModelSearch */
-/* @var $statusLabels array */
-/* @var $typeLabels array */
-/* @var $typeMultiple bool */
 
+$statusLabels = $this->context->modelClass::getStatusLabels(null, true);
+$typeLabels = $this->context->modelClass::getTypeLabels(null, true);
 ?>
 
 <style>
@@ -27,7 +26,6 @@ use common\helpers\Url;
     <?= Html::export(null, [], Yii::t('app', 'Export '), ['class' => 'ml-3 btn btn-default btn-sm']) ?>
     <?= Html::a(Yii::t('app', 'Delete'), "javascript:void(0);", ['class' => 'ml-3 btn btn-default btn-sm delete-selection']); ?>
 
-    <?php if (isset($statusLabels) && count($statusLabels)) { ?>
     <div class="btn-group ml-3 btn-group-status">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"><?= Yii::t('app', 'Status') ?></button>
         <div class="dropdown-menu">
@@ -38,14 +36,12 @@ use common\helpers\Url;
             <div class="text-center"><button class="btn btn-primary status-selection"><?= Yii::t('app', 'Submit') ?></button></div>
         </div>
     </div>
-    <?php } ?>
 
-    <?php if (isset($typeLabels) && count($typeLabels)) { ?>
     <div class="btn-group ml-3 btn-group-type">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"><?= Yii::t('app', 'Type') ?></button>
         <div class="dropdown-menu">
             <div class="px-4 py-1 dropdown-options type-items">
-                <?php if (isset($typeMultiple) && $typeMultiple = true) { ?>
+                <?php if (in_array('type', $this->context->filterMultipleFields)) { ?>
                 <?= Html::checkboxList('type', null, $typeLabels, ['class' => '', 'itemOptions' => ['class' => 'form-group']]) ?>
                 <?php } else { ?>
                 <?= Html::radioList('type', key($typeLabels), $typeLabels, ['class' => '', 'itemOptions' => ['class' => 'form-group']]) ?>
@@ -55,7 +51,6 @@ use common\helpers\Url;
             <div class="text-center"><button class="btn btn-primary type-selection"><?= Yii::t('app', 'Submit') ?></button></div>
         </div>
     </div>
-    <?php } ?>
 
 </div>
 

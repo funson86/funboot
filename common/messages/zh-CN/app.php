@@ -65,6 +65,7 @@ return [
     'Sync' => '同步',
     'Back' => '返回',
     'Close' => '关闭',
+    'Reset' => '重置',
     'Ok' => '确定',
     'Are you sure you want to delete this item?' => '您确定要删除此项吗？',
     'Are you sure to do this operation?' => '您确定要执行此项操作吗？',
@@ -564,6 +565,7 @@ return [
     'Chat Room' => '聊天室',
 
     'Download Template' => '下载模板',
+    'Choose file' => '选择文件',
 
     // login
     'Sign in to start your session' => '欢迎登录',

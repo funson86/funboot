@@ -423,6 +423,30 @@ class Html extends \yii\helpers\Html
     }
 
     /**
+     * 创建按钮
+     * Html::createModal(['edit-ajax'], null, ['size' => 'Large'])
+     * Html::createModal(['edit-ajax'], null, ['size' => 'Max'])
+     *
+     * @param array url
+     * @param String name
+     * @param array $options
+     * @return string
+     */
+    public static function filterModal($name = null, $options = [])
+    {
+        !$name && $name = '<i class="fa fa-search"></i> ' . Yii::t('app', 'Filter');
+
+        if (!isset($options['class'])) {
+            $options = [
+                'class' => "btn btn-default btn-sm mr-3",
+                'data-toggle' => 'modal',
+                'data-target' => '#ajaxModalFilter',
+            ];
+        }
+        return self::a($name, '#', $options);
+    }
+
+    /**
      * 稍微复杂的做跳转 包括view
      *
      * @return array

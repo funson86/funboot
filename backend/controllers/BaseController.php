@@ -40,10 +40,7 @@ use yii\web\Response;
  */
 class BaseController extends \common\components\controller\BaseController
 {
-    /**
-     * 开启多语言
-     * @var bool
-     */
+    /** @var bool 开启多语言 */
     public $isMultiLang = false;
 
     /**
@@ -52,58 +49,35 @@ class BaseController extends \common\components\controller\BaseController
      */
     public $isAutoTranslation = false;
 
-    /**
-     * 1带搜索列表 11只显示parent_id为0 2树形(不分页) 3非常规表格
-     * @var array[]
-     */
+    /** @var int 1带搜索列表 11只显示parent_id为0 2树形(不分页) 3非常规表格 */
     protected $style = 1;
 
-    /**
-     * 模糊查询字段
-     *
-     * @var int
-     */
+    /** @var string[] 模糊查询字段 */
     protected $likeAttributes = ['name'];
 
-    /**
-     * 列表默认排序
-     * @var array[]
-     */
+    /** @var array 列表默认排序 */
     protected $defaultOrder = ['sort' => SORT_ASC, 'id' => SORT_DESC];
 
-    /**
-     * 可编辑字段
-     *
-     * @var int
-     */
+    /** @var string[] 列表可编辑字段 */
     protected $editAjaxFields = ['name', 'sort'];
 
-    /**
-     * @var bool 强制查询当前store
-     */
+    /** @var bool 强制查询当前store */
     protected $forceStoreId = true;
 
-    /**
-     * 导入导出字段
-     *
-     * @var int
-     */
+    /** @var string[] 导入导出字段 */
     protected $exportFields = [
         'id' => 'text',
         'name' => 'text',
         'type' => 'select',
     ];
 
-    /**
-     * 导出排序
-     * @var array
-     */
+    /** @var array 导出排序 */
     protected $exportSort = ['store_id' => SORT_ASC, 'id' => SORT_ASC];
 
-    /**
-     * 用于多个action共用一个view file时设置
-     * @var array
-     */
+    /** @var string[] $filterMultipleFields 筛选列表使用checkbox支持多个选择 */
+    public $filterMultipleFields = ['type', ];
+
+    /** @var null 用于多个action共用一个view file时设置, null表示使用默认view file */
     protected $viewFile = null;
 
     /**
