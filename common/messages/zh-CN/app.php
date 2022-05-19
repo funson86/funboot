@@ -216,6 +216,7 @@ return [
     'Updated By' => '更新用户',
     'Sort Order' => '排序',
     'Root' => '顶级',
+    'Message Count' => '消息数',
     'Consume Count' => '消费次数',
     'Consume Amount' => '消费金额',
     'Last Paid At' => '最近消费',
