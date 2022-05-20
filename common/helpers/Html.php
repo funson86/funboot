@@ -366,6 +366,25 @@ class Html extends \yii\helpers\Html
     }
 
     /**
+     * 按钮组
+     *
+     * @param array $buttonLinkNames
+     * @param array $options
+     * @return mixed
+     */
+    public static function btnGroup($buttons = [], $options = [])
+    {
+        if (empty($buttons)) {
+            return '';
+        }
+
+        $strButtons = implode(' ', $buttons);
+
+
+        return self::tag('span', $strButtons, array_merge(['class' => 'btn-group btn-sm'], $options));
+    }
+
+    /**
      * 导入按钮
      *
      * @param array url

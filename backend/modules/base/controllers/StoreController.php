@@ -331,6 +331,19 @@ class StoreController extends BaseController
         return $this->redirectSuccess();
     }
 
+    /**
+     * @return mixed
+     */
+    public function actionViewMonitor()
+    {
+        $models = Yii::$app->cacheSystem->getAllStore();
+        krsort($models);
+
+        return $this->render($this->action->id, [
+            'models' => $models,
+        ]);
+    }
+
     protected function clearCache()
     {
         Yii::$app->cacheSystem->clearStoreSetting();

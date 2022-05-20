@@ -22,8 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id] ?? null) ?></h2>
                 <div class="card-tools">
                     <?= Html::filterModal() ?>
-                    <?= Html::buttonModal(['edit-maintain-all'], Yii::t('app', 'Maintain All'), ['class' => 'btn btn-sm btn-danger'], false) ?>
-                    <?= Html::buttonModal(['edit-maintain-cancel'], Yii::t('app', 'Cancel Maintenance'), ['class' => 'btn btn-sm btn-success'], false) ?>
+                    <?= Html::buttonModal(['view-monitor'], Yii::t('app', 'Monitor'), ['class' => 'btn btn-info'], false, true) ?>
+                    <?= Html::btnGroup([Html::buttonModal(['edit-maintain-all'], Yii::t('app', 'Maintain All'), ['class' => 'btn btn-sm btn-danger text-white'], false), Html::buttonModal(['edit-maintain-cancel'], Yii::t('app', 'Cancel Maintenance'), ['class' => 'btn btn-sm btn-success text-white'], false)]) ?>
                     <?= Html::createModal(['edit-ajax'], null, ['size' => 'Large']) ?>
                     <?= Html::buttonModal(['edit-config'], Yii::t('app', 'Refresh Config File'), ['class' => 'btn btn-sm btn-warning'], false) ?>
                     <?= Html::buttonModal(['edit-qrcode'], Yii::t('app', 'Refresh Qrcode'), ['class' => 'btn btn-sm btn-info'], false) ?>
