@@ -11,7 +11,7 @@ namespace common\components\assets;
 class JqueryNiceScrollAsset extends \yii\web\AssetBundle
 {
     public $js = [
-        'https://cdn.jsdelivr.net/npm/jquery.nicescroll@3.7.6/jquery.nicescroll.min.js',
+        'https://unpkg.com/jquery.nicescroll@3.7.6/jquery.nicescroll.min.js',
     ];
 
     public $depends = [

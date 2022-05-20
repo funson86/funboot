@@ -11,11 +11,11 @@ namespace common\components\assets;
 class SweetAlert2Asset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css',
+        'https://unpkg.com/sweetalert2@11.0.19/dist/sweetalert2.min.css',
     ];
 
     public $js = [
-        'https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js',
+        'https://unpkg.com/sweetalert2@11.0.19/dist/sweetalert2.all.min.js',
     ];
 
     public $depends = [

@@ -11,10 +11,10 @@ namespace common\components\assets;
 class Bootstrap4Asset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css',
+        'https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css',
     ];
 
     public $js = [
-        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js',
+        'https://unpkg.com/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js',
     ];
 }

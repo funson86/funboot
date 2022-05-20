@@ -10,11 +10,11 @@ namespace common\components\assets;
 class JqueryUiAsset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/jquery-ui-dist@1.12.0/jquery-ui.min.css',
+        'https://unpkg.com/jquery-ui-dist@1.12.0/jquery-ui.min.css',
     ];
 
     public $js = [
-        'https://cdn.jsdelivr.net/npm/jquery-ui-dist@1.12.0/jquery-ui.min.js',
+        'https://unpkg.com/jquery-ui-dist@1.12.0/jquery-ui.min.js',
     ];
 
     public $depends = [

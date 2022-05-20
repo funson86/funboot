@@ -11,11 +11,11 @@ namespace common\components\assets;
 class OwlCarouselAsset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css',
+        'https://unpkg.com/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css',
     ];
 
     public $js = [
-        'https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js',
+        'https://unpkg.com/owl.carousel@2.3.4/dist/owl.carousel.min.js',
     ];
 
     public $depends = [

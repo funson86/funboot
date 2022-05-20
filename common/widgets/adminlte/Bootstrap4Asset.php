@@ -12,6 +12,6 @@ use yii\web\AssetBundle;
 class Bootstrap4Asset extends AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css',
+        'https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css',
     ];
 }

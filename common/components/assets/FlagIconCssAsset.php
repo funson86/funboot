@@ -11,6 +11,6 @@ namespace common\components\assets;
 class FlagIconCssAsset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css',
+        'https://unpkg.com/flag-icon-css@3.5.0/css/flag-icon.min.css',
     ];
 }

@@ -11,11 +11,11 @@ namespace common\components\assets;
 class SlicknavAsset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/slicknav@1.0.8/dist/slicknav.min.css',
+        'https://unpkg.com/slicknav@1.0.8/dist/slicknav.min.css',
     ];
 
     public $js = [
-        'https://cdn.jsdelivr.net/npm/slicknav@1.0.8/dist/jquery.slicknav.min.js',
+        'https://unpkg.com/slicknav@1.0.8/dist/jquery.slicknav.min.js',
     ];
 
     public $depends = [

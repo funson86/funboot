@@ -11,6 +11,6 @@ namespace common\components\assets;
 class WowAsset extends \yii\web\AssetBundle
 {
     public $js = [
-        'https://cdn.jsdelivr.net/npm/wow.js@1.2.2/dist/wow.min.js',
+        'https://unpkg.com/wow.js@1.2.2/dist/wow.min.js',
     ];
 }
