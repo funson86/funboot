@@ -551,13 +551,14 @@ class BaseController extends \common\components\controller\BaseController
         if ($status === null || !in_array(intval($status), array_keys($this->modelClass::getStatusLabels()))) {
             return $this->error(422);
         }
+        $model->status = intval($status);
 
         if ($this->beforeEditAjaxStatusSave($id, $model, $status)) {
-            $model->status = intval($status);
             if (!$model->save()) {
                 Yii::$app->logSystem->db($model->errors);
                 return $this->error(500, $this->getError($model));
             }
+
             $this->afterEditAjaxStatus($id, $model, $status);
             $this->clearCache();
             return $this->success($model->attributes);
@@ -605,15 +606,18 @@ class BaseController extends \common\components\controller\BaseController
         if ($status === null || !in_array(intval($status), array_keys($this->modelClass::getStatusLabels(null, true)))) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
-
-        $this->beforeEditStatusSave($id, $model, $status);
         $model->status = intval($status);
-        if (!$model->save()) {
-            Yii::$app->logSystem->db($model->errors);
-            return $this->error(500, $this->getError($model));
+
+        if ($this->beforeEditStatusSave($id, $model, $status)) {
+            if (!$model->save()) {
+                Yii::$app->logSystem->db($model->errors);
+                return $this->error(500, $this->getError($model));
+            }
+            $this->afterEditStatus($id, $model, $status);
+            $this->clearCache();
+            return $this->redirectSuccess();
         }
-        $this->afterEditStatus($id, $model, $status);
-        $this->clearCache();
+
         return $this->redirectSuccess();
     }
 
