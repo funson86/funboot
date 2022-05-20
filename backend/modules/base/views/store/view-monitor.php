@@ -15,8 +15,15 @@ $settingTypeCodeName = ArrayHelper::map(SettingType::find()->all(), 'code', 'nam
 
 function buildSettings($settings, $prefix = 'website_', $settingTypeCodeName = []) {
     foreach ($settings as $code => $value) {
-        if (strpos($code, $prefix) === 0 && $value) {
-            echo Yii::t('setting', ($settingTypeCodeName[$code] ?? '-')) . ': ' . $value . '<br>';
+        if (strpos($code, $prefix) === 0) {
+            $value = ($value == '' ? '-' : $value);
+            if (strpos($value, 'http') === 0) {
+                $arr = explode(".", $value);
+                $ext = strtolower(end($arr));
+                in_array($ext, ['jpg', 'jgeg', 'png', 'gif']) && $value = Html::img($value, ['width' => 20]);
+            }
+
+            echo Html::tag('p', Yii::t('setting', ($settingTypeCodeName[$code] ?? '-')) . ': ' . $value, ['class' => 'mb-0']);
         }
     }
 }
