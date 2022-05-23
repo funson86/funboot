@@ -219,7 +219,7 @@ function fbSort(obj) {
             dataType: "json",
             data: {
                 id: id,
-                name: "sort",
+                field: "sort",
                 value: sort
             },
             success: function (data) {
