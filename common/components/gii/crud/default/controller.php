@@ -37,33 +37,21 @@ use <?= ltrim($generator->baseControllerClass, '\\') ?>;
  */
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
-    /**
-      * @var <?= $modelClass . "\n" ?>
-      */
+    /** @var <?= $modelClass . "\n" ?> */
     public $modelClass = <?= $modelClass ?>::class;
 
-    /**
-      * 模糊查询字段
-      * @var string[]
-      */
+    /** @var string[] 模糊查询字段 */
     public $likeAttributes = ['name'];
 
-    /**
-     * 可编辑字段
-     *
-     * @var int
-     */
+    /** @var string[] 列表可编辑字段 */
     protected $editAjaxFields = ['name', 'sort'];
 
-    /**
-     * 导入导出字段
-     *
-     * @var int
-     */
+    /** @var string[] 导入导出字段 */
     protected $exportFields = [
         'id' => 'text',
         'name' => 'text',
         'type' => 'select',
+        'status' => 'select',
     ];
 
 }
