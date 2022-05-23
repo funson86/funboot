@@ -224,7 +224,7 @@ function fbSort(obj) {
             },
             success: function (data) {
                 if (parseInt(data.code) === 200) {
-                    fbSuccess(data.msg)
+                    toastSuccess(data.msg)
                 } else {
                     fbError(data.msg);
                 }
