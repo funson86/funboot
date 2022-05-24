@@ -306,9 +306,10 @@ class Html extends \yii\helpers\Html
      * @param array $exts
      * @param null $name
      * @param array $options
+     * @param bool $redirect
      * @return mixed
      */
-    public static function export($url = null, $exts = [], $name = null, $options = [], $redirect = false)
+    public static function export($url = null, $exts = [], $name = null, $options = [], $redirect = true)
     {
         !$url && $url = ['export'];
         !$name && $name = Yii::t('app', 'Export ');

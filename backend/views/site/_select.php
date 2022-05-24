@@ -23,7 +23,7 @@ $typeLabels = $this->context->modelClass::getTypeLabels(null, true);
         <button type="button" class="btn-selection btn btn-default btn-filter"><?= Yii::t('app', 'All Filter') ?>(<?= $dataProvider->totalCount ?>)</button>
         <button type="button" class="btn-selection btn btn-filter-active btn-cancel"><?= Yii::t('app', 'Cancel All') ?></button>
     </div>
-    <?= Html::export(null, [], Yii::t('app', 'Export '), ['class' => 'ml-3 btn btn-default btn-sm']) ?>
+    <?= Html::export(null, [], Yii::t('app', 'Export '), ['class' => 'ml-3 btn btn-default btn-sm'], false) ?>
     <?= Html::a(Yii::t('app', 'Delete'), "javascript:void(0);", ['class' => 'ml-3 btn btn-default btn-sm delete-selection']); ?>
 
     <div class="btn-group ml-3 btn-group-status">
