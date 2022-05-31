@@ -370,6 +370,7 @@ class SettingController extends BaseController
 
     protected function clearCache()
     {
+        Yii::$app->cacheSystem->clearAllStore();
         return Yii::$app->cacheSystem->clearStoreSetting();
     }
 }

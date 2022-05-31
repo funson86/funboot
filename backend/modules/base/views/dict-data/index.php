@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body p-0">
                 <ul class="nav nav-pills flex-column dict-data">
                     <?php foreach ($dicts as $dict) { ?>
-                    <li class="nav-item <?php if ($dict->id == $dictId) echo 'active' ?>" data-id="<?= $dict->id ?>">
+                    <li class="nav-item <?= ($dict->id == $dictId) ? 'active' : '' ?>" data-id="<?= $dict->id ?>">
                         <a href="<?= Url::to(['index', 'ModelSearch' => ['dict_id' => $dict->id]]) ?>" class="nav-link">
                             <?= $dict->name ?> [<?= $dict->code ?>]
                         </a>
