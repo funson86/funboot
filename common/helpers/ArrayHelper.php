@@ -241,7 +241,7 @@ class ArrayHelper extends BaseArrayHelper
 
         $value = 0;
         foreach ($array as $v) {
-            $value |= $v;
+            $value |= intval($v);
         }
         return $value;
     }
@@ -256,9 +256,11 @@ class ArrayHelper extends BaseArrayHelper
         if (!$i) {
             return [];
         }
+        $i = intval($i);
 
         $array = [];
         foreach ($labels as $k => $v) {
+            $k = intval($k);
             if ($k & $i) {
                 $array[$k] = $k;
             }

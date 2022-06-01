@@ -113,6 +113,7 @@ class SettingController extends BaseController
     {
         $storeId = Yii::$app->request->get('store_id', $this->getStoreId());
         $settingTypes = SettingType::find()->all();
+        $mapSettingType = ArrayHelper::mapIdData($settingTypes);
         $mapSettingTypeCodeName = ArrayHelper::map($settingTypes, 'code', 'name');
         $mapSettingTypeCodeId = ArrayHelper::map($settingTypes, 'code', 'id');
 
@@ -131,7 +132,11 @@ class SettingController extends BaseController
                 $model->name = $mapSettingTypeCodeName[$code] ?? '';
                 $model->setting_type_id = $mapSettingTypeCodeId[$code] ?? '';
                 $model->code = $code;
-                $model->value = is_array($value) ? Json::encode($value) : trim($value);
+                $settingType = $mapSettingType[$model->setting_type_id] ?? null;
+                if (!$settingType) {
+                    continue;
+                }
+                $model->value = ($settingType->type == 'checkboxList') ? (string)ArrayHelper::arrayToInt($value) : (is_array($value) ? Json::encode($value) : trim($value));
 
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($model->errors);

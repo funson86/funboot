@@ -3,8 +3,9 @@
 use common\helpers\Html;
 use common\models\base\Setting;
 use yii\helpers\HtmlPurifier;
+use common\helpers\ArrayHelper;
 
-$value = $row['setting']['value'] ?? null;
+$value = ArrayHelper::intToArray(($row['setting']['value'] ?? intval($valueDefault)), $valueRange);
 ?>
 
 <div class="form-group">
@@ -13,7 +14,7 @@ $value = $row['setting']['value'] ?? null;
     <div class="col-sm-push-10">
         <?php foreach ($valueRange as $key => $v) { ?>
             <label class="radio-inline">
-                <input type="radio" name="setting[<?= $row['code'] ?>]" class="radio" value="<?= $key ?>" <?= ($key == $value || (is_null($value) && $key == $valueDefault)) ? 'checked' : '' ?>>
+                <input type="checkbox" name="setting[<?= $row['code'] ?>]" class="checkbox" value="<?= $key ?>" <?= in_array(intval($key), $value) ? 'checked' : '' ?>>
                 <?= Yii::t('setting', $v) ?>
             </label>
         <?php } ?>
