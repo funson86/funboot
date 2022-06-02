@@ -5,12 +5,36 @@ namespace backend\modules\pay\controllers;
 use backend\controllers\BaseController;
 use common\models\pay\Payment;
 use Yii;
+use yii\filters\AccessControl;
 
 /**
  * Default controller for the `pay` module
  */
 class DefaultController extends BaseController
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['mail-audit'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Renders the index view for the module
      * @return string
