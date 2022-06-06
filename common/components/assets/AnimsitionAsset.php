@@ -4,7 +4,7 @@ namespace common\components\assets;
 
 /**
  * 页面切换动画 JS有问题会导致显示异常，复杂场景慎用
- * <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+ * <script src="https://unpkg.com/jquery@3.5.1/dist/jquery.min.js"></script>
  * Class AnimsitionAsset
  * @package common\components\assets
  * @author funson86 <funson86@gmail.com>

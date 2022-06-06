@@ -12,6 +12,6 @@ use yii\web\AssetBundle;
 class BootstrapIconsAsset extends AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css',
+        'https://unpkg.com/bootstrap-icons@1.4.0/font/bootstrap-icons.css',
     ];
 }

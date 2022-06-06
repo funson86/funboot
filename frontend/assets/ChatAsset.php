@@ -13,11 +13,11 @@ class ChatAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'https://cdn.jsdelivr.net/npm/jquery-sina-emotion@4.1.0/dist/jquery-sina-emotion.min.css',
+        'https://unpkg.com/jquery-sina-emotion@4.1.0/dist/jquery-sina-emotion.min.css',
     ];
 
     public $js = [
-        'https://cdn.jsdelivr.net/npm/jquery-sina-emotion@4.1.0/dist/jquery-sina-emotion.min.js',
+        'https://unpkg.com/jquery-sina-emotion@4.1.0/dist/jquery-sina-emotion.min.js',
     ];
 
     public $depends = [

@@ -3,7 +3,7 @@
 namespace common\components\assets;
 
 /**
- * <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+ * <script src="https://unpkg.com/jquery@3.5.1/dist/jquery.min.js"></script>
  * Class FancyBoxAsset
  * @package common\components\assets
  * @author funson86 <funson86@gmail.com>

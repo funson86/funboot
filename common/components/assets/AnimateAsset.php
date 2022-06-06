@@ -11,6 +11,6 @@ namespace common\components\assets;
 class AnimateAsset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css',
+        'https://unpkg.com/animate.css@3.5.2/animate.min.css',
     ];
 }

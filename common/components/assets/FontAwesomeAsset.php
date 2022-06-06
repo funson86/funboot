@@ -11,6 +11,6 @@ namespace common\components\assets;
 class FontAwesomeAsset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
+        'https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css',
     ];
 }

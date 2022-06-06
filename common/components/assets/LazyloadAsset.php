@@ -11,7 +11,7 @@ namespace common\components\assets;
 class LazyloadAsset extends \yii\web\AssetBundle
 {
     public $js = [
-        'https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js',
+        'https://unpkg.com/lazyload@2.0.0-rc.2/lazyload.js',
     ];
 
     public $depends = [

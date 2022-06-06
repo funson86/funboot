@@ -11,6 +11,6 @@ namespace common\components\assets;
 class IcheckAsset extends \yii\web\AssetBundle
 {
     public $js = [
-        'https://cdn.jsdelivr.net/npm/icheck@1.0.2/icheck.min.js',
+        'https://unpkg.com/icheck@1.0.2/icheck.min.js',
     ];
 }

@@ -10,11 +10,11 @@ namespace common\components\assets;
 class JqueryNiceSelectAsset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/jquery-nice-select@1.1.0/css/nice-select.css',
+        'https://unpkg.com/jquery-nice-select@1.1.0/css/nice-select.css',
     ];
 
     public $js = [
-        'https://cdn.jsdelivr.net/npm/jquery-nice-select@1.1.0/js/jquery.nice-select.min.js',
+        'https://unpkg.com/jquery-nice-select@1.1.0/js/jquery.nice-select.min.js',
     ];
 
     public $depends = [

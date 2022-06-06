@@ -11,8 +11,8 @@ namespace common\components\assets;
 class TheiaStickySidebarAsset extends \yii\web\AssetBundle
 {
     public $js = [
-        'https://cdn.jsdelivr.net/npm/theia-sticky-sidebar@1.7.0/dist/ResizeSensor.js',
-        'https://cdn.jsdelivr.net/npm/theia-sticky-sidebar@1.7.0/dist/theia-sticky-sidebar.min.js',
+        'https://unpkg.com/theia-sticky-sidebar@1.7.0/dist/ResizeSensor.js',
+        'https://unpkg.com/theia-sticky-sidebar@1.7.0/dist/theia-sticky-sidebar.min.js',
     ];
 
     public $depends = [

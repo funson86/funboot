@@ -11,11 +11,11 @@ namespace common\components\assets;
 class ToastAsset extends \yii\web\AssetBundle
 {
     public $css = [
-        'https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css',
+        'https://unpkg.com/toastr@2.1.4/build/toastr.min.css',
     ];
 
     public $js = [
-        'https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js',
+        'https://unpkg.com/toastr@2.1.4/build/toastr.min.js',
     ];
 
     public $depends = [
