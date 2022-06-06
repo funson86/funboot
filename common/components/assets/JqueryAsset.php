@@ -10,8 +10,10 @@ namespace common\components\assets;
  */
 class JqueryAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/jquery';
+
     public $js = [
-        'https://code.jquery.com/jquery-3.5.1.min.js',
+        'jquery-3.5.1.min.js',
     ];
 
     public $jsOptions = [

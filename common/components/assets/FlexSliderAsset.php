@@ -12,11 +12,13 @@ namespace common\components\assets;
  */
 class FlexSliderAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/flex-slider';
+
     public $css = [
-        'https://unpkg.com/flexslider@2.7.2/flexslider.css',
+        'flexslider.css',
     ];
 
     public $js = [
-        'https://unpkg.com/flexslider@2.7.2/jquery.flexslider-min.js',
+        'jquery.flexslider-min.js',
     ];
 }

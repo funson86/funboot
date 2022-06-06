@@ -10,11 +10,13 @@ namespace common\components\assets;
  */
 class FancyBoxAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/fancy-box';
+
     public $css = [
-        'https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css',
+        'dist/jquery.fancybox.min.css',
     ];
 
     public $js = [
-        'https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js',
+        'dist/jquery.fancybox.min.js',
     ];
 }

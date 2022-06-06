@@ -10,12 +10,14 @@ namespace common\components\assets;
  */
 class SweetAlert2Asset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/sweetalert2';
+
     public $css = [
-        'https://unpkg.com/sweetalert2@11.0.19/dist/sweetalert2.min.css',
+        'dist/sweetalert2.min.css',
     ];
 
     public $js = [
-        'https://unpkg.com/sweetalert2@11.0.19/dist/sweetalert2.all.min.js',
+        'dist/sweetalert2.all.min.js',
     ];
 
     public $depends = [

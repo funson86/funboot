@@ -11,11 +11,13 @@ namespace common\components\assets;
  */
 class AnimsitionAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/animsition';
+
     public $css = [
-        'https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/css/animsition.min.css',
+        'dist/css/animsition.min.css',
     ];
 
     public $js = [
-        'https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.min.js',
+        'dist/js/animsition.min.js',
     ];
 }
