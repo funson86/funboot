@@ -1,0 +1,33 @@
+{
+  "name": "jquery-sina-emotion",
+  "version": "4.1.0",
+  "description": "A jQuery plugin to create Sina Weibo emotion selection dialog.",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "cleancss -o dist/jquery-sina-emotion.min.css src/jquery-sina-emotion.css",
+    "build:js": "uglifyjs --compress --mangle --comments -o dist/jquery-sina-emotion.min.js src/jquery-sina-emotion.js",
+    "build": "npm run build:css && npm run build:js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lanfei/jquery-sina-emotion.git"
+  },
+  "keywords": [
+    "jquery",
+    "jquery-plugin"
+  ],
+  "author": "Jealous",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lanfei/jquery-sina-emotion/issues"
+  },
+  "homepage": "https://github.com/Lanfei/jquery-sina-emotion#readme",
+  "peerDependencies": {
+    "jquery": ">=1.7"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^4.1.10",
+    "uglify-js": "^3.3.5"
+  }
+}
