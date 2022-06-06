@@ -10,12 +10,14 @@ namespace common\components\assets;
  */
 class CookieBarAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/cookie-bar';
+
     public $css = [
-        '/resources/css/jquery.cookiebar.css',
+        'css/jquery.cookiebar.css',
     ];
 
     public $js = [
-        '/resources/js/jquery.cookiebar.js',
+        'js/jquery.cookiebar.js',
     ];
 
     public $depends = [

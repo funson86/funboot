@@ -13,11 +13,9 @@ class ChatAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'https://unpkg.com/jquery-sina-emotion@4.1.0/dist/jquery-sina-emotion.min.css',
     ];
 
     public $js = [
-        'https://unpkg.com/jquery-sina-emotion@4.1.0/dist/jquery-sina-emotion.min.js',
     ];
 
     public $depends = [
@@ -25,5 +23,6 @@ class ChatAsset extends AssetBundle
         'common\components\assets\Bootstrap4Asset',
         'common\components\assets\CookieBarAsset',
         'common\components\assets\FlagIconCssAsset',
+        'common\components\assets\JquerySinaEmotionAsset',
     ];
 }

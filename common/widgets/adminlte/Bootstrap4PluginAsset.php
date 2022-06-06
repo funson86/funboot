@@ -11,8 +11,10 @@ use yii\web\AssetBundle;
  */
 class Bootstrap4PluginAsset extends AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/bootstrap4';
+
     public $js = [
-        'https://unpkg.com/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js',
+        'dist/js/bootstrap.bundle.min.js',
     ];
 
     public $depends = [

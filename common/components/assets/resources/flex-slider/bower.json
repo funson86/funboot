@@ -1,0 +1,32 @@
+{
+  "name": "flexslider",
+  "version": "2.7.2",
+  "homepage": "https://github.com/woocommerce/FlexSlider",
+  "authors": [
+    "Automattic <jeff@woothemes.com>"
+  ],
+  "description": "An awesome, fully responsive jQuery slider toolkit.",
+  "main": [
+    "jquery.flexslider.js",
+    "flexslider.css"
+  ],
+  "keywords": [
+    "flexslider",
+    "jquery",
+    "slider",
+    "woothemes",
+    "automattic"
+  ],
+  "license": "GPLv2 and later",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "demo"
+  ],
+  "dependencies": {
+    "jquery": ">=1.11.3"
+  }
+}

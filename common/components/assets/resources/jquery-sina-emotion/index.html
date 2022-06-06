@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title>jQuery 新浪表情插件 Demo</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" href="dist/jquery-sina-emotion.min.css"/>
+	<style type="text/css">
+	body {
+		color: #345;
+		font-size: 14px;
+		min-height: 100vh;
+		background: #f1f3f5;
+		text-align: center;
+	}
+
+	body, textarea {
+		font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
+	}
+
+	a {
+		color: #345;
+	}
+
+	a:hover {
+		color: #745fb5;
+	}
+
+	#title {
+		font-weight: normal;
+	}
+
+	#desc {
+		color: #678;
+		line-height: 30px;
+		margin: 0 0 30px 0;
+	}
+
+	#form {
+		margin: 20px 0;
+	}
+
+	#article,
+	#content {
+		width: 500px;
+		height: 100px;
+		overflow: auto;
+		margin: 5px auto;
+		padding: 5px 8px;
+		text-align: left;
+		background: #f8f9fa;
+		box-sizing: border-box;
+		box-shadow: 0 6px 8px rgba(102, 119, 136, 0.03), 0 1px 2px rgba(102, 119, 136, 0.3);
+	}
+
+	#article .sina-emotion {
+		vertical-align: middle;
+	}
+
+	#content {
+		padding: 8px;
+		resize: none;
+		border: none;
+		outline: none;
+		font-size: 14px;
+		background: #fff;
+		box-shadow: 0 6px 8px rgba(102, 119, 136, 0.03), 0 1px 2px rgba(102, 119, 136, 0.3);
+	}
+
+	.button {
+		color: #fff;
+		border: none;
+		outline: none;
+		margin: 0 5px;
+		padding: 8px 16px;
+		border-radius: 3px;
+		background: #678;
+		background: linear-gradient(15deg, #678, #6f8793);
+		box-shadow: 0 6px 8px rgba(102, 119, 136, 0.03), 0 1px 2px rgba(102, 119, 136, 0.3);
+	}
+
+	.button:hover {
+		background: #89a;
+	}
+
+	.button:active {
+		background: #556371;
+	}
+	</style>
+</head>
+<body>
+<h1 id="title">jQuery Sina Emotion</h1>
+<p id="desc">
+	一个用于方便快速地创建新浪微博表情选择对话框的 jQuery 插件。<br>
+	（
+	<a target="_blank" href="https://www.npmjs.com/package/jquery-sina-emotion">npm</a> |
+	<a target="_blank" href="https://github.com/Lanfei/jquery-sina-emotion">GitHub</a> |
+	<a target="_blank" href="https://gitee.com/lanfei/jquery-sina-emotion">码云</a> |
+	<a target="_blank" href="http://www.clanfei.com">Blog</a>
+	）
+</p>
+<p id="article">
+	请编辑内容，插入表情后点击解析按钮。
+</p>
+<form id="form">
+	<p>
+		<label><textarea id="content">欢迎使用 jQuery Sina Emotion [微笑]</textarea></label>
+	</p>
+	<input id="face" class="button" type="button" value="表 情"/>
+	<input class="button" type="submit" value="解 析"/>
+</form>
+
+<script src="https://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+<script src="src/jquery-sina-emotion.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57981079-1"></script>
+<script>
+$('#form').bind({
+	submit: function (e) {
+		var content = $('#content').val();
+		$('#article').html(content).parseEmotion();
+		e.preventDefault();
+	}
+});
+$('#face').bind({
+	click: function (event) {
+		if (!$('#sinaEmotion').is(':visible')) {
+			$(this).sinaEmotion();
+			event.stopPropagation();
+		}
+	}
+});
+window.dataLayer = window.dataLayer || [];
+function gtag() {dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-57981079-1');
+gtag('event', 'pv', {event_category: 'jquery-sina-emotion'});
+</script>
+</body>
+</html>

@@ -10,12 +10,14 @@ namespace common\components\assets;
  */
 class ToastAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/toastr';
+
     public $css = [
-        'https://unpkg.com/toastr@2.1.4/build/toastr.min.css',
+        'build/toastr.min.css',
     ];
 
     public $js = [
-        'https://unpkg.com/toastr@2.1.4/build/toastr.min.js',
+        'build/toastr.min.js',
     ];
 
     public $depends = [

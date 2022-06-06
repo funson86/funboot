@@ -10,7 +10,9 @@ namespace common\components\assets;
  */
 class AnimateAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/animate';
+
     public $css = [
-        'https://unpkg.com/animate.css@3.5.2/animate.min.css',
+        'animate.min.css',
     ];
 }

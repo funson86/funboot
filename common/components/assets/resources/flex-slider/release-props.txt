@@ -1,0 +1,16 @@
+Release props
+
+@smskin  		pull #1438
+@mrcoles  		pull #1421
+@regepan		pull #1382
+@driesdesmet	pull #1376
+@regepan		pull #1380
+@jwfuller		pull #1368
+@florianjacob	pull #1434
+@nsickness		issue #646 (adds solution to demo)
+@Ninos			pull @1419
+@cgrymala		pull #1390
+
+Setup microsite at flexslider.com
+Create email addresses for flexslider.com
+Replace all instances of email addresses in the code and bower, npm packages.

@@ -10,7 +10,9 @@ namespace common\components\assets;
  */
 class IcheckAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/icheck';
+
     public $js = [
-        'https://unpkg.com/icheck@1.0.2/icheck.min.js',
+        'icheck.min.js',
     ];
 }

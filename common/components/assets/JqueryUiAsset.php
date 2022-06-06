@@ -9,12 +9,14 @@ namespace common\components\assets;
  */
 class JqueryUiAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/jquery-ui-dist';
+
     public $css = [
-        'https://unpkg.com/jquery-ui-dist@1.12.0/jquery-ui.min.css',
+        'jquery-ui.min.css',
     ];
 
     public $js = [
-        'https://unpkg.com/jquery-ui-dist@1.12.0/jquery-ui.min.js',
+        'jquery-ui.min.js',
     ];
 
     public $depends = [

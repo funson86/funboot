@@ -9,12 +9,14 @@ namespace common\components\assets;
  */
 class JqueryNiceSelectAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/jquery-nice-select';
+
     public $css = [
-        'https://unpkg.com/jquery-nice-select@1.1.0/css/nice-select.css',
+        'css/nice-select.css',
     ];
 
     public $js = [
-        'https://unpkg.com/jquery-nice-select@1.1.0/js/jquery.nice-select.min.js',
+        'js/jquery.nice-select.min.js',
     ];
 
     public $depends = [

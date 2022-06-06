@@ -10,12 +10,14 @@ namespace common\components\assets;
  */
 class OwlCarouselAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/owl-carousel';
+
     public $css = [
-        'https://unpkg.com/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css',
+        'dist/assets/owl.carousel.min.css',
     ];
 
     public $js = [
-        'https://unpkg.com/owl.carousel@2.3.4/dist/owl.carousel.min.js',
+        'dist/owl.carousel.min.js',
     ];
 
     public $depends = [

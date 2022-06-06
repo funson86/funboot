@@ -10,7 +10,9 @@ namespace common\components\assets;
  */
 class FlagIconCssAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/flag-icon-css';
+
     public $css = [
-        'https://unpkg.com/flag-icon-css@3.5.0/css/flag-icon.min.css',
+        'css/flag-icon.min.css',
     ];
 }

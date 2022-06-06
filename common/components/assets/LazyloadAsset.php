@@ -10,8 +10,10 @@ namespace common\components\assets;
  */
 class LazyloadAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/lazyload';
+
     public $js = [
-        'https://unpkg.com/lazyload@2.0.0-rc.2/lazyload.js',
+        'lazyload.min.js',
     ];
 
     public $depends = [

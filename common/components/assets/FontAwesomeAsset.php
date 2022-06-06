@@ -10,7 +10,9 @@ namespace common\components\assets;
  */
 class FontAwesomeAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/font-awesome';
+
     public $css = [
-        'https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css',
+        'css/font-awesome.min.css',
     ];
 }

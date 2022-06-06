@@ -10,7 +10,9 @@ namespace common\components\assets;
  */
 class WowAsset extends \yii\web\AssetBundle
 {
+    public $sourcePath = '@common/components/assets/resources/wow';
+
     public $js = [
-        'https://unpkg.com/wow.js@1.2.2/dist/wow.min.js',
+        'dist/wow.min.js',
     ];
 }
