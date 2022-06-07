@@ -187,9 +187,9 @@
         ],
 ```
 
-- 不记录操作日志
+- 默认不记录操作日志，打开操作日志需要按照如下执行
 
-common/config/main-local.php 中将 logSystem 改成 'types' => ['login', 'db', 'error', 'console', 'mail'], 删除 'operation'。
+common/config/main-local.php 中将 logSystem 改成 'types' => ['operation', 'login', 'db', 'error', 'console', 'mail'], 增加 'operation'， 增加操作日志会减慢系统速度
 
 ```
         'logSystem' => [
@@ -197,7 +197,7 @@ common/config/main-local.php 中将 logSystem 改成 'types' => ['login', 'db', 
             'queue' => false,//true, // 是否通过队列方式存数据库
             'driver' => 'mysql', //'mongodb', // 存储方式，mysql数据库或mongodb数据库
             'levels' => ['error', 'warning'], // 记录错误日志等级error warning info trace
-            'types' => [/*'operation', */'login', 'db', 'error', 'console', 'mail'], // 记录日志类型
+            'types' => ['operation', 'login', 'db', 'error', 'console', 'mail'], // 记录日志类型
             'ignoreCodes' => [404], // 忽略错误码
         ],
 
