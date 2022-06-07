@@ -26,7 +26,7 @@ $comment->topic_id = $model->id;
                         <div class="topic-info">
                             <a class="topic-node" href="<?= Url::to(['/bbs/default/index', 'id' => $model->node_id]) ?>"><?= Html::tag('span', $model->node->name, ['class' => 'btn-sm btn-info']) ?></a> •
                             <?= $model->tag_id > 0 ? Html::a($model->tag->name, ['/bbs/default/index', 'ModelSearch[tag_id]' => $model->tag_id], ['class' => 'btn-sm btn-info']) : '' ?> •
-                            <a class="remove-padding-left" href="<?= Url::to(['/bbs/topic/view', 'id' => $model->id]) ?>"><span class="bi-hand-thumbs-up"> <?= $model->like ?> </span></a> •
+                            <a class="remove-padding-left" href="<?= Url::to(['/bbs/topic/view', 'id' => $model->id]) ?>"><span class="fa fa-thumbs-o-up"> <?= $model->like ?> </span></a> •
                             <?php if ($model->comment > 0) { ?>
                             <span>最后由 <a href="<?= Url::to(['/bbs/user/view', 'id' => $model->last_comment_user_id]) ?>"><strong> <?= $model->last_comment_username ?> </strong></a>于 <?= Yii::$app->formatter->asDate($model->last_comment_updated_at) ?> 回复 •
                             <?php } else { ?>
@@ -55,7 +55,7 @@ $comment->topic_id = $model->id;
             <div class="card-footer">
                 <?php
                 $like = Html::a(
-                    Html::tag('i', '', ['class' => 'bi-hand-thumbs-up']) . Html::tag('span', $model->like) . ' 个赞',
+                    Html::tag('i', '', ['class' => 'fa fa-thumbs-o-up']) . Html::tag('span', $model->like) . ' 个赞',
                     '#',
                     [
                         'data-action' => UserAction::ACTION_LIKE,
@@ -65,7 +65,7 @@ $comment->topic_id = $model->id;
                     ]);
 
                 $hate = Html::a(
-                    Html::tag('i', '', ['class' => 'bi-hand-thumbs-down']) . ' 踩',
+                    Html::tag('i', '', ['class' => 'fa fa-thumbs-o-down']) . ' 踩',
                     '#',
                     [
                         'data-action' => UserAction::ACTION_HATE,
@@ -76,7 +76,7 @@ $comment->topic_id = $model->id;
                 );
 
                 $follow = Html::a(
-                    Html::tag('i', '', ['class' => 'bi-eye']) . ' 关注',
+                    Html::tag('i', '', ['class' => 'fa fa-eye']) . ' 关注',
                     '#',
                     [
                         'data-action' => UserAction::ACTION_FOLLOW,
@@ -86,7 +86,7 @@ $comment->topic_id = $model->id;
                     ]
                 );
                 $thanks = Html::a(
-                    Html::tag('i', '', ['class' => 'bi-heart']) . ' 感谢',
+                    Html::tag('i', '', ['class' => 'fa fa-heart-o']) . ' 感谢',
                     '#',
                     [
                         'data-action' => UserAction::ACTION_THANKS,
@@ -96,7 +96,7 @@ $comment->topic_id = $model->id;
                     ]
                 );
                 $favorite = Html::a(
-                    Html::tag('i', '', ['class' => 'bi-bookmark']) . ' 收藏',
+                    Html::tag('i', '', ['class' => 'fa fa-bookmark-o']) . ' 收藏',
                     '#',
                     [
                         'data-action' => UserAction::ACTION_FAVORITE,
@@ -109,7 +109,7 @@ $comment->topic_id = $model->id;
 
                 if ($model->isOwner()) {
                     echo Html::a(
-                        Html::tag('i', '', ['class' => 'bi-hand-thumbs-up']) . ' ' . Html::tag('span', $model->like) . ' 个赞',
+                        Html::tag('i', '', ['class' => 'fa fa-thumbs-o-up']) . ' ' . Html::tag('span', $model->like) . ' 个赞',
                         'javascript:;'
                     );
                 } else {
@@ -119,12 +119,12 @@ $comment->topic_id = $model->id;
 
                 if ($this->context->isManager()) {
                     echo Html::a(
-                        Html::tag('i', '', ['class' => 'bi-trophy']) . ' ' . ($model->grade == ActiveModel::GRADE_EXCELLENT ? '取消' : '') . '加精',
+                        Html::tag('i', '', ['class' => 'fa fa-trophy']) . ' ' . ($model->grade == ActiveModel::GRADE_EXCELLENT ? '取消' : '') . '加精',
                         ['/bbs/topic/excellent', 'id' => $model->id, 'cancel' => $model->grade == ActiveModel::GRADE_EXCELLENT ? 1 : 0],
                         ['class' => ($model->grade == ActiveModel::GRADE_EXCELLENT ? 'icon-active' : '')]
                     );
                     echo Html::a(
-                        Html::tag('i', '', ['class' => 'bi-arrow-up-circle']) . ' ' . ($model->sort == 10 ? '取消' : '') . '置顶',
+                        Html::tag('i', '', ['class' => 'fa fa-arrow-circle-o-up']) . ' ' . ($model->sort == 10 ? '取消' : '') . '置顶',
                         ['/bbs/topic/top', 'id' => $model->id, 'cancel' => $model->sort == 10 ? 1 : 0],
                         ['class' => ($model->sort == 10 ? ' icon-active' : '')]
                     );
@@ -134,16 +134,16 @@ $comment->topic_id = $model->id;
                     echo '<span class="float-right">';
                     if ($model->status != ActiveModel::STATUS_ACTIVE) {
                         echo Html::a(
-                            Html::tag('i', '', ['class' => 'bi-pencil']) . ' 审核通过',
+                            Html::tag('i', '', ['class' => 'fa fa-pencil']) . ' 审核通过',
                             ['/bbs/topic/pass', 'id' => $model->id]
                         );
                     }
                     echo Html::a(
-                        Html::tag('i', '', ['class' => 'bi-pencil']) . ' 修改',
+                        Html::tag('i', '', ['class' => 'fa fa-pencil']) . ' 修改',
                         ['/bbs/topic/edit', 'id' => $model->id]
                     );
                     echo Html::a(
-                        Html::tag('i', '', ['class' => 'bi-trash']) . ' 删除',
+                        Html::tag('i', '', ['class' => 'fa fa-trash']) . ' 删除',
                         ['/bbs/topic/delete', 'id' => $model->id],
                         [
                             'data' => [

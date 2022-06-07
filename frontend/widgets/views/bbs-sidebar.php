@@ -7,7 +7,7 @@ use yii\helpers\Url;
 <?php if ($type == 'topic') { ?>
 <div class="card">
     <div class="card-body text-center">
-        <?= Html::a(Html::tag('i', '', ['class' => 'bi-pencil']) . ' ' . Yii::t('app', 'Publish'), ['/bbs/topic/edit', 'type' => $type, 'node_id' => $nodeId], ['class' => 'btn btn-block btn-primary']) ?>
+        <?= Html::a(Html::tag('i', '', ['class' => 'fa fa-pencil']) . ' ' . Yii::t('app', 'Publish'), ['/bbs/topic/edit', 'type' => $type, 'node_id' => $nodeId], ['class' => 'btn btn-block btn-primary']) ?>
     </div>
 </div>
 <?php } ?>

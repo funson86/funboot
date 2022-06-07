@@ -50,7 +50,7 @@ if (Yii::$app->user->isGuest) {
 } else {
     // 通知
     /*$menuItems[] = [
-        'label' => Html::tag('i', '', ['class' => 'bi-bell-fill']) . (1 > 0 ?Html::tag('span', 1, ['class' => 'badge badge-danger']) : ''),
+        'label' => Html::tag('i', '', ['class' => 'fa fa-bell']) . (1 > 0 ?Html::tag('span', 1, ['class' => 'badge badge-danger']) : ''),
         'url' => ['/notice/index'],
         'options' => ['class' => 'notice-count'],
     ];*/
@@ -70,7 +70,7 @@ if (Yii::$app->user->isGuest) {
 
 // 语言
 /*$menuItems[] = [
-    'label' => Html::tag('i', '', ['class' => 'bi-globe']),
+    'label' => Html::tag('i', '', ['class' => 'fa fa-globe']),
     'items' => [
         ['label' => '<i class="flag-icon flag-icon-cn mr-2"></i>' . Yii::t('app', 'Chinese'), 'url' => 'javascript:;', 'linkOptions' => ['class' => 'funboot-lang', 'data-lang' => 'cn']],
         ['label' => '<i class="flag-icon flag-icon-gb mr-2"></i>' . Yii::t('app', 'English'), 'url' => 'javascript:;', 'linkOptions' => ['class' => 'funboot-lang', 'data-lang' => 'en']],

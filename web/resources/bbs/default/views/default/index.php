@@ -28,7 +28,7 @@ $this->registerMetaTag(["name" => "description", "content" => $store->settings['
                     </li>
                     <?php } ?>
                     <li class="nav-item ml-auto mr-2">
-                        <a class="nav-link btn-primary" href="<?= Url::to(['/bbs/topic/edit', 'node_id' => Yii::$app->request->get('id')]) ?>" tabindex="-1" aria-disabled="true"><?= Html::tag('i', '', ['class' => 'bi-pencil']) . ' ' . Yii::t('app', 'Publish') ?></a>
+                        <a class="nav-link btn-primary" href="<?= Url::to(['/bbs/topic/edit', 'node_id' => Yii::$app->request->get('id')]) ?>" tabindex="-1" aria-disabled="true"><?= Html::tag('i', '', ['class' => 'fa fa-pencil']) . ' ' . Yii::t('app', 'Publish') ?></a>
                     </li>
                 </ul>
             </div>
