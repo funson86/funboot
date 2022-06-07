@@ -43,7 +43,8 @@ return [
             'class' => 'common\components\base\LogSystem',
             'queue' => false,//true, // 是否通过队列方式存数据库
             'driver' => 'mysql', //'mongodb', // 存储方式，mysql数据库或mongodb数据库
-            'levels' => ['error', 'warning'], // 记录日志等级error warning info trace
+            'levels' => ['error', 'warning'], // 记录错误日志等级error warning info trace
+            'types' => [/*'operation', */'login', 'db', 'error', 'console', 'mail'], // 记录日志类型
             'ignoreCodes' => [404], // 忽略错误码
         ],
         'authSystem' => [
