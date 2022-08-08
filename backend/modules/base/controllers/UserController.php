@@ -10,7 +10,7 @@ use common\models\base\UserRole;
 use common\models\Store;
 use Yii;
 use common\models\User;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 
 /**
@@ -62,6 +62,8 @@ class UserController extends BaseController
     {
         if (!$this->isAdmin()) {
             $params['ModelSearch']['id'] = '>' . $this->store->user_id;
+        } elseif ($this->isAgent()) {
+            $params['ModelSearch']['store_id'] = $this->getAgentStoreIds();
         }
     }
 
@@ -76,17 +78,19 @@ class UserController extends BaseController
         $model = $this->findModel($id);
 
         $allRoles = [];
-        $userRole = UserRole::find()->where(['user_id' => Yii::$app->user->id])->orderBy(['role_id' => SORT_ASC])->one();
-        if ($userRole) {
-            //默认前端ID，然后按照组别进行区分，只能选择比自己组别小的角色，比如管理员只能设置商家、
-            $roleId = $userRole->id;
-            $minRoleId = Yii::$app->authSystem->maxStoreRoleId + 1;
-            $roleId <= Yii::$app->authSystem->maxAdminRoleId && $minRoleId = Yii::$app->authSystem->maxAdminRoleId + 1;
-            $roleId <= Yii::$app->authSystem->maxSuperAdminRoleId && $minRoleId = Yii::$app->authSystem->maxSuperAdminRoleId + 1;
-
-            $allRoles = ArrayHelper::map(Role::find()->where(['status' => Role::STATUS_ACTIVE])->andWhere(['>=', 'id', $minRoleId])->asArray()->all(), 'id', 'name');
-        } elseif ($this->isSuperAdmin()) {
+        if ($this->isSuperAdmin()) {
             $allRoles = ArrayHelper::map(Role::find()->where(['status' => Role::STATUS_ACTIVE])->asArray()->all(), 'id', 'name');
+        } else {
+            $userRole = UserRole::find()->where(['user_id' => Yii::$app->user->id])->orderBy(['role_id' => SORT_ASC])->one();
+            if ($userRole) {
+                //默认前端ID，然后按照组别进行区分，只能选择比自己组别小的角色，比如管理员只能设置商家、
+                $roleId = $userRole->id;
+                $minRoleId = Yii::$app->authSystem->maxStoreRoleId + 1;
+                $roleId <= Yii::$app->authSystem->maxAdminRoleId && $minRoleId = Yii::$app->authSystem->maxAdminRoleId + 1;
+                $roleId <= Yii::$app->authSystem->maxSuperAdminRoleId && $minRoleId = Yii::$app->authSystem->maxSuperAdminRoleId + 1;
+
+                $allRoles = ArrayHelper::map(Role::find()->where(['status' => Role::STATUS_ACTIVE])->andWhere(['>=', 'id', $minRoleId])->asArray()->all(), 'id', 'name');
+            }
         }
 
         if (Yii::$app->request->isPost) {
@@ -109,11 +113,12 @@ class UserController extends BaseController
                         }
                     }
 
+                    Yii::$app->cacheSystem->clearUserRoleIds($model->id);
                     Yii::$app->cacheSystem->clearUserPermissionIds($model->id);
                     return $this->redirectSuccess(['index']);
                 } else {
                     Yii::error($model->errors);
-                    $this->flashError('操作失败' . json_encode($model->errors));
+                    $this->flashError($this->getError($model));
                 }
             }
         }
@@ -134,14 +139,14 @@ class UserController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionLogin()
+    public function actionEditLogin()
     {
         $id = Yii::$app->request->get('id');
         if (!$id) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
@@ -157,4 +162,17 @@ class UserController extends BaseController
         return $this->goBack();
     }
 
+    protected function beforeEditSave($id = null, $model = null)
+    {
+        $password = Yii::$app->request->post($model->formName())['password'] ?? null;
+        $password && $model->setPassword($password);
+
+        return true;
+    }
+
+    protected function clearCache()
+    {
+        Yii::$app->cacheSystem->clearAllPermission();
+        return Yii::$app->cacheSystem->clearAllUserRole();
+    }
 }

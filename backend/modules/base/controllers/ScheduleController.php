@@ -4,7 +4,7 @@ namespace backend\modules\base\controllers;
 
 use Yii;
 use common\models\base\Schedule;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\helpers\FileHelper;
 
@@ -25,7 +25,7 @@ class ScheduleController extends BaseController
       * 模糊查询字段
       * @var string[]
       */
-    public $likeAttributes = ['name'];
+    public $likeAttributes = ['name', 'params', 'brief', 'cron'];
 
     /**
      * 可编辑字段
@@ -58,7 +58,7 @@ class ScheduleController extends BaseController
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function afterDeleteModel($id = null, $model = null, $soft = false, $tree = false)
     {
         $this->writeSchedule();
     }

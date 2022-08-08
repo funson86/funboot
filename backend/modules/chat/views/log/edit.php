@@ -31,13 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'to_client_id')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-                    <?= $form->field($model, 'type')->textInput() ?>
-                    <?= $form->field($model, 'status')->textInput() ?>
+                    <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
+                    <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>
             </div>
             <div class="card-footer">
                 <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-                <span class="btn btn-white" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
+                <span class="btn btn-default" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
             </div>
         </div>
     </div>

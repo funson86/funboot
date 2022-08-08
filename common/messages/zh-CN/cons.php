@@ -16,6 +16,7 @@ return [
     'STATUS_MAINTENANCE' => '维护',
     'YES' => '是',
     'NO' => '否',
+    'TYPE_DEFAULT' => '默认',
     'TYPE_A' => '类型一',
     'TYPE_B' => '类型二',
     'SEX_UNKNOWN' => '未知',
@@ -73,6 +74,7 @@ return [
     'SEND_TARGET_USER' => '指定用户',
     'STATUS_READ' => '已读',
     'STATUS_UNREAD' => '未读',
+    'STATUS_STAR' => '星标',
     'STATUS_RECYCLE' => '回收站',
 
     'Grade' => '级别',
@@ -104,8 +106,9 @@ return [
     'STATUS_DELETED' => '删除',
     'PAYMENT_STATUS_COD' => '现金',
     'PAYMENT_STATUS_UNPAID' => '未付款',
+    'PAYMENT_STATUS_REFUND' => '已退款',
     'PAYMENT_STATUS_PAYING' => '正在付款',
-    'PAYMENT_STATUS_PAID' => 'Paid',
+    'PAYMENT_STATUS_PAID' => '已付款',
     'SHIPMENT_STATUS_UNSHIPPED' => '未配送',
     'SHIPMENT_STATUS_PREPARING' => '准备',
     'SHIPMENT_STATUS_ON_TIME' => '准时',
@@ -118,6 +121,9 @@ return [
     'TYPE_BOUGHT' => '购买商品',
     'TYPE_COMMENT' => '评价商品',
     'TYPE_BUYING' => '消费积分',
+
+    'TYPE_RECHARGE' => '充值',
+    'TYPE_CONSUME' => '消费',
 
     'TYPE_USER' => '按用户发送',
     'TYPE_ORDER' => '按订单发送',

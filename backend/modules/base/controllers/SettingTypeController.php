@@ -5,7 +5,7 @@ namespace backend\modules\base\controllers;
 use common\helpers\ArrayHelper;
 use Yii;
 use common\models\base\SettingType;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\data\ActiveDataProvider;
 
@@ -61,16 +61,23 @@ class SettingTypeController extends BaseController
     protected function beforeEditSave($id = null, $model = null)
     {
         $post = Yii::$app->request->post();
-        $model->support_role = ArrayHelper::arrayToInt($post['SettingType']['supportRoles']);
+        $model->support_role = ArrayHelper::arrayToInt($post[$model->formName()]['supportRoles']);
+        return true;
     }
 
     protected function afterEdit($id = null, $model = null)
     {
-        Yii::$app->cacheSystem->clearAllSetting(); // 清理缓存
+        $this->clearCache();
     }
 
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function afterDeleteModel($id = null, $model = null, $soft = false, $tree = false)
     {
-        Yii::$app->cacheSystem->clearAllSetting(); // 清理缓存
+        $this->clearCache();
     }
+
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystem->clearAllSetting();
+    }
+
 }

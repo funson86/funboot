@@ -66,7 +66,7 @@ Api
 如果函数不需要鉴权，在controller中的optionalAuth变量中写入action id
 
 ```php
-    public $optionalAuth = ['index', 'login', 'logout'];
+    public $optionalAuth = ['index', 'login', 'refresh'];
 ```
 
 使用refresh_token重新更新access_token

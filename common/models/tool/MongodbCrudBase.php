@@ -19,7 +19,7 @@ class MongodbCrudBase extends ActiveRecord
     const STATUS_EXPIRED = -1;
     const STATUS_DELETED = -10;
 
-    const TYPE_A = 1;
+    const TYPE_DEFAULT = 1;
     const TYPE_B = 2;
 
     /**
@@ -84,7 +84,7 @@ class MongodbCrudBase extends ActiveRecord
     public static function getTypeLabels($id = null, $all = false, $flip = false)
     {
         $data = [
-            self::TYPE_A => Yii::t('cons', 'TYPE_A'),
+            self::TYPE_DEFAULT => Yii::t('cons', 'TYPE_DEFAULT'),
             self::TYPE_B => Yii::t('cons', 'TYPE_B'),
         ];
 

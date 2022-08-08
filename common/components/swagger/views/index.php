@@ -1,6 +1,7 @@
 <?php
 
 use common\components\swagger\SwaggerAsset;
+use frontend\helpers\Url;
 
 SwaggerAsset::register($this);
 
@@ -44,6 +45,19 @@ SwaggerAsset::register($this);
 <body>
 <div id="swagger-ui"></div>
 
+<div style="text-align: center"><span id="refresh" onclick="refreshDoc()" style="background-color: #000; color: #FFF; padding: .3rem 1rem; border-radius: .2rem">Refresh Document</span></div>
+<script>
+    function refreshDoc() {
+        $.get("<?= Url::to(['swagger/refresh']); ?>", function(data, status) {
+            if (status === "success") {
+                alert(data.msg);
+            } else {
+                alert (status);
+            }
+            window.location.reload();
+        });
+    }
+</script>
 <script>
     window.onload = function() {
         // Begin Swagger UI call region

@@ -34,7 +34,7 @@ $form = ActiveForm::begin([
         <input type="hidden" id="treeIds" name="tree_ids">
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" onclick="submitForm()"><?= Yii::t('app', 'Save') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

@@ -11,7 +11,6 @@ use common\models\base\RolePermission;
 use http\Exception\InvalidArgumentException;
 use Yii;
 use common\models\base\Role;
-use common\models\ModelSearch;
 use backend\controllers\BaseController;
 use yii\base\NotSupportedException;
 use yii\web\ForbiddenHttpException;
@@ -54,16 +53,8 @@ class RoleController extends BaseController
         'type' => 'select',
     ];
 
-    /**
-     * ajax编辑/创建
-     *
-     * @return mixed|string|\yii\web\Response
-     * @throws \yii\base\ExitException
-     */
-    public function actionEditAjax()
+    protected function beforeEditSave($id = null, $model = null)
     {
-        $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id);
         if (!$id) {
             $id = $this->getId(Yii::$app->request->get('type'));
             if ($id) {
@@ -71,29 +62,20 @@ class RoleController extends BaseController
             }
         }
 
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-            if (!$model->save()) {
-                $this->redirectError($this->getError($model));
-            }
+        return true;
+    }
 
-            if ($model->is_default == YesNo::YES) {
-                if ($model->id > Yii::$app->authSystem->maxStoreRoleId) { // 普通用户
-                    $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > ' . Yii::$app->authSystem->maxStoreRoleId);
-                } elseif ($model->id <= Yii::$app->authSystem->maxAdminRoleId) { // 店铺角色
-                    $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > 1 and id < ' . Yii::$app->authSystem->maxAdminRoleId);
-                } else { // 管理员
-                    $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > ' . Yii::$app->authSystem->maxAdminRoleId . ' and id <= ' . Yii::$app->authSystem->maxStoreRoleId);
-                }
+    protected function afterEdit($id = null, $model = null)
+    {
+        if ($model->is_default == YesNo::YES) {
+            if ($model->id > Yii::$app->authSystem->maxStoreRoleId) { // 普通用户
+                $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > ' . Yii::$app->authSystem->maxStoreRoleId);
+            } elseif ($model->id <= Yii::$app->authSystem->maxAdminRoleId) { // 店铺角色
+                $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > 1 and id < ' . Yii::$app->authSystem->maxAdminRoleId);
+            } else { // 管理员
+                $this->modelClass::updateAll(['is_default' => YesNo::NO], 'id <>' . $model->id . ' and id > ' . Yii::$app->authSystem->maxAdminRoleId . ' and id <= ' . Yii::$app->authSystem->maxStoreRoleId);
             }
-
-            return $this->redirectSuccess();
         }
-
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -129,12 +111,13 @@ class RoleController extends BaseController
 
             RolePermission::deleteAll(['status' => RolePermission::STATUS_INACTIVE, 'role_id' => $id]);
 
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
         $permissions = Permission::find()->asArray()->all();
         $selectIds = ArrayHelper::getColumn(RolePermission::find()->where(['role_id' => $id])->all(), 'permission_id');
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
             'permissions' => $permissions,
             'selectIds' => $selectIds,
@@ -174,12 +157,13 @@ class RoleController extends BaseController
 
             RoleDepartment::deleteAll(['status' => RoleDepartment::STATUS_INACTIVE, 'role_id' => $id]);
 
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
         $departments = Department::find()->asArray()->all();
         $selectIds = ArrayHelper::getColumn(RoleDepartment::find()->where(['role_id' => $id])->all(), 'department_id');
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
             'departments' => $departments,
             'selectIds' => $selectIds,
@@ -208,5 +192,10 @@ class RoleController extends BaseController
         }
 
         return null;
+    }
+
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystem->clearAllUserRole();
     }
 }

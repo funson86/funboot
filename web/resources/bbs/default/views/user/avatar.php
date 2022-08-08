@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ]); ?>
 <div class="row mt-3 user-menu">
     <div class="col-md-3">
-        <?= $this->render('_menu') ?>
+        <?= $this->render('_nav') ?>
     </div>
     <div class="col-md-9">
         <div class="card">

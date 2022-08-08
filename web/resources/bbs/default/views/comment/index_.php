@@ -19,19 +19,19 @@ $index = 1 + $widget->dataProvider->pagination->page * $widget->dataProvider->pa
             <div class="float-right">
                 <?php if ($model->isOwner()) {
                     echo Html::a(
-                        Html::tag('i', '', ['class' => 'bi-hand-thumbs-up']) . ' ' . Html::tag('span', $model->like) . ' 个赞 ',
+                        Html::tag('i', '', ['class' => 'fa fa-thumbs-o-up']) . ' ' . Html::tag('span', $model->like) . ' 个赞 ',
                         'javascript:;'
                     );
 
                     echo Html::a('',
                         ['/bbs/comment/update', 'id' => $model->id],
-                        ['title' => '修改回帖', 'class' => 'bi-pencil']
+                        ['title' => '修改回帖', 'class' => 'fa fa-pencil']
                     ) . ' ';
                     echo Html::a('',
                         ['/bbs/comment/delete', 'id' => $model->id],
                         [
                             'title' => '删除回复',
-                            'class' => 'bi-trash',
+                            'class' => 'fa fa-trash',
                             'data' => [
                                 'confirm' => "您确认要删除回复吗？",
                                 'method' => 'post',
@@ -40,7 +40,7 @@ $index = 1 + $widget->dataProvider->pagination->page * $widget->dataProvider->pa
                     );
                 } else {
                     echo Html::a(
-                        Html::tag('i', '', ['class' => 'bi-hand-thumbs-up']) . ' ' . Html::tag('span', $model->like_count) . ' 个赞',
+                        Html::tag('i', '', ['class' => 'fa fa-thumbs-o-up']) . ' ' . Html::tag('span', $model->like_count) . ' 个赞',
                         '#',
                         [
                             'data-do' => 'like',

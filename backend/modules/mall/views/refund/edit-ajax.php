@@ -31,10 +31,10 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'amount')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'status')->textInput() ?>
+        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

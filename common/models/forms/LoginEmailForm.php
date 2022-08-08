@@ -17,6 +17,8 @@ class LoginEmailForm extends Model
     public $verifyCode;
     public $rememberMe = true;
 
+    const KEY_FAILED = 'loginFailed';
+
     private $_user;
 
 
@@ -33,7 +35,7 @@ class LoginEmailForm extends Model
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
             ['email', 'validateStatus'],
-            ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
+            ['verifyCode', 'captcha', 'captchaAction' => 'site/captcha', 'on' => 'captchaRequired'],
         ];
     }
 
@@ -96,7 +98,7 @@ class LoginEmailForm extends Model
         }
 
         // 记录失败次数
-        Yii::$app->session->set('loginFailed', Yii::$app->session->get('loginFailed', 0) + 1);
+        Yii::$app->session->set(self::KEY_FAILED, Yii::$app->session->get(self::KEY_FAILED, 0) + 1);
         return false;
     }
 
@@ -118,9 +120,9 @@ class LoginEmailForm extends Model
     /**
      * 验证码显示判断
      */
-    public function loginCaptchaRequired()
+    public function checkCaptchaRequired()
     {
-        if (Yii::$app->session->get('loginFailed') >= $this->getAttempts()) {
+        if (Yii::$app->session->get(self::KEY_FAILED) >= $this->getAttempts()) {
             $this->setScenario("captchaRequired");
         }
     }

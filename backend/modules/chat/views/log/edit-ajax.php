@@ -30,11 +30,11 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'to_client_id')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-        <?= $form->field($model, 'type')->textInput() ?>
-        <?= $form->field($model, 'status')->textInput() ?>
+        <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
+        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

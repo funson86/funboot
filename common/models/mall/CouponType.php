@@ -14,6 +14,7 @@ use common\models\Store;
  * @property string $name 名称
  * @property string $money 优惠金额
  * @property float $min_amount 最低金额
+ * @property int $max_times 最大数量
  * @property int $started_at 开始时间
  * @property int $ended_at 结束时间
  * @property string $sn 编号
@@ -41,7 +42,7 @@ class CouponType extends CouponTypeBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'started_at', 'ended_at', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'max_times', 'started_at', 'ended_at', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['money', 'started_at', 'ended_at'], 'required'],
             [['min_amount'], 'number'],
             [['name', 'money', 'sn'], 'string', 'max' => 255],
@@ -60,6 +61,7 @@ class CouponType extends CouponTypeBase
                 'name' => '名称',
                 'money' => '优惠金额',
                 'min_amount' => '最低金额',
+                'max_times' => '最大数量',
                 'started_at' => '开始时间',
                 'ended_at' => '结束时间',
                 'sn' => '编号',
@@ -78,6 +80,7 @@ class CouponType extends CouponTypeBase
                 'name' => Yii::t('app', 'Name'),
                 'money' => Yii::t('app', 'Money'),
                 'min_amount' => Yii::t('app', 'Min Amount'),
+                'max_times' => Yii::t('app', 'Max Times'),
                 'started_at' => Yii::t('app', 'Started At'),
                 'ended_at' => Yii::t('app', 'Ended At'),
                 'sn' => Yii::t('app', 'Sn'),

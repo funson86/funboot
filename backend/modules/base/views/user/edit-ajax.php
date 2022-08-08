@@ -26,20 +26,10 @@ $form = ActiveForm::begin([
     </div>
     <div class="modal-body">
         <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'brief')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'sex')->radioList(ActiveModel::getSexLabels()) ?>
-        <?= $form->field($model, 'area')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'birthday')->textInput() ?>
-        <?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels(null, true)) ?>
+        <?= $form->field($model, 'password')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

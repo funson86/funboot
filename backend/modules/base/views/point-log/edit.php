@@ -26,26 +26,21 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
                 <div class="col-sm-12">
-                    <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'store_id')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
+                    <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
+                    <?= $form->field($model, 'user_id')->dropDownList($this->context->getUsersIdName()) // $form->field($model, 'user_id')->widget(kartik\select2\Select2::classname(), ['data' => $this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],]) ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'change')->textInput() ?>
                     <?= $form->field($model, 'original')->textInput() ?>
                     <?= $form->field($model, 'balance')->textInput() ?>
                     <?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'type')->textInput() ?>
+                    <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
                     <?= $form->field($model, 'sort')->textInput() ?>
-                    <?= $form->field($model, 'status')->textInput() ?>
-                    <?= $form->field($model, 'created_at')->textInput() ?>
-                    <?= $form->field($model, 'updated_at')->textInput() ?>
-                    <?= $form->field($model, 'created_by')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'updated_by')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
                 </div>
             </div>
             <div class="card-footer">
                 <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-                <span class="btn btn-white" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
+                <span class="btn btn-default" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
             </div>
         </div>
     </div>

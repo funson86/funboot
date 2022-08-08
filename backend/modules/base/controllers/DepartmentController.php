@@ -5,7 +5,7 @@ namespace backend\modules\base\controllers;
 use common\helpers\ArrayHelper;
 use Yii;
 use common\models\base\Department;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\data\ActiveDataProvider;
 use common\models\User;
@@ -53,76 +53,29 @@ class DepartmentController extends BaseController
         'type' => 'select',
     ];
 
-    /**
-      * 列表页
-      *
-      * @return string
-      * @throws \yii\web\NotFoundHttpException
-      */
-    public function actionIndex()
+    protected function beforeEdit($id = null, $model = null)
     {
-        $query = $this->modelClass::find()
-            ->where(['store_id' => $this->getStoreId()])
-            ->orderBy(['id' => SORT_ASC]);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => false
-        ]);
-
-        return $this->render($this->action->id, [
-            'dataProvider' => $dataProvider,
-        ]);
+        $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
     }
 
-    /**
-      * ajax编辑/创建
-      *
-      * @return mixed|string|\yii\web\Response
-      * @throws \yii\base\ExitException
-      */
-    public function actionEditAjax()
+    protected function beforeEditRender($id = null, $model = null)
     {
-        $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id);
-
-        $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
-        $allUsers = User::getIdLabel(false, 'username');
-
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-            $heads = Yii::$app->request->post($model->formName())['heads'] ?? [];
-            if (is_array($heads) && count($heads) > 0) {
-                $model->head = implode('|', $heads);
-            }
-
-            $viceHeads = Yii::$app->request->post($model->formName())['viceHeads'] ?? [];
-            if (is_array($heads) && count($viceHeads) > 0) {
-                $model->vice_head = implode('|', $viceHeads);
-            }
-
-            if (!$model->save()) {
-                $this->redirectError($this->getError($model));
-            }
-
-            return $this->redirectSuccess();
-        }
-
         $model->heads = explode('|', $model->head);
         $model->viceHeads = explode('|', $model->vice_head);
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-            'allUsers' => $allUsers,
-        ]);
     }
 
-    /**
-     * @param $id
-     * @return bool|void
-     */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function beforeEditSave($id = null, $model = null)
     {
-        Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
+        $heads = Yii::$app->request->post($model->formName())['heads'] ?? [];
+        if (is_array($heads) && count($heads) > 0) {
+            $model->head = implode('|', $heads);
+        }
+
+        $viceHeads = Yii::$app->request->post($model->formName())['viceHeads'] ?? [];
+        if (is_array($heads) && count($viceHeads) > 0) {
+            $model->vice_head = implode('|', $viceHeads);
+        }
+
+        return true;
     }
 }

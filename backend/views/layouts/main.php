@@ -30,14 +30,11 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <div class="wrapper" style="background: #f4f6f9">
 
-    <?= $this->render(
-        'content.php',
-        ['content' => $content]
-    ) ?>
+    <?= $this->render('content', [
+        'content' => $content
+    ]) ?>
 
-    <?= $this->render(
-        'footer.php'
-    ) ?>
+    <?= $this->render('footer') ?>
 
 </div>
 

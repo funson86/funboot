@@ -4,6 +4,7 @@ use yii\widgets\ActiveForm;
 use common\helpers\Html;
 use common\models\forms\tool\QrForm as ActiveModel;
 use frontend\helpers\Url;
+use yii\helpers\Inflector;
 
 /* @var $this yii\web\View */
 /* @var $model \common\models\forms\tool\QrForm */
@@ -22,7 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
+                <div class="card-header">
+                    <h2 class="card-title"><?= !is_null($this->title) ? Html::encode($this->title) : Inflector::camelize($this->context->id);?> <?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id] ?? null) ?></h2>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -75,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="card-footer">
                     <?= Html::button(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary', 'id' => 'create']) ?>
-                    <span class="btn btn-white" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
+                    <span class="btn btn-default" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
                 </div>
                 <div class="card-body">
                     <div class="col-md-12">

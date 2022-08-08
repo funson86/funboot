@@ -16,15 +16,37 @@ use Yii;
  */
 class CacheSystemBbs extends CacheSystem
 {
+    const BBS_ALL_NODE = 'BBS_ALL_NODE';
+    const BBS_STORE_NODE = 'bbsStoreNode:';
+    const BBS_ALL_TAG = 'bbsAllTag';
+
+    /**
+     * clear all data, if specify storeId, then only clear one store data.
+     * @param null $storeId
+     * @return bool
+     */
+    public function clearBbsAllData($storeId = null)
+    {
+        if ($storeId) {
+            return $this->clearItems($storeId);
+        } else {
+            $models = Yii::$app->cacheSystem->getAllStore();
+            foreach ($models as $model) {
+                $this->clearItems($model->id);
+            }
+        }
+        return true;
+    }
+
     /**
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
     public function getAllNode()
     {
-        $data = Yii::$app->cache->get('bbsAllNode');
+        $data = Yii::$app->cache->get(self::BBS_ALL_NODE);
         if (!$data) {
             $data = Node::find()->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
-            Yii::$app->cache->set('bbsAllNode', $data);
+            Yii::$app->cache->set(self::BBS_ALL_NODE, $data);
         }
         return ArrayHelper::mapIdData($data);
     }
@@ -34,7 +56,7 @@ class CacheSystemBbs extends CacheSystem
      */
     public function clearAllNode()
     {
-        return Yii::$app->cache->delete('bbsAllNode');
+        return Yii::$app->cache->delete(self::BBS_ALL_NODE);
     }
 
     /**
@@ -74,7 +96,7 @@ class CacheSystemBbs extends CacheSystem
      */
     public function clearStoreNode($storeId)
     {
-        return Yii::$app->cache->delete('bbsStoreNode:' . $storeId);
+        return Yii::$app->cache->delete(self::BBS_STORE_NODE . $storeId);
     }
 
     /**
@@ -82,10 +104,10 @@ class CacheSystemBbs extends CacheSystem
      */
     public function getAllTag()
     {
-        $data = Yii::$app->cache->get('bbsAllTag');
+        $data = Yii::$app->cache->get(self::BBS_ALL_TAG);
         if (!$data) {
             $data = Tag::find()->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])->all();
-            Yii::$app->cache->set('bbsAllTag', $data);
+            Yii::$app->cache->set(self::BBS_ALL_TAG, $data);
         }
         return ArrayHelper::mapIdData($data);
     }
@@ -95,7 +117,7 @@ class CacheSystemBbs extends CacheSystem
      */
     public function clearAllTag()
     {
-        return Yii::$app->cache->delete('bbsAllTag');
+        return Yii::$app->cache->delete(self::BBS_ALL_TAG);
     }
 
 

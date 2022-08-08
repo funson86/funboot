@@ -219,12 +219,12 @@ function fbSort(obj) {
             dataType: "json",
             data: {
                 id: id,
-                name: "sort",
+                field: "sort",
                 value: sort
             },
             success: function (data) {
                 if (parseInt(data.code) === 200) {
-                    fbSuccess(data.msg)
+                    toastSuccess(data.msg)
                 } else {
                     fbError(data.msg);
                 }
@@ -242,7 +242,7 @@ function fbField(obj) {
         id = self.parents('tr').attr('data-key');
     }
 
-    var name = self.attr('name');
+    var field = self.attr('name');
     var value = self.val();
     $.ajax({
         type: "post",
@@ -250,7 +250,7 @@ function fbField(obj) {
         dataType: "json",
         data: {
             id: id,
-            name: name,
+            field: field,
             value: value
         },
         success: function (data) {

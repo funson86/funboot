@@ -8,3 +8,24 @@
 .js-batch-form input, .js-batch-form a {
     margin-right: 10px;
 }
+
+.btn-filter-active {
+    background-color: #CCC
+}
+
+.selection-info {
+    margin-left: 2rem
+}
+
+#ajaxModalFilter .required label:before {
+    display: none;
+}
+
+.card-footer .btn, .modal-footer .btn {
+    margin-right: 1rem;
+}
+
+.card-footer .btn-primary, .modal-footer .btn-primary {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}

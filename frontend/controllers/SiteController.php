@@ -95,7 +95,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return YII_ENV_PROD ? $this->renderPartial('prod') : $this->render('index');
     }
 
     /**
@@ -318,29 +318,6 @@ class SiteController extends BaseController
         return $this->render($this->action->id, [
             'model' => $model,
         ]);
-    }
-
-    public function actionSitemap()
-    {
-        $str = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $str .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-        $str .= '<url>' . "\n";
-
-        $str .= $this->buildLink();
-
-        $str .= '</url>' . "\n";
-        $str .= '</urlset>' . "\n";
-
-        file_put_contents(Yii::getAlias('@webroot/sitemap/' . $this->store->host_name . '.xml'), $str);
-        return $this->redirect('/sitemap/' . $this->store->host_name . '.xml');
-    }
-
-    protected function buildLink()
-    {
-        $str = '<loc>' . Yii::$app->urlManager->createAbsoluteUrl(['/']) . '</loc>' . "\n";
-        $str .= '<lastmod>' . date('Y-m-d') . '</lastmod>' . "\n";
-
-        return $str;
     }
 
     /**

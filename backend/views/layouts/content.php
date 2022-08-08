@@ -37,8 +37,8 @@ use common\helpers\Url;
 
 <section class="content">
     <div class="container-fluid">
-        <?= !Yii::$app->request->isAjax ? \common\widgets\alert\SweetAlert2::widget() : '' ?>
         <?= $content ?>
+        <?= !Yii::$app->request->isAjax ? \common\widgets\alert\SweetAlert2::widget() : '' ?>
     </div>
 </section>
 

@@ -8,7 +8,7 @@ use common\helpers\OfficeHelper;
 use common\models\base\SettingType;
 use Yii;
 use common\models\base\Setting;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\db\Expression;
 use yii\helpers\Inflector;
@@ -113,6 +113,7 @@ class SettingController extends BaseController
     {
         $storeId = Yii::$app->request->get('store_id', $this->getStoreId());
         $settingTypes = SettingType::find()->all();
+        $mapSettingType = ArrayHelper::mapIdData($settingTypes);
         $mapSettingTypeCodeName = ArrayHelper::map($settingTypes, 'code', 'name');
         $mapSettingTypeCodeId = ArrayHelper::map($settingTypes, 'code', 'id');
 
@@ -131,7 +132,11 @@ class SettingController extends BaseController
                 $model->name = $mapSettingTypeCodeName[$code] ?? '';
                 $model->setting_type_id = $mapSettingTypeCodeId[$code] ?? '';
                 $model->code = $code;
-                $model->value = is_array($value) ? Json::encode($value) : trim($value);
+                $settingType = $mapSettingType[$model->setting_type_id] ?? null;
+                if (!$settingType) {
+                    continue;
+                }
+                $model->value = ($settingType->type == 'checkboxList') ? (string)ArrayHelper::arrayToInt($value) : (is_array($value) ? Json::encode($value) : trim($value));
 
                 if (!$model->save()) {
                     Yii::$app->logSystem->db($model->errors);
@@ -140,7 +145,7 @@ class SettingController extends BaseController
             }
             $this->afterEditAjaxSave($setting);
 
-            Yii::$app->cacheSystem->clearStoreSetting($storeId);
+            $this->clearCache();
             return $this->success();
         }
 
@@ -155,6 +160,7 @@ class SettingController extends BaseController
     {
         foreach ($setting as $code => $value) { // 根据code自定义规则
         }
+        return $this->clearCache();
     }
 
     /**
@@ -223,12 +229,12 @@ class SettingController extends BaseController
 
                     //数据无错误才插入
                     if (!$errorData) {
-                        $this->beforeImport($model);
+                        $this->beforeImport($model->id, $model);
                         if (!$model->save()) {
                             array_push($errorLines, $i);
                             array_push($errorMsgs, json_encode($model->errors));
                         }
-                        $this->afterImport($model);
+                        $this->afterImport($model->id, $model);
                         $countCreate++;
                     }
 
@@ -246,7 +252,7 @@ class SettingController extends BaseController
                 return $this->redirectError($e->getMessage(), null, true);
             }
 
-            Yii::$app->cacheSystem->clearStoreSetting();
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
@@ -274,7 +280,7 @@ class SettingController extends BaseController
             Setting::updateAll(['name' => ($mapCodeName[$model->code] ?? '')], ['id' => $model->id]);
         }
 
-        Yii::$app->cacheSystem->clearStoreSetting();
+        $this->clearCache();
         return $this->redirectSuccess(Yii::$app->request->referrer);
     }
 
@@ -329,6 +335,14 @@ class SettingController extends BaseController
             return $this->error();
         }
 
+        // 系统维护
+        if ($code == 'store_status') {
+            $this->store->status = $value;
+            $this->store->save();
+            $this->clearCache();
+            return $this->success();
+        }
+
         $settingType = SettingType::findOne(['code' => $code]);
         if (!$settingType) {
             return $this->error();
@@ -350,12 +364,18 @@ class SettingController extends BaseController
         }
         $this->afterEditAjaxSave([$code => $value]);
 
-        Yii::$app->cacheSystem->clearStoreSetting($this->store->id);
+        $this->clearCache();
         return $this->success();
     }
 
     public function actionEditQuick()
     {
         return $this->render($this->action->id);
+    }
+
+    protected function clearCache()
+    {
+        Yii::$app->cacheSystem->clearAllStore();
+        return Yii::$app->cacheSystem->clearStoreSetting();
     }
 }

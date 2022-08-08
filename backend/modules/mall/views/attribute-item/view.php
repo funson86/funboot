@@ -36,13 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'attribute_id', 'value' => function ($model) { return ActiveModel::getAttributeIdLabels($model->attribute_id); }, ],
                 'name',
                 'brief',
-                'type',
+                ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
                 'sort',
-                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
+                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],
                 'created_at:datetime',
                 'updated_at:datetime',
-                'created_by',
-                'updated_by',
+                ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
+                ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
             ],
         ]) ?>
 

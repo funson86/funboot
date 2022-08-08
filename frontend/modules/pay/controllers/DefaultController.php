@@ -20,7 +20,10 @@ class DefaultController extends BaseController
 {
     public function beforeAction($action)
     {
-        return parent::beforeAction($action);
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -41,7 +44,7 @@ class DefaultController extends BaseController
         $model = new Payment();
         $store = $this->store;
 
-        $model->captchaRequired();
+        $model->checkCaptchaRequired();
         if (Yii::$app->request->isPost) {
             if ($store->status != Store::STATUS_ACTIVE) {
                 $this->flashError(Yii::t('app', 'Closed Yet, please try it later'));
@@ -72,7 +75,7 @@ class DefaultController extends BaseController
     {
         $store = $this->store;
         Yii::$app->urlManager->setBaseUrl("https://" . $store->host_name . '/backend');
-        $urlParam = ['/site/mail-audit', 'type' => 'payment', 'id' => $model->id, 'created_at' => $model->created_at, 'sn' => $model->sn];
+        $urlParam = ['/pay/default/mail-audit', 'type' => 'payment', 'id' => $model->id, 'created_at' => $model->created_at, 'sn' => $model->sn];
         $buttons = [
             'paid' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID])), 'label' => Yii::t('app', '支付成功并加入名单'), 'color' => '#28a745'],
             'paid_funpay' => ['url' => Url::toWithoutCheck(array_merge($urlParam, ['status' => Payment::STATUS_PAID, 'type' => 'funpay'])), 'label' => Yii::t('app', '支付成功并发送FunPay'), 'color' => '#91c444'],

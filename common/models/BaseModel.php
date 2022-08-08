@@ -31,10 +31,10 @@ class BaseModel extends ActiveRecord
     ];
     public $translating = 0;
 
-    /**
-     * 是否启用高并发，需要启用的在XxxBase中设置
-     * @var bool
-     */
+    /** @var array multiple type */
+    public $types;
+
+    /** @var bool 是否启用高并发，需要启用的在XxxBase中设置 */
     protected $highConcurrency = false;
 
     const SORT_DEFAULT = 50;
@@ -45,7 +45,7 @@ class BaseModel extends ActiveRecord
     const STATUS_EXPIRED = -1;
     const STATUS_DELETED = -10;
 
-    const TYPE_A = 1;
+    const TYPE_DEFAULT = 1;
     const TYPE_B = 2;
 
     public function __construct($config = [])
@@ -71,25 +71,12 @@ class BaseModel extends ActiveRecord
      */
     public function behaviors()
     {
-        // 未登录认为是store管理员登录, console下不一定有Yii::$app->user
-        $userId = isset(Yii::$app->user) && !Yii::$app->user->getIsGuest() ? Yii::$app->user->id : Yii::$app->storeSystem->getUserId();
         return array_merge(parent::behaviors(), [
             TimestampBehavior::class,
             [
                 'class' => BlameableBehavior::class,
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_by', 'updated_by'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_by'],
-                ],
-                'value' => $userId,
+                'defaultValue' => Yii::$app->storeSystem->getUserId(),
             ],
-            /*[
-                'class' => TimestampBehavior::class,
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['store_id'],
-                ],
-                'value' => Yii::$app->storeSystem->getId(),
-            ],*/
         ]);
     }
 
@@ -134,7 +121,7 @@ class BaseModel extends ActiveRecord
     public static function getTypeLabels($id = null, $all = false, $flip = false)
     {
         $data = [
-            self::TYPE_A => Yii::t('cons', 'TYPE_A'),
+            self::TYPE_DEFAULT => Yii::t('cons', 'TYPE_DEFAULT'),
             self::TYPE_B => Yii::t('cons', 'TYPE_B'),
         ];
 
@@ -143,6 +130,57 @@ class BaseModel extends ActiveRecord
         $flip && $data = array_flip($data);
 
         return !is_null($id) ? ($data[$id] ?? $id) : $data;
+    }
+
+    /**
+     * return label or labels array
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
+     * @param string $glue
+     * @return array|mixed
+     */
+    public static function getTypesLabel($id = null, $all = false, $flip = false, $glue = ' ')
+    {
+        if (is_null($id)) {
+            return static::getTypeLabels($id, $all, $flip);
+        }
+
+        $data = static::getTypeLabels(null, true);
+        $keys = array_keys($data);
+        $list = [];
+        foreach ($keys as $key) {
+            if (($id & $key) === $key) {
+                array_push($list, $data[$key]);
+            }
+        }
+
+        return implode($glue, $list);
+    }
+
+    /**
+     * return label or labels array
+     * @param null $id
+     * @param bool $all
+     * @param bool $flip
+     * @param string $glue
+     * @return array|mixed
+     */
+    public static function getTypesLabels($id = null, $all = false, $flip = false, $glue = ' ')
+    {
+        if (!is_null($id)) {
+            return static::getTypesLabel($id, $all, $flip);
+        }
+
+        $data = static::getTypeLabels(null, true);
+        $count = count($data);
+        $max = 1 << ($count - 1);
+        $list = [];
+        for ($i = 1; $i <= $count; $i++) {
+            $list[$i] = static::getTypesLabel($i, true, false, $glue);
+        }
+
+        return $list;
     }
 
     /**

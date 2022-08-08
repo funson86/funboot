@@ -15,7 +15,7 @@ use common\models\mall\Tag;
 use Yii;
 use common\models\mall\Product;
 use common\models\ModelSearch;
-use backend\controllers\BaseController;
+
 use yii\web\NotFoundHttpException;
 
 /**
@@ -77,7 +77,7 @@ class ProductController extends BaseController
 
                 $post = Yii::$app->request->post();
 
-                $model->type = ArrayHelper::arrayToInt($post['Product']['types'] ?? []);
+                $model->type = ArrayHelper::arrayToInt($post[$model->formName()]['types'] ?? []);
 
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
@@ -89,7 +89,7 @@ class ProductController extends BaseController
                     $this->isMultiLang && $this->afterLang($id, $model);
 
                     // 标签
-                    $tags = $post['Product']['tags'];
+                    $tags = $post[$model->formName()]['tags'];
                     ProductTag::updateAll(['status' => ProductSku::STATUS_DELETED], ['store_id' => $this->getStoreId(), 'product_id' => $model->id]);
                     if (is_array($tags)) {
                         foreach ($tags as $tagId) {
@@ -208,6 +208,7 @@ class ProductController extends BaseController
                     }
 
                     $transaction->commit();
+                    $this->clearCache();
                     return $this->redirectSuccess(['index']);
                 } catch (\Exception $e) {
                     $transaction->rollBack();

@@ -4,6 +4,7 @@ namespace common\models\base;
 
 use common\models\BaseModel;
 use common\models\Store;
+use common\models\User;
 use Yii;
 
 /**
@@ -13,7 +14,6 @@ use Yii;
  */
 class ScheduleBase extends BaseModel
 {
-
     /**
      * @return array|array[]
      */
@@ -24,6 +24,8 @@ class ScheduleBase extends BaseModel
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
     }
+
+    /** add function getXxxLabels here, detail in BaseModel **/
 
     /**
      * {@inheritdoc}

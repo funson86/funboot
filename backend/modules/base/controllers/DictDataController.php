@@ -26,7 +26,7 @@ class DictDataController extends BaseController
       * 模糊查询字段
       * @var string[]
       */
-    public $likeAttributes = ['name', 'brief'];
+    public $likeAttributes = ['name', 'code', 'value', 'brief'];
 
     /**
      * 可编辑字段
@@ -46,59 +46,18 @@ class DictDataController extends BaseController
         'type' => 'select',
     ];
 
-    /**
-    * 列表页
-    *
-    * @return string
-    * @throws \yii\web\NotFoundHttpException
-    */
-    public function actionIndex()
+    protected function filterParams(&$params)
     {
-        $dicts = Dict::find()->all();
-        $dictId = Yii::$app->request->get('ModelSearch')['dict_id'] ?? 0;
-
-        $searchModel = new ModelSearch([
-            'model' => $this->modelClass,
-            'scenario' => 'default',
-            'likeAttributes' => $this->likeAttributes,
-            'defaultOrder' => [
-                'id' => SORT_DESC
-            ],
-            'pageSize' => Yii::$app->request->get('page_size', $this->pageSize),
-        ]);
-
-        // 管理员级别才能查看所有数据，其他只能查看本store数据
-        $params = Yii::$app->request->queryParams;
-        if (!$this->isAdmin()) {
-            $params['ModelSearch']['store_id'] = $this->getStoreId();
-            $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
-        }
-        $dataProvider = $searchModel->search($params);
-
-        return $this->render($this->action->id, [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'dicts' => $dicts,
-            'dictId' => $dictId,
-        ]);
+        $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
     }
 
-    /**
-     * ajax编辑/创建
-     *
-     * @return mixed|string|\yii\web\Response
-     * @throws \yii\base\ExitException
-     */
-    public function actionEditAjax()
+    protected function beforeEdit($id = null, $model = null)
     {
-        $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id);
-
         // 判断必须有dict_id
         if (!$model->dict_id) {
             $model->dict_id = Yii::$app->request->get('dict_id', null);
             if (!$model->dict_id) {
-                return $this->redirectError(Yii::t('app', 'Invalid id'));
+                return $this->redirectError(Yii::t('app', 'Plese select dict first'));
             }
         }
 
@@ -110,21 +69,11 @@ class DictDataController extends BaseController
                 $model->code = $dict->code . '_';
             }
         }
+    }
 
-        // ajax 校验
-        $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post())) {
-            if (!$model->save()) {
-                $this->redirectError($this->getError($model));
-            }
-
-            Yii::$app->cacheSystem->clearAllDict();
-            return $this->redirectSuccess();
-        }
-
-        return $this->renderAjax($this->action->id, [
-            'model' => $model,
-        ]);
+    protected function afterEdit($id = null, $model = null)
+    {
+        $this->clearCache();
     }
 
     /**
@@ -137,6 +86,9 @@ class DictDataController extends BaseController
     {
         $id = Yii::$app->request->get('id');
         $model = $this->findDict($id);
+        if (!$model) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
 
         // ajax 校验
         $this->activeFormValidate($model);
@@ -145,11 +97,11 @@ class DictDataController extends BaseController
                 $this->redirectError($this->getError($model));
             }
 
-            Yii::$app->cacheSystem->clearAllDict();
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
     }
@@ -179,7 +131,7 @@ class DictDataController extends BaseController
             return $this->redirectError();
         }
 
-        Yii::$app->cacheSystem->clearAllDict();
+        $this->clearCache();
         return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete Successfully'));
     }
 
@@ -192,12 +144,18 @@ class DictDataController extends BaseController
     protected function findDict($id)
     {
         /* @var $model \yii\db\ActiveRecord */
-        if (empty($id) || empty(($model = Dict::findOne($id)))) {
+        if (empty($id)) {
             $model = new Dict();
             return $model->loadDefaultValues();
+        } else {
+            $model = Dict::findOne($id);
         }
 
         return $model;
     }
 
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystem->clearAllDict();
+    }
 }

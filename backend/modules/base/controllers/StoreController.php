@@ -10,7 +10,7 @@ use common\models\User;
 use Da\QrCode\QrCode;
 use Yii;
 use common\models\Store;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\helpers\FileHelper;
 
@@ -54,7 +54,11 @@ class StoreController extends BaseController
 
    protected function filterParams(&$params)
    {
-       $params['ModelSearch']['status'] = '>=' . $this->modelClass::STATUS_DELETED;
+       (!isset($params['ModelSearch']['status']) || is_null($params['ModelSearch']['status'])) && $params['ModelSearch']['status'] = '>=' . $this->modelClass::STATUS_DELETED;
+
+       if ($this->isAgent()) {
+           $params['ModelSearch']['created_by'] = Yii::$app->user->id;
+       }
    }
 
     /**
@@ -75,21 +79,22 @@ class StoreController extends BaseController
 
         // ajax 校验
         $this->activeFormValidate($model);
-        if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
             $post = Yii::$app->request->post();
             $model->user_id = Yii::$app->params['defaultUserId'];
-            $model->language = ArrayHelper::arrayToInt($post['Store']['languages'] ?? []);
-            $model->lang_backend = ArrayHelper::arrayToInt($post['Store']['langBackends'] ?? []);
-            $model->lang_frontend = ArrayHelper::arrayToInt($post['Store']['langFrontends'] ?? []);
-            $model->lang_api = ArrayHelper::arrayToInt($post['Store']['langApis'] ?? []);
-            $model->type = ArrayHelper::arrayToInt($post['Store']['types'] ?? []);
-            $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
+            $model->route = $post[$model->formName()]['route'] ?? Yii::$app->params['defaultRoute'];
+            $model->language = ArrayHelper::arrayToInt($post[$model->formName()]['languages'] ?? []);
+            $model->lang_backend = ArrayHelper::arrayToInt($post[$model->formName()]['langBackends'] ?? Yii::$app->params['defaultLangBackend'] ?? []);
+            $model->lang_frontend = ArrayHelper::arrayToInt($post[$model->formName()]['langFrontends'] ?? Yii::$app->params['defaultLangFrontend'] ?? []);
+            $model->lang_api = ArrayHelper::arrayToInt($post[$model->formName()]['langApis'] ?? Yii::$app->params['defaultLangApi'] ?? []);
+            $model->type = ArrayHelper::arrayToInt($post[$model->formName()]['types'] ?? []);
+            $model->expired_at = strtotime($post[$model->formName()]['expiredTime']) + 86400 - 1;
             $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
 
             if ($model->save()) {
                 $user->store_id = $model->id;
-                if (strlen($post['User']['password']) > 0) {
-                    $user->setPassword(trim($post['User']['password']));
+                if (strlen($post[$user->formName()]['password']) > 0) {
+                    $user->setPassword(trim($post[$user->formName()]['password']));
                 }
 
                 if (!$user->save()) {
@@ -99,10 +104,7 @@ class StoreController extends BaseController
                 }
 
                 // 增加user为默认店铺角色
-                $role = Role::getDefaultStoreRole();
-                if ($role) {
-                    $user->addRole($role->id, $model->id);
-                }
+                $user->addRole(Yii::$app->params['defaultStoreRole'][$model->route] ?? Role::getDefaultStoreRoleId(), $model->id);
 
                 // 设置store的管理员
                 $model->user_id = $user->id;
@@ -112,8 +114,7 @@ class StoreController extends BaseController
                     return $this->redirectError($this->getError($model));
                 }
 
-                Yii::$app->cacheSystem->clearAllStore();
-                Yii::$app->cacheSystem->clearStoreSetting();
+                $this->clearCache();
                 $this->generateHostFile();
                 return $this->redirectSuccess();
             } else {
@@ -121,14 +122,14 @@ class StoreController extends BaseController
             }
         }
 
-        $model->expiredTime = date('Y-m-d', ($model->expired_at > 0 ? $model->expired_at : time() + 365 * 86400));
+        $model->expiredTime = date('Y-m-d', ($model->expired_at > 0 ? $model->expired_at : time() + Yii::$app->params['defaultStoreExpiredTime']));
         $model->languages = ArrayHelper::intToArray($model->language, $this->modelClass::getLanguageLabels());
         $model->langBackends = ArrayHelper::intToArray($model->lang_backend, $this->modelClass::getLanguageLabels());
         $model->langFrontends = ArrayHelper::intToArray($model->lang_frontend, $this->modelClass::getLanguageLabels());
         $model->langApis = ArrayHelper::intToArray($model->lang_api, $this->modelClass::getLanguageLabels());
         $model->types = ArrayHelper::intToArray($model->type, $this->modelClass::getTypeLabels());
         $model->parent_id == 0 && $model->parent_id = Yii::$app->request->get('parent_id', 0);
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
             'user' => $user,
         ]);
@@ -138,38 +139,37 @@ class StoreController extends BaseController
      * @return mixed|string|\yii\web\Response
      * @throws \yii\base\InvalidConfigException
      */
-    public function actionEditRenew()
+    public function actionEditModal()
     {
         $id = Yii::$app->request->get('id');
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->goBack();
         }
 
-        if (Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             $post = Yii::$app->request->post();
-            $model->loadDefaultValues($post);
-            $model->expired_at = strtotime($post['Store']['expiredTime']) + 86400 - 1;
+            isset($post[$model->formName()]['expiredTime']) && $model->expired_at = strtotime($post[$model->formName()]['expiredTime']) + 86400 - 1;
+            isset($post[$model->formName()]['chains']) && $model->chain = json_encode($post[$model->formName()]['chains']);
             if (!$model->save()) {
                 Yii::$app->logSystem->db($model->errors);
                 return $this->redirectError($this->getError($model));
             } else {
-                Yii::$app->cacheSystem->clearAllStore();
-                Yii::$app->cacheSystem->clearStoreSetting();
+                $this->clearCache();
                 return $this->redirectSuccess();
             }
         }
 
-        $model->expiredTime = date('Y-m-d', ($model->expired_at > 0 ? $model->expired_at : time() + 365 * 86400));
-        return $this->renderAjax($this->action->id, [
+        $model->expiredTime = date('Y-m-d', ($model->expired_at > 0 ? $model->expired_at : time() + Yii::$app->params['defaultStoreExpiredTime']));
+        $model->chains = $model->chain ? json_decode($model->chain, true) : [];
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
     }
 
-    protected function afterEditAjaxStatus($id, $status, $model = null)
+    protected function afterEditAjaxStatus($id = null, $model = null, $status = null)
     {
-        Yii::$app->cacheSystem->clearAllStore();
-        Yii::$app->cacheSystem->clearStoreSetting();
+        $this->clearCache();
         return true;
     }
 
@@ -181,14 +181,14 @@ class StoreController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionLogin()
+    public function actionEditLogin()
     {
         $id = Yii::$app->request->get('id');
         if (!$id) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
@@ -212,14 +212,14 @@ class StoreController extends BaseController
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionGo()
+    public function actionEditGo()
     {
         $id = Yii::$app->request->get('id');
         if (!$id) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
@@ -315,8 +315,8 @@ class StoreController extends BaseController
     public function actionEditMaintainAll()
     {
         Store::updateAll(['status' => $this->modelClass::STATUS_MAINTENANCE], ['status' => $this->modelClass::STATUS_ACTIVE]);
-        Yii::$app->cacheSystem->clearAllStore();
 
+        $this->clearCache();
         return $this->redirectSuccess();
     }
 
@@ -326,8 +326,27 @@ class StoreController extends BaseController
     public function actionEditMaintainCancel()
     {
         Store::updateAll(['status' => $this->modelClass::STATUS_ACTIVE], ['status' => $this->modelClass::STATUS_MAINTENANCE]);
-        Yii::$app->cacheSystem->clearAllStore();
 
+        $this->clearCache();
         return $this->redirectSuccess();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionViewMonitor()
+    {
+        $models = Yii::$app->cacheSystem->getAllStore();
+        krsort($models);
+
+        return $this->render($this->action->id, [
+            'models' => $models,
+        ]);
+    }
+
+    protected function clearCache()
+    {
+        Yii::$app->cacheSystem->clearStoreSetting();
+        return Yii::$app->cacheSystem->clearAllStore();
     }
 }

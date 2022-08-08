@@ -11,6 +11,7 @@ use common\models\Store;
  *
  * @property int $id
  * @property int $store_id 商家
+ * @property int $parent_id 父节点
  * @property int $user_id 用户
  * @property int $from_id 发送用户
  * @property int $message_type_id 消息
@@ -40,7 +41,7 @@ class Message extends MessageBase
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['store_id', 'user_id', 'from_id', 'message_type_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['store_id', 'parent_id', 'user_id', 'from_id', 'message_type_id', 'type', 'sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'required'],
             [['content'], 'string'],
             [['name'], 'string', 'max' => 255],
@@ -56,6 +57,7 @@ class Message extends MessageBase
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => '商家',
+                'parent_id' => '父节点',
                 'user_id' => '用户',
                 'from_id' => '发送用户',
                 'message_type_id' => '消息',
@@ -73,6 +75,7 @@ class Message extends MessageBase
             return array_merge(parent::attributeLabels(), [
                 'id' => Yii::t('app', 'ID'),
                 'store_id' => Yii::t('app', 'Store ID'),
+                'parent_id' => Yii::t('app', 'Parent ID'),
                 'user_id' => Yii::t('app', 'User ID'),
                 'from_id' => Yii::t('app', 'From ID'),
                 'message_type_id' => Yii::t('app', 'Message Type ID'),

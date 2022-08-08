@@ -25,11 +25,11 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'user_id')->dropDownList($this->context->getUsersIdName()) // $form->field($model, 'user_id')->widget(kartik\select2\Select2::classname(), ['data' => $this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],]) ?>
         <?= $form->field($model, 'product_id')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

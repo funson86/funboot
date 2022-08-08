@@ -6,26 +6,26 @@ use common\helpers\Url;
 ?>
 
 <div class="modal-header">
-    <h4 class="modal-title">文件列表</h4>
+    <h4 class="modal-title"><?= Yii::t('app', 'File List') ?></h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 </div>
 
 <div class="modal-body">
     <div class="row">
         <div class="col-lg-2">
-            <?= Html::dropDownList('year', '', ArrayHelper::merge(['' => '不限年份'] , ArrayHelper::dropListInt('2018', date('Y'))), [
+            <?= Html::dropDownList('year', '', ArrayHelper::merge(['' =>  Yii::t('app', 'All Years')] , ArrayHelper::dropListInt('2018', date('Y'))), [
                 'class' => 'form-control',
                 'id' => 'fbYear',
             ])?>
         </div>
         <div class="col-lg-2">
-            <?= Html::dropDownList('month', '', ArrayHelper::merge(['' => '不限月份'] , ArrayHelper::dropListInt(1, 12)), [
+            <?= Html::dropDownList('month', '', ArrayHelper::merge(['' => Yii::t('app', 'All Months')] , ArrayHelper::dropListInt(1, 12)), [
                 'class' => 'form-control',
                 'id' => 'fbMonth',
             ])?>
         </div>
         <div class="col-lg-2">
-            <?= Html::dropDownList('upload_type', '', ArrayHelper::merge(['' => '不限文件类型'] , Attachment::getUploadTypeLabels()), [
+            <?= Html::dropDownList('upload_type', '', ArrayHelper::merge(['' => Yii::t('app', 'All File Types')] , Attachment::getUploadTypeLabels()), [
                 'class' => 'form-control',
                 'id' => 'fbUploadType',
             ])?>
@@ -34,10 +34,10 @@ use common\helpers\Url;
             <div class="input-group m-b">
                 <?= Html::input('text', 'keyword', '', [
                     'class' => 'form-control',
-                    'placeholder' => '关键字查询',
+                    'placeholder' => Yii::t('app', 'Keywords'),
                     'id' => 'fbKeyword'
                 ]); ?>
-                <?= Html::tag('span', '<button class="btn btn-white" onclick="fbAttachmentSearch()"><i class="fa fa-search"></i> 搜索</button>', ['class' => 'input-group-btn'])?>
+                <?= Html::tag('span', '<button class="input-group-text" onclick="fbAttachmentSearch()"><i class="fa fa-search"></i></button>', ['class' => 'input-group-append'])?>
             </div>
         </div>
         <div class="col-lg-3 text-right">
@@ -58,11 +58,11 @@ use common\helpers\Url;
         <ul class="mailbox-attachments clearfix" id="fbAttachmentList" data-multiple=""></ul>
     </div>
     <div class="row d-block text-center" id="loadingAttachment">
-        <span onclick="fbGetAttachment()" class="btn btn-default">加载更多</span>
+        <span onclick="fbGetAttachment()" class="btn btn-default"><?= Yii::t('app', 'Load More') ?></span>
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+    <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
     <button class="btn btn-primary" data-dismiss="modal" id="fbAttachmentDetermine"><?= Yii::t('app', 'Ok') ?></button>
 </div>
 
@@ -153,9 +153,9 @@ use common\helpers\Url;
                         var html = template('fbAttachmentTemplate', data);
                         // 渲染添加数据
                         $('#fbAttachmentList').append(html);
-                        $('#loadingAttachment').html('<span onclick="fbGetAttachment()" class="btn btn-white">加载更多</span>');
+                        $('#loadingAttachment').html('<span onclick="fbGetAttachment()" class="btn btn-default"><?= Yii::t('app', 'Load More') ?>></span>');
                     } else {
-                        $('#loadingAttachment').text('没有更多数据了');
+                        $('#loadingAttachment').text('<?= Yii::t('app', 'No more data') ?>');
                     }
                 } else {
                     fbWarning(data.msg);

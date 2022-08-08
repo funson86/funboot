@@ -26,8 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
                 <div class="col-sm-12">
-                    <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'store_id')->textInput(['maxlength' => true]) ?>
+                    <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
                     <?= $form->field($model, 'bank_code')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'money')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -40,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="card-footer">
                 <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-                <span class="btn btn-white" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
+                <span class="btn btn-default" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
             </div>
         </div>
     </div>

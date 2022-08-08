@@ -2,8 +2,6 @@
 
 namespace backend\modules\mall\controllers;
 
-use backend\controllers\BaseController;
-
 /**
  * Default controller for the `mall` module
  */

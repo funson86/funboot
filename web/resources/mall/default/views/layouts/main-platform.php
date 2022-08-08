@@ -34,7 +34,7 @@ $this->registerJsFile($this->context->getJs('main-platform.js'), ['depends' => M
 
     <main class="container">
         <?= $content ?>
-        <?= \common\widgets\alert\SweetAlert2::widget() ?>
+        <?= !Yii::$app->request->isAjax ? \common\widgets\alert\SweetAlert2::widget() : '' ?>
     </main>
 
     <footer>

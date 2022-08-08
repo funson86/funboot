@@ -13,6 +13,7 @@ use common\models\base\Permission;
 use common\models\BaseModel;
 use common\models\ModelSearch;
 use common\models\Store;
+use common\models\User;
 use common\services\base\UserPermission;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
@@ -22,10 +23,12 @@ use yii\base\Model;
 use common\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
+use yii\db\ActiveRecord;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Inflector;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -37,10 +40,7 @@ use yii\web\Response;
  */
 class BaseController extends \common\components\controller\BaseController
 {
-    /**
-     * 开启多语言
-     * @var bool
-     */
+    /** @var bool 开启多语言 */
     public $isMultiLang = false;
 
     /**
@@ -49,48 +49,36 @@ class BaseController extends \common\components\controller\BaseController
      */
     public $isAutoTranslation = false;
 
-    /**
-     * 1带搜索列表 11只显示parent_id为0 2树形(不分页) 3非常规表格
-     * @var array[]
-     */
+    /** @var int 1带搜索列表 11只显示parent_id为0 2树形(不分页) 3非常规表格 */
     protected $style = 1;
 
-    /**
-     * 模糊查询字段
-     *
-     * @var int
-     */
+    /** @var string[] 模糊查询字段 */
     protected $likeAttributes = ['name'];
 
-    /**
-     * 列表默认排序
-     * @var array[]
-     */
+    /** @var array 列表默认排序 */
     protected $defaultOrder = ['sort' => SORT_ASC, 'id' => SORT_DESC];
 
-    /**
-     * 可编辑字段
-     *
-     * @var int
-     */
+    /** @var string[] 列表可编辑字段 */
     protected $editAjaxFields = ['name', 'sort'];
 
-    /**
-     * 导入导出字段
-     *
-     * @var int
-     */
+    /** @var bool 强制查询当前store */
+    protected $forceStoreId = true;
+
+    /** @var string[] 导入导出字段 */
     protected $exportFields = [
         'id' => 'text',
         'name' => 'text',
         'type' => 'select',
     ];
 
-    /**
-     * 导出排序
-     * @var array
-     */
+    /** @var array 导出排序 */
     protected $exportSort = ['store_id' => SORT_ASC, 'id' => SORT_ASC];
+
+    /** @var string[] $filterMultipleFields 筛选列表使用checkbox支持多个选择 */
+    public $filterMultipleFields = ['type', ];
+
+    /** @var null 用于多个action共用一个view file时设置, null表示使用默认view file */
+    protected $viewFile = null;
 
     /**
      * 行为控制
@@ -161,7 +149,12 @@ class BaseController extends \common\components\controller\BaseController
         } catch (ForbiddenHttpException $e) {
             Yii::$app->logSystem->login(Yii::$app->user->identity->username ?? Yii::$app->user->identity->username . ' of id ' . Yii::$app->user->id . ' with no auth to backend', null, true);
             Yii::$app->user->logout();
-            $this->redirect('/');
+            return false;
+        }
+
+        // 店主使用另外一种layout
+        if ($this->isBackend() && !$this->isAdmin()) {
+            $this->layout = '@backend/views/layouts/main-store';
         }
 
         return true;
@@ -175,7 +168,7 @@ class BaseController extends \common\components\controller\BaseController
      */
     public function actionIndex()
     {
-        $storeId = $this->isAdmin() ? null : $this->getStoreId();
+        $storeId = $this->getStoreId();
 
         if ($this->style == 2) {
             $query = $this->modelClass::find()
@@ -188,7 +181,7 @@ class BaseController extends \common\components\controller\BaseController
                 'pagination' => false
             ]);
 
-            return $this->render($this->action->id, [
+            return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
                 'dataProvider' => $dataProvider,
             ]);
         } elseif ($this->style == 3) {
@@ -201,7 +194,7 @@ class BaseController extends \common\components\controller\BaseController
                 ->limit($pages->limit)
                 ->all();
 
-            return $this->render($this->action->id, [
+            return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
                 'models' => $models,
                 'pages' => $pages
             ]);
@@ -219,15 +212,27 @@ class BaseController extends \common\components\controller\BaseController
         $params = Yii::$app->request->queryParams;
         if (!$this->isAdmin()) {
             $params['ModelSearch']['store_id'] = $this->getStoreId();
-            $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
+            (!isset($params['ModelSearch']['status']) || is_null($params['ModelSearch']['status'])) && $params['ModelSearch']['status'] = '>' . $this->modelClass::STATUS_DELETED;
+        } elseif ($this->isAgent()) {
+            $params['ModelSearch']['store_id'] = $this->getAgentStoreIds();
         }
+
         if ($this->style == 11) {
             $params['ModelSearch']['parent_id'] = 0;
         }
+
+        // 可以在filterParams方法中unset($params['ModelSearch']['created_at']) 清除该时间范围，然后筛选到其他字段
+        if (Yii::$app->request->get('rangeCreatedAt')) {
+            $arrDate = explode(' - ', Yii::$app->request->post('rangeCreatedAt'));
+            $arrDate[0] = strtotime($arrDate[0] ?: '-1 month');
+            $arrDate[1] = strtotime($arrDate[1] ?? 'now');
+            $params['ModelSearch']['created_at'] = implode('><', $arrDate);
+        }
+
         $this->filterParams($params);
         $dataProvider = $searchModel->search($params);
 
-        return $this->render($this->action->id, [
+        return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
         ]);
@@ -254,12 +259,13 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        return $this->render($this->action->id, [
+        $this->beforeView($id, $model);
+        return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
     }
@@ -276,14 +282,20 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        return $this->renderAjax($this->action->id, [
+        $this->beforeView($id, $model);
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
+    }
+
+    protected function beforeView($id, $model)
+    {
+        return true;
     }
 
     /**
@@ -295,26 +307,34 @@ class BaseController extends \common\components\controller\BaseController
     {
         $id = Yii::$app->request->get('id', null);
         $model = $this->findModel($id);
+        if (!$model) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $this->beforeEdit($id, $model);
         $lang = $this->isMultiLang ? $this->beforeLang($id, $model) : [];
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $model->translating = Yii::$app->request->post($model->formName())['translating'] ?? 0;
-                $this->beforeEditSave($id, $model);
-                if ($model->save()) {
-                    $this->afterEdit($id, $model);
-                    $this->isMultiLang && $this->afterLang($id, $model);
-                    return $this->redirectSuccess(['index']);
+                if ($this->beforeEditSave($id, $model)) {
+                    if ($model->save()) {
+                        $this->afterEdit($id, $model);
+                        $this->isMultiLang && $this->afterLang($id, $model);
+                        $this->clearCache();
+                        return $this->redirectSuccess(['index']);
+                    } else {
+                        Yii::$app->logSystem->db($model->errors);
+                        $this->flashError($this->getError($model));
+                    }
                 } else {
-                    Yii::$app->logSystem->db($model->errors);
-                    $this->flashError($this->getError($model));
+                    $this->flashError(Yii::t('app', 'Something wrong'));
                 }
             }
         }
 
         $this->beforeEditRender($id, $model);
-        return $this->render($this->action->id, [
+        return $this->render(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
             'lang' => $lang,
         ]);
@@ -330,24 +350,32 @@ class BaseController extends \common\components\controller\BaseController
     {
         $id = Yii::$app->request->get('id');
         $model = $this->findModel($id);
+        if (!$model) {
+            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+
         $this->beforeEdit($id, $model);
 
         // ajax 校验
         $this->activeFormValidate($model);
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             $model->translating = Yii::$app->request->post($model->formName())['translating'] ?? 0;
-            $this->beforeEditSave($id, $model);
 
-            if (!$model->save()) {
-                return $this->redirectError($this->getError($model));
+            if ($this->beforeEditSave($id, $model)) {
+                if (!$model->save()) {
+                    return $this->redirectError($this->getError($model));
+                }
+            } else {
+                return $this->redirectError(Yii::t('app', 'Something wrong'));
             }
 
             $this->afterEdit($id, $model);
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
         $this->beforeEditRender($id, $model);
-        return $this->renderAjax($this->action->id, [
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? $this->action->id, [
             'model' => $model,
         ]);
     }
@@ -381,43 +409,85 @@ class BaseController extends \common\components\controller\BaseController
     public function actionEditAjaxField()
     {
         $id = Yii::$app->request->get('id');
-        if (!$id) {
+        $ids = Yii::$app->request->post('ids');
+        if (!$id && !$ids) {
             return $this->error(404);
         }
 
-        $model = $this->findModel($id, true);
+        if ($ids) {
+            $field = Yii::$app->request->get('field');
+            $value = Yii::$app->request->get('value');
+            if (!$field || !$value) {
+                return $this->error(422);
+            }
+
+            $arrIds = explode(',', $ids);
+            if (empty($arrIds)) {
+                return $this->error(Yii::t('app', 'Invalid id'));
+            }
+
+            $count = 0;
+            foreach ($arrIds as $id) {
+                $model = $this->findModel($id);
+                if (!$model) {
+                    continue;
+                }
+
+                $this->beforeEditAjaxField($id, $model, $field, $value);
+                $model->$field = $value;
+
+                if ($this->beforeEditAjaxFieldSave($id, $model, $field, $value)) {
+                    if (!$model->save()) {
+                        Yii::$app->logSystem->db($model->errors);
+                        return $this->error(500, $this->getError($model));
+                    }
+                    $this->afterEditAjaxField($id, $model, $field, $value);
+                    $count++;
+                }
+            }
+
+            $this->clearCache();
+            return $this->success([], ['count' => $count], Yii::t('app', '{count} items update successfully.', ['count' => $count]));
+        }
+
+        $field = Yii::$app->request->post('field');
+        if (!in_array($field, $this->editAjaxFields)) {
+            return $this->error(422);
+        }
+
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->error(404);
         }
+        $value = Yii::$app->request->post('value');
 
-        $this->beforeEditAjaxField($id, Yii::$app->request->post('name'), Yii::$app->request->post('value'), $model);
-        if ($name = Yii::$app->request->post('name')) {
-            if (in_array($name, $this->editAjaxFields)) {
-                $model->$name = Yii::$app->request->post('value');
+        $this->beforeEditAjaxField($id, $model, $field, $value);
+        $model->$field = $value;
+
+        if ($this->beforeEditAjaxFieldSave($id, $model, $field, $value)) {
+            if (!$model->save()) {
+                Yii::$app->logSystem->db($model->errors);
+                return $this->error(500, $this->getError($model));
             }
+            $this->afterEditAjaxField($id, $model, $field, $value);
+            $this->clearCache();
+            return $this->success($model->attributes, null, Yii::t('app', 'Edit Successfully'));
         }
 
-        $this->beforeEditAjaxFieldSave($id, Yii::$app->request->post('name'), Yii::$app->request->post('value'), $model);
-        if (!$model->save()) {
-            Yii::$app->logSystem->db($model->errors);
-            return $this->error(500, $this->getError($model));
-        }
-        $this->afterEditAjaxField($id, Yii::$app->request->post('name'), Yii::$app->request->post('value'), $model);
-
-        return $this->success($model->attributes, null, Yii::t('app', 'Edit Successfully'));
+        return $this->error();
     }
 
-    protected function beforeEditAjaxField($id, $name = null, $value = null, $model = null)
+    protected function beforeEditAjaxField($id = null, $model = null, $field = null, $value = null)
     {
         return true;
     }
 
-    protected function beforeEditAjaxFieldSave($id, $name = null, $value = null, $model = null)
+    protected function beforeEditAjaxFieldSave($id = null, $model = null, $field = null, $value = null)
     {
         return true;
     }
 
-    protected function afterEditAjaxField($id, $name = null, $value = null, $model = null)
+    protected function afterEditAjaxField($id = null, $model = null, $field = null, $value = null)
     {
         return true;
     }
@@ -431,43 +501,89 @@ class BaseController extends \common\components\controller\BaseController
     public function actionEditAjaxStatus()
     {
         $id = Yii::$app->request->get('id');
-        if (!$id) {
+        $ids = Yii::$app->request->post('ids');
+        if (!$id && !$ids) {
             return $this->error(404);
         }
 
-        $model = $this->findModel($id, true);
+        if ($ids) {
+            $status = Yii::$app->request->get('status');
+            if ($status === null || !in_array(intval($status), array_keys($this->modelClass::getStatusLabels()))) {
+                return $this->error(422);
+            }
+
+            $arrIds = explode(',', $ids);
+            if (empty($arrIds)) {
+                return $this->error(Yii::t('app', 'Invalid id'));
+            }
+
+            $count = 0;
+            foreach ($arrIds as $id) {
+                $model = $this->findModel($id);
+                if (!$model) {
+                    continue;
+                }
+
+                $this->beforeEditAjaxStatus($id, $model);
+                if ($this->beforeEditAjaxStatusSave($id, $model, $status)) {
+                    $model->status = intval($status);
+                    if (!$model->save()) {
+                        Yii::$app->logSystem->db($model->errors);
+                        return $this->error(500, $this->getError($model));
+                    }
+                    $this->afterEditAjaxStatus($id, $model, $status);
+                    $count++;
+                }
+            }
+
+            $this->clearCache();
+            return $this->success([], ['count' => $count], Yii::t('app', '{count} items update successfully.', ['count' => $count]));
+        }
+
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->error(404);
         }
+
+        $this->beforeEditAjaxStatus($id, $model);
 
         $status = Yii::$app->request->post('status');
         if ($status === null || !in_array(intval($status), array_keys($this->modelClass::getStatusLabels()))) {
             return $this->error(422);
         }
-
-        $this->beforeEditAjaxStatus($id, $status, $model);
         $model->status = intval($status);
-        if (!$model->save()) {
-            Yii::$app->logSystem->db($model->errors);
-            return $this->error(500, $this->getError($model));
-        }
-        $this->afterEditAjaxStatus($id, $status, $model);
 
-        return $this->success($model->attributes);
+        if ($this->beforeEditAjaxStatusSave($id, $model, $status)) {
+            if (!$model->save()) {
+                Yii::$app->logSystem->db($model->errors);
+                return $this->error(500, $this->getError($model));
+            }
+
+            $this->afterEditAjaxStatus($id, $model, $status);
+            $this->clearCache();
+            return $this->success($model->attributes);
+        }
+
+        return $this->error();
     }
 
-    protected function beforeEditAjaxStatus($id, $status, $model = null)
+    protected function beforeEditAjaxStatus($id = null, $model = null)
     {
         return true;
     }
 
-    protected function afterEditAjaxStatus($id, $status, $model = null)
+    protected function beforeEditAjaxStatusSave($id = null, $model = null, $status = null)
+    {
+        return true;
+    }
+
+    protected function afterEditAjaxStatus($id = null, $model = null, $status = null)
     {
         return true;
     }
 
     /**
-     * ajax更新状态
+     * 更新状态
      *
      * @param $id
      * @return array
@@ -480,33 +596,42 @@ class BaseController extends \common\components\controller\BaseController
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
+        $this->beforeEditStatus($id, $model);
 
         $status = Yii::$app->request->get('status');
         if ($status === null || !in_array(intval($status), array_keys($this->modelClass::getStatusLabels(null, true)))) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
-
-        $this->beforeEditStatus($id, $status, $model);
         $model->status = intval($status);
-        if (!$model->save()) {
-            Yii::$app->logSystem->db($model->errors);
-            return $this->error(500, $this->getError($model));
-        }
-        $this->afterEditStatus($id, $status, $model);
 
-        return $this->redirectSuccess();
+        if ($this->beforeEditStatusSave($id, $model, $status)) {
+            if (!$model->save()) {
+                Yii::$app->logSystem->db($model->errors);
+                return $this->error(500, $this->getError($model));
+            }
+            $this->afterEditStatus($id, $model, $status);
+            $this->clearCache();
+            return $this->redirectSuccess();
+        }
+
+        return $this->redirectError();
     }
 
-    protected function beforeEditStatus($id, $status, $model = null)
+    protected function beforeEditStatus($id = null, $model = null)
     {
         return true;
     }
 
-    protected function afterEditStatus($id, $status, $model = null)
+    protected function beforeEditStatusSave($id = null, $model = null, $status = null)
+    {
+        return true;
+    }
+
+    protected function afterEditStatus($id = null, $model = null, $status = null)
     {
         return true;
     }
@@ -523,23 +648,62 @@ class BaseController extends \common\components\controller\BaseController
     public function actionDelete()
     {
         $id = Yii::$app->request->get('id');
-        if (!$id) {
-            return $this->redirectError(Yii::t('app', 'Invalid id'));
+        $ids = Yii::$app->request->post('ids');
+        if (!$id && !$ids) {
+            return Yii::$app->request->isPost ? $this->error(Yii::t('app', 'Invalid id')) : $this->redirectError(Yii::t('app', 'Invalid id'));
+        }
+        $soft = Yii::$app->request->get('soft', true);
+        $tree = Yii::$app->request->get('tree', false);
+
+        if ($ids) { // batch delete
+            // $count = $this->modelClass::deleteAll(['id' => explode(',', $ids)]); 简易版
+            $arrIds = explode(',', $ids);
+            if (empty($arrIds)) {
+                return $this->error(Yii::t('app', 'Invalid id'));
+            }
+
+            $count = 0;
+            foreach ($arrIds as $id) {
+                $model = $this->findModel($id);
+                if (!$model) {
+                    continue;
+                }
+
+                if ($tree) {
+                    $allIds = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->select(['id', 'parent_id'])->asArray()->all());
+                } else {
+                    $allIds = $id;
+                }
+                $this->beforeDeleteModel($allIds, $model, $soft, $tree);
+
+                if ($soft) {
+                    $model->status = $this->modelClass::STATUS_DELETED;
+                    $result = $model->save();
+                } else {
+                    $result = $model->delete();
+                }
+                if ($result !== false) {
+                    $count += $result;
+                }
+
+                $this->afterDeleteModel($id, $model, $soft, $tree);
+            }
+
+            $this->clearCache();
+            return $this->success([], [], Yii::t('app', '{count} items delete successfully.', ['count' => $count]));
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->redirectError(Yii::t('app', 'Invalid id'));
         }
 
-        $soft = Yii::$app->request->get('soft', true);
-        $tree = Yii::$app->request->get('tree', false);
         if ($tree) {
-            $ids = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->asArray()->all());
+            $allIds = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->select(['id', 'parent_id'])->asArray()->all());
         } else {
-            $ids = $id;
+            $allIds = $id;
         }
-        $this->beforeDeleteModel($ids, $soft, $tree);
+        $this->beforeDeleteModel($allIds, $model, $soft, $tree);
 
         if ($soft) {
             $model->status = $this->modelClass::STATUS_DELETED;
@@ -547,7 +711,6 @@ class BaseController extends \common\components\controller\BaseController
         } else {
             $result = $model->delete();
         }
-
         if ($result === false) {
             Yii::$app->logSystem->db($model->errors);
             return $this->redirectError($this->getError($model));
@@ -561,8 +724,77 @@ class BaseController extends \common\components\controller\BaseController
             }
         }
 
-        $this->afterDeleteModel($id, $soft, $tree);
+        $this->afterDeleteModel($ids, $model, $soft, $tree);
+
+        $this->clearCache();
         return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete Successfully'));
+    }
+
+    /**
+     * 删除动作前处理，子方法只需覆盖该函数即可
+     * @param $id
+     * @param null|ActiveRecord $model
+     * @param bool $soft
+     * @param bool $tree
+     * @return bool
+     */
+    protected function beforeDeleteModel($id = null, $model = null, $soft = false, $tree = false)
+    {
+        return true;
+    }
+
+    /**
+     * 删除动作后处理，子方法只需覆盖该函数即可
+     * @param $id
+     * @param null|ActiveRecord $model
+     * @param bool $soft
+     * @param bool $tree
+     * @return bool
+     */
+    protected function afterDeleteModel($id = null, $model = null, $soft = false, $tree = false)
+    {
+        return true;
+    }
+
+    /**
+     * 清空
+     * @return mixed
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionDeleteAll()
+    {
+        $this->beforeDeleteAll();
+        $this->modelClass::deleteAll(['store_id' => $this->store->id]);
+        $this->afterDeleteAll();
+
+        $this->clearCache();
+        return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete All Successfully'));
+    }
+
+    /**
+     * @return bool
+     */
+    protected function beforeDeleteAll()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function afterDeleteAll()
+    {
+        return true;
+    }
+
+    /**
+     * 清理缓存
+     * @return bool
+     */
+    protected function clearCache()
+    {
+        return true;
     }
 
     /**
@@ -649,55 +881,6 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
-     * 删除动作前处理，子方法只需覆盖该函数即可
-     * @return bool
-     */
-    protected function beforeDeleteModel($id, $soft = false, $tree = false)
-    {
-        return true;
-    }
-
-    /**
-     * 删除动作后处理，子方法只需覆盖该函数即可
-     * @return bool
-     */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
-    {
-        return true;
-    }
-
-    /**
-     * 清空
-     * @return mixed
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function actionDeleteAll()
-    {
-        $this->beforeDeleteAll();
-        $this->modelClass::deleteAll(['store_id' => $this->store->id]);
-        $this->afterDeleteAll();
-
-        return $this->redirectSuccess(Yii::$app->request->referrer, Yii::t('app', 'Delete All Successfully'));
-    }
-
-    /**
-     * @return bool
-     */
-    protected function beforeDeleteAll()
-    {
-        return true;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function afterDeleteAll()
-    {
-        return true;
-    }
-
-    /**
      * 导出
      *
     ['id', 'ID', 'text'],
@@ -716,7 +899,7 @@ class BaseController extends \common\components\controller\BaseController
             $item = [];
             if ($type == 'select') {
                 $getLabels = 'get' . Inflector::camelize($field) . 'Labels';
-                $item = [$field, $model->attributeLabels()[$field] ?? '', $type, $this->modelClass::$getLabels()];
+                $item = [$field, $model->attributeLabels()[$field] ?? '', $type, $this->modelClass::$getLabels(null, true)];
             } elseif ($type == 'date') {
                 $item = [$field, $model->attributeLabels()[$field] ?? '', $type, 'Y-m-d'];
             } elseif ($type == 'datetime') {
@@ -729,13 +912,20 @@ class BaseController extends \common\components\controller\BaseController
         }
 
         $ext = Yii::$app->request->get('ext', 'xls');
+        if (Yii::$app->request->get('template')) { // download template
+            $spreadSheet = $this->arrayToSheet([], $fields);
+            OfficeHelper::write($spreadSheet, $ext, $this->store->host_name . '_template.' . $ext);
+            exit();
+        }
+
         $storeId = $this->isAdmin() ? null : $this->getStoreId();
-        $models = $this->modelClass::find()->filterWhere(['store_id' => $storeId])->orderBy($this->exportSort)->asArray()->all();
+        $condition = Yii::$app->request->post('ids') ? ['id' => explode(',', Yii::$app->request->post('ids'))] : ['store_id' => $storeId];
+        $models = $this->modelClass::find()->filterWhere($condition)->orderBy($this->exportSort)->asArray()->all();
 
         $spreadSheet = $this->arrayToSheet($models, $fields);
 
         $arrModelClass = explode('\\', strtolower($this->modelClass));
-        OfficeHelper::write($spreadSheet, $ext,  $this->store->host_name . '_' . array_pop($arrModelClass) . '_' . date('mdHis') . '.' . $ext);
+        OfficeHelper::write($spreadSheet, $ext, $this->store->host_name . '_' . array_pop($arrModelClass) . '_' . date('mdHis') . '.' . $ext);
 
         exit();
     }
@@ -756,6 +946,7 @@ class BaseController extends \common\components\controller\BaseController
                 $countCreate = $countUpdate = 0;
                 $errorLines = $errorMsgs = [];
                 for ($i = 2; $i <= $count; $i++) { // 忽略第1行表头
+                    $isUpdate = false;
                     $row = $data[$i];
 
                     // 更新的话ID必须在第一行，有数据才查找
@@ -765,6 +956,8 @@ class BaseController extends \common\components\controller\BaseController
                             array_push($errorLines, $i);
                             $errorData = true;
                             continue;
+                        } else {
+                            $isUpdate = true;
                         }
                     } else {
                         $model = new $this->modelClass();
@@ -796,13 +989,13 @@ class BaseController extends \common\components\controller\BaseController
 
                     //数据无错误才插入
                     if (!$errorData) {
-                        $this->beforeImport($model);
+                        $this->beforeImport($model->id, $model);
                         if (!$model->save()) {
                             array_push($errorLines, $i);
                             array_push($errorMsgs, json_encode($model->errors));
                         }
-                        $this->afterImport($model);
-                        $countCreate++;
+                        $this->afterImport($model->id, $model);
+                        $isUpdate ? $countUpdate++ : $countCreate++;
                     }
 
                     if (count($errorLines)) {
@@ -819,35 +1012,40 @@ class BaseController extends \common\components\controller\BaseController
                 return $this->redirectError($e->getMessage(), null, true);
             }
 
+            $this->clearCache();
             return $this->redirectSuccess();
         }
 
-        return $this->renderAjax('@backend/views/site/' . $this->action->id);
+        return $this->renderAjax(Yii::$app->request->get('view') ?? $this->viewFile ?? '@backend/views/site/' . $this->action->id);
     }
 
-    protected function beforeImport($model = null)
+    protected function beforeImport($id = null, $model = null)
     {
-        return true;
+        return $this->beforeEditSave($model->id, $model);
     }
 
-    protected function afterImport($model = null)
+    protected function afterImport($id = null, $model = null)
     {
-        return true;
+        return $this->afterEdit($model->id, $model);
     }
 
-    protected function findModel($id, $action = false)
+    protected function findModel($id = null)
     {
         /* @var $model \yii\db\ActiveRecord */
-
-        // 管理员无需store_id
-        $storeId = (($this->modelClass === Store::class) || $this->isAdmin()) ? null : $this->getStoreId();
-        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
-            if ($action) {
-                return null;
-            }
-
+        if (empty($id)) {
             $model = new $this->modelClass();
             $model->loadDefaultValues();
+        } else {
+            $storeId = $this->getFilterStoreId();
+            if ($this->modelClass == Store::class) {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['id' => $storeId])->one();
+            } else {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one();
+            }
+
+//            if (!$model) {
+//                throw new NotFoundHttpException(Yii::t('app', 'Invalid id'), 500);
+//            }
         }
 
         return $model;
@@ -870,6 +1068,7 @@ class BaseController extends \common\components\controller\BaseController
 
     /**
      * @param array $models
+     * @param $fields
      * @return \PhpOffice\PhpSpreadsheet\Spreadsheet
      */
     protected function arrayToSheet($models, $fields)
@@ -959,6 +1158,14 @@ class BaseController extends \common\components\controller\BaseController
     }
 
     /**
+     * @return bool
+     */
+    public function isAgent()
+    {
+        return Yii::$app->authSystem->isAgent();
+    }
+
+    /**
      * 如果在authSystem中配置，或者有superadmin角色，则是，拥有所有权限
      * @return bool
      */
@@ -966,4 +1173,70 @@ class BaseController extends \common\components\controller\BaseController
     {
         return Yii::$app->authSystem->isSuperAdmin();
     }
+
+    /**
+     * @return bool
+     */
+    public function isBackend()
+    {
+        return Yii::$app->authSystem->isBackend();
+    }
+
+    /**
+     * @param null $field
+     * @param null $storeId
+     * @return array
+     */
+    public function getUsersIdName($field = null, $storeId = null)
+    {
+        !$storeId && $storeId = ($this->isAdmin() ? null : $this->getStoreId());
+        !$field && $field = 'username';
+        $selection = ['id', $field];
+        $models = User::find()->where(['status' => User::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->select($selection)->all();
+        return ArrayHelper::map($models, 'id', $field);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAgentStores()
+    {
+        $models = Yii::$app->cacheSystem->getAllStore();
+        $list = [];
+        foreach ($models as $model) {
+            if ($model->created_by == Yii::$app->user->id) {
+                $list[] = $model;
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAgentStoreIds()
+    {
+        return ArrayHelper::getColumn($this->getAgentStores(), 'id');
+    }
+
+    public function getFilterStoreId()
+    {
+        if ($this->isAgent()) {
+            return $this->getAgentStoreIds();
+        } elseif ($this->isAdmin()) {
+            return null;
+        } else {
+            return $this->getStoreId();
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getStoresIdName()
+    {
+        $stores = Yii::$app->authSystem->isAgent() ? $this->getAgentStores() : $this->getStores();
+        return ArrayHelper::map($stores, 'id', 'name');
+    }
+
 }

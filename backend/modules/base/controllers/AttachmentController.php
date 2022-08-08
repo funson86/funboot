@@ -4,7 +4,6 @@ namespace backend\modules\base\controllers;
 
 use Yii;
 use common\models\base\Attachment;
-use common\models\ModelSearch;
 use backend\controllers\BaseController;
 
 /**

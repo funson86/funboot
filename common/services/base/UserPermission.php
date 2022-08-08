@@ -14,7 +14,7 @@ use Yii;
  */
 class UserPermission extends BaseService
 {
-    public static function getUserPermissions($userId, $force = false)
+    public static function getUserPermissions($userId, $roleIds = false)
     {
         if ($userId < 0) {
             return null;
@@ -31,10 +31,12 @@ class UserPermission extends BaseService
             ->asArray()
             ->all();
 
-        if (isset($permissions[0]['permission'])) {
-            $permissionIds = ArrayHelper::getColumn($permissions[0]['permission'], 'permission_id');
-            Yii::$app->cache->set('user_permissions:' . $userId, $permissionIds);
-            return $permissionIds;
+        if (!$roleIds && isset($permissions[0]['permission'])) {
+            return ArrayHelper::getColumn($permissions[0]['permission'], 'permission_id');
+        } elseif ($roleIds) {
+            return ArrayHelper::getColumn($permissions, 'role_id');
         }
+
+        return [];
     }
 }

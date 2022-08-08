@@ -84,9 +84,10 @@ class PointLogBase extends BaseModel
         ]);
     }
 
-    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_BOUGHT, $userId = null)
+    public static function create($change, $original, $balance, $name = '', $type = self::TYPE_BOUGHT, $userId = null, $storeId = null)
     {
         $model = new PointLog();
+        $storeId && $model->store_id = $storeId;
         $model->name = $name;
         $model->user_id = $userId ?? Yii::$app->user->id;
         $model->change = $change;

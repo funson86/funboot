@@ -166,3 +166,37 @@ Start Elasticsearch, it listens to port 9200 by default.
             'dslVersion' => 7, // default is 5
         ],
 ```
+
+### Other
+
+- Enable schema cache for mysql.
+
+```
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=funboot',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8mb4',
+            'tablePrefix' => 'fb_',
+            'enableSchemaCache' => true,
+            'schemaCacheDuration' => 86400,
+            'schemaCache' => 'cache',
+        ],
+```
+
+- Not save operation log
+
+In common/config/main-local.php set 'types' => ['login', 'db', 'error', 'console', 'mail'], delete 'operation'
+
+```
+        'logSystem' => [
+            'class' => 'common\components\base\LogSystem',
+            'queue' => true,
+            'driver' => 'mongodb', // driver type, mysql or mongodb
+            'levels' => ['error', 'warning'],
+            'types' => [/*'operation', */'login', 'db', 'error', 'console', 'mail'], // without opeartion
+            'ignoreCodes' => [404], // ignored codes
+        ],
+
+```

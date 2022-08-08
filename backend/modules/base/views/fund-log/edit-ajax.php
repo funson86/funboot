@@ -4,11 +4,11 @@ use common\helpers\Html;
 use common\helpers\Url;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
-use common\models\base\Message as ActiveModel;
+use common\models\base\FundLog as ActiveModel;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\base\Message */
+/* @var $model common\models\base\FundLog */
 /* @var $form yii\widgets\ActiveForm */
 
 $form = ActiveForm::begin([
@@ -25,14 +25,19 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'user_id')->textInput() ?>
-        <?= $form->field($model, 'from_id')->textInput() ?>
-        <?= $form->field($model, 'message_type_id')->textInput() ?>
+        <?= $this->context->isAdmin() ? $form->field($model, 'store_id')->dropDownList($this->context->getStoresIdName()) : '' ?>
+        <?= $form->field($model, 'user_id')->dropDownList($this->context->getUsersIdName()) // $form->field($model, 'user_id')->widget(kartik\select2\Select2::classname(), ['data' => $this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'change')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'original')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'balance')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'type')->dropDownList(ActiveModel::getTypeLabels()) ?>
+        <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

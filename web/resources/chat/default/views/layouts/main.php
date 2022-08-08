@@ -42,7 +42,7 @@ $this->registerJsFile($this->context->getJs('main.js'), ['depends' => ChatAsset:
     </main>
 
     <?= $this->render('footer') ?>
-    <?= \common\widgets\alert\SweetAlert2::widget() ?>
+    <?= !Yii::$app->request->isAjax ? \common\widgets\alert\SweetAlert2::widget() : '' ?>
 
     <!-- Scroll to Top -->
     <button type="button" class="btn btn-scroll-top" id="goTop" title="<?= Yii::t('app', 'Go Top') ?>"><span class="fa fa-chevron-up"></span></button>

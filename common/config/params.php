@@ -17,6 +17,8 @@ return [
     'defaultStoreId' => 2, //默认店铺ID，当不存在时用该id
     'defaultUserId' => 2, //默认用户ID
     'defaultSort' => 50, //默认排序ID
+    'defaultNameAdminField' => 'username', //默认显示created_by updated_by字段
+    'defaultMessageMessageTypeId' => 3, //默认私信消息ID
     'defaultFeedbackMessageTypeId' => 7, //默认在线反馈消息ID
     'defaultWebsiteLogo' => '/resources/images/default-logo.png', //默认在线反馈消息ID
     'defaultWebsiteBanner' => '/resources/images/default-banner.jpg', //默认banner
@@ -26,6 +28,23 @@ return [
     'defaultContactAddress' => '7 Wardour St, London W1D 6PE', //默认在线反馈消息ID
     'defaultContactMobile' => '0796 7888 883', //默认在线反馈消息ID
     'defaultLogo' => '/resources/images/default-logo.png', //默认在线反馈消息ID
+    'defaultAgentRoleId' => 49, //默认代理角色ID
+    'defaultStoreRoleId' => 50, //默认店铺角色ID
+    'defaultRoute' => 'site',
+    'defaultStoreExpiredTime' => 365 * 86400,
+    'defaultLangBackend' => [1, 2],
+    'defaultLangFrontend' => [1, 2],
+    'defaultLangApi' => [1, 2],
+    'defaultStoreRole' => [
+        'site' => 50,
+        'pay' => 50,
+        'cms' => 50,
+        'bbs' => 50,
+        'mall' => 50,
+        'wechat' => 50,
+        'mini' => 50,
+        'chat' => 50,
+    ],
 
     // 默认错误码，在返回前还会做i18n翻译
     'errorCode' => [
@@ -72,7 +91,7 @@ return [
         'mini' => 64,
         'chat' => 128,
     ],
-    'systemSupport' => 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128,
+    'systemSupport' => 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 65536,
 
     // 定时任务存储路径
     'scheduleFile' => '@console/runtime/schedule/schedule.php',
@@ -227,5 +246,8 @@ return [
         'wechatPaymentConfig' => [],
     ]
 
+     'spamKeywords' => [
+         ' porn ',
+     ],
 
 ];

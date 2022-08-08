@@ -4,7 +4,8 @@ use common\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\base\Setting as ActiveModel;
-use common\helpers\Url;
+use frontend\helpers\Url;
+use yii\helpers\Inflector;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\base\Setting */
@@ -25,11 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row pt-3 pb-5">
     <div class="col-md-12 bg-white border-1" style="border-radius: 3px;">
         <div class="tab-content p-3" id="vert-tabs-tabContent">
+            <h5 class="text-right"><?= Html::aHelp(Yii::$app->params['helpUrl'][Yii::$app->language][$this->context->module->id . '_' . $this->context->id . '_' . Yii::$app->request->get('parent_id', '')] ?? null) ?></h5>
             <?php foreach ($settingTypes as $k => $settingType) { ?>
-                <div class="tab-pane text-left fade <?php if ($k == 0) echo 'active show'; ?>" id="setting_type_<?= $settingType['id'] ?>" role="tabpanel">
+                <div class="tab-pane text-left fade <?php if ($k == 0) echo 'active show'; ?>" id="setting_type_<?= $settingType['id'] ?? 0 ?>" role="tabpanel">
                     <div class="panel-body">
                         <?php $form = ActiveForm::begin([
-                            'id' => 'form-tab-' . $settingType['id']
+                            'id' => 'form-tab-' . ($settingType['id'] ?? 0)
                         ]); ?>
                         <?php foreach ($settingType['children'] as $setting) {  if (isset($setting['children']) && count($setting['children']) > 0) { ?>
                             <h2 style="font-size: 18px;padding-top: 0;margin-top: 0">
@@ -37,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </h2>
                             <div class="col-sm-12 pl-3">
                                 <?php foreach ($setting['children'] as $row) { ?>
+                                    <?= Html::a('', null, ['name' => 'anchor-' . $row['id'], 'class' => 'anchor']); ?>
                                     <?= $this->render($row['type'], [
                                         'row' => $row,
                                         'valueRange' => \common\helpers\StringHelper::parseAttr($row['value_range']),
@@ -46,6 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         <?php } else { $row = $setting; ?>
                             <div class="col-sm-12 pl-3">
+                                <?= Html::a('', null, ['name' => 'anchor-' . $row['id'], 'class' => 'anchor']); ?>
                                 <?= $this->render($row['type'], [
                                     'row' => $row,
                                     'valueRange' => \common\helpers\StringHelper::parseAttr($row['value_range']),
@@ -55,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php } } ?>
                         <div class="col-sm-12 pl-3 form-group clearfix">
                             <div class="col-sm-12 text-center">
-                                <span type="submit" class="btn btn-primary" onclick="editAjaxSave(<?= $settingType['id'] ?>)"><?= Yii::t('app', 'Save') ?></span>
+                                <span type="submit" class="btn btn-primary" onclick="editAjaxSave(<?= $settingType['id'] ?? 0 ?>)"><?= Yii::t('app', 'Save') ?></span>
                                 <?= Html::export() ?>
                                 <?= Html::import() ?>
                                 <?php if ($this->context->isAdmin()) { ?>

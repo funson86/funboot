@@ -25,7 +25,6 @@ $form = ActiveForm::begin([
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="modal-body">
-        <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'bank_code')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'money')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -36,7 +35,7 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'status')->dropDownList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

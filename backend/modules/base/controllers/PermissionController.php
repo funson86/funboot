@@ -6,7 +6,7 @@ use common\helpers\ArrayHelper;
 use common\models\base\RolePermission;
 use Yii;
 use common\models\base\Permission;
-use common\models\ModelSearch;
+
 use backend\controllers\BaseController;
 use yii\data\ActiveDataProvider;
 
@@ -67,28 +67,19 @@ class PermissionController extends BaseController
         }
     }
 
-    protected function afterEdit($id = null, $model = null)
-    {
-        Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
-    }
-
     /**
      * @param $id
      * @return bool|void
      */
-    protected function beforeDeleteModel($id, $soft = false, $tree = false)
+    protected function beforeDeleteModel($id = null, $model = null, $soft = false, $tree = false)
     {
         if (!$soft) {
             RolePermission::deleteAll(['permission_id' => $id]);
         }
     }
 
-    /**
-     * @param $id
-     * @return bool
-     */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function clearCache()
     {
-        return Yii::$app->cacheSystem->clearAllPermission(); // 清理缓存
+        return Yii::$app->cacheSystem->clearAllPermission();;
     }
 }

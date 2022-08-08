@@ -119,6 +119,8 @@ class UserBase extends BaseModel implements IdentityInterface
             'point' => Yii::t('app', 'Point'),
             'balance' => Yii::t('app', 'Balance'),
             'remark' => Yii::t('app', 'Remark'),
+            'message_count' => Yii::t('app', 'Message Count'),
+            'coupon_count' => Yii::t('app', 'Coupon Count'),
             'login_count' => Yii::t('app', 'Login Count'),
             'last_login_at' => Yii::t('app', 'Last Login At'),
             'last_login_ip' => Yii::t('app', 'Last Login Ip'),
@@ -235,6 +237,17 @@ class UserBase extends BaseModel implements IdentityInterface
     public static function findByToken($token)
     {
         return $token ? static::findOne(['token' => $token]) : null;
+    }
+
+    /**
+     * Finds user by token
+     *
+     * @param string $token
+     * @return static|null
+     */
+    public static function findByAccessToken($token)
+    {
+        return $token ? static::findOne(['access_token' => $token]) : null;
     }
 
     /**
@@ -396,6 +409,12 @@ class UserBase extends BaseModel implements IdentityInterface
         $this->password_reset_token = '';
     }
 
+    public function getNameAdmin()
+    {
+        $name = Yii::$app->params['defaultNameAdminField'] ?? 'username';
+        return $this->$name ?: $this->username;
+    }
+
     /**
      * @param $roleId
      * @return array|UserRole|ActiveRecord
@@ -436,5 +455,26 @@ class UserBase extends BaseModel implements IdentityInterface
         }
 
         return false;
+    }
+
+    public static function updateCounter($field, $count = 1, $userId = null)
+    {
+        !$userId && !Yii::$app->user->isGuest && $userId = Yii::$app->user->id;
+        return !$userId ? false : User::updateAllCounters([$field => $count], ['id' => $userId]);
+    }
+
+    public static function updateMessageCount($count = 1, $userId = null)
+    {
+        return static::updateCounter('message_count', $count, $userId);
+    }
+
+    public static function updateCouponCount($count = 1, $userId = null)
+    {
+        return static::updateCounter('coupon_count', $count, $userId);
+    }
+
+    public static function updateLoginCount($count = 1, $userId = null)
+    {
+        return static::updateCounter('login_count', $count, $userId);
     }
 }

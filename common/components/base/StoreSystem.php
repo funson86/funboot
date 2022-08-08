@@ -29,7 +29,7 @@ class StoreSystem extends \yii\base\Component
      */
     public function set($store)
     {
-        return $this->store = $store;
+        return $this->store = $store ?? Store::findOne(Yii::$app->params['defaultStoreId'] ?? 2);
     }
 
     /**
@@ -50,7 +50,7 @@ class StoreSystem extends \yii\base\Component
             return $this->store;
         }
 
-        $data = ArrayHelper::mapIdData(Yii::$app->cacheSystem->getAllStore());
+        $data = Yii::$app->cacheSystem->getAllStore();
 
         return $data[$storeId] ?? $this->store;
     }

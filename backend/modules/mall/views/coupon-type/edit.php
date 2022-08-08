@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'money')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'min_amount')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'max_times')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'started_at')->widget(kartik\date\DatePicker::class, [
                         'language' => 'zh-CN',
                         'layout'=>'{picker}{input}',
@@ -60,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="card-footer">
                 <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-                <span class="btn btn-white" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
+                <span class="btn btn-default" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
             </div>
         </div>
     </div>

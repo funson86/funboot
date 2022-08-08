@@ -14,6 +14,9 @@ use common\components\base\LogSystem;
 /* @var $searchModel common\models\ModelSearch */
 /* @var int $type */
 
+$type = Yii::$app->request->get('type', 1);
+$driver = Yii::$app->logSystem->driver;
+
 $this->title = Yii::t('app', 'Logs');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,28 +31,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php } ?>
                 </ul>
                 <div class="card-tools">
+                    <?= Html::filterModal() ?>
                     <?= Html::export() ?>
-                    <?= Html::buttonModal(['stat-ajax-error'], Yii::t('app', 'Error') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
-                    <?= Html::buttonModal(['stat-ajax-login'], Yii::t('app', 'Login') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
+                    <?= Html::buttonModal(['view-ajax-stat-error'], Yii::t('app', 'Error') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
+                    <?= Html::buttonModal(['view-ajax-stat-login'], Yii::t('app', 'Login') . Yii::t('app', 'Stat Report'), ['size' => 'Max', 'class' => 'btn btn-default btn-sm']) ?>
                 </div>
             </div>
 
             <?php if (Yii::$app->logSystem->driver == LogSystem::DRIVER_MYSQL) { ?>
 
             <div class="card-body">
+                <?//= $this->render('@backend/views/site/_select', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>
+
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'tableOptions' => ['class' => 'table table-hover'],
                     'columns' => [
                         [
-                            'class' => 'yii\grid\SerialColumn',
+                            'class' => 'yii\grid\CheckboxColumn',
                             'visible' => false,
                         ],
 
                         'id',
-                        // ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', ArrayHelper::map($this->context->getStores(), 'id', 'name'), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        // 'user_id',
+                        // ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name; }, 'filter' => Html::activeDropDownList($searchModel, 'store_id', $this->context->getStoresIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        // ['attribute' => 'user_id', 'value' => function ($model) { return $model->user->username ?? '-'; }, 'filter' => Html::activeDropDownList($searchModel, 'user_id', $this->context->getUsersIdName(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],,
                         'name',
                         // ['attribute' => 'name', 'format' => 'raw', 'value' => function ($model) { return Html::field('name', $model->name); }, 'filter' => true,],
                         'url:url',
@@ -87,11 +93,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             'visible' => intval(Yii::$app->request->get('id')) == 1,
                         ],*/
                         // ['attribute' => 'sort', 'format' => 'raw', 'value' => function ($model) { return Html::sort($model->sort); }, 'filter' => false,],
-                        // ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
-                        'created_at:datetime',
-                        // 'updated_at:datetime',
-                        // 'created_by',
-                        // 'updated_by',
+                        // ['attribute' => 'status', 'format' => 'raw', 'value' => function ($model) { return ActiveModel::isStatusActiveInactive($model->status) ? Html::status($model->status) : ActiveModel::getStatusLabels($model->status, true); }, 'filter' => Html::activeDropDownList($searchModel, 'status', ActiveModel::getStatusLabels(), ['class' => 'form-control', 'prompt' => Yii::t('app', 'Please Filter')]),],
+                        ['attribute' => 'created_at', 'format' => 'datetime', 'filter' => false],
+                        // ['attribute' => 'updated_at', 'format' => 'datetime', 'filter' => false],
+                        // ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
+                        // ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
 
                         [
                             'header' => Yii::t('app', 'Actions'),
@@ -160,3 +166,4 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
+<?= $this->render('@backend/views/site/_filter', ['model' => $searchModel, 'dataProvider' => $dataProvider]) ?>

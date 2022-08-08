@@ -6,7 +6,9 @@ use common\helpers\CommonHelper;
 use common\helpers\DateHelper;
 use common\helpers\EchartsHelper;
 use common\helpers\IdHelper;
+use common\models\base\FundLog;
 use common\models\base\Log;
+use common\models\base\Recharge;
 use common\models\forms\ChangePasswordForm;
 use common\models\pay\Payment;
 use common\models\Store;
@@ -35,7 +37,7 @@ class SiteController extends BaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'login-backend', 'error', 'captcha', 'set-language', 'qrcode', 'mail-audit'],
+                        'actions' => ['login', 'login-backend', 'error', 'captcha', 'set-language', 'qrcode', 'recharge-notify', 'recharge-cancel', 'mail-audit'],
                         'allow' => true,
                     ],
                     [
@@ -78,6 +80,15 @@ class SiteController extends BaseController
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        $this->layout = Yii::$app->authSystem->isAdmin() ? 'main' : 'main-store';
+        return true;
+    }
+
     /**
      * Displays homepage.
      *
@@ -86,7 +97,7 @@ class SiteController extends BaseController
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']);
+            return $this->redirect(['/site/login']);
         }
 
         // 非管理员不能登录后台
@@ -109,7 +120,7 @@ class SiteController extends BaseController
                     // 如果客户登录，Store已经非激活，用户无法登录。如果是super admin从后台登录允许
                     if (!Yii::$app->authSystem->isSuperAdmin() && $store->status != Store::STATUS_ACTIVE) {
                         Yii::$app->user->logout();
-                        return $this->redirect(['site/login']);
+                        return $this->redirect(['/site/login']);
                     } else {
                         // 同一个入口，跳转到不同的后台
                         return $this->redirect(CommonHelper::getHostPrefix($store->host_name) . '/backend/site/login-backend?token=' . $user->token);
@@ -117,12 +128,16 @@ class SiteController extends BaseController
                 } else {
                     Yii::$app->logSystem->db($user->errors);
                     Yii::$app->user->logout();
-                    return $this->redirect(['site/login']);
+                    return $this->redirect(['/site/login']);
                 }
             }
         }
 
-        return $this->renderPartial('index');
+        if (Yii::$app->authSystem->isAdmin()) {
+            return $this->renderPartial('index');
+        } else {
+            return $this->redirect(['/site/info']);
+        }
     }
 
     /**
@@ -136,7 +151,6 @@ class SiteController extends BaseController
         $logCount = Log::find()->filterWhere(['store_id' => $storeId])->count();
         $userCount = User::find()->filterWhere(['store_id' => $storeId])->count();
 
-        $this->layout = 'main';
         return $this->render($this->action->id, [
             'userCount' => $userCount,
             'logCount' => $logCount,
@@ -158,12 +172,12 @@ class SiteController extends BaseController
         }
 
         $model = new LoginForm();
-        $model->loginCaptchaRequired();
+        $model->checkCaptchaRequired();
 
         // 如果是POST提交
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
-                Yii::$app->logSystem->login();
+                Yii::$app->logSystem->login((Yii::$app->user->identity->email ?: Yii::$app->user->identity->username) . ' ' . Yii::$app->user->id . ' login');
 
                 // 如果Store已经非激活，用户无法登录
                 if ($this->store->status != Store::STATUS_ACTIVE) {
@@ -193,10 +207,10 @@ class SiteController extends BaseController
                             } else {
                                 Yii::$app->logSystem->db($user->errors);
                                 Yii::$app->user->logout();
-                                return $this->redirect(['/']);
+                                return Yii::$app->authSystem->isAdmin() ? $this->redirect(['/']) : $this->goBack();
                             }
                         } else {
-                            return $this->redirect(['/']);
+                            return Yii::$app->authSystem->isAdmin() ? $this->redirect(['/']) : $this->goBack();
                         }
                     }
                 }
@@ -287,7 +301,10 @@ class SiteController extends BaseController
      */
     public function actionClearCache()
     {
-        if (Yii::$app->authSystem->isAdmin()) {
+        if (Yii::$app->authSystem->isSuperAdmin()) {
+            Yii::$app->db->schema->refresh();
+            Yii::$app->cache->flush();
+        } elseif (Yii::$app->authSystem->isAdmin()) {
             Yii::$app->cacheSystem->clearAllPermission();
             Yii::$app->cacheSystem->clearAllStore();
             Yii::$app->cacheSystem->clearAllSetting();
@@ -301,6 +318,7 @@ class SiteController extends BaseController
             }
         } else {
             Yii::$app->cacheSystem->clearUserPermissionIds(Yii::$app->user->id);
+            Yii::$app->cacheSystem->clearUserRoleIds(Yii::$app->user->id);
             Yii::$app->cacheSystem->clearStoreSetting();
             Yii::$app->cacheSystem->refreshStoreLang();
 
@@ -314,8 +332,53 @@ class SiteController extends BaseController
             }
         }
 
-        Yii::$app->cache->flush();
         return $this->redirectSuccess();
+    }
+
+    public function actionRechargeNotify()
+    {
+        $id = Yii::$app->request->get('id');
+        $sn = Yii::$app->request->get('sn');
+        if (!($id || $sn)) {
+            return $this->htmlFailed();
+        }
+        /** @var Recharge $model */
+        $model = $id ? Recharge::findOne(['id' => $id]) : Recharge::findOne(['sn' => $sn]);
+        if (!$model) {
+            return $this->htmlFailed();
+        }
+
+        $model->payment_status = Recharge::PAYMENT_STATUS_PAID;
+        if (!$model->save()) {
+            Yii::$app->logSystem->db($model->errors);
+            return $this->htmlFailed();
+        }
+
+        // 资金 && 资金记录
+        $store = Store::findOne($model->store_id);
+        $original = $store->fund;
+        $amount = floatval($model->amount);
+        Store::updateAllCounters(['fund' => $amount, 'billable_fund' => $amount], ['id' => $model->store_id]);
+        FundLog::create($amount, $original, $original + $amount, $model->name, FundLog::TYPE_RECHARGE, $model->user_id, $store->id);
+        Yii::$app->cacheSystem->refreshStoreById();
+
+        return $this->redirectSuccess(['/base/recharge/index'], Yii::t('app', 'Recharge Successfully'));
+    }
+
+    public function actionRechargeCancel()
+    {
+        $id = Yii::$app->request->get('id');
+        $sn = Yii::$app->request->get('sn');
+        if (!($id || $sn)) {
+            return $this->htmlFailed();
+        }
+        /** @var Recharge $model */
+        $model = $id ? Recharge::findOne(['id' => $id]) : Recharge::findOne(['sn' => $sn]);
+        if (!$model) {
+            return $this->htmlFailed();
+        }
+
+        return $this->redirectError(Yii::t('app', 'Recharge Cancelled'), ['/base/recharge/index']);
     }
 
     public function actionStat()
@@ -385,7 +448,7 @@ class SiteController extends BaseController
 
         Yii::$app->response->format = Response::FORMAT_RAW;
         Yii::$app->response->headers->add('Content-Type', $qrCode->getContentType());
-        echo $qrCode->writeString();
+        return $qrCode->writeString();
     }
 
     /**
@@ -402,68 +465,7 @@ class SiteController extends BaseController
             return $this->htmlFailed(404);
         }
 
-        if ($type == 'order') {
-            $status = Yii::$app->request->get('status');
-            $model = Order::find()->where(['id' => $id, 'created_at' => $createdAt])->one();
-            if (!$model || $model->store_id != $this->getStoreId()) {
-                return $this->htmlFailed(403);
-            }
-
-            if (!$status || !in_array(intval($status), array_keys(Order::getStatusLabels()))) {
-                return $this->htmlFailed(422);
-            }
-
-            if (time() - $model->created_at > 3 * 3600) {
-                return $this->htmlFailed(429);
-            }
-
-            $model->shipment_status = $model->status = intval($status);
-            $shipmentName && $model->shipment_name = $shipmentName;
-            if (!$model->save()) {
-                return $this->htmlFailed();
-            }
-
-            return $this->htmlSuccess();
-        } elseif ($type == 'payment') {
-            $sn = Yii::$app->request->get('sn', null);
-
-            $status = Yii::$app->request->get('status', null);
-            if ($status) {
-                $model = Payment::find()->where(['id' => $id, 'sn' => $sn, 'created_at' => $createdAt])->one();
-                if (!$model || $model->store_id != $this->getStoreId()) {
-                    return $this->htmlFailed(403);
-                }
-
-                if (!$status || !in_array(intval($status), array_keys(Payment::getStatusLabels()))) {
-                    return $this->htmlFailed(422);
-                }
-
-                if (time() - $model->created_at > 3 * 3600) {
-                    return $this->htmlFailed(429);
-                }
-
-                $model->status = intval($status);
-                if (!$model->save()) {
-                    return $this->htmlFailed();
-                }
-            }
-
-            $storeStatus = Yii::$app->request->get('store_status', null);
-            if (!is_null($storeStatus)) {
-                $model = Payment::find()->where(['id' => $id, 'sn' => $sn, 'created_at' => $createdAt])->one();
-                if (!$model || $model->store_id != $this->getStoreId()) {
-                    return $this->htmlFailed(403);
-                }
-
-                $this->store->status = intval($storeStatus);
-                if (!$this->store->save()) {
-                    return $this->htmlFailed();
-                }
-            }
-
-            return $this->htmlSuccess();
-        }
-
+        return $this->htmlSuccess();
     }
 
 }

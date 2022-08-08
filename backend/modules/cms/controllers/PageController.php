@@ -80,4 +80,9 @@ class PageController extends BaseController
         ]);
 
     }
+
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystemCms->clearAllData($this->getStoreId());
+    }
 }

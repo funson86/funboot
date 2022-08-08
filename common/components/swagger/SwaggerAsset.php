@@ -20,5 +20,5 @@ class SwaggerAsset extends \yii\web\AssetBundle
         'swagger-ui.css'
     ];
 
-    public $depends = [];
+    public $depends = ['common\components\assets\JqueryAsset'];
 }

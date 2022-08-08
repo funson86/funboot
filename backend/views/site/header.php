@@ -7,6 +7,7 @@ use common\models\Store;
 use common\models\base\Lang;
 
 $store = $this->context->store;
+!isset($type) && $type = 'admin';
 
 ?>
 
@@ -38,17 +39,13 @@ $store = $this->context->store;
     <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
         <li class="nav-link" id="help">
-            <a href="/help" target="_blank"><i class="fas fa-book"></i></a>
+            <a href="/help/<?= Yii::$app->language ?>/" target="_blank"><i class="fas fa-question-circle"></i></a>
         </li>
-        <li class="nav-item dropdown" id="headerMessage">
-            <a class="nav-link" data-toggle="dropdown" href="#">
+        <li class="nav-link" id="headerMessage">
+            <a href="<?= Url::to(['/base/msg/index'], false, false) ?>" class="text-secondary <?= $type != 'store' ? 'J_menuItem' : '' ?>" onclick="$('body').click();">
                 <i class="far fa-comments"></i>
                 <span class="badge badge-danger navbar-badge" id="unreadMessageCount"></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <div class="dropdown-divider"></div>
-                <a href="<?= Url::to(['message/index'], false, false) ?>" class="dropdown-item dropdown-footer J_menuItem" onclick="$('body').click();"><?= Yii::t('app', 'View all messages') ?></a>
-            </div>
         </li>
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown <?= Yii::$app->user->id != 1 ? 'hidden' : '' ?>">
@@ -59,22 +56,22 @@ $store = $this->context->store;
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <!--span class="dropdown-item dropdown-header">15 Notifications</span-->
                 <div class="dropdown-divider"></div>
-                <a href="<?= Url::to(['base/log/index', 'type' => Log::TYPE_ERROR]) ?>" class="dropdown-item J_menuItem" onclick="$('body').click();">
+                <a href="<?= Url::to(['base/log/index', 'type' => Log::TYPE_ERROR]) ?>" class="dropdown-item <?= $type != 'store' ? 'J_menuItem' : '' ?>" onclick="$('body').click();">
                     <i class="fas fa-exclamation-triangle mr-2"></i> <span id="logErrorCount">0</span> <?= Yii::t('app', 'new error logs') ?>
                     <!--span class="float-right text-muted text-sm">3 mins</span-->
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="<?= Url::to(['base/log/index', 'type' => Log::TYPE_LOGIN]) ?>" class="dropdown-item J_menuItem" onclick="$('body').click();">
+                <a href="<?= Url::to(['base/log/index', 'type' => Log::TYPE_LOGIN]) ?>" class="dropdown-item <?= $type != 'store' ? 'J_menuItem' : '' ?>" onclick="$('body').click();">
                     <i class="fas fa-user mr-2"></i> <span id="logLoginCount">0</span> <?= Yii::t('app', 'new login logs') ?>
                     <!--span class="float-right text-muted text-sm">12 hours</span-->
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="<?= Url::to(['base/log/index', 'type' => Log::TYPE_DB]) ?>" class="dropdown-item J_menuItem" onclick="$('body').click();">
+                <a href="<?= Url::to(['base/log/index', 'type' => Log::TYPE_DB]) ?>" class="dropdown-item <?= $type != 'store' ? 'J_menuItem' : '' ?>" onclick="$('body').click();">
                     <i class="fas fa-database mr-2"></i> <span id="logDbCount">0</span> <?= Yii::t('app', 'new database logs') ?>
                     <!--span class="float-right text-muted text-sm">2 days</span-->
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="<?= Url::to(['base/log/index']) ?>" class="dropdown-item dropdown-footer J_menuItem"><?= Yii::t('app', 'View All Logs') ?></a>
+                <a href="<?= Url::to(['base/log/index']) ?>" class="dropdown-item dropdown-footer <?= $type != 'store' ? 'J_menuItem' : '' ?>"><?= Yii::t('app', 'View All Logs') ?></a>
             </div>
         </li>
 
@@ -98,10 +95,10 @@ $store = $this->context->store;
                 <li class="user-body">
                     <div class="row">
                         <div class="col-4 text-center">
-                            <a href="<?= Url::to(['/site/me']); ?>" class="J_menuItem" onclick="$('body').click();"><?= Yii::t('app', 'Profile'); ?></a>
+                            <a href="<?= Url::to(['/site/me']); ?>" class="<?= $type != 'store' ? 'J_menuItem' : '' ?>" onclick="$('body').click();"><?= Yii::t('app', 'Profile'); ?></a>
                         </div>
                         <div class="col-4 text-center">
-                            <a href="<?= Url::to(['/site/change-password']); ?>" class="J_menuItem" onclick="$('body').click();"><?= Yii::t('app', 'Modify Password'); ?></a>
+                            <a href="<?= Url::to(['/site/change-password']); ?>" class="<?= $type != 'store' ? 'J_menuItem' : '' ?>" onclick="$('body').click();"><?= Yii::t('app', 'Modify Password'); ?></a>
                         </div>
                         <div class="col-4 text-center">
                             <a href="#">Friends</a>
@@ -112,7 +109,7 @@ $store = $this->context->store;
                 <!-- Menu Footer-->
                 <li class="user-footer">
                     <a href="#" class="btn btn-default btn-flat" data-methods="post" onclick="fbPrompt('<?= Url::to(['/site/clear-cache']); ?>'); return false;"><?= Yii::t('app', 'Clear Cache'); ?></a>
-                    <a href="<?= Url::to(['site/logout']); ?>" data-method="post" class="btn btn-default btn-flat float-right"><?= Yii::t('app', 'Logout'); ?></a>
+                    <a href="<?= Url::to(['/site/logout']); ?>" data-method="post" class="btn btn-default btn-flat float-right"><?= Yii::t('app', 'Logout'); ?></a>
                 </li>
             </ul>
         </li>
@@ -157,9 +154,10 @@ $store = $this->context->store;
 </script>
 
 <?php
-$urlSetLanguage = Url::to(['site/set-language'], false, false);
-$urlMessageList = Url::to(['message/list'], false, false);
-$urlSiteLog = Url::to(['site/log'], false, false);
+$urlSetLanguage = Url::to(['/site/set-language'], false, false);
+$urlMsgList = Url::to(['/base/msg/list'], false, false);
+$urlSiteLog = Url::to(['/site/log'], false, false);
+$urlMsgIndex = ($type == 'admin' ? '' : Url::to(['/base/msg/index'], false, false));
 $js = <<<JS
 $(document).ready(function() {
     $('.J_iframe').attr('src', $('.J_iframe').data('src'));
@@ -179,13 +177,14 @@ $('.funboot-lang').click(function() {
 function getMessageList() {
     $.ajax({
         type: "get",
-        url: "{$urlMessageList}",
+        url: "{$urlMsgList}",
         dataType: "json",
         success: function (data) {
             if (parseInt(data.code) === 200) {
                 if (parseInt(data.map.unread) > 0) {
                     $('#unreadMessageCount').html(data.map.unread);
-                    messageWarning(fbT('New Message'))
+                    $('.leftMessage p').append('<span class="badge badge-danger ">' + data.map.unread + '</span>');
+                    messageWarning(fbT('New Message'), '', '{$urlMsgIndex}')
                 }
 
                 let items = data.data;

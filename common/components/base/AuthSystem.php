@@ -79,7 +79,11 @@ class AuthSystem extends \yii\base\Component
             $userPermissionPaths = $this->userPermissionPaths;
         }
 
-        return AuthHelper::verify($url, $userPermissionPaths);
+        if (AuthHelper::urlMath($url, $this->mapPermissionIdPath)) {
+            return AuthHelper::verify($url, $userPermissionPaths);
+        }
+
+        return true;
     }
 
     /**
@@ -112,9 +116,37 @@ class AuthSystem extends \yii\base\Component
             return true;
         }
 
-        // 不使用role的type，使用id区段提升性能
-        foreach (Yii::$app->user->identity->userRoles as $model) {
-            if ($model->role_id <= $this->maxAdminRoleId) {
+        $ids = Yii::$app->cacheSystem->getUserRoleIds(Yii::$app->user->id);
+        if (count($ids) <= 0) {
+            return false;
+        }
+
+        foreach ($ids as $id) {
+            if ($id <= $this->maxAdminRoleId) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 判断是否为管理员，管理员可以看所有store的数据
+     * @return bool
+     */
+    public function isAgent()
+    {
+        if (Yii::$app->user->isGuest) {
+            return false;
+        }
+
+        $ids = Yii::$app->cacheSystem->getUserRoleIds(Yii::$app->user->id);
+        if (count($ids) <= 0) {
+            return false;
+        }
+
+        foreach ($ids as $id) {
+            if ($id == (Yii::$app->params['defaultAgentRoleId'] ?? 0)) {
                 return true;
             }
         }
@@ -136,8 +168,13 @@ class AuthSystem extends \yii\base\Component
             return true;
         }
 
-        foreach (Yii::$app->user->identity->userRoles as $model) {
-            if ($model->role_id <= $this->maxStoreRoleId) {
+        $ids = Yii::$app->cacheSystem->getUserRoleIds(Yii::$app->user->id);
+        if (count($ids) <= 0) {
+            return false;
+        }
+
+        foreach ($ids as $id) {
+            if ($id <= $this->maxStoreRoleId) {
                 return true;
             }
         }

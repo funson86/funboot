@@ -43,7 +43,7 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * a标签，鉴权
+     * a标签，帮助
      *
      * @param $text
      * @param null $url
@@ -55,8 +55,28 @@ class Html extends \yii\helpers\Html
         if (!$url) {
             return null;
         }
-        !$text && $text = Yii::t('app', 'Help');
-        return self::aRedirect(self::colorLabel($text, 'info'), $url, $options);
+        !$text && $text = ' <i class="fas fa-question-circle text-info"></i> ';
+        !isset($options['title']) && $options['title'] = Yii::t('app', 'Help');
+        return self::aRedirect($text, $url, $options);
+    }
+
+    /**
+     * a标签，VIP
+     *
+     * @param $text
+     * @param null $url
+     * @param array $options
+     * @return string
+     */
+    public static function aVip($url = null, $text = null, $options = [])
+    {
+        if (!$url) {
+            return null;
+        }
+
+        !$text && $text = ' <i class="fa fa-star text-warning" aria-hidden="true"></i> ';
+        !isset($options['title']) && $options['title'] = Yii::t('app', 'VIP');
+        return self::aRedirect($text, $url, $options);
     }
 
     /**
@@ -280,23 +300,28 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * 状态标签
+     * 导出按钮组
      *
+     * @param null $url
      * @param array $exts
+     * @param null $name
+     * @param array $options
+     * @param bool $redirect
      * @return mixed
      */
-    public static function export($url = 'export', $exts = [], $name = null, $options = [])
+    public static function export($url = null, $exts = [], $name = null, $options = [], $redirect = true)
     {
-        !$url && $url = 'export';
+        !$url && $url = ['export'];
         !$name && $name = Yii::t('app', 'Export ');
         empty($exts) && $exts = ['xls', 'xlsx', 'csv', 'html'];
 
         $options['class'] = $options['class'] ?? 'btn btn-success btn-xs';
-        $head = '<button type="button" class="'. $options['class'] . '"><i class="icon ion-ios-cloud-download-outline"></i> ' . $name . '</button><button type="button" class="'. $options['class'] . ' dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>';
+        $head = '<button type="button" class="'. $options['class'] . ' dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon ion-ios-cloud-download-outline"></i> ' . $name . '</button>';
         $links = '';
         $i = 0;
         foreach ($exts as $ext) {
-            $links .= self::tag('li', self::a($name . $ext, [$url, 'ext' => $ext]), ['class' => 'dropdown-item']);
+            $link = Url::to(array_merge($url, ['ext' => $ext]));
+            $links .= self::tag('li', $redirect ? self::a($name . $ext, $link, ['class' => 'dropdown-item']) : self::a($name . $ext, 'javascript:;', ['data-url' => $link, 'data-ext' => $ext, 'class' => 'dropdown-item ' . (($options['id'] ?? 'export-selection'))]));
             $i++;
             if ($i % 2 == 0 && $i < count($exts)) { // 每2行出一个分隔符
                 $links .= self::tag('li', '', ['class' => 'divider']);
@@ -308,9 +333,11 @@ class Html extends \yii\helpers\Html
     }
 
     /**
-     * 状态标签
+     * 状态按钮组
      *
-     * @param array $exts
+     * @param array $buttonLinkNames
+     * @param null $name
+     * @param array $options
      * @return mixed
      */
     public static function groupButton($buttonLinkNames = [], $name = null, $options = [])
@@ -337,6 +364,25 @@ class Html extends \yii\helpers\Html
         $linksUl = self::tag('ul', $links, ['class' => 'dropdown-menu']);
 
         return self::tag('div', $head . $linksUl, array_merge(['class' => 'btn-group btn-sm'], $options));
+    }
+
+    /**
+     * 按钮组
+     *
+     * @param array $buttonLinkNames
+     * @param array $options
+     * @return mixed
+     */
+    public static function btnGroup($buttons = [], $options = [])
+    {
+        if (empty($buttons)) {
+            return '';
+        }
+
+        $strButtons = implode(' ', $buttons);
+
+
+        return self::tag('span', $strButtons, array_merge(['class' => 'btn-group btn-sm'], $options));
     }
 
     /**
@@ -397,6 +443,32 @@ class Html extends \yii\helpers\Html
     }
 
     /**
+     * 创建按钮
+     * Html::createModal(['edit-ajax'], null, ['size' => 'Large'])
+     * Html::createModal(['edit-ajax'], null, ['size' => 'Max'])
+     *
+     * @param array url
+     * @param String name
+     * @param array $options
+     * @return string
+     */
+    public static function filterModal($name = null, $options = [])
+    {
+        !$name && $name = '<i class="fa fa-search"></i> ' . Yii::t('app', 'Filter');
+
+        if (!isset($options['class'])) {
+            $options = [
+                'class' => "btn btn-default btn-sm mr-3",
+                'data-toggle' => 'modal',
+                'data-target' => '#ajaxModalFilter',
+            ];
+        }
+
+        $btnReset = self::a(Yii::t('app', 'Reset'), ['/' . Yii::$app->request->getPathInfo()], ['class' => 'btn btn-default']);
+        return self::tag('span',  $btnReset . self::a($name, '#', $options), ['class' => 'btn-group']);
+    }
+
+    /**
      * 稍微复杂的做跳转 包括view
      *
      * @return array
@@ -433,8 +505,11 @@ class Html extends \yii\helpers\Html
         return [
             'header' => Yii::t('app', 'Actions'),
             'class' => 'yii\grid\ActionColumn',
-            'template' => '{edit} {delete}',
+            'template' => '{view} {edit} {delete}',
             'buttons' => [
+                'view' => function ($url, $model, $key) {
+                    return Html::viewModal(['view-ajax', 'id' => $model->id]);
+                },
                 'edit' => function ($url, $model, $key) {
                     return Html::editModal(['edit-ajax', 'id' => $model->id]);
                 },
@@ -495,6 +570,27 @@ class Html extends \yii\helpers\Html
     }
 
     /**
+     * 弹框，适用Log
+     *
+     * @param array $options
+     * @return array
+     */
+    public static function actionsView($options = [])
+    {
+        return [
+            'header' => Yii::t('app', 'Actions'),
+            'class' => 'yii\grid\ActionColumn',
+            'template' => '{view}',
+            'buttons' => [
+                'view' => function ($url, $model, $key) {
+                    return Html::viewModal(['view-ajax', 'id' => $model->id]);
+                },
+            ],
+            'headerOptions' => ['class' => 'action-column'],
+        ];
+    }
+
+    /**
      * 弹框，适用简单的表，无view
      *
      * @param array $options
@@ -517,8 +613,8 @@ class Html extends \yii\helpers\Html
 
     /**
      * 自定义按钮
-     * 如传入  ['edit-modal', 'delete']
-     * 如传入  ['view-modal', 'delete']
+     * 如传入  ['edit-ajax', 'delete']
+     * 如传入  ['view-ajax', 'delete']
      *
      * @param array $options
      * @return array
@@ -533,67 +629,34 @@ class Html extends \yii\helpers\Html
         $buttons = [];
         foreach ($options as $option) {
             $str = $option;
-            if ($option == 'edit-modal') {
-                $str = 'edit';
-            } elseif ($option == 'view-modal') {
-                $str = 'view';
-            }
+
             $template .= ' {' . $str . '}';
-
-            if ($option == 'status') {
-                array_push($buttons, [
-                    'status' => function ($url, $model, $key) {
-                        return Html::status($model->status);
-                    },
-                ]);
-            }
-
-            if ($option == 'view') {
-                array_push($buttons, [
-                    'view' => function ($url, $model, $key) {
-                        return Html::view(['view', 'id' => $model->id]);
-                    },
-                ]);
-            }
-
-            if ($option == 'view-modal') {
-                array_push($buttons, [
-                    'view' => function ($url, $model, $key) {
-                        return Html::viewModal(['view-ajax', 'id' => $model->id]);
-                    },
-                ]);
-            }
-
-            if ($option == 'edit-modal') {
-                array_push($buttons, [
-                    'edit' => function ($url, $model, $key) {
-                        return Html::editModal(['edit-ajax', 'id' => $model->id]);
-                    },
-                ]);
-            }
-
-            if ($option == 'edit') {
-                array_push($buttons, [
-                    'edit' => function ($url, $model, $key) {
-                        return Html::edit(['edit-ajax', 'id' => $model->id]);
-                    },
-                ]);
-            }
-
-            if ($option == 'delete') {
-                array_push($buttons, [
-                    'delete' => function ($url, $model, $key) {
-                        Html::delete(['delete', 'id' => $model->id]);
-                    },
-                ]);
-            }
         }
 
         return [
             'header' => Yii::t('app', 'Actions'),
             'class' => 'yii\grid\ActionColumn',
             'template' => $template,
-            'buttons' => $buttons,
+            'buttons' => [
+                'status' => function ($url, $model, $key) {
+                    return static::status($model->status);
+                },
+                'view-ajax' => function ($url, $model, $key) {
+                    return static::viewModal(['view-ajax', 'id' => $model->id]);
+                },
+                'view' => function ($url, $model, $key) {
+                    return static::view(['view', 'id' => $model->id]);
+                },
+                'edit-ajax' => function ($url, $model, $key) {
+                    return static::editModal(['edit-ajax', 'id' => $model->id]);
+                },
+                'edit' => function ($url, $model, $key) {
+                    return static::edit(['edit-ajax', 'id' => $model->id]);
+                },
+                'delete' => function ($url, $model, $key) use ($options) {
+                    return Html::delete(['delete', 'id' => $model->id, 'soft' => ($options['soft'] ?? false), 'tree' => ($options['tree'] ?? false)]);
+                },
+            ],
             'headerOptions' => ['class' => 'action-column action-column-lg'],
         ];
     }
@@ -634,16 +697,16 @@ class Html extends \yii\helpers\Html
     /**
      * 标签加颜色
      * @param null $label
-     * @param string $color  default info danger warning success
+     * @param string $color default info danger warning success
+     * @param bool $text
      * @return string|null
      */
-    public static function colorLabel($label = null, $color = 'info')
+    public static function colorLabel($label = null, $color = 'info', $text = false)
     {
         if (!$label || strlen($label) < 1) {
             return $label;
         }
 
-        $class = 'btn-' . $color;
-        return Html::tag('span', $label, ['class' => 'btn-xs ' . $class]);
+        return Html::tag('span', $label, ['class' => $text ? ('text-' . $color) : ('d-inline-block btn-xs btn-' . $color)]);
     }
 }

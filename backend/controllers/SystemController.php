@@ -57,8 +57,10 @@ class SystemController extends BaseController
 
     public function beforeAction($action)
     {
-        $this->layout = 'main';
-        parent::beforeAction($action);
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        $this->layout = Yii::$app->authSystem->isAdmin() ? 'main' : 'main-store';
         return true;
     }
 

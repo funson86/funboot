@@ -34,11 +34,12 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'value_default')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'supportRoles')->checkboxList(ActiveModel::getSupportRoleLabels()) ?>
         <?= $form->field($model, 'support_system')->dropDownList(ActiveModel::getSupportSystemLabels()) ?>
+        <?= $form->field($model, 'grade')->dropDownList(ActiveModel::getGradeLabels()) ?>
         <?= $form->field($model, 'sort')->textInput() ?>
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

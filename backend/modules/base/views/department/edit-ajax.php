@@ -2,10 +2,12 @@
 
 use common\helpers\Html;
 use common\helpers\Url;
+use common\models\User;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\base\Department as ActiveModel;
 
+$allUsers = User::getIdLabel(false, 'username');
 
 /* @var $this yii\web\View */
 /* @var $model common\models\base\Department */
@@ -40,7 +42,7 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

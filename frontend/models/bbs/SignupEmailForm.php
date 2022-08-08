@@ -89,7 +89,7 @@ class SignupEmailForm extends Model
             $user->setPassword($this->password);
 
             $store = Yii::$app->storeSystem->get();
-            isset($store->settings['user_login_need_verify']) && $store->settings['user_login_need_verify'] > 0 && $user->status = User::STATUS_INACTIVE;
+            isset($store->settings['website_user_login_need_verify']) && $store->settings['website_user_login_need_verify'] > 0 && $user->status = User::STATUS_INACTIVE;
 
             $user->generateAuthKey();
             $user->generateEmailVerificationToken();

@@ -9,10 +9,12 @@ use common\helpers\ResultHelper;
 use common\models\BaseModel;
 use common\models\Store;
 use common\models\User;
+use Da\QrCode\Action\QrCodeAction;
 use Yii;
 use yii\base\Model;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -38,6 +40,27 @@ class BaseController extends Controller
      * @var int
      */
     protected $pageSize = 10;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+                'layout' => 'error',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+            'qr' => [
+                'class' => QrCodeAction::className(),
+                // 'component' => 'qr' // if configured in our app as `qr`
+            ],
+        ];
+    }
 
     /**
      * @param \yii\base\Action $action
@@ -102,25 +125,26 @@ class BaseController extends Controller
      *
      * @param $id
      * @param bool $emptyNew
-     * @param bool $action
      * @return BaseModel
      * @throws \Exception
      */
-    protected function findModel($id, $action = false)
+    protected function findModel($id = null)
     {
-        try {
-            /* @var $model \yii\db\ActiveRecord */
-            $storeId = ($this->modelClass === Store::class) ? null : $this->getStoreId();
-            if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one())))) {
-                if ($action) {
-                    return null;
-                }
-
-                $model = new $this->modelClass();
-                $model->loadDefaultValues();
+        /* @var $model \yii\db\ActiveRecord */
+        if (empty($id)) {
+            $model = new $this->modelClass();
+            $model->loadDefaultValues();
+        } else {
+            $storeId = $this->getStoreId();
+            if ($this->modelClass == Store::class) {
+                $model = $this->modelClass::find()->where(['id' => $id])->one();
+            } else {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one();
             }
-        } catch (\Exception $e) {
-            Yii:$this->error($e->getMessage());
+        }
+
+        if (!$model) {
+            throw new NotFoundHttpException(Yii::t('app', 'Invalid id'), 500);
         }
 
         return $model;
@@ -140,7 +164,10 @@ class BaseController extends Controller
 
         $user = User::findByToken($token);
         if (!$user) {
-            throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+            $user = User::findByAccessToken($token);
+            if (!$user) {
+                throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+            }
         }
 
         if (Yii::$app->user->login($user, intval(Yii::$app->params['user.loginBackendTime'] ?? 30 * 86400))) {
@@ -153,20 +180,28 @@ class BaseController extends Controller
     }
 
     /**
+     * @param bool $force
      * @return Store
      */
-    public function getStore()
+    public function getStore($force = false)
     {
-        return $this->store;
+        return $force ? Store::findOne($this->getStoreId()) : $this->store;
     }
 
-
     /**
-     * @return Store
+     * @return array
      */
     public function getStores()
     {
         return Yii::$app->cacheSystem->getAllStore();
+    }
+
+    /**
+     * @return array
+     */
+    public function getStoresIdName()
+    {
+        return ArrayHelper::map($this->getStores(), 'id', 'name');
     }
 
     /**
@@ -226,7 +261,7 @@ class BaseController extends Controller
      */
     protected function flashSuccess($msg = null)
     {
-        $msg = $msg ? $msg : Yii::t('app', 'Operate Successfully');
+        $msg = $msg ?? Yii::$app->session->getAllFlashes()['success'] ?? Yii::t('app', 'Operate Successfully');
         $this->setFlash('success', $msg);
     }
 
@@ -236,7 +271,7 @@ class BaseController extends Controller
      */
     protected function flashError($msg = null)
     {
-        $msg = $msg ? $msg : Yii::t('app', 'Operation Failed');
+        $msg = $msg ?? Yii::$app->session->getAllFlashes()['danger'] ??  Yii::t('app', 'Operation Failed');
         $this->setFlash('danger', $msg);
     }
 
@@ -246,7 +281,7 @@ class BaseController extends Controller
      */
     protected function flashWarning($msg = null)
     {
-        $msg = $msg ? $msg : Yii::t('app', 'Operation Warning');
+        $msg = $msg ?? Yii::$app->session->getAllFlashes()['warning'] ?? Yii::t('app', 'Operation Warning');
         $this->setFlash('warning', $msg);
     }
 
@@ -256,7 +291,7 @@ class BaseController extends Controller
      */
     protected function flashInfo($msg = null)
     {
-        $msg = $msg ? $msg : Yii::t('app', 'Operation Info');
+        $msg = $msg ?? Yii::$app->session->getAllFlashes()['info'] ?? Yii::t('app', 'Operation Info');
         $this->setFlash('info', $msg);
     }
 
@@ -345,7 +380,7 @@ class BaseController extends Controller
      * @param  string $msg
      * @return array | mixed
      */
-    protected function success($data = [], $map = [], $msg = '', $code = 200)
+    protected function success($data = [], $map = null, $msg = '', $code = 200)
     {
         return ResultHelper::ret($code, $msg, $data, $map);
     }
@@ -415,6 +450,14 @@ class BaseController extends Controller
     }
 
     /**
+     * @return bool
+     */
+    public function isStoreOwner()
+    {
+        return Yii::$app->user->isGuest ? false : ($this->store->user_id == Yii::$app->user->id);
+    }
+
+    /**
      * @return array|mixed
      */
     public function actionSetLanguage()
@@ -435,5 +478,26 @@ class BaseController extends Controller
         }
 
         return $this->redirect($url);
+    }
+
+    public function actionSitemap()
+    {
+        $str = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        $str .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+        $str .= $this->buildLink();
+
+        $str .= '</urlset>' . "\n";
+
+        file_put_contents(Yii::getAlias('@webroot/sitemap/' . CommonHelper::getHostPrefix($this->store->host_name, false) . '.xml'), $str);
+        return $this->redirect('/sitemap/' . CommonHelper::getHostPrefix($this->store->host_name, false) . '.xml');
+    }
+
+    protected function buildLink()
+    {
+        $str = "<url>\n<lastmod>" . date('Y-m-d') . "</lastmod>\n<loc>" . Yii::$app->urlManager->createAbsoluteUrl(['/']) . "</loc>\n</url>\n";
+        // $str .= "";
+
+        return $str;
     }
 }

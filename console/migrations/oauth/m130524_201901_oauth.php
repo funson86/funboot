@@ -88,7 +88,7 @@ CREATE TABLE `fb_oauth_refresh_token` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名称',
   `client_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '客户ID',
   `user_id` bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '用户',
-  `refresh_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '访问Token',
+  `refresh_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '刷新Token',
   `scope` json COMMENT '范围',
   `expired_at` int(11) NOT NULL DEFAULT '0' COMMENT '过期时间',
   `grant_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '授权类型',

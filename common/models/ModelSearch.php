@@ -139,7 +139,9 @@ class ModelSearch extends Model
     }
 
     /**
-     * 可以查询大于小于和IN
+     * 可以查询大于小于
+     * IN 用,分隔，可以多个
+     * between 用<<分隔
      *
      * @param $attributeName
      * @param $value
@@ -151,20 +153,24 @@ class ModelSearch extends Model
             case is_array($value):
                 return [$attributeName => $value];
                 break;
-            case stripos($value, '>=') !== false:
+            case stripos($value, '>=') === 0:
                 return ['>=', $attributeName, substr($value, 2)];
                 break;
-            case stripos($value, '<=') !== false:
+            case stripos($value, '<=') === 0:
                 return ['<=', $attributeName, substr($value, 2)];
                 break;
-            case stripos($value, '<') !== false:
+            case stripos($value, '<') === 0:
                 return ['<', $attributeName, substr($value, 1)];
                 break;
-            case stripos($value, '>') !== false:
+            case stripos($value, '>') === 0:
                 return ['>', $attributeName, substr($value, 1)];
                 break;
             case stripos($value, ',') !== false:
                 return [$attributeName => explode(',', $value)];
+                break;
+            case stripos($value, '><') !== false:
+                $arr = explode('><', $value);
+                return ['between', $attributeName, $arr[0], ($arr[1] ?? '')];
                 break;
             default:
                 return [$attributeName => $value];

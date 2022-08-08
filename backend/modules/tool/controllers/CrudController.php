@@ -47,8 +47,9 @@ class CrudController extends BaseController
     protected function beforeEditSave($id = null, $model = null)
     {
         $post = Yii::$app->request->post();
-        $model->started_at = strtotime($post['Crud']['startedTime']);
-        $model->ended_at = strtotime($post['Crud']['endedTime']);
-    }
+        $model->started_at = strtotime($post[$model->formName()]['startedTime']);
+        $model->ended_at = strtotime($post[$model->formName()]['endedTime']);
 
+        return true;
+    }
 }

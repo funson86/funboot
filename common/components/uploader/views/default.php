@@ -19,7 +19,7 @@ use common\helpers\StringHelper;
                             <?php } else { ?>
                                 <i class="fa fa-file-o"></i>
                                 <i class="upload-ext"><?= StringHelper::clipping($vo) ?></i>
-                                <div class="bottom-bar"><a href="<?= $vo ?>" target="_blank">预览</a></div>
+                                <div class="bottom-bar"><a href="<?= $vo ?>" target="_blank"><?= Yii::t('app', 'Preview') ?></a></div>
                             <?php } ?>
                             <i class="delete-image" data-multiple="<?= $config['pick']['multiple'] ?>"></i>
                         </div>
@@ -29,15 +29,15 @@ use common\helpers\StringHelper;
                     <i class="fa fa-cloud-upload-alt"></i>
                     <?php if ($themeConfig['select'] === true) {?>
                         <div class="upload-box-bg hidden select-upload">
-                            <a class="first" href="<?= Url::to(['/file/index', 'boxId' => $boxId, 'upload_type' => $uploadType, 'multiple' => $config['pick']['multiple'], 'driver' => $config['formData']['driver']])?>" data-toggle='modal' data-target='#ajaxModalMax'>选择文件</a>
-                            <a class="second upload-box-immediately">立即上传</a>
+                            <a class="first" href="<?= Url::to(['/file/index', 'boxId' => $boxId, 'upload_type' => $uploadType, 'multiple' => $config['pick']['multiple'], 'driver' => $config['formData']['driver']])?>" data-toggle='modal' data-target='#ajaxModalMax'><?= Yii::t('app', 'Choose') ?></a>
+                            <a class="second upload-box-immediately"><?= Yii::t('app', 'Upload') ?></a>
                         </div>
                     <?php } ?>
                     <div class="upload-box-bg hidden">
                         <div class="upload-progress first">
                             <span class="badge bg-green">0%</span>
                         </div>
-                        <a class="second cancel">取消上传</a>
+                        <a class="second cancel"><?= Yii::t('app', 'Cancel') ?></a>
                     </div>
                 </li>
             </ul>
@@ -57,7 +57,7 @@ use common\helpers\StringHelper;
             {{else}}
             <i class="fa fa-file-o"></i>
             <i class="upload-ext">{{ext}}</i>
-            <div class="bottom-bar"><a href="{{value}}" target="_blank">预览</a></div>
+            <div class="bottom-bar"><a href="{{value}}" target="_blank"><?= Yii::t('app', 'Preview') ?></a></div>
             {{/if}}
             <i class="delete-image" data-multiple="{{multiple}}"></i>
         </div>
@@ -174,7 +174,7 @@ use common\helpers\StringHelper;
     // 上传失败
     $(document).on('upload-error-' + boxId, function(e, file, reason, uploader, config){
         uploader.removeFile(file); //从队列中移除
-        fbError("上传失败，服务器错误");
+        fbError("<?= Yii::t('app', 'Upload failed with server error') ?>");
     });
 
     // 文件添加进来的时候
@@ -239,7 +239,7 @@ use common\helpers\StringHelper;
     });
 
     // md5创建验证中
-    $(document).on('md5Verify-create-progress-' + boxId, function(e, file, uploader, config, text = "验证中..."){
+    $(document).on('md5Verify-create-progress-' + boxId, function(e, file, uploader, config, text = "Checking..."){
         let parentObj = getParent(config);
         if (parentObj.children(".upload-progress").length === 0) {
             parentObj.find(".badge").html(text);

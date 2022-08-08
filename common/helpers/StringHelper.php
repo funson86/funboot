@@ -64,17 +64,14 @@ class StringHelper extends BaseStringHelper
             for ($j = 0; $j < count($matches[0]); $j++)
             {
                 $str = $matches[0][$j];
-                if (strpos($str, '\\u') === 0)
-                {
+                if (strpos($str, '\\u') === 0) {
                     $code = base_convert(substr($str, 2, 2), 16, 10);
                     $code2 = base_convert(substr($str, 4), 16, 10);
                     $c = chr($code).chr($code2);
                     $c = iconv('UCS-2', 'UTF-8', $c);
                     $new .= $c;
-                }
-                else
-                {
-                    $new .= $str;
+                } else {
+                    $new .= ' ' . $str;
                 }
             }
         }
@@ -175,7 +172,7 @@ class StringHelper extends BaseStringHelper
     /**
      * 加密邮箱
      * @param $str
-     * @param string $target
+     * @param string $secretChar
      * @return mixed
      */
     public static function secretEmail($str, $secretChar = '*')
@@ -191,7 +188,7 @@ class StringHelper extends BaseStringHelper
     /**
      * 加密名称
      * @param $str
-     * @param string $target
+     * @param string $secretChar
      * @return mixed
      */
     public static function secretName($str, $secretChar = '*')
@@ -269,5 +266,25 @@ class StringHelper extends BaseStringHelper
     public static function urlFull($url)
     {
         return (strpos($url, 'http://') !== false) || (strpos($url, 'https://') !== false);
+    }
+
+    /**
+     * 返回固定长度并用省略号
+     * @param $str
+     * @param int $length
+     * @param string $replace
+     * @return string
+     */
+    public static function fixLength($str, $length = 10, $replace = '...')
+    {
+        if ($length < 0) {
+            return $str;
+        }
+
+        if (strlen($str) > $length) {
+            return substr($str, 0, $length) . $replace;
+        }
+
+        return $str;
     }
 }

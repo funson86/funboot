@@ -67,7 +67,7 @@ $this->title = Html::encode($model->username);
             'dataProvider' => $dataProvider,
             'itemOptions' => ['class' => 'list-group-item'],
             'summary' => false,
-            'itemView' => '_view',
+            'itemView' => $this->context->action->id . '_',
             'options' => ['class' => 'list-group'],
         ]) ?>
     </div>

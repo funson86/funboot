@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header"><h2 class="card-title"><?= $this->title ?></h2></div>
             <div class="card-body">
                 <div class="col-sm-12">
-                    <?= $form->field($model, 'user_id')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'user_id')->dropDownList($this->context->getUsersIdName()) // $form->field($model, 'user_id')->widget(kartik\select2\Select2::classname(), ['data' => $this->context->getUsersIdName('email'), 'options' => ['placeholder' => Yii::t('app', 'Please Select'), 'multiple' => false],]) ?>
                     <?= $form->field($model, 'product_id')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
             <div class="card-footer">
                 <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-                <span class="btn btn-white" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
+                <span class="btn btn-default" onclick="history.go(-1)"><?= Yii::t('app', 'Back') ?></span>
             </div>
         </div>
     </div>

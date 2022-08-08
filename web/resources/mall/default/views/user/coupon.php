@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'dataProvider' => $dataProvider,
                             'itemOptions' => ['class' => 'list-group-item border-0 p-0'],
                             'summary' => false,
-                            'itemView' => '_' . $this->context->action->id,
+                            'itemView' => $this->context->action->id . '_',
                             'options' => ['class' => 'list-group'],
                             'pager' => [
                                 'options' => ['class' => 'pagination user-pagination'],

@@ -16,6 +16,7 @@ return [
     'STATUS_MAINTENANCE' => 'Maintenance',
     'YES' => 'Yes',
     'NO' => 'No',
+    'TYPE_DEFAULT' => 'Default',
     'TYPE_A' => 'Type A',
     'TYPE_B' => 'Type B',
     'SEX_UNKNOWN' => 'Unknown',
@@ -73,6 +74,7 @@ return [
     'SEND_TARGET_USER' => 'Target User',
     'STATUS_READ' => 'Read ',
     'STATUS_UNREAD' => 'Unread ',
+    'STATUS_STAR' => 'Star',
     'STATUS_RECYCLE' => 'Recycle',
 
     'GRADE_COUNTRY' => 'Country',
@@ -103,6 +105,7 @@ return [
     'STATUS_DELETED' => 'Deleted',
     'PAYMENT_STATUS_COD' => 'Cash',
     'PAYMENT_STATUS_UNPAID' => 'Unpaid',
+    'PAYMENT_STATUS_REFUND' => 'Refund',
     'PAYMENT_STATUS_PAYING' => 'Paying',
     'PAYMENT_STATUS_PAID' => 'Paid',
     'SHIPMENT_STATUS_UNSHIPPED' => 'Unshipped',
@@ -117,6 +120,9 @@ return [
     'POINT_TYPE_BOUGHT' => 'Bought',
     'POINT_TYPE_COMMENT' => 'Comment',
     'POINT_TYPE_BUYING' => 'Buying',
+
+    'TYPE_RECHARGE' => 'Recharge',
+    'TYPE_CONSUME' => 'Consume',
 
     'COUPON_TYPE_USER' => 'User',
     'COUPON_TYPE_ORDER' => 'Order',

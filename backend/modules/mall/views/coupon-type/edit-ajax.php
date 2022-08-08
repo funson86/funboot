@@ -29,6 +29,7 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'sn')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'money')->textInput(['maxlength' => true])->hint(Yii::t('app', 'Without currency. eg: -10% for percent off, -5 for fixed off')) ?>
         <?= $form->field($model, 'min_amount')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'max_times')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'startedTime')->widget(kartik\date\DatePicker::class, [
             'language' => 'zh-CN',
             'layout'=>'{picker}{input}',
@@ -58,7 +59,7 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

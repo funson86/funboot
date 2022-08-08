@@ -53,7 +53,7 @@ class UserController extends BaseController
             return $this->goBack();
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model || $model->status != $this->modelClass::STATUS_ACTIVE) {
             return $this->goBack();
         }
@@ -152,7 +152,7 @@ class UserController extends BaseController
             return $this->goBack();
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->goBack();
         }

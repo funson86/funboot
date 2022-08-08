@@ -18,9 +18,8 @@ class CommonHelper
     public static function getStoreById($id)
     {
         $allStore = Yii::$app->cacheSystem->getAllStore();
-        $mapIdStore = ArrayHelper::mapIdData($allStore);
 
-        return $mapIdStore[$id] ?? null;
+        return $allStore[$id] ?? null;
     }
 
     /**
@@ -42,7 +41,6 @@ class CommonHelper
     public static function getStoreByHostName()
     {
         $allStore = Yii::$app->cacheSystem->getAllStore();
-        $mapIdStore = ArrayHelper::mapIdData($allStore);
 
         // host id map
         $mapHostNameId = [];
@@ -59,14 +57,15 @@ class CommonHelper
         $hostName = Yii::$app->request->hostName;
         $storeId = $mapHostNameId[$hostName] ?? null;
 
-        return $storeId ? $mapIdStore[$storeId] : ($mapIdStore[Yii::$app->params['defaultStoreId']] ?? null);
+        return $storeId ? $allStore[$storeId] : ($allStore[Yii::$app->params['defaultStoreId']] ?? null);
     }
 
     /** 获取类似 http(s)://www.host_name.com 域名前缀
      * @param null $hostName
+     * @param bool $protocol
      * @return string
      */
-    public static function getHostPrefix($hostName = null)
+    public static function getHostPrefix($hostName = null, $protocol = true)
     {
         if (!$hostName) {
             $store = Yii::$app->storeSystem->get();
@@ -78,7 +77,7 @@ class CommonHelper
         }
 
         $hostNames = explode('|', $hostName);
-        return self::getHttpPrefix() . ($hostNames[0] ?? $hostName);
+        return ($protocol ? self::getHttpPrefix() : '') . ($hostNames[0] ?? $hostName);
     }
 
     /**

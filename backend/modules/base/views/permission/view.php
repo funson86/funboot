@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\components\enums\YesNo;
 use common\models\base\Permission as ActiveModel;
 
 /* @var $this yii\web\View */
@@ -12,8 +13,8 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Permissions'), 'url'
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="permission-view">
-    <p>
+<div class="card permission-view">
+    <div class="card-header">
         <?= Html::a(Yii::t('app', 'Update'), ['edit', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -22,31 +23,34 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-    </p>
+    </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'options' => ['class' => 'table table-hover box'],
-        'attributes' => [
-            'id',
-            'store_id',
-            'parent_id',
-            'name',
-            'app_id',
-            'brief',
-            'path',
-            'icon',
-            'tree',
-            'level',
-            ['attribute' => 'target', 'value' => function ($model) { return ActiveModel::getTargetLabels($model->target); }, ],
-            'type',
-            'sort',
-            ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
-        ],
-    ]) ?>
+    <div class="card-body">
 
+        <?= DetailView::widget([
+            'model' => $model,
+            'options' => ['class' => 'table table-bordered table-hover box'],
+            'attributes' => [
+                'id',
+                ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name ?? '-'; }, ],
+                ['attribute' => 'parent_id', 'value' => function ($model) { return $model->parent->name ?? '-'; }, ],
+                'name',
+                'app_id',
+                'brief',
+                'path',
+                'icon',
+                'tree',
+                'level',
+                ['attribute' => 'target', 'value' => function ($model) { return ActiveModel::getTargetLabels($model->target); }, ],
+                ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
+                'sort',
+                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],
+                'created_at:datetime',
+                'updated_at:datetime',
+                ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
+                ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
+            ],
+        ]) ?>
+
+    </div>
 </div>

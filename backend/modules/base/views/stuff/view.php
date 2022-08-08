@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'options' => ['class' => 'table table-bordered table-hover box'],
             'attributes' => [
                 'id',
-                'store_id',
+                ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name ?? '-'; }, ],
                 'name',
                 'code',
                 'brief',
@@ -41,11 +41,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'position',
                 ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
                 'sort',
-                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status); }, ],
+                ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],
                 'created_at:datetime',
                 'updated_at:datetime',
-                'created_by',
-                'updated_by',
+                ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
+                ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
             ],
         ]) ?>
 

@@ -13,33 +13,33 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Dict Datas'), 'url' 
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="card mt-2 dict-data-view">
-    <div class="card-header">
-        <?= $model->name ?>
-    </div>
 
-    <div class="card-body">
+<div class="modal-header">
+    <h4 class="modal-title"><?= $model->name ?: Yii::t('app', 'Basic info') ?></h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
 
-        <?= DetailView::widget([
-            'model' => $model,
-            'options' => ['class' => 'table table-bordered table-hover box', 'style' => 'table-layout:fixed; width:100%;'],
-            'attributes' => [
-                'id',
-                'store_id',
-                'dict_id',
-                'name',
-                'code',
-                'value',
-                'brief',
-                'type',
-                'sort',
-                'status',
-                'created_at:datetime',
-                'updated_at:datetime',
-                'created_by',
-                'updated_by',
-            ],
-        ]) ?>
+<div class="modal-body dict-data-view">
 
-    </div>
+    <?= DetailView::widget([
+        'model' => $model,
+        'options' => ['class' => 'table table-bordered table-hover box', 'style' => 'table-layout:fixed; width:100%;'],
+        'attributes' => [
+            'id',
+            ['attribute' => 'store_id', 'visible' => $this->context->isAdmin(), 'value' => function ($model) { return $model->store->name ?? '-'; }, ],
+            'dict_id',
+            'name',
+            'code',
+            'value',
+            'brief',
+            ['attribute' => 'type', 'value' => function ($model) { return ActiveModel::getTypeLabels($model->type); }, ],
+            'sort',
+            ['attribute' => 'status', 'value' => function ($model) { return ActiveModel::getStatusLabels($model->status, true); }, ],
+            'created_at:datetime',
+            'updated_at:datetime',
+            ['attribute' => 'created_by', 'value' => function ($model) { return $model->createdBy->nameAdmin ?? '-'; }, ],
+            ['attribute' => 'updated_by', 'value' => function ($model) { return $model->updatedBy->nameAdmin ?? '-'; }, ],
+        ],
+    ]) ?>
+
 </div>

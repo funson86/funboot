@@ -1,7 +1,9 @@
 <?php
 
+use common\helpers\ArrayHelper;
 use common\helpers\Html;
 use common\helpers\Url;
+use common\models\User;
 use yii\widgets\ActiveForm;
 use common\components\enums\YesNo;
 use common\models\base\MessageType as ActiveModel;
@@ -10,6 +12,9 @@ use common\models\base\MessageType as ActiveModel;
 /* @var $this yii\web\View */
 /* @var $model common\models\base\Message */
 /* @var $form yii\widgets\ActiveForm */
+
+$userIds = ArrayHelper::getColumn(Yii::$app->cacheSystem->getAllStore(), 'user_id');
+$allUsers = ArrayHelper::map(User::find()->where(['status' => User::STATUS_ACTIVE, 'id' => $userIds])->select(['id', 'username'])->asArray()->all(), 'id', 'username');
 
 $form = ActiveForm::begin([
     'id' => $model->formName(),
@@ -38,7 +43,7 @@ $form = ActiveForm::begin([
         <?= $form->field($model, 'status')->radioList(ActiveModel::getStatusLabels()) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
         <button class="btn btn-primary" type="submit"><?= Yii::t('app', 'Submit') ?></button>
     </div>
 <?php ActiveForm::end(); ?>

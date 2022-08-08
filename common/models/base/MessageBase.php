@@ -17,12 +17,19 @@ use Yii;
  */
 class MessageBase extends BaseModel
 {
-    const STATUS_READ = 1;
-    const STATUS_UNREAD = 0;
-    const STATUS_RECYCLE = -1;
+    const STATUS_READ = 0;
+    const STATUS_UNREAD = 1;
+    const STATUS_STAR = 2;
 
     const TYPE_TEXT = 1;
     const TYPE_JSON = 2;
+    const TYPE_MARKDOWN = 4;
+
+    /**
+     * 是否启用高并发，需要启用的在XxxBase中设置
+     * @var bool
+     */
+    protected $highConcurrency = true;
 
     /**
      * @return array|array[]
@@ -51,7 +58,7 @@ class MessageBase extends BaseModel
         $data = [
             self::STATUS_READ => Yii::t('cons', 'STATUS_READ'),
             self::STATUS_UNREAD => Yii::t('cons', 'STATUS_UNREAD'),
-            self::STATUS_RECYCLE => Yii::t('cons', 'STATUS_RECYCLE'),
+            self::STATUS_STAR => Yii::t('cons', 'STATUS_STAR'),
         ];
 
         $all && $data += [
@@ -71,6 +78,7 @@ class MessageBase extends BaseModel
         return array_merge(parent::attributeLabels(), [
             'id' => Yii::t('app', 'ID'),
             'store_id' => Yii::t('app', 'Store ID'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'from_id' => Yii::t('app', 'From ID'),
             'message_type_id' => Yii::t('app', 'Message Type ID'),
@@ -123,7 +131,7 @@ class MessageBase extends BaseModel
         $user = User::findOne($userId);
         $model->store_id = $user ? $user->store_id : Yii::$app->storeSystem->getId();
 
-        $model->from_id = $fromId ?? Yii::$app->params['defaultUserId'];
+        $model->from_id = $fromId ?? (!Yii::$app->user->isGuest ? Yii::$app->user->id : Yii::$app->params['defaultUserId']);
         $model->message_type_id = $messageId ?? Yii::$app->params['defaultFeedbackMessageTypeId'];
 
         // 处理内容

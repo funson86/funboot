@@ -69,10 +69,15 @@ class CatalogController extends BaseController
         }
     }
 
-    protected function beforeDeleteModel($id, $soft = false, $tree = false)
+    protected function beforeDeleteModel($id = null, $model = null, $soft = false, $tree = false)
     {
         if (!$soft) {
             Page::deleteAll(['catalog_id' => $id]);
         }
+    }
+
+    protected function clearCache()
+    {
+        return Yii::$app->cacheSystemCms->clearAllData($this->getStoreId());
     }
 }
