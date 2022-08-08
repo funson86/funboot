@@ -5,6 +5,7 @@ namespace backend\modules\base\controllers;
 use common\helpers\IdHelper;
 use common\helpers\ImageHelper;
 use common\helpers\Url;
+use common\models\User;
 use Yii;
 use common\models\base\Message;
 use backend\controllers\BaseController;
