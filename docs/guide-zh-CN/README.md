@@ -86,3 +86,11 @@ Funboot开发文档
 - [Sweetalert2](https://github.com/sweetalert2/sweetalert2): 弹窗
 - [Kartik Widgets](https://github.com/kartik-v/yii2-widget-datetimepicker): Kartik 各种组件
 - [jsTree](https://www.jstree.com/): 树状选择框
+
+
+### V1.1更新
+
+- 代码更加规整
+- 支持列表页自定义筛选（可在后台商城-》商品管理参考样例）
+- 支持列表页按照全选、全选当前条件（可在后台商城-》商品管理参考样例）
+- 修复部分bug
