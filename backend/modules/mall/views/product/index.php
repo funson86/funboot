@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'columns' => [
                         [
                             'class' => 'yii\grid\CheckboxColumn',
-                            'visible' => false,
+                            'visible' => true,
                         ],
 
                         'id',
