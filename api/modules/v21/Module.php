@@ -1,16 +1,16 @@
 <?php
 
-namespace api\modules\school;
+namespace api\modules\v21;
 
 /**
- * school module definition class
+ * v21 module definition class
  */
 class Module extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'api\modules\school\controllers';
+    public $controllerNamespace = 'api\modules\v21\controllers';
 
     /**
      * {@inheritdoc}

@@ -9,11 +9,14 @@ use common\models\Store;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpHeaderAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\RateLimiter;
 use yii\rest\ActiveController;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class BaseController
@@ -37,6 +40,13 @@ class BaseController extends ActiveController
      * @var Store
      */
     protected $store;
+
+    /**
+     * 模糊查询字段
+     *
+     * @var int
+     */
+    protected $likeAttributes = ['name'];
 
     /**
      * 列表默认排序
@@ -82,6 +92,21 @@ class BaseController extends ActiveController
         // 注销系统自带的实现方法，只保留option
         unset($actions['index'], $actions['view'], $actions['update'], $actions['create'], $actions['view'], $actions['delete']);
         return $actions;
+    }
+
+    /**
+     * all support post for agile development
+     * {@inheritdoc}
+     */
+    protected function verbs()
+    {
+        return [
+            'index' => ['GET', 'HEAD', 'POST'],
+            'view' => ['GET', 'HEAD', 'POST'],
+            'create' => ['POST'],
+            'update' => ['PUT', 'PATCH', 'POST'],
+            'delete' => ['DELETE', 'POST'],
+        ];
     }
 
     public function behaviors()
@@ -145,21 +170,60 @@ class BaseController extends ActiveController
             return false;
         }
 
+        // 判断权限
+        try {
+            $permissionName = '/' . Yii::$app->controller->route;
+            if (!Yii::$app->authSystem->verify($permissionName)) {
+                throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+            }
+        } catch (ForbiddenHttpException $e) {
+            !Yii::$app->user->isGuest && Yii::$app->logSystem->login(Yii::$app->user->identity->username ?? Yii::$app->user->identity->username . ' of id ' . Yii::$app->user->id . ' with no auth to backend', null, true);
+            throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+        }
+
         return true;
     }
 
     /**
-     * 首页
-     *
-     * @return ActiveDataProvider
+     * @OA\Get(
+     *     path="/api/xxx/users",
+     *     tags={"Base"},
+     *     summary="List records",
+     *     description="list ?page=2 pagination  ?name='funson&created_at=>1648607050 search",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionIndex()
     {
+         $query = $this->modelClass::find()
+            ->where(['>', 'status', $this->modelClass::STATUS_DELETED])
+            ->andFilterWhere(['store_id' => $this->getStoreId()]);
+
+        // filter
+        $params = [];
+        $this->filterParams($params);
+        foreach ($params as $field => $value) {
+            if (in_array($field, $this->modelClass::getTableSchema()->getColumnNames())) {
+                if (in_array($field, $this->likeAttributes)) {
+                    $query->andWhere(['like', $field, trim($value)]);
+                } else {
+                    $query->andWhere($this->conditionTrans($field, $value));
+                }
+            }
+        }
+        foreach (Yii::$app->request->get() as $field => $value) {
+            if (in_array($field, $this->modelClass::getTableSchema()->getColumnNames())) {
+                if (in_array($field, $this->likeAttributes)) {
+                    $query->andWhere(['like', $field, trim($value)]);
+                } else {
+                    $query->andWhere($this->conditionTrans($field, $value));
+                }
+            }
+        }
+        $query->orderBy($this->defaultOrder);
         return new ActiveDataProvider([
-            'query' => $this->modelClass::find()
-                ->where(['status' => $this->modelClass::STATUS_ACTIVE])
-                ->andFilterWhere(['store_id' => $this->getStoreId()])
-                ->orderBy($this->defaultOrder),
+            'query' => $query,
             'pagination' => [
                 'pageSize' => $this->pageSize,
                 'validatePage' => false,// 超出分页不返回data
@@ -167,10 +231,20 @@ class BaseController extends ActiveController
         ]);
     }
 
+    protected function filterParams(&$params)
+    {
+        return true;
+    }
+
     /**
-     * 查看单条记录
-     *
-     * @return ActiveDataProvider
+     * @OA\Get(
+     *     path="/api/xxx/users/{id}",
+     *     tags={"Base"},
+     *     summary="View one record",
+     *     description="View one record",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionView()
     {
@@ -179,18 +253,39 @@ class BaseController extends ActiveController
             return $this->error();
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
-            return $this->error();
+            return $this->error(Yii::t('app', 'Invalid id'));
         }
 
+        $this->beforeView($id, $model);
         return $model;
     }
 
+    protected function beforeView($id = null, $model = null)
+    {
+        return true;
+    }
+
     /**
-     * 新增
-     * @return mixed|\yii\db\ActiveRecord
-     * @throws \Exception
+     * @OA\Post(
+     *     path="/api/xxx/users",
+     *     tags={"Base"},
+     *     summary="Create a new record",
+     *     description="Create a new record",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *           mediaType="application/x-www-form-urlencoded",
+     *           @OA\Schema(
+     *               type="object",
+     *               @OA\Property(property="name", type="string", description="Name"),
+     *           )
+     *       )
+     *     ),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionCreate()
     {
@@ -200,25 +295,65 @@ class BaseController extends ActiveController
 
         /* @var $model \yii\db\ActiveRecord */
         $model = new $this->modelClass;
+        $this->highConcurrency && $model->id = IdHelper::snowFlakeId();
+
+        $this->beforeCreate($model);
         $model->attributes = Yii::$app->request->post();
 
-        if (!$model->save()) {
-            return $this->error();
+        if ($this->beforeCreateSave($model)) {
+            if ($model->save()) {
+                $this->afterCreate($model);
+                $this->clearCache();
+                return $model;
+            } else {
+                return $this->error(500, $this->getError($model));
+            }
         }
 
-        return $model;
+        return $this->error();
+    }
+
+    protected function beforeCreate($model)
+    {
+        return true;
+    }
+
+    protected function beforeCreateSave($model)
+    {
+        return true;
+    }
+
+    protected function afterCreate($model)
+    {
+        return true;
     }
 
     /**
-     * 更新
-     * @return mixed|\yii\db\ActiveRecord
-     * @throws \Exception
+     * @OA\Put(
+     *     path="/api/xxx/users/{id}",
+     *     tags={"Base"},
+     *     summary="Update a record",
+     *     description="Update a record",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\Parameter(name="id", required=true, @OA\Schema(type="string"), in="path", description="id"),
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *           mediaType="application/x-www-form-urlencoded",
+     *           @OA\Schema(
+     *               type="object",
+     *               @OA\Property(property="name", type="string", description="Name"),
+     *           )
+     *       )
+     *     ),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionUpdate()
     {
         $id = Yii::$app->request->get('id');
         if (!$id) {
-            return $this->error();
+            return $this->error(Yii::t('app', 'Invalid id'));
         }
 
         if (!$this->modelClass) {
@@ -226,28 +361,96 @@ class BaseController extends ActiveController
         }
 
         /* @var $model \yii\db\ActiveRecord */
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
+            return $this->error(Yii::t('app', 'Invalid id'));
+        }
+
+        $this->beforeUpdate($id, $model);
+        $model->attributes = Yii::$app->request->post();
+        if ($this->beforeUpdateSave($model)) {
+            if ($model->save()) {
+                $this->afterUpdateSave($id, $model);
+                $this->clearCache();
+                return $model;
+            } else {
+                return $this->error(500, $this->getError($model));
+            }
+        }
+
+        return $this->error();
+    }
+
+    protected function beforeUpdate($id = null, $model = null)
+    {
+        return true;
+    }
+
+    protected function beforeUpdateSave($id = null, $model = null)
+    {
+        return true;
+    }
+
+    protected function afterUpdateSave($id = null, $model = null)
+    {
+        return true;
+    }
+
+    public function actionEdit()
+    {
+        if (!$this->modelClass) {
             return $this->error();
         }
 
-        $model->attributes = Yii::$app->request->post();
-        if (!$model->save()) {
-            return $this->error(422);
+        $id = Yii::$app->request->get('id');
+        /* @var $model \yii\db\ActiveRecord */
+        $model = $this->findModel($id);
+        if (!$model) {
+            return $this->error(Yii::t('app', 'Invalid id'));
         }
 
-        return $model;
+        $this->beforeEdit($id, $model);
+        $model->attributes = Yii::$app->request->post();
+        if ($this->beforeEditSave($model)) {
+            if ($model->save()) {
+                $this->afterEditSave($id, $model);
+                $this->clearCache();
+                return $model;
+            } else {
+                return $this->error(500, $this->getError($model));
+            }
+        }
+
+        return $this->error();
     }
 
+    protected function beforeEdit($id = null, $model = null)
+    {
+        return true;
+    }
+
+    protected function beforeEditSave($id = null, $model = null)
+    {
+        return true;
+    }
+
+    protected function afterEditSave($id = null, $model = null)
+    {
+        return true;
+    }
 
     /**
-     * 删除
-     * delete?soft=true 软删除，状态变成删除状态
-     * delete?tree=true 树状删除，删除所有
-     * @param $id
-     * @return mixed
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @OA\Delete(
+     *     path="/api/xxx/users/{id}",
+     *     tags={"Base"},
+     *     summary="Delete a record",
+     *     description="Delete a record, delete?soft=true delete softly, status to STATUS_DELETED. delete?tree=true delete include the data which parent_id matched",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\Parameter(name="id", required=true, @OA\Schema(type="string"), in="path", description="id"),
+     *     @OA\Parameter(name="soft", required=false, @OA\Schema(type="string"), in="path", description="soft"),
+     *     @OA\Parameter(name="tree", required=false, @OA\Schema(type="string"), in="path", description="tree"),
+     *     @OA\Response(response="200", description="Success")
+     * )
      */
     public function actionDelete()
     {
@@ -256,7 +459,7 @@ class BaseController extends ActiveController
             return $this->error();
         }
 
-        $model = $this->findModel($id, true);
+        $model = $this->findModel($id);
         if (!$model) {
             return $this->error();
         }
@@ -264,11 +467,11 @@ class BaseController extends ActiveController
         $soft = Yii::$app->request->get('soft', true);
         $tree = Yii::$app->request->get('tree', false);
         if ($tree) {
-            $ids = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->asArray()->all());
+            $ids = ArrayHelper::getChildrenIds($id, $this->modelClass::find()->select(['id', 'parent_id'])->asArray()->all());
         } else {
             $ids = $id;
         }
-        $this->beforeDeleteModel($ids, $soft, $tree);
+        $this->beforeDeleteModel($ids, $model, $soft, $tree);
 
         if ($soft) {
             $model->status = $this->modelClass::STATUS_DELETED;
@@ -291,17 +494,19 @@ class BaseController extends ActiveController
         }
 
         $this->afterDeleteModel($id, $soft = false, $tree = false);
+        $this->clearCache();
         return $this->success();
     }
 
     /**
      * 删除动作前处理，子方法只需覆盖该函数即可
      * @param $id
+     * @param null|ActiveRecord $model
      * @param bool $soft
      * @param bool $tree
      * @return bool
      */
-    protected function beforeDeleteModel($id, $soft = false, $tree = false)
+    protected function beforeDeleteModel($id = null, $model = null, $soft = false, $tree = false)
     {
         return true;
     }
@@ -309,11 +514,21 @@ class BaseController extends ActiveController
     /**
      * 删除动作后处理，子方法只需覆盖该函数即可
      * @param $id
+     * @param null|ActiveRecord $model
      * @param bool $soft
      * @param bool $tree
      * @return bool
      */
-    protected function afterDeleteModel($id, $soft = false, $tree = false)
+    protected function afterDeleteModel($id = null, $model = null, $soft = false, $tree = false)
+    {
+        return true;
+    }
+
+    /**
+     * 清理缓存
+     * @return bool
+     */
+    protected function clearCache()
     {
         return true;
     }
@@ -321,21 +536,62 @@ class BaseController extends ActiveController
     /**
      * 要操作的必须先查询有权限的ID
      * @param $id
-     * @param bool $action
      * @return mixed|null |null
      */
-    protected function findModel($id, $action = true)
+    protected function findModel($id = null)
     {
-        $storeId = $this->getStoreId();
-        if ((empty($id) || empty(($model = $this->modelClass::find()->where(['id' => $id, 'status' => $this->modelClass::STATUS_ACTIVE])->andFilterWhere(['store_id' => $storeId])->one())))) {
-            if ($action) {
-                return null;
+        /* @var $model \yii\db\ActiveRecord */
+        if (empty($id)) {
+            $model = new $this->modelClass();
+            $model->loadDefaultValues();
+        } else {
+            $storeId = $this->getFilterStoreId();
+            if ($this->modelClass == Store::class) {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['id' => $storeId])->one();
+            } else {
+                $model = $this->modelClass::find()->where(['id' => $id])->andFilterWhere(['store_id' => $storeId])->one();
             }
 
-            $model = new $this->modelClass();
+            if (!$model) {
+                throw new NotFoundHttpException(Yii::t('app', 'Invalid id'), 500);
+            }
         }
 
         return $model;
+    }
+
+    /**
+     * 可以查询大于小于和IN
+     *
+     * @param $attributeName
+     * @param $value
+     * @return array
+     */
+    private function conditionTrans($attributeName, $value)
+    {
+        switch (true) {
+            case is_array($value):
+                return [$attributeName => $value];
+                break;
+            case stripos($value, '>=') !== false:
+                return ['>=', $attributeName, substr($value, 2)];
+                break;
+            case stripos($value, '<=') !== false:
+                return ['<=', $attributeName, substr($value, 2)];
+                break;
+            case stripos($value, '<') !== false:
+                return ['<', $attributeName, substr($value, 1)];
+                break;
+            case stripos($value, '>') !== false:
+                return ['>', $attributeName, substr($value, 1)];
+                break;
+            case stripos($value, ',') !== false:
+                return [$attributeName => explode(',', $value)];
+                break;
+            default:
+                return [$attributeName => $value];
+                break;
+        }
     }
 
     /**
@@ -345,7 +601,7 @@ class BaseController extends ActiveController
      * @param int $code
      * @return mixed
      */
-    protected function success($data = null, $map = [], $msg = '', $code = 200)
+    protected function success($data = null, $map = null, $msg = '', $code = 200)
     {
         return Yii::$app->responseSystem->success($data, $map, $msg, $code);
     }
@@ -362,11 +618,12 @@ class BaseController extends ActiveController
     }
 
     /**
+     * @param bool $force
      * @return Store
      */
-    public function getStore()
+    public function getStore($force = false)
     {
-        return $this->store;
+        return $force ? Store::findOne($this->getStoreId()) : $this->store;
     }
 
     /**
@@ -378,11 +635,78 @@ class BaseController extends ActiveController
     }
 
     /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return Yii::$app->authSystem->isAdmin();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAgent()
+    {
+        return Yii::$app->authSystem->isAgent();
+    }
+
+    /**
+     * 如果在authSystem中配置，或者有superadmin角色，则是，拥有所有权限
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return Yii::$app->authSystem->isSuperAdmin();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBackend()
+    {
+        return Yii::$app->authSystem->isBackend();
+    }
+
+    /**
      * @return int
      */
     public function getStoreId()
     {
         return $this->store->id ?? 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAgentStores()
+    {
+        $models = Yii::$app->cacheSystem->getAllStore();
+        $list = [];
+        foreach ($models as $model) {
+            if ($model->created_by == Yii::$app->user->id) {
+                $list[] = $model;
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAgentStoreIds()
+    {
+        return ArrayHelper::getColumn($this->getAgentStores(), 'id');
+    }
+
+    public function getFilterStoreId()
+    {
+        if ($this->isAgent()) {
+            return $this->getAgentStoreIds();
+        } elseif ($this->isAdmin()) {
+            return null;
+        } else {
+            return $this->getStoreId();
+        }
     }
 
     /**
@@ -410,4 +734,20 @@ class BaseController extends ActiveController
     {
         return [];
     }
+
+    /**
+     * @param Model $model
+     * @return string
+     */
+    protected function getError($model)
+    {
+        $firstErrors = $model->getFirstErrors();
+        if (!is_array($firstErrors) || empty($firstErrors)) {
+            return false;
+        }
+
+        $errors = array_values($firstErrors)[0];
+        return $errors ? $errors : Yii::t('app', 'Uncaught Error');
+    }
+
 }

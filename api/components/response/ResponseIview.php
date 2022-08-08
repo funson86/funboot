@@ -34,7 +34,7 @@ class ResponseIview extends ResponseAbstract
         ];
     }
 
-    protected function success($data = [], $map = [], $msg = '', $code = 200)
+    protected function success($data = [], $map = null, $msg = '', $code = 200)
     {
         return [
             'code' => 200,

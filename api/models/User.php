@@ -42,10 +42,12 @@ class User extends \common\models\User implements RateLimitInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
+        if (!$token) {
+            return null;
+        }
+
         if (Yii::$app->params['user']['accessTokenValid']) {
-            $time = intval(substr($token, strrpos($token, '_') + 1));
-            $expire = intval(Yii::$app->params['user']['accessTokenExpired']);
-            if (($time + $expire) < time()) {
+            if (!Yii::$app->accessTokenSystem->timeValid($token, intval(Yii::$app->params['user']['accessTokenExpired']))) {
                 throw new UnauthorizedHttpException(Yii::t('app', 'Access Token Expired'));
             }
         }
@@ -109,11 +111,10 @@ class User extends \common\models\User implements RateLimitInterface
     }
 
     /**
-     * 指定extraFields中显示哪些字段
-     * @return \yii\db\ActiveQuery|null
+     * @return \stdClass|\yii\db\ActiveQuery|null
      */
     public function getStore()
     {
-        return parent::getStore() ? parent::getStore()->select(['name']) : null;
+        return parent::getStore() ? parent::getStore()->select(['id', 'name', 'host_name']) : new \stdClass();
     }
 }

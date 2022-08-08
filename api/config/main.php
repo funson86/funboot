@@ -19,9 +19,9 @@ return [
             'basePath' => '@api/modules/v1',
             'class' => 'api\modules\v1\Module'
         ],
-        'v2' => [
-            'basePath' => '@api/modules/v2',
-            'class' => 'api\modules\v2\Module'
+        'v21' => [
+            'basePath' => '@api/modules/v21',
+            'class' => 'api\modules\v21\Module',
         ],
         'school' => [
             'basePath' => '@api/modules/school',
@@ -31,8 +31,8 @@ return [
     'components' => [
         'user' => [
             'identityClass' => 'api\models\User',
-             'enableAutoLogin' => true,
-             'enableSession' => false,// 显示一个HTTP 403 错误, 不是跳转到登录界面
+            'enableAutoLogin' => true,
+            'enableSession' => false,// 显示一个HTTP 403 错误, 不是跳转到登录界面
             'loginUrl' => null,
         ],
         'log' => [

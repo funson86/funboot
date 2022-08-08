@@ -26,7 +26,11 @@ class JsonResponseFormatterSystem extends \yii\web\JsonResponseFormatter
             }
             // 拼接字段
             if (is_array($response->data)) {
-                if (isset($response->data['data'])) {
+                if (isset($response->data['data']['data'])) {
+                    $data = $response->data;
+                    unset($data['data']);
+                    $data['data'] = $response->data['data']['data'];
+                } elseif (isset($response->data['data'])) {
                     $data = $response->data;
                     unset($data['data']);
                     $data['data'] = $response->data['data'];
@@ -38,7 +42,8 @@ class JsonResponseFormatterSystem extends \yii\web\JsonResponseFormatter
             }
 
             (!isset($data['code']) || !$data['code']) && $data['code'] = $response->statusCode;
-            (!isset($data['msg']) || !$data['msg']) && ($data['msg'] = $data['data']['message'] ?? ResultHelper::getMsg($data['code']));
+            (!isset($data['msg']) || !$data['msg']) && ($data['msg'] = ($data['data']['message'] ?? ResultHelper::getMsg($data['code'])));
+            (!isset($data['map']) || !$data['map']) && $data['map'] = new \stdClass();
             $data['timestamp'] = time();
 
             $response->content = Json::encode($data, $options);

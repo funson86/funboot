@@ -25,7 +25,7 @@ class ResponseSystem extends ResponseAbstract
      * @param int $code
      * @return array|mixed
      */
-    public function success($data = null, $map = [], $msg = '', $code = 200)
+    public function success($data = null, $map = null, $msg = '', $code = 200)
     {
         return ResultHelper::ret($code, $msg, $data, $map);
     }

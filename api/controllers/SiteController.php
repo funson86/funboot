@@ -12,6 +12,9 @@ use yii\rest\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
+ * @OA\Info(title="Site", version="1.0")
+ */
+/**
  * Site controller
  */
 class SiteController extends BaseController
@@ -20,7 +23,7 @@ class SiteController extends BaseController
 
     public $skipModelClass = '*';
 
-    public $optionalAuth = ['error', 'index', 'login', 'refresh', 'logout'];
+    public $optionalAuth = ['error', 'index', 'login', 'refresh'];
 
     /**
      * @return string
@@ -31,7 +34,8 @@ class SiteController extends BaseController
             $exception = new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
         }
 
-        return Yii::$app->responseSystem->error($exception->getCode(), $exception->getMessage());
+        header('Content-type:text/json');
+        exit(json_encode(Yii::$app->responseSystem->error(404, $exception->getMessage())));
     }
 
     /**
@@ -44,6 +48,26 @@ class SiteController extends BaseController
         return 'funboot';
     }
 
+    /**
+     * @OA\Post(path="/api/site/login",
+     *     tags={"Site"},
+     *     summary="Login",
+     *     description="Logs user into the system",
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *           mediaType="application/x-www-form-urlencoded",
+     *           @OA\Schema(
+     *               type="object",
+     *               @OA\Property(property="username", description="Username", type="string"),
+     *               @OA\Property(property="password", description="Password", type="string"),
+     *           )
+     *       )
+     *     ),
+     *     @OA\Response(response="200",description="Success"),
+     *     @OA\Response(response="422",description="Input Parameter Error"),
+     * )
+     */
     public function actionLogin()
     {
         $model = new LoginForm();
@@ -55,6 +79,25 @@ class SiteController extends BaseController
         return $this->error();
     }
 
+    /**
+     * @OA\Post(path="/api/site/refresh",
+     *     tags={"Site"},
+     *     summary="Refresh user access token",
+     *     description="Refresh user access token",
+     *     @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *           mediaType="application/x-www-form-urlencoded",
+     *           @OA\Schema(
+     *               type="object",
+     *               @OA\Property(property="refresh_token", description="Refresh Token in login", type="string"),
+     *           )
+     *       )
+     *     ),
+     *     @OA\Response(response="200",description="Success"),
+     *     @OA\Response(response="422",description="Input Parameter Error"),
+     * )
+     */
     public function actionRefresh()
     {
         $model = new RefreshForm();
@@ -66,6 +109,16 @@ class SiteController extends BaseController
         return $this->error();
     }
 
+    /**
+     * @OA\Get(path="/api/site/logout",
+     *     tags={"Site"},
+     *     summary="Logout",
+     *     description="Logout",
+     *     @OA\Parameter(name="access-token", required=true, @OA\Schema(type="string"), in="header", description="login access token"),
+     *     @OA\Response(response="200",description="Success"),
+     *     @OA\Response(response="401",description="Unauthorized"),
+     * )
+     */
     public function actionLogout()
     {
         if (Yii::$app->accessTokenSystem->disableAccessToken(Yii::$app->user->identity->access_token)) {

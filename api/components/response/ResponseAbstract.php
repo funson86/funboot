@@ -19,5 +19,5 @@ Abstract class ResponseAbstract
      * @param int $code
      * @return mixed
      */
-    abstract protected function success($data = [], $map = [], $msg = '', $code = 200);
+    abstract protected function success($data = [], $map = null, $msg = '', $code = 200);
 }

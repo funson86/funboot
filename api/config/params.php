@@ -2,6 +2,12 @@
 return [
     'adminEmail' => 'admin@example.com',
 
+    // 无需鉴权的url路径，需要以/开头
+    'ignoreUrlList' => [
+        '/site/*', //自身判断是否登录
+        '/food/default/login', //自身判断是否登录
+    ],
+
     //速率限制，如 100s 内 20 次，可以在param.php中设置频率
     'rateLimit' => 20,
     'timeLimit' => 100,

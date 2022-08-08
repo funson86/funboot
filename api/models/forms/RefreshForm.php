@@ -18,6 +18,8 @@ class RefreshForm extends Model
     public $verifyCode;
     public $rememberMe = true;
 
+    const KEY_FAILED = 'refreshTokenFailed';
+
     protected $_user;
 
     /**
@@ -30,7 +32,7 @@ class RefreshForm extends Model
             [['refresh_token'], 'required'],
             // password is validated by validatePassword()
             ['refresh_token', 'validateToken'],
-            ['verifyCode', 'captcha', 'on' => 'captchaRequired'],
+            ['verifyCode', 'captcha', 'captchaAction' => 'site/captcha', 'on' => 'captchaRequired'],
         ];
     }
 
@@ -45,10 +47,7 @@ class RefreshForm extends Model
     {
         if (!$this->hasErrors()) {
             if (Yii::$app->params['user']['refreshTokenValid']) {
-                $token = $this->refresh_token;
-                $time = intval(substr($token, strrpos($token, '_') + 1));
-                $expire = intval(Yii::$app->params['user']['refreshTokenExpired']);
-                if (($time + $expire) < time()) {
+                if (!Yii::$app->accessTokenSystem->timeValid($this->refresh_token, intval(Yii::$app->params['user']['refreshTokenExpired']))) {
                     throw new UnauthorizedHttpException(Yii::t('app', 'Refresh Token Expired'));
                 }
             }
@@ -87,9 +86,9 @@ class RefreshForm extends Model
     /**
      * 验证码显示判断
      */
-    public function loginCaptchaRequired()
+    public function checkCaptchaRequired()
     {
-        if (Yii::$app->session->get('refreshTokenFailed') >= $this->getAttempts()) {
+        if (Yii::$app->session->get(self::KEY_FAILED) >= $this->getAttempts()) {
             $this->setScenario("captchaRequired");
         }
     }
