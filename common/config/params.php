@@ -244,7 +244,7 @@ return [
 
         // 微信公众号 参考EasyWechat
         'wechatPaymentConfig' => [],
-    ]
+    ],
 
      'spamKeywords' => [
          ' porn ',
