@@ -509,9 +509,9 @@ CREATE TABLE `fb_user` (
   `updated_by` bigint(20) unsigned NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
   UNIQUE KEY `base_username` (`username`),
-  KEY `base_created_at` (`created_at`),
-  KEY `base_user_fk2` (`store_id`),
-  CONSTRAINT `base_user_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `base_user_k3` (`created_at`),
+  KEY `base_user_k0` (`store_id`),
+  CONSTRAINT `base_user_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户';
 
 DROP TABLE IF EXISTS `fb_school_student`;
@@ -527,8 +527,8 @@ CREATE TABLE `fb_school_student` (
   `created_by` int(11) NOT NULL DEFAULT '1' COMMENT '创建用户',
   `updated_by` int(11) NOT NULL DEFAULT '1' COMMENT '更新用户',
   PRIMARY KEY (`id`),
-  KEY `school_student_fk2` (`store_id`),
-  CONSTRAINT `school_student_fk2` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `school_student_k0` (`store_id`),
+  CONSTRAINT `school_student_fk0` FOREIGN KEY (`store_id`) REFERENCES `fb_store` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT '学生';
 
 DROP TABLE IF EXISTS `fb_base_lang`;
