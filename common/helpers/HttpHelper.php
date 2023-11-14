@@ -30,7 +30,7 @@ class HttpHelper
      * 如果不是网络地址，加上服务器图片地址前缀
      * @param string $url
      * @param array $data
-     * @param array $header
+     * @param array $header $header = ['Content-Type: application/json', 'access_token:token'];
      * @param integer $timeout
      * @return string
      */

@@ -99,4 +99,19 @@ class ImageHelper
 
         return Html::a($html, $image, ['data-fancybox' => 'gallery']);
     }
+
+    /**
+     * 获取全http或https路径
+     * @param $url
+     * @return string
+     */
+    public static function getFullUrl($url)
+    {
+        if (strpos($url, 'http') === 0) {
+            return $url;
+        }
+
+        (strpos($url, '/') !== 0) && $url = '/' . $url;
+        return CommonHelper::getStoreUrl() . $url;
+    }
 }
