@@ -17,7 +17,7 @@ class Product extends \common\models\mall\Product
     public function fields()
     {
         return [
-            'id', 'store_id', 'name', 'sku', 'price', 'thumb', 'images', 'brief', 'content',
+            'id', 'store_id', 'category_id', 'name', 'sku', 'price', 'thumb', 'images', 'brief', 'content',
             'name_', 'brief_', 'content_', 'thumb_', 'price_', 'images_', 'currency_',
         ];
     }
