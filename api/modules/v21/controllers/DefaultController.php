@@ -44,7 +44,7 @@ class DefaultController extends BaseController
             return Yii::$app->accessTokenSystem->getAccessToken($model->getUser());
         }
 
-        return $this->error();
+        return $this->error($this->getError($model));
     }
 
     public function actionSignup()
