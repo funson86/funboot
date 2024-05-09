@@ -236,7 +236,7 @@ class ArrayHelper extends BaseArrayHelper
     public static function arrayToInt($array)
     {
         if (!is_array($array) || !count($array)) {
-            return 0;
+            return intval($array);
         }
 
         $value = 0;
